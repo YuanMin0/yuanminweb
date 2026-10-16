@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>页面不存在 · MediLearn</title>
+<meta name="description" content="页面不存在，返回 MediLearn 医学学习站首页。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap">
+    <section class="hero hero-fx rv" style="text-align:center;padding:60px 32px">
+      <span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span>
+      <div class="hero-tag"><span class="badge-dot"></span> 404 Not Found</div>
+      <h1 style="font-size:clamp(48px,9vw,92px)"><span class="grad-anim">404</span></h1>
+      <p class="lead" style="margin:0 auto 22px">这个页面走丢了。可能是链接输入有误，或该内容已被移动。</p>
+      <div class="hero-actions" style="justify-content:center">
+        <a class="gbtn gbtn-primary gbtn-lg" href="index.html"><span class="gbtn-ico">⌂</span> 返回首页</a>
+        <a class="gbtn gbtn-lg" href="subjects.html"><span class="gbtn-ico">◈</span> 全部科目</a>
+        <a class="gbtn gbtn-lg" href="wrongbook.html"><span class="gbtn-ico">✦</span> 错题本</a>
+      </div>
+    </section>
+
+    <section class="mt-4">
+      <div class="sec-head rv"><div><h2>或者从这里继续</h2><div class="sub">推荐几个常用入口</div></div></div>
+      <div class="tiles" id="tiles"></div>
+    </section>
+  </div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="js/core.js"></script>
+<script src="data/xssx.js"></script>
+<script src="data/ethics.js"></script>
+<script src="data/bigdata.js"></script>
+<script src="data/statistics.js"></script>
+<script src="data/pharmacology.js"></script>
+<script src="data/medical-english.js"></script>
+<script src="js/fx.js"></script>
+<script>
+(function () {
+  WB.mountChrome('');
+  document.getElementById('tiles').innerHTML = WB.subjects().slice(0, 4).map(function (s, i) {
+    return '<a class="tile spot rv rv-d' + (i + 1) + '" style="--accent:' + s.accent + '" href="' + WB.link('subject.html', { s: s.id }) + '">' +
+      '<div class="tile-ico">' + s.icon + '</div><div style="min-width:0">' +
+      '<div class="tile-t">' + WB.esc(s.name) + '</div>' +
+      '<div class="tile-d">' + s._count.chapters + ' 章 · ' + s._count.knowledge + ' 知识点 · ' + s._count.quiz + ' 题</div>' +
+      '</div></a>';
+  }).join('');
+  WB.fx.init();
+})();
+</script>
+</body>
+</html>

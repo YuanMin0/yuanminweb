@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>知识点 · MediLearn</title>
+<meta name="description" content="知识点讲义：结构化的表格、要点框、术语卡与自测练习，可下载为 Markdown 或打印为 PDF。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap" id="root"></div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="js/core.js"></script>
+<script src="data/xssx.js"></script>
+<script src="data/ethics.js"></script>
+<script src="data/bigdata.js"></script>
+<script src="data/statistics.js"></script>
+<script src="data/pharmacology.js"></script>
+<script src="data/medical-english.js"></script>
+<script src="js/fx.js"></script>
+<script>
+(function () {
+  WB.mountChrome('subjects');
+  var sid = WB.qs('s'), kid = WB.qs('k');
+  var s = WB.getSubject(sid), k = s ? WB.getKnowledge(sid, kid) : null;
+  var root = document.getElementById('root');
+
+  if (!s || !k) {
+    root.innerHTML = WB.empty('🧭', '知识点不存在', '该知识点可能已被移除，或链接参数不正确。',
+      '<a class="gbtn gbtn-primary" href="subjects.html">返回科目列表</a>');
+    WB.fx.init(); return;
+  }
+
+  document.title = k.title + ' · ' + s.name + ' · MediLearn';
+  document.documentElement.style.setProperty('--accent', s.accent);
+  document.documentElement.style.setProperty('--accent-soft', s.accentSoft);
+
+  /* 上一条 / 下一条 */
+  var flat = WB.flatKnowledge(sid);
+  var idx = -1;
+  for (var i = 0; i < flat.length; i++) if (flat[i].id === k.id) { idx = i; break; }
+  var prev = idx > 0 ? flat[idx - 1] : null;
+  var next = idx < flat.length - 1 ? flat[idx + 1] : null;
+
+  /* 目录 */
+  var toc = WB.outline(k.content);
+
+  var head =
+    WB.crumb([
+      { text: '首页', href: 'index.html' },
+      { text: s.name, href: WB.link('subject.html', { s: s.id }) },
+      { text: k.chapterTitle },
+      { text: k.title }
+    ]) +
+    '<div class="toolbar rv" style="position:sticky;top:calc(var(--hdr) + 10px);z-index:40">' +
+      '<div style="flex:1;min-width:0">' +
+        '<div class="row" style="gap:8px;flex-wrap:wrap">' +
+          '<span class="chip" style="background:' + s.accentSoft + ';color:' + s.accent + '">' + s.icon + ' ' + WB.esc(s.name) + '</span>' +
+          '<span class="chip chip-line">' + WB.esc(k.chapterTitle) + '</span>' +
+          (k.tags || []).map(function (t) { return '<span class="chip chip-line">' + WB.esc(t) + '</span>'; }).join('') +
+        '</div>' +
+      '</div>' +
+      '<button class="gbtn gbtn-sm" id="learnBtn"></button>' +
+      '<button class="gbtn gbtn-sm" id="dlBtn"><span class="gbtn-ico">⇩</span> 下载</button>' +
+      '<a class="gbtn gbtn-sm gbtn-primary" href="' + WB.link('quiz.html', { s: s.id, k: k.id }) + '"><span class="gbtn-ico">◉</span> 做题 ' + k.quiz.length + '</a>' +
+    '</div>';
+
+  var layout =
+    '<div class="klayout mt-3">' +
+      '<aside class="toc rv rv-l">' +
+        (toc.length ? '<div class="toc-h">本页目录</div>' + toc.map(function (t) {
+          return '<a href="#' + WB.esc(t.id) + '">' + WB.esc(t.text) + '</a>';
+        }).join('') : '') +
+        '<div class="toc-h" style="margin-top:20px">本科目速览</div>' +
+        '<div class="small dim" style="padding:0 11px;line-height:1.9">' +
+          '共 ' + s._count.knowledge + ' 个知识点<br>' +
+          '已学 ' + WB.store.learnedCount(s.id) + ' / ' + s._count.knowledge + '<br>' +
+          '本章 ' + k.chapterId.replace(/^.*-c/, '第 ') + ' 章' +
+        '</div>' +
+      '</aside>' +
+      '<article class="article rv rv-r">' +
+        '<h2>' + WB.esc(k.title) + '</h2>' +
+        '<div class="k-meta">' + (k.tags || []).map(function (t) { return '<span class="chip chip-line">' + WB.esc(t) + '</span>'; }).join('') + '</div>' +
+        (k.summary ? '<p style="font-size:15.5px;color:var(--text-2);padding:14px 16px;border-radius:12px;background:var(--surface-2);border:1px dashed var(--border-2)"><b>概要</b>：' + WB.rich(k.summary) + '</p>' : '') +
+        '<div id="body">' + WB.renderBlocks(k.content) + '</div>' +
+        '<div class="pager no-print">' +
+          (prev ? '<a class="spot" style="--accent:' + s.accent + '" href="' + WB.link('knowledge.html', { s: s.id, k: prev.id }) + '"><div class="dir">← 上一个</div><div class="t">' + WB.esc(prev.title) + '</div></a>' : '<span style="flex:1"></span>') +
+          (next ? '<a class="next spot" style="--accent:' + s.accent + '" href="' + WB.link('knowledge.html', { s: s.id, k: next.id }) + '"><div class="dir">下一个 →</div><div class="t">' + WB.esc(next.title) + '</div></a>' : '<span style="flex:1"></span>') +
+        '</div>' +
+        '<div class="mt-3 no-print" style="text-align:center">' +
+          '<a class="gbtn gbtn-primary gbtn-lg" href="' + WB.link('quiz.html', { s: s.id, k: k.id }) + '">开始自测（' + k.quiz.length + ' 题）</a>' +
+        '</div>' +
+      '</article>' +
+    '</div>';
+
+  root.innerHTML = head + layout;
+
+  /* 记录「上次学习」 */
+  try { localStorage.setItem('medilearn.last.v1', JSON.stringify({ s: s.id, k: k.id, name: s.name, kTitle: k.title })); } catch (e) {}
+
+  /* ---------- 已学按钮 ---------- */
+  var lb = document.getElementById('learnBtn');
+  function paintLearn() {
+    var on = WB.store.isLearned(s.id, k.id);
+    lb.innerHTML = (on ? '<span class="gbtn-ico">✓</span> 已学' : '<span class="gbtn-ico">○</span> 标记已学');
+    lb.classList.toggle('gbtn-primary', on);
+  }
+  paintLearn();
+  lb.addEventListener('click', function () {
+    WB.store.toggleLearned(s.id, k.id);
+    paintLearn();
+    WB.toast(WB.store.isLearned(s.id, k.id) ? '已标记为「已学」' : '已取消「已学」');
+  });
+
+  /* ---------- 下载 ---------- */
+  document.getElementById('dlBtn').addEventListener('click', function () {
+    WB.downloadModal('下载《' + k.title + '》', [
+      { icon: '📄', label: '知识点讲义（含习题与答案）', desc: 'Markdown 格式，含全部内容块、自测题与参考答案',
+        run: function () { WB.download('MediLearn-' + WB.slug(k.title) + '.md', WB.knowledgeToMd(k, { withQuiz: true })); WB.toast('已开始下载'); } },
+      { icon: '📃', label: '知识点讲义（仅正文）', desc: '不含习题，便于快速阅读',
+        run: function () { WB.download('MediLearn-' + WB.slug(k.title) + '-正文.md', WB.knowledgeToMd(k, { withQuiz: false })); WB.toast('已开始下载'); } },
+      { icon: '📋', label: '复制为 Markdown', desc: '直接复制到剪贴板，粘贴进笔记软件',
+        run: function () { WB.copy(WB.knowledgeToMd(k, { withQuiz: true })); } },
+      { icon: '🖨', label: '打印 / 另存为 PDF', desc: '自动隐藏导航与按钮，只保留正文',
+        run: function () { window.print(); } }
+    ]);
+  });
+
+  /* ---------- 目录高亮 ---------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  if (links.length && 'IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (en.isIntersecting) {
+          links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + en.target.id); });
+        }
+      });
+    }, { rootMargin: '-15% 0px -70% 0px' });
+    document.querySelectorAll('#body h3[id]').forEach(function (h) { obs.observe(h); });
+  }
+
+  /* ---------- 键盘翻页 ---------- */
+  document.addEventListener('keydown', function (e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowLeft' && prev) location.href = WB.link('knowledge.html', { s: s.id, k: prev.id });
+    if (e.key === 'ArrowRight' && next) location.href = WB.link('knowledge.html', { s: s.id, k: next.id });
+  });
+
+  WB.fx.init({
+    dock: [
+      { ico: '⌂', label: '总览', href: 'index.html' },
+      { ico: '◈', label: s.name.slice(0, 6), href: WB.link('subject.html', { s: s.id }) },
+      { ico: '◉', label: '做题', href: WB.link('quiz.html', { s: s.id, k: k.id }) },
+      { ico: '⇩', label: '下载', href: '#' }
+    ]
+  });
+  var dock = document.querySelector('.dock');
+  if (dock) dock.lastElementChild.addEventListener('click', function (e) { e.preventDefault(); document.getElementById('dlBtn').click(); });
+})();
+</script>
+</body>
+</html>

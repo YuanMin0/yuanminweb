@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>科目详情 · MediLearn</title>
+<meta name="description" content="按章节浏览知识点、标记学习进度、下载讲义并开始做题。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap" id="root"></div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="js/core.js"></script>
+<script src="data/xssx.js"></script>
+<script src="data/ethics.js"></script>
+<script src="data/bigdata.js"></script>
+<script src="data/statistics.js"></script>
+<script src="data/pharmacology.js"></script>
+<script src="data/medical-english.js"></script>
+<script src="js/fx.js"></script>
+<script>
+(function () {
+  WB.mountChrome('subjects');
+  var sid = WB.qs('s');
+  var s = WB.getSubject(sid);
+  var root = document.getElementById('root');
+
+  if (!s) {
+    root.innerHTML = WB.crumb([{ text: '首页', href: 'index.html' }, { text: '全部科目', href: 'subjects.html' }, { text: '未找到' }]) +
+      WB.empty('🧭', '科目不存在', '该科目可能已被移除，或链接参数不正确。',
+        '<a class="gbtn gbtn-primary" href="subjects.html">返回科目列表</a>');
+    WB.fx.init(); return;
+  }
+
+  document.title = s.name + ' · MediLearn';
+  document.documentElement.style.setProperty('--accent', s.accent);
+  document.documentElement.style.setProperty('--accent-soft', s.accentSoft);
+
+  var pct = WB.store.subjectPct(s.id);
+
+  /* ---------- 头部 ---------- */
+  var head =
+    WB.crumb([{ text: '首页', href: 'index.html' }, { text: '全部科目', href: 'subjects.html' }, { text: s.name }]) +
+    '<section class="subj-hero rv" style="--accent:' + s.accent + ';--accent-soft:' + s.accentSoft + '">' +
+      '<div class="row" style="align-items:flex-start;gap:18px;flex-wrap:wrap">' +
+        '<div class="sh-ico">' + s.icon + '</div>' +
+        '<div style="flex:1;min-width:260px">' +
+          '<h1 style="font-size:27px">' + WB.esc(s.name) + '</h1>' +
+          '<div class="subj-en" style="margin-top:2px">' + WB.esc(s.en || '') + '</div>' +
+          '<p class="muted mt-2 mb-0" style="max-width:720px">' + WB.esc(s.intro || s.desc) + '</p>' +
+          '<div class="metric-strip">' +
+            '<div class="metric"><b data-count="' + s._count.chapters + '">0</b><span>章节</span></div>' +
+            '<div class="metric"><b data-count="' + s._count.knowledge + '">0</b><span>知识点</span></div>' +
+            '<div class="metric"><b data-count="' + s._count.quiz + '">0</b><span>练习题</span></div>' +
+            '<div class="metric"><b data-count="' + WB.store.learnedCount(s.id) + '">0</b><span>已学</span></div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="text-align:center">' + WB.ring(pct, { color: s.accent, size: 96, sw: 8, lg: true }) +
+          '<div class="small dim mt-1">学习进度</div></div>' +
+      '</div>' +
+      '<div class="hero-actions mt-3">' +
+        '<a class="gbtn gbtn-primary" href="' + WB.link('quiz.html', { s: s.id }) + '"><span class="gbtn-ico">◉</span> 开始全科练习</a>' +
+        '<button class="gbtn" id="dlBtn"><span class="gbtn-ico">⇩</span> 下载全册讲义</button>' +
+        '<a class="gbtn" href="' + WB.link('quiz.html', { s: s.id, mode: 'random' }) + '"><span class="gbtn-ico">⚡</span> 随机抽题</a>' +
+      '</div>' +
+    '</section>' +
+    '<div class="card card-pad mt-3 rv rv-d1 small muted"><b>素材来源</b>：' + WB.esc(s.source || '—') + '</div>';
+
+  /* ---------- 章节手风琴 ---------- */
+  var acc = '<section class="mt-4">' +
+    '<div class="sec-head rv rv-d2"><div><h2>章节与知识点</h2><div class="sub">点击章节展开；勾选左侧圆点即可标记「已学」</div></div>' +
+    '<button class="gbtn gbtn-sm" id="expandAll">展开全部</button></div>' +
+    '<div class="acc" id="acc">' +
+    s.chapters.map(function (ch, ci) {
+      var rows = (ch.knowledge || []).map(function (k) {
+        var done = WB.store.isLearned(s.id, k.id);
+        return '<div class="krow' + (done ? ' done' : '') + '" data-kid="' + k.id + '">' +
+          '<button class="icon-btn" data-toggle title="标记已学" style="border-radius:50%;width:26px;height:26px;font-size:12px;' +
+            (done ? 'background:var(--ok);border-color:var(--ok);color:#fff' : '') + '">' + (done ? '✓' : '') + '</button>' +
+          '<div class="krow-main">' +
+            '<div class="krow-t">' + WB.esc(k.title) +
+              (k.tags || []).slice(0, 3).map(function (t) { return '<span class="chip chip-line tiny">' + WB.esc(t) + '</span>'; }).join('') +
+            '</div>' +
+            '<div class="krow-d">' + WB.esc(k.summary || '') + '</div>' +
+          '</div>' +
+          '<div class="krow-acts">' +
+            '<a class="gbtn gbtn-sm" href="' + WB.link('knowledge.html', { s: s.id, k: k.id }) + '">浏览</a>' +
+            '<a class="gbtn gbtn-sm" href="' + WB.link('quiz.html', { s: s.id, k: k.id }) + '">做题 ' + k.quiz.length + '</a>' +
+          '</div></div>';
+      }).join('');
+      return '<div class="chapter' + (ci === 0 ? ' open' : '') + '" data-ch="' + ci + '" style="--accent:' + s.accent + ';--accent-soft:' + s.accentSoft + '">' +
+        '<div class="chapter-hd">' +
+          '<div class="chapter-no">' + (ci + 1) + '</div>' +
+          '<div style="flex:1;min-width:0">' +
+            '<div class="chapter-t">' + WB.esc(ch.title) + '</div>' +
+            '<div class="chapter-s">' + WB.esc(ch.desc || '') + ' · ' + ch.knowledge.length + ' 个知识点</div>' +
+          '</div>' +
+          '<span class="chip chip-line">' + ch.knowledge.reduce(function (a, k) { return a + k.quiz.length; }, 0) + ' 题</span>' +
+          '<span class="caret">▶</span>' +
+        '</div>' +
+        '<div class="chapter-bd"><div class="klist">' + rows + '</div></div>' +
+      '</div>';
+    }).join('') + '</div></section>';
+
+  /* ---------- 速记手册 ---------- */
+  var cheat = '';
+  if (s.cheatsheet && s.cheatsheet.length) {
+    cheat = '<section class="mt-4 rv">' +
+      '<div class="sec-head"><div><h2>考前速览</h2><div class="sub">' + s.cheatsheet.length + ' 个模块，考前 10 分钟过一遍</div></div></div>' +
+      '<div class="tiles">' + s.cheatsheet.map(function (m, i) {
+        return '<div class="card card-pad spot rv rv-d' + ((i % 3) + 1) + '" style="--accent:' + s.accent + '">' +
+          '<div style="font-weight:750;font-size:15px;margin-bottom:8px">' + WB.esc(m.title) + '</div>' +
+          '<ul style="margin:0;padding-left:18px;font-size:13px;color:var(--text-2);line-height:1.7">' +
+            m.items.map(function (x) { return '<li>' + WB.rich(x) + '</li>'; }).join('') +
+          '</ul></div>';
+      }).join('') + '</div></section>';
+  }
+
+  root.innerHTML = head + acc + cheat;
+
+  /* ---------- 交互 ---------- */
+  root.addEventListener('click', function (e) {
+    var hd = e.target.closest('.chapter-hd');
+    if (hd && !e.target.closest('a')) { hd.parentNode.classList.toggle('open'); return; }
+    var tg = e.target.closest('[data-toggle]');
+    if (tg) {
+      var row = tg.closest('.krow');
+      var on = WB.store.toggleLearned(s.id, row.getAttribute('data-kid'));
+      row.classList.toggle('done', on);
+      tg.style.background = on ? 'var(--ok)' : '';
+      tg.style.borderColor = on ? 'var(--ok)' : '';
+      tg.style.color = on ? '#fff' : '';
+      tg.textContent = on ? '✓' : '';
+      WB.toast(on ? '已标记为「已学」' : '已取消「已学」');
+    }
+  });
+
+  var allOpen = true;
+  document.getElementById('expandAll').addEventListener('click', function () {
+    allOpen = !allOpen;
+    root.querySelectorAll('.chapter').forEach(function (c) { c.classList.toggle('open', allOpen); });
+    this.textContent = allOpen ? '收起全部' : '展开全部';
+  });
+
+  document.getElementById('dlBtn').addEventListener('click', function () {
+    WB.downloadModal('下载《' + s.name + '》', [
+      { icon: '📘', label: '全册讲义（含习题与答案）', desc: 'Markdown 格式，含全部知识点、练习题与参考答案',
+        run: function () { WB.download('MediLearn-' + WB.slug(s.name) + '-全册.md', WB.subjectToMd(s, { withQuiz: true })); WB.toast('已开始下载'); } },
+      { icon: '📗', label: '全册讲义（仅知识点）', desc: '不含习题，适合打印背诵',
+        run: function () { WB.download('MediLearn-' + WB.slug(s.name) + '-讲义.md', WB.subjectToMd(s, { withQuiz: false })); WB.toast('已开始下载'); } },
+      { icon: '🖨', label: '打印 / 另存为 PDF', desc: '使用浏览器打印功能，可选「另存为 PDF」',
+        run: function () { window.print(); } }
+    ]);
+  });
+
+  /* ---------- 悬浮操作坞 ---------- */
+  WB.fx.init({
+    dock: [
+      { ico: '⌂', label: '总览', href: 'index.html' },
+      { ico: '◈', label: '科目', href: 'subjects.html' },
+      { ico: '◉', label: '全科练习', href: WB.link('quiz.html', { s: s.id }) },
+      { ico: '⇩', label: '下载', href: '#' }
+    ]
+  });
+  var dock = document.querySelector('.dock');
+  if (dock) dock.lastElementChild.addEventListener('click', function (e) { e.preventDefault(); document.getElementById('dlBtn').click(); });
+})();
+</script>
+</body>
+</html>

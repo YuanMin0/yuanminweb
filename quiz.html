@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>在线练习 · MediLearn</title>
+<meta name="description" content="在线做题：单选、多选、判断、填空四种题型，即时解析，错题自动收录。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap" id="root"></div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="js/core.js"></script>
+<script src="data/xssx.js"></script>
+<script src="data/ethics.js"></script>
+<script src="data/bigdata.js"></script>
+<script src="data/statistics.js"></script>
+<script src="data/pharmacology.js"></script>
+<script src="data/medical-english.js"></script>
+<script src="js/fx.js"></script>
+<script>
+(function () {
+  WB.mountChrome('subjects');
+
+  var root = document.getElementById('root');
+  var sid = WB.qs('s'), kid = WB.qs('k'), mode = WB.qs('mode');
+
+  /* ==================== 收集题目 ==================== */
+  function uidOf(s, k, i) { return s + '|' + k + '|' + i; }
+
+  function fromSubject(s, onlyKid) {
+    var out = [];
+    s.chapters.forEach(function (ch) {
+      (ch.knowledge || []).forEach(function (k) {
+        if (onlyKid && k.id !== onlyKid) return;
+        (k.quiz || []).forEach(function (q, i) {
+          out.push(Object.assign({}, q, {
+            uid: uidOf(s.id, k.id, i), subjectId: s.id, subjectName: s.name,
+            kid: k.id, kTitle: k.title, chapterTitle: ch.title, accent: s.accent, accentSoft: s.accentSoft
+          }));
+        });
+      });
+    });
+    return out;
+  }
+
+  var pool = [], title = '', subtitle = '', accent = 'var(--brand)', accentSoft = 'var(--brand-soft)';
+
+  if (mode === 'random') {
+    WB.subjects().forEach(function (s) { pool = pool.concat(fromSubject(s)); });
+    shuffle(pool); pool = pool.slice(0, 20);
+    title = '随机练习'; subtitle = '从全部科目随机抽取 20 题';
+  } else if (mode === 'wrong') {
+    WB.store.wrongList().forEach(function (w) {
+      pool.push({
+        uid: w.uid, type: w.type, stem: w.stem, options: w.options, answer: w.answer, explain: w.explain,
+        subjectId: w.subjectId, subjectName: w.subjectName, kid: w.kid, kTitle: w.kTitle,
+        chapterTitle: w.chapterTitle, accent: 'var(--rose)', accentSoft: 'var(--rose-soft)'
+      });
+    });
+    title = '错题重做'; subtitle = '来自错题本，共 ' + pool.length + ' 题';
+    accent = 'var(--rose)'; accentSoft = 'var(--rose-soft)';
+  } else {
+    var s = WB.getSubject(sid);
+    if (!s) { notFound(); return; }
+    pool = fromSubject(s, kid || null);
+    accent = s.accent; accentSoft = s.accentSoft;
+    if (kid) {
+      var k = WB.getKnowledge(sid, kid);
+      if (!k) { notFound(); return; }
+      title = k.title; subtitle = s.name + ' · ' + k.chapterTitle;
+    } else {
+      title = s.name; subtitle = '全科练习 · 共 ' + s._count.quiz + ' 题';
+    }
+  }
+
+  if (!pool.length) {
+    var isEmptyWrong = (mode === 'wrong');
+    root.innerHTML = WB.empty(isEmptyWrong ? '🎯' : '📝',
+      isEmptyWrong ? '错题本是空的' : '这里还没有题目',
+      isEmptyWrong ? '做错的题会自动进入错题本。先去练习几道题吧！' : '请先浏览知识点，或在科目页开始练习。',
+      '<a class="gbtn gbtn-primary" href="subjects.html">返回科目列表</a>' +
+      (isEmptyWrong ? '<a class="gbtn" href="' + WB.link('quiz.html', { mode: 'random' }) + '">随机抽 20 题</a>' : ''));
+    WB.fx.init(); return;
+  }
+
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = (Math.random() * (i + 1)) | 0; var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function notFound() {
+    root.innerHTML = WB.empty('🧭', '找不到对应的题目', '链接参数可能不正确。', '<a class="gbtn gbtn-primary" href="subjects.html">返回科目列表</a>');
+    WB.fx.init();
+  }
+
+  document.documentElement.style.setProperty('--accent', accent);
+  document.documentElement.style.setProperty('--accent-soft', accentSoft);
+  document.title = title + ' · 在线练习 · MediLearn';
+
+  /* ==================== 状态 ==================== */
+  var st = { i: 0, ans: {}, checked: {}, right: 0, order: pool.map(function (_, i) { return i; }), t0: Date.now(), started: false };
+
+  /* ==================== 开始页 ==================== */
+  function typeBreak() {
+    var c = { single: 0, multiple: 0, judge: 0, fill: 0 };
+    pool.forEach(function (q) { c[q.type] = (c[q.type] || 0) + 1; });
+    return c;
+  }
+
+  function renderIntro() {
+    var c = typeBreak();
+    root.innerHTML =
+      WB.crumb([{ text: '首页', href: 'index.html' }, { text: '全部科目', href: 'subjects.html' }, { text: title }]) +
+      '<section class="hero hero-fx rv" style="padding:34px 32px">' +
+        '<span class="orb o1"></span><span class="orb o2"></span>' +
+        '<div class="hero-tag"><span class="badge-dot"></span>' + WB.esc(subtitle) + '</div>' +
+        '<h1 style="font-size:clamp(23px,3vw,32px)">' + WB.esc(title) + '</h1>' +
+        '<p class="lead">共 <b data-count="' + pool.length + '">0</b> 道题。每道题作答后即时给出解析；答错的题会自动进入错题本。</p>' +
+        '<div class="metric-strip" style="margin-bottom:20px">' +
+          '<div class="metric"><b>' + (c.single || 0) + '</b><span>单选</span></div>' +
+          '<div class="metric"><b>' + (c.multiple || 0) + '</b><span>多选</span></div>' +
+          '<div class="metric"><b>' + (c.judge || 0) + '</b><span>判断</span></div>' +
+          '<div class="metric"><b>' + (c.fill || 0) + '</b><span>填空</span></div>' +
+        '</div>' +
+        '<div class="hero-actions">' +
+          '<button class="gbtn gbtn-primary gbtn-lg" id="startBtn"><span class="gbtn-ico">▶</span> 开始作答</button>' +
+          '<button class="gbtn gbtn-lg" id="shuffleBtn"><span class="gbtn-ico">⇄</span> 打乱题序</button>' +
+          (kid || mode ? '<a class="gbtn gbtn-lg" href="' + WB.link('knowledge.html', { s: sid, k: kid }) + '">返回知识点</a>' : '') +
+        '</div>' +
+      '</section>' +
+      '<div class="card card-pad mt-3 rv rv-d2 small muted">' +
+        '<b>作答提示</b>：多选题需选中全部正确项才算答对；填空题忽略大小写与空格，支持同义写法。' +
+      '</div>';
+    document.getElementById('startBtn').addEventListener('click', start);
+    document.getElementById('shuffleBtn').addEventListener('click', function () {
+      shuffle(st.order); WB.toast('题序已打乱');
+    });
+    WB.fx.init();
+  }
+
+  /* ==================== 开始 ==================== */
+  function start() { st.started = true; st.t0 = Date.now(); renderQ(); }
+
+  /* ==================== 题目渲染 ==================== */
+  function cur() { return pool[st.order[st.i]]; }
+
+  function renderQ() {
+    var q = cur();
+    var checked = !!st.checked[q.uid];
+    var my = st.ans[q.uid];
+
+    var body = '';
+    if (q.type === 'fill') {
+      body = '<input class="q-fill" id="fillIn" placeholder="在此输入答案…" ' + (checked ? 'disabled' : '') +
+        ' value="' + WB.esc(checked ? String(my == null ? '' : my) : (my == null ? '' : my)) + '">';
+    } else if (q.type === 'judge') {
+      body = '<div class="opts" id="opts">' +
+        [true, false].map(function (v, i) {
+          var sel = my === v;
+          var cls = 'opt' + (sel ? ' sel' : '');
+          if (checked) {
+            cls = 'opt locked' + (v === q.answer ? ' right' : (sel ? ' wrong' : ''));
+          }
+          return '<label class="' + cls + '" data-v="' + v + '">' +
+            '<span class="opt-key">' + (i ? '✗' : '✓') + '</span>' +
+            '<span>' + (v ? '正确' : '错误') + '</span></label>';
+        }).join('') + '</div>';
+    } else {
+      body = '<div class="opts" id="opts">' +
+        (q.options || []).map(function (o, i) {
+          var arr = Array.isArray(my) ? my : (my == null ? [] : [my]);
+          var sel = arr.indexOf(i) > -1;
+          var cls = 'opt' + (sel ? ' sel' : '');
+          if (checked) {
+            var isAns = q.type === 'multiple' ? (q.answer || []).indexOf(i) > -1 : q.answer === i;
+            cls = 'opt locked' + (isAns ? ' right' : (sel ? ' wrong' : ''));
+          }
+          return '<label class="' + cls + '" data-i="' + i + '">' +
+            '<span class="opt-key">' + 'ABCDEF'[i] + '</span><span>' + WB.rich(o) + '</span></label>';
+        }).join('') + '</div>';
+    }
+
+    var fb = '';
+    if (checked) {
+      var ok = WB.isCorrect(q, my);
+      fb = '<div class="fb ' + (ok ? 'fb-ok' : 'fb-bad') + '">' +
+        '<div class="fb-t">' + (ok ? '✓ 回答正确' : '✗ 回答错误') + '</div>' +
+        '<div class="small" style="margin-bottom:6px">你的答案：<b>' + WB.esc(WB.myAnswerText(q, my)) + '</b>' +
+        (ok ? '' : '　｜　正确答案：<b>' + WB.esc(WB.answerText(q)) + '</b>') + '</div>' +
+        (q.explain ? '<div style="font-size:14px;line-height:1.75">' + WB.rich(q.explain) + '</div>' : '') +
+        (kid ? '' : '<div class="mt-2"><a class="gbtn gbtn-sm" href="' + WB.link('knowledge.html', { s: q.subjectId, k: q.kid }) + '">📖 复习对应知识点</a></div>') +
+        '</div>';
+    }
+
+    root.innerHTML =
+      '<div class="row-between rv" style="margin-bottom:14px">' +
+        '<div style="min-width:0">' +
+          '<div class="crumb" style="margin-bottom:2px"><a href="index.html">首页</a><span class="sep">/</span>' +
+            '<a href="' + WB.link('subject.html', { s: q.subjectId }) + '">' + WB.esc(q.subjectName) + '</a>' +
+            '<span class="sep">/</span><span>' + WB.esc(q.chapterTitle) + '</span></div>' +
+          '<div style="font-weight:750;font-size:16px">' + WB.esc(kid ? q.kTitle : title) + '</div>' +
+        '</div>' +
+        '<div class="row">' +
+          '<span class="chip chip-line" id="timer">00:00</span>' +
+          '<button class="gbtn gbtn-sm" id="quitBtn">退出</button>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="quiz-top rv rv-d1">' +
+        '<div class="qbar"><i id="qbar" style="width:0%"></i></div>' +
+        '<div class="small muted nowrap"><b id="curNo">1</b> / ' + pool.length + '　正确 <b id="rightN">0</b></div>' +
+      '</div>' +
+
+      '<div class="q q-enter spot" id="qcard">' +
+        '<div class="q-no">' +
+          '<span class="q-num">' + (st.i + 1) + '</span>' +
+          '<span class="chip chip-line">' + WB.typeLabel(q.type) + '</span>' +
+          (q.type === 'multiple' ? '<span class="chip chip-amber">多选，需全对</span>' : '') +
+        '</div>' +
+        '<div class="q-stem">' + WB.rich(q.stem) + '</div>' +
+        body + fb +
+        '<div class="q-foot">' +
+          (checked
+            ? '<button class="gbtn gbtn-primary" id="nextBtn">' + (st.i >= pool.length - 1 ? '查看结果' : '下一题 →') + '</button>'
+            : '<button class="gbtn gbtn-primary" id="submitBtn">提交答案</button>') +
+          '<button class="gbtn" id="skipBtn">' + (checked ? '跳到结果' : '跳过') + '</button>' +
+          '<div class="spacer"></div>' +
+          '<button class="gbtn gbtn-sm" id="prevBtn"' + (st.i === 0 ? ' disabled' : '') + '>← 上一题</button>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="qgrid rv rv-d2" id="dots" style="margin-top:22px"></div>';
+
+    bindQ(q, checked);
+    paintDots();
+    WB.fx.refresh();
+  }
+
+  function paintDots() {
+    var d = document.getElementById('dots');
+    if (!d) return;
+    d.innerHTML = pool.map(function (q, i) {
+      var cls = 'qdot';
+      if (st.checked[q.uid]) cls += WB.isCorrect(q, st.ans[q.uid]) ? ' ok' : ' bad';
+      else if (i === st.i) cls += ' cur';
+      return '<div class="' + cls + '" data-jump="' + i + '" title="第 ' + (i + 1) + ' 题">' + (i + 1) + '</div>';
+    }).join('');
+    var bar = document.getElementById('qbar');
+    if (bar) bar.style.width = WB.pct(Object.keys(st.checked).length, pool.length) + '%';
+    var cn = document.getElementById('curNo'); if (cn) cn.textContent = st.i + 1;
+    var rn = document.getElementById('rightN'); if (rn) rn.textContent = st.right;
+  }
+
+  function bindQ(q, checked) {
+    var opts = document.getElementById('opts');
+    if (opts) {
+      opts.addEventListener('click', function (e) {
+        if (checked) return;
+        var el = e.target.closest('.opt'); if (!el) return;
+        if (q.type === 'judge') {
+          st.ans[q.uid] = el.getAttribute('data-v') === 'true';
+        } else if (q.type === 'multiple') {
+          var i = +el.getAttribute('data-i');
+          var arr = Array.isArray(st.ans[q.uid]) ? st.ans[q.uid].slice() : [];
+          var p = arr.indexOf(i);
+          if (p > -1) arr.splice(p, 1); else arr.push(i);
+          st.ans[q.uid] = arr;
+        } else {
+          st.ans[q.uid] = +el.getAttribute('data-i');
+        }
+        /* 重绘选中态 */
+        Array.prototype.forEach.call(opts.children, function (c) {
+          var on;
+          if (q.type === 'judge') on = (c.getAttribute('data-v') === 'true') === st.ans[q.uid];
+          else if (q.type === 'multiple') on = (st.ans[q.uid] || []).indexOf(+c.getAttribute('data-i')) > -1;
+          else on = +c.getAttribute('data-i') === st.ans[q.uid];
+          c.classList.toggle('sel', on);
+        });
+      });
+    }
+
+    var sb = document.getElementById('submitBtn');
+    if (sb) sb.addEventListener('click', function () {
+      var my = st.ans[q.uid];
+      if (q.type === 'fill') {
+        var inp = document.getElementById('fillIn');
+        my = inp ? inp.value : '';
+        st.ans[q.uid] = my;
+      }
+      if (my === undefined || my === null || my === '' || (Array.isArray(my) && !my.length)) {
+        WB.toast('请先作答'); return;
+      }
+      commit(q);
+    });
+
+    var nb = document.getElementById('nextBtn');
+    if (nb) nb.addEventListener('click', function () {
+      if (st.i >= pool.length - 1) return finish();
+      st.i++; renderQ(); window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    var kb = document.getElementById('skipBtn');
+    if (kb) kb.addEventListener('click', function () {
+      if (checked) return finish();
+      if (st.i >= pool.length - 1) return finish();
+      st.i++; renderQ(); window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    var pb = document.getElementById('prevBtn');
+    if (pb) pb.addEventListener('click', function () { if (st.i > 0) { st.i--; renderQ(); window.scrollTo({ top: 0, behavior: 'smooth' }); } });
+
+    var dots = document.getElementById('dots');
+    if (dots) dots.addEventListener('click', function (e) {
+      var t = e.target.closest('[data-jump]'); if (!t) return;
+      st.i = +t.getAttribute('data-jump'); renderQ();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    var qb = document.getElementById('quitBtn');
+    if (qb) qb.addEventListener('click', function () {
+      if (confirm('确定退出本次练习吗？已作答的记录会保留在错题本中。')) history.length > 1 ? history.back() : (location.href = 'subjects.html');
+    });
+
+    /* 填空回车提交 */
+    var fi = document.getElementById('fillIn');
+    if (fi && !checked) fi.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); document.getElementById('submitBtn').click(); }
+    });
+  }
+
+  function commit(q) {
+    var my = st.ans[q.uid];
+    var ok = WB.isCorrect(q, my);
+    st.checked[q.uid] = true;
+    if (ok) st.right++;
+    else WB.store.addWrong(Object.assign({}, q, { myAnswer: my }));
+    WB.store.addLog({ uid: q.uid, subjectId: q.subjectId, kid: q.kid, ok: ok });
+    renderQ();
+    if (ok) WB.toast('回答正确 ✓');
+  }
+
+  /* ==================== 计时 ==================== */
+  setInterval(function () {
+    if (!st.started) return;
+    var t = document.getElementById('timer'); if (!t) return;
+    var s = Math.floor((Date.now() - st.t0) / 1000);
+    t.textContent = WB.pad(Math.floor(s / 60)) + ':' + WB.pad(s % 60);
+  }, 500);
+
+  /* ==================== 结果页 ==================== */
+  function finish() {
+    st.started = false;
+    var total = pool.length;
+    var done = Object.keys(st.checked).length;
+    var score = WB.pct(st.right, total);
+    var secs = Math.floor((Date.now() - st.t0) / 1000);
+    var wrongs = pool.filter(function (q) { return st.checked[q.uid] && !WB.isCorrect(q, st.ans[q.uid]); });
+
+    root.innerHTML =
+      '<div class="card rv" style="padding:0;overflow:hidden">' +
+        '<div class="result">' +
+          '<div class="small muted">' + WB.esc(title) + '</div>' +
+          '<div class="score grad-anim" style="margin:8px 0"><span data-count="' + score + '">0</span><span>%</span></div>' +
+          '<div class="muted">答对 <b>' + st.right + '</b> / ' + total + ' 题　·　用时 ' + WB.pad(Math.floor(secs / 60)) + ':' + WB.pad(secs % 60) +
+            (done < total ? '　·　未作答 ' + (total - done) + ' 题' : '') + '</div>' +
+          '<div class="mt-3 row" style="justify-content:center">' +
+            '<button class="gbtn gbtn-primary" id="againBtn">↻ 再做一遍</button>' +
+            '<button class="gbtn" id="wrongOnlyBtn">只重做错题' + (wrongs.length ? '（' + wrongs.length + '）' : '') + '</button>' +
+            (kid ? '<a class="gbtn" href="' + WB.link('knowledge.html', { s: sid, k: kid }) + '">返回知识点</a>' :
+              '<a class="gbtn" href="' + WB.link('subject.html', { s: pool[0].subjectId }) + '">返回科目</a>') +
+          '</div>' +
+        '</div>' +
+        '<div style="padding:0 26px 26px"><div class="qgrid" id="dots2"></div></div>' +
+      '</div>' +
+
+      (wrongs.length
+        ? '<section class="mt-4 rv rv-d1"><div class="sec-head"><div><h2>错题回顾</h2><div class="sub">共 ' + wrongs.length + ' 题，已自动收入错题本</div></div>' +
+          '<a class="gbtn gbtn-sm" href="wrongbook.html">打开错题本</a></div>' +
+          wrongs.map(function (q, i) {
+            return '<div class="wrow spot" style="--accent:var(--bad)">' +
+              '<div class="wrow-hd"><span class="chip chip-bad">' + WB.typeLabel(q.type) + '</span>' +
+                '<span class="chip chip-line">' + WB.esc(q.kTitle) + '</span>' +
+                '<span class="chip chip-line">' + WB.esc(q.subjectName) + '</span></div>' +
+              '<div class="wrow-q">' + (i + 1) + '. ' + WB.rich(q.stem) + '</div>' +
+              '<div class="wrow-line">你的答案：<b style="color:var(--bad)">' + WB.esc(WB.myAnswerText(q, st.ans[q.uid])) + '</b></div>' +
+              '<div class="wrow-line">正确答案：<b style="color:var(--ok)">' + WB.esc(WB.answerText(q)) + '</b></div>' +
+              (q.explain ? '<div class="wrow-line muted mt-1" style="line-height:1.75">' + WB.rich(q.explain) + '</div>' : '') +
+              '<div class="mt-2"><a class="gbtn gbtn-sm" href="' + WB.link('knowledge.html', { s: q.subjectId, k: q.kid }) + '">📖 复习知识点</a></div>' +
+            '</div>';
+          }).join('') + '</section>'
+        : '<div class="card card-pad mt-4 rv rv-d1 center" style="color:var(--ok);font-weight:700">🎉 全部答对，没有错题！</div>');
+
+    /* 结果点阵 */
+    var d2 = document.getElementById('dots2');
+    d2.innerHTML = pool.map(function (q, i) {
+      var cls = 'qdot';
+      if (st.checked[q.uid]) cls += WB.isCorrect(q, st.ans[q.uid]) ? ' ok' : ' bad';
+      else cls += ' skip';
+      return '<div class="' + cls + '" data-jump2="' + i + '">' + (i + 1) + '</div>';
+    }).join('');
+    d2.addEventListener('click', function (e) {
+      var t = e.target.closest('[data-jump2]'); if (!t) return;
+      st.i = +t.getAttribute('data-jump2'); renderQ(); window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('againBtn').addEventListener('click', function () {
+      st = { i: 0, ans: {}, checked: {}, right: 0, order: pool.map(function (_, i) { return i; }), t0: Date.now(), started: true };
+      renderQ();
+    });
+    var wob = document.getElementById('wrongOnlyBtn');
+    wob.addEventListener('click', function () {
+      if (!wrongs.length) { WB.toast('本次没有错题'); return; }
+      pool = wrongs.map(function (q) { return q; });
+      st = { i: 0, ans: {}, checked: {}, right: 0, order: pool.map(function (_, i) { return i; }), t0: Date.now(), started: true };
+      title = '错题重做';
+      renderQ();
+    });
+
+    if (score >= 80) WB.fx.confetti(56);
+    WB.fx.refresh();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  renderIntro();
+})();
+</script>
+</body>
+</html>

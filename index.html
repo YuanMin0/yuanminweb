@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MediLearn · 医学学习站 — 知识点 · 刷题 · 下载</title>
+<meta name="description" content="MediLearn 医学学习站：医学英语、医学伦理学、医学大数据、医学统计学、药理学、习近平新时代中国特色社会主义思想概论，支持知识点浏览、在线刷题与讲义下载。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero hero-fx rv" id="hero">
+      <span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span>
+      <div class="hero-tag"><span class="badge-dot"></span><span data-tw>期末复习 · 全站离线可用 · 无需登录</span></div>
+      <h1><span class="grad-anim">MediLearn</span> 医学学习站</h1>
+      <p class="lead">
+        把「知识点浏览 → 在线刷题 → 错题回顾 → 讲义下载」串成一条闭环。
+        覆盖 <b data-count="6">6</b> 个科目、<b data-count="108">108</b> 个知识点、<b data-count="602">602</b> 道练习，
+        纯静态站点，可一键部署到 GitHub Pages / Cloudflare Pages。
+      </p>
+      <div class="hero-actions">
+        <a class="gbtn gbtn-primary gbtn-lg" href="subjects.html"><span class="gbtn-ico">◈</span> 开始学习</a>
+        <a class="gbtn gbtn-lg" href="#subjects"><span class="gbtn-ico">⌘</span> 浏览科目</a>
+        <a class="gbtn gbtn-lg" href="wrongbook.html"><span class="gbtn-ico">✦</span> 我的错题本</a>
+      </div>
+    </section>
+
+    <!-- ============ STATS ============ -->
+    <section class="mt-3" id="stats"></section>
+
+    <!-- ============ QUICK TILES ============ -->
+    <section class="mt-4">
+      <div class="sec-head rv">
+        <div>
+          <h2>快捷入口</h2>
+          <div class="sub">四步走完一轮复习</div>
+        </div>
+      </div>
+      <div class="tiles" id="tiles"></div>
+    </section>
+
+    <!-- ============ SUBJECTS ============ -->
+    <section class="mt-4" id="subjects">
+      <div class="sec-head rv">
+        <div>
+          <h2>全部科目</h2>
+          <div class="sub">点击进入科目，按章节浏览知识点并开始做题</div>
+        </div>
+        <a class="gbtn gbtn-sm" href="subjects.html">查看全部 <span class="gbtn-ico">→</span></a>
+      </div>
+      <div class="subj-grid" id="subjGrid"></div>
+    </section>
+
+    <!-- ============ FEATURES ============ -->
+    <section class="mt-4">
+      <div class="sec-head rv">
+        <div>
+          <h2>这个站点能做什么</h2>
+          <div class="sub">面向「考试」而不是「科普」设计</div>
+        </div>
+      </div>
+      <div class="tiles" id="feats"></div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="mt-4 rv">
+      <div class="card card-pad spot" style="--accent:var(--brand)">
+        <div class="row-between">
+          <div style="min-width:0">
+            <h2 style="font-size:20px">准备好了吗？</h2>
+            <p class="muted small mb-0 mt-1">从任一科目开始，边看知识点边做题；做错的题会自动进入错题本，随时回顾。</p>
+          </div>
+          <div class="row">
+            <a class="gbtn gbtn-primary" href="subjects.html">进入科目列表</a>
+            <a class="gbtn" href="about.html">了解本站</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="js/core.js"></script>
+<script src="data/xssx.js"></script>
+<script src="data/ethics.js"></script>
+<script src="data/bigdata.js"></script>
+<script src="data/statistics.js"></script>
+<script src="data/pharmacology.js"></script>
+<script src="data/medical-english.js"></script>
+<script src="js/fx.js"></script>
+<script>
+(function () {
+  WB.mountChrome('home');
+  var st = WB.stats();
+
+  /* ---------- 统计条 ---------- */
+  document.getElementById('stats').innerHTML =
+    '<div class="stats">' +
+      stat(st.subjects, '科目') + stat(st.chapters, '章节') +
+      stat(st.knowledge, '知识点') + stat(st.quiz, '练习题') +
+    '</div>';
+  function stat(n, l) {
+    return '<div class="stat spot rv" style="--accent:var(--brand)">' +
+      '<div class="stat-n"><span data-count="' + n + '">0</span></div>' +
+      '<div class="stat-l">' + l + '</div></div>';
+  }
+
+  /* ---------- 快捷入口 ---------- */
+  var last = null;
+  try { last = JSON.parse(localStorage.getItem('medilearn.last.v1') || 'null'); } catch (e) {}
+  var tiles = [
+    { ico: '◈', t: '继续上次学习', d: last ? (last.name + ' · ' + last.kTitle) : '从任一科目开始你的复习',
+      href: last ? WB.link('knowledge.html', { s: last.s, k: last.k }) : 'subjects.html' },
+    { ico: '✦', t: '错题本', d: '自动收录做错的题，支持重做与移除', href: 'wrongbook.html' },
+    { ico: '⚡', t: '随机练习', d: '从全部科目随机抽题，检验掌握程度', href: 'quiz.html?mode=random' },
+    { ico: '▤', t: '全部科目', d: '按科目查看章节与知识点，支持搜索', href: 'subjects.html' }
+  ];
+  document.getElementById('tiles').innerHTML = tiles.map(function (t, i) {
+    return '<a class="tile spot rv rv-d' + (i + 1) + '" style="--accent:var(--teal)" href="' + t.href + '">' +
+      '<div class="tile-ico">' + t.ico + '</div><div style="min-width:0">' +
+      '<div class="tile-t">' + t.t + '</div><div class="tile-d">' + WB.esc(t.d) + '</div></div></a>';
+  }).join('');
+
+  /* ---------- 科目卡片 ---------- */
+  document.getElementById('subjGrid').innerHTML = WB.subjects().map(function (s, i) {
+    var pct = WB.store.subjectPct(s.id);
+    return '<a class="subj-card spot rv rv-d' + ((i % 3) + 1) + '" style="--accent:' + s.accent + ';--accent-soft:' + s.accentSoft + '" href="' + WB.link('subject.html', { s: s.id }) + '">' +
+      '<div class="subj-top">' +
+        '<div class="subj-ico">' + s.icon + '</div>' +
+        '<div style="min-width:0;flex:1">' +
+          '<div class="subj-name">' + WB.esc(s.name) + '</div>' +
+          '<div class="subj-en">' + WB.esc(s.en || '') + '</div>' +
+        '</div>' +
+        WB.ring(pct, { color: s.accent }) +
+      '</div>' +
+      '<p class="subj-desc">' + WB.esc(s.desc) + '</p>' +
+      '<div class="subj-foot">' +
+        '<div class="subj-meta">' +
+          '<span><b>' + s._count.chapters + '</b> 章</span>' +
+          '<span><b>' + s._count.knowledge + '</b> 知识点</span>' +
+          '<span><b>' + s._count.quiz + '</b> 题</span>' +
+        '</div>' +
+        '<div class="spacer"></div>' +
+        '<span class="chip chip-line">进入 →</span>' +
+      '</div></a>';
+  }).join('');
+
+  /* ---------- 特色 ---------- */
+  var feats = [
+    { i: '▤', t: '结构化知识点', d: '每个知识点含表格、要点框、术语卡与速记口诀，按章节组织，可下载为 Markdown。' },
+    { i: '◉', t: '四种题型', d: '单选、多选、判断、填空，每题都有解析，讲清为什么对、为什么错。' },
+    { i: '✦', t: '错题本闭环', d: '答错自动收录，支持按科目筛选、重做与移除，考前集中攻克。' },
+    { i: '◐', t: '进度追踪', d: '知识点标记已学、科目进度环，本地保存，换页面不丢失。' },
+    { i: '☾', t: '深色模式', d: '一键切换浅色 / 深色主题，夜间复习不刺眼。' },
+    { i: '⇩', t: '一键导出', d: '支持导出 Markdown 讲义与打印为 PDF，便于二次编辑与随身携带。' }
+  ];
+  document.getElementById('feats').innerHTML = feats.map(function (f, i) {
+    return '<div class="tile spot rv rv-d' + ((i % 3) + 1) + '" style="--accent:var(--violet);cursor:default">' +
+      '<div class="tile-ico">' + f.i + '</div><div style="min-width:0">' +
+      '<div class="tile-t">' + f.t + '</div><div class="tile-d">' + f.d + '</div></div></div>';
+  }).join('');
+
+  /* ---------- 启动特效 ---------- */
+  WB.fx.init();
+  WB.fx.typewriter(document.querySelector('[data-tw]'),
+    ['期末复习 · 全站离线可用 · 无需登录', '知识点 · 刷题 · 错题本 · 讲义下载'], { speed: 46, pause: 2400 });
+})();
+</script>
+</body>
+</html>

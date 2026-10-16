@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>全部科目 · MediLearn</title>
+<meta name="description" content="MediLearn 全部科目列表：按关键词搜索知识点，按科目进入章节与练习。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap">
+
+    <div class="sec-head rv">
+      <div>
+        <h2 style="font-size:24px">全部科目</h2>
+        <div class="sub">共 <span id="sCount">0</span> 个科目 · 支持全站知识点搜索</div>
+      </div>
+    </div>
+
+    <div class="toolbar rv rv-d1">
+      <div class="search" style="position:relative">
+        <input type="search" id="q" placeholder="搜索科目、章节、知识点、术语…（如 t 检验、肝、强军目标）" autocomplete="off">
+        <div id="sug"></div>
+      </div>
+      <div class="seg" id="sortSeg">
+        <button class="on" data-sort="order">默认</button>
+        <button data-sort="quiz">题量</button>
+        <button data-sort="progress">进度</button>
+        <button data-sort="name">名称</button>
+      </div>
+    </div>
+
+    <div class="subj-grid" id="grid"></div>
+
+    <section class="mt-4 hide" id="searchWrap">
+      <div class="sec-head">
+        <div>
+          <h2>搜索结果</h2>
+          <div class="sub" id="searchSub"></div>
+        </div>
+        <button class="gbtn gbtn-sm" id="clearSearch">清除搜索</button>
+      </div>
+      <div class="acc" id="searchList"></div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="js/core.js"></script>
+<script src="data/xssx.js"></script>
+<script src="data/ethics.js"></script>
+<script src="data/bigdata.js"></script>
+<script src="data/statistics.js"></script>
+<script src="data/pharmacology.js"></script>
+<script src="data/medical-english.js"></script>
+<script src="js/fx.js"></script>
+<script>
+(function () {
+  WB.mountChrome('subjects');
+
+  var sortBy = 'order';
+
+  function subjList() {
+    var list = WB.subjects().slice();
+    if (sortBy === 'quiz') list.sort(function (a, b) { return b._count.quiz - a._count.quiz; });
+    else if (sortBy === 'progress') list.sort(function (a, b) { return WB.store.subjectPct(b.id) - WB.store.subjectPct(a.id); });
+    else if (sortBy === 'name') list.sort(function (a, b) { return a.name.localeCompare(b.name, 'zh'); });
+    else list.sort(function (a, b) { return (a.order || 99) - (b.order || 99); });
+    return list;
+  }
+
+  function card(s, i) {
+    var pct = WB.store.subjectPct(s.id);
+    return '<a class="subj-card spot rv rv-d' + ((i % 3) + 1) + '" style="--accent:' + s.accent + ';--accent-soft:' + s.accentSoft + '" href="' + WB.link('subject.html', { s: s.id }) + '">' +
+      '<div class="subj-top">' +
+        '<div class="subj-ico">' + s.icon + '</div>' +
+        '<div style="min-width:0;flex:1">' +
+          '<div class="subj-name">' + WB.esc(s.name) + '</div>' +
+          '<div class="subj-en">' + WB.esc(s.en || '') + '</div>' +
+        '</div>' + WB.ring(pct, { color: s.accent }) +
+      '</div>' +
+      '<p class="subj-desc">' + WB.esc(s.desc) + '</p>' +
+      '<div class="bar fx" style="margin-bottom:14px"><i style="width:' + pct + '%"></i></div>' +
+      '<div class="subj-foot">' +
+        '<div class="subj-meta">' +
+          '<span><b>' + s._count.chapters + '</b> 章</span>' +
+          '<span><b>' + s._count.knowledge + '</b> 知识点</span>' +
+          '<span><b>' + s._count.quiz + '</b> 题</span>' +
+        '</div><div class="spacer"></div>' +
+        '<span class="chip chip-line">进入 →</span>' +
+      '</div></a>';
+  }
+
+  function render() {
+    var list = subjList();
+    document.getElementById('sCount').textContent = list.length;
+    document.getElementById('grid').innerHTML = list.map(card).join('');
+    WB.fx.refresh();
+  }
+  render();
+
+  /* 排序 */
+  document.getElementById('sortSeg').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    this.querySelectorAll('button').forEach(function (x) { x.classList.remove('on'); });
+    b.classList.add('on'); sortBy = b.getAttribute('data-sort'); render();
+  });
+
+  /* 搜索 + 联想 */
+  var qEl = document.getElementById('q'), sugEl = document.getElementById('sug');
+  var sWrap = document.getElementById('searchWrap'), sList = document.getElementById('searchList'), sSub = document.getElementById('searchSub');
+  var tmr = null;
+
+  function hl(text, q) {
+    var t = WB.esc(text);
+    if (!q) return t;
+    var re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
+    return t.replace(re, '<mark>$1</mark>');
+  }
+
+  qEl.addEventListener('input', function () {
+    clearTimeout(tmr);
+    var q = qEl.value.trim();
+    if (!q) { sugEl.innerHTML = ''; sWrap.classList.add('hide'); return; }
+    tmr = setTimeout(function () { runSearch(q); }, 160);
+  });
+
+  qEl.addEventListener('keydown', function (e) { if (e.key === 'Escape') { qEl.value = ''; sugEl.innerHTML = ''; sWrap.classList.add('hide'); } });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.search')) sugEl.innerHTML = ''; });
+
+  function runSearch(q) {
+    var res = WB.search(q);
+    /* 联想层：前 6 条 */
+    sugEl.innerHTML = res.length
+      ? '<div class="sug">' + res.slice(0, 6).map(function (r) {
+          return '<a class="sug-item" href="' + WB.link('knowledge.html', { s: r.subject.id, k: r.k.id }) + '">' +
+            '<div class="sug-t">' + hl(r.k.title, q) + '</div>' +
+            '<div class="sug-d">' + WB.esc(r.subject.name) + ' · ' + WB.esc(r.k.chapterTitle) + '</div></a>';
+        }).join('') + '</div>'
+      : '<div class="sug"><div class="sug-item"><div class="sug-d">没有匹配的知识点</div></div></div>';
+
+    /* 结果列表 */
+    sWrap.classList.remove('hide');
+    sSub.textContent = '关键词「' + q + '」命中 ' + res.length + ' 个知识点';
+    if (!res.length) {
+      sList.innerHTML = WB.empty('🔍', '没有找到相关内容', '换个关键词试试，例如「构词法」「t 检验」「强军目标」「两山」');
+    } else {
+      sList.innerHTML = res.map(function (r) {
+        var k = r.k;
+        return '<div class="chapter open spot" style="--accent:' + r.subject.accent + ';--accent-soft:' + r.subject.accentSoft + '">' +
+          '<div class="chapter-hd" style="cursor:default">' +
+            '<div class="chapter-no">' + r.subject.icon + '</div>' +
+            '<div style="flex:1;min-width:0">' +
+              '<div class="chapter-t">' + hl(k.title, q) + '</div>' +
+              '<div class="chapter-s">' + WB.esc(r.subject.name) + ' · ' + WB.esc(k.chapterTitle) + ' · ' + k.quiz.length + ' 题</div>' +
+            '</div>' +
+            '<a class="gbtn gbtn-sm" href="' + WB.link('knowledge.html', { s: r.subject.id, k: k.id }) + '">查看</a>' +
+          '</div>' +
+          '<div class="chapter-bd" style="max-height:none;opacity:1">' +
+            '<div class="krow" style="border-bottom:0"><div class="krow-main">' +
+              '<div class="krow-d" style="white-space:normal">' + WB.esc(r.snippet) + '</div>' +
+            '</div></div>' +
+          '</div></div>';
+      }).join('');
+    }
+    WB.fx.refresh();
+  }
+
+  document.getElementById('clearSearch').addEventListener('click', function () {
+    qEl.value = ''; sugEl.innerHTML = ''; sWrap.classList.add('hide');
+  });
+
+  /* 快捷键 / 聚焦搜索 */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === '/' && document.activeElement !== qEl) { e.preventDefault(); qEl.focus(); }
+  });
+
+  WB.fx.init();
+})();
+</script>
+</body>
+</html>

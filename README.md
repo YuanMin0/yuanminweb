@@ -1,1 +1,224 @@
-# yuanminweb
+# MediLearn · 医学学习站
+
+一个面向医学院校学生的**纯静态**复习站点。把课程资料整理成结构化知识点，配自测题与错题本，
+再用 Markdown 导出打通「看 → 练 → 回顾 → 带走」的闭环。
+
+> 无构建步骤 · 无第三方依赖 · 可直接双击打开 · 可离线使用
+
+---
+
+## 目录结构
+
+```
+medilearn/
+├── index.html          总览：全站统计、快捷入口、科目卡片、进度环
+├── subjects.html       全部科目 + 全站知识点搜索（按 / 聚焦搜索框）
+├── subject.html        科目详情：章节手风琴、知识点列表、标记已学、下载全册
+├── knowledge.html      知识点正文：目录高亮、上/下条切换、下载与打印
+├── quiz.html           在线练习：四种题型、即时解析、计时、结果页与彩蛋
+├── wrongbook.html      错题本：按科目筛选、重做、移除、导出
+├── about.html          站点说明、数据来源、部署方法、FAQ
+├── 404.html            未找到页面
+├── css/
+│   └── style.css       设计系统 + 高级视觉层（极光背景 / 玻璃拟态 / 滚动揭示）
+├── js/
+│   ├── core.js         核心运行时：数据注册、存储、主题、渲染、导出、搜索
+│   └── fx.js           特效引擎：极光、光斑跟随、涟漪、数字滚动、视差、彩带
+└── data/
+    ├── xssx.js                     习近平新时代中国特色社会主义思想概论
+    ├── ethics.js                   医学伦理学
+    ├── bigdata.js                  医学大数据
+    ├── statistics.js               医学统计学
+    ├── pharmacology.js             药理学
+    └── medical-english.js          医学英语
+```
+
+---
+
+## 内容规模
+
+| 科目 | 章节 | 知识点 | 练习题 |
+|---|---:|---:|---:|
+| 习近平新时代中国特色社会主义思想概论 | 7 | 20 | 115 |
+| 医学伦理学 | 7 | 18 | 105 |
+| 医学大数据 | 6 | 19 | 95 |
+| 医学统计学 | 6 | 17 | 95 |
+| 药理学 | 6 | 22 | 132 |
+| 医学英语 | 5 | 12 | 60 |
+| **合计** | **37** | **108** | **602** |
+
+另有 1210 个内容块、170 张对比表格、183 条键值对照、5 套考前速览速记卡。
+
+---
+
+## 功能特性
+
+### 学习闭环
+- **知识点浏览**：表格、要点框、术语卡、公式块、口诀引用统一渲染
+- **在线刷题**：单选 / 多选 / 判断 / 填空四种题型，每题都有解析
+- **错题本**：答错自动收录，记录错误次数，支持筛选、重做与移除
+- **进度追踪**：知识点可标记「已学」，科目卡片显示进度环，数据存于 localStorage
+- **一键导出**：Markdown（含/不含习题与答案）、复制到剪贴板、打印为 PDF
+
+### 视觉与交互
+- **玻璃拟态悬浮按钮**：backdrop-blur + 内高光 + 悬停浮起 + 光带扫过
+- **极光背景**：三团渐变光斑缓慢漂移，并随鼠标做轻微视差
+- **滚动揭示**：内容块进入视口时依次上浮淡入
+- **光斑跟随**：鼠标经过卡片时出现跟随的径向高光
+- **涟漪反馈**：按钮点击位置扩散涟漪
+- **数字滚动**：统计数字进入视口时递增动画
+- **顶部滚动进度条**、**悬浮操作坞**、**答对彩带**、**深色模式**
+- 全部动效遵循 `prefers-reduced-motion`，系统开启「减少动态效果」时自动关闭
+
+---
+
+## 本地运行
+
+站点无构建步骤，三种方式任选：
+
+```bash
+# 方式一：直接打开
+双击 index.html
+
+# 方式二：起一个本地服务（推荐，避免个别浏览器的本地文件限制）
+python -m http.server 8080
+# 然后访问 http://localhost:8080
+
+# 方式三：Node
+npx serve .
+```
+
+---
+
+## 部署到 GitHub + Cloudflare Pages
+
+### 1. 推送到 GitHub
+
+```bash
+cd medilearn
+git init
+git add .
+git commit -m "feat: MediLearn 医学学习站"
+git branch -M main
+git remote add origin https://github.com/<你的用户名>/<仓库名>.git
+git push -u origin main
+```
+
+### 2. Cloudflare Pages 连接仓库
+
+1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/) → **Workers & Pages**
+2. 点击 **Create** → 选择 **Pages** 标签 → **Connect to Git**
+3. 授权并选择刚推送的仓库
+4. 构建设置：
+   - **Framework preset**：`None`
+   - **Build command**：*留空*
+   - **Build output directory**：`/`（若仓库根目录就是站点，填 `/`；若站点在子目录，填 `medilearn`）
+5. 点击 **Save and Deploy**，等待数十秒即可获得 `https://<项目名>.pages.dev` 地址
+
+### 3. 后续更新
+
+推送到 `main` 分支即自动重新部署。
+
+> **GitHub Pages 备选**：仓库 Settings → Pages → Source 选择 `main` 分支 `/ (root)`，保存后访问
+> `https://<用户名>.github.io/<仓库名>/`。仓库中已包含 `.nojekyll`，避免 Jekyll 处理下划线开头的文件。
+
+---
+
+## 数据文件编写规范
+
+每个科目是一个纯 JS 文件，调用 `WB.register({...})` 注册。
+
+### 科目骨架
+
+```js
+WB.register({
+  id: 'subject-id',            // kebab-case
+  name: '科目中文名',
+  en: 'English Name',
+  icon: '📈',                  // 单个 emoji
+  accent: 'var(--brand)',      // 与 accentSoft 必须成对
+  accentSoft: 'var(--brand-soft)',
+  order: 4,                    // 越小越靠前
+  desc: '卡片上的一句话介绍（30-50 字）',
+  intro: '科目页头部的课程说明（2-3 句）',
+  source: '素材来源：……',
+  chapters: [ /* 章节数组 */ ],
+  cheatsheet: [ /* 考前速览模块 */ ]
+});
+```
+
+可选配色对：`--brand`、`--teal`、`--rose`、`--amber`、`--violet`、`--cyan`（各带 `-soft` 变体）。
+
+### 知识点
+
+```js
+{
+  title: '知识点标题',
+  summary: '40-70 字概要，列表页显示',
+  tags: ['考点', '计算'],
+  content: [ /* 内容块 */ ],
+  quiz: [ /* 题目 */ ]
+}
+```
+
+### 内容块类型
+
+| type | 字段 | 说明 |
+|---|---|---|
+| `h` | `level`(3/4), `text` | 小标题，level 3 会进入右侧目录 |
+| `p` | `text` | 段落 |
+| `list` | `items[]`, `ordered` | 列表 |
+| `table` | `head[]`, `rows[][]` | 表格，`rows` 每行长度须等于 `head` |
+| `note` | `variant`, `title`, `text` | 提示框，variant ∈ `info` `tip` `warn` `key` |
+| `terms` | `items[{en,cn,note}]` | 术语卡片网格 |
+| `kv` | `items[{k,v}]` | 键值对照行 |
+| `code` | `text` | 等宽代码/公式块 |
+| `quote` | `text` | 引用 / 口诀 |
+
+### 题目类型
+
+```js
+{ type: 'single',   stem: '…', options: ['A','B','C','D'], answer: 1,        explain: '…' }
+{ type: 'multiple', stem: '…', options: ['A','B','C','D'], answer: [0, 2],    explain: '…' }
+{ type: 'judge',    stem: '…', answer: true,                                  explain: '…' }
+{ type: 'fill',     stem: '… ____ …', answer: ['标准答案', '同义写法'],        explain: '…' }
+```
+
+- `single` 的 `answer` 是**下标数字**（0 起）
+- `multiple` 的 `answer` 是**下标数组**（2-3 个正确项）
+- `judge` 的 `answer` 是布尔值
+- `fill` 的 `answer` 是字符串数组，匹配时忽略大小写与空格
+
+### 富文本
+
+仅支持三种标记，其余 HTML 会被转义显示：
+
+- `**加粗**`
+- `[[行内代码]]`
+- `<br>` 换行
+
+> **注意**：中文内容里若出现英文单引号（如 `patient's`），请改写成 `the patient` 或使用中文引号，
+> 避免破坏 JS 字符串。文件必须能通过 `node --check`。
+
+---
+
+## 浏览器支持
+
+Chrome / Edge / Firefox / Safari 近两年版本。使用到的现代特性：`backdrop-filter`、
+`color-mix()`、`IntersectionObserver`、CSS 自定义属性、`aspect-ratio`。
+不支持 `color-mix()` 的旧浏览器会退化为无染色效果，功能不受影响。
+
+---
+
+## 数据与隐私
+
+所有学习进度、错题记录、做题日志均保存在**浏览器 localStorage**，不上传任何服务器。
+清除浏览器数据会同时清空这些记录。关于页提供「重置全部数据」入口。
+
+---
+
+## 许可
+
+MIT License，详见 [LICENSE](LICENSE)。
+
+知识点内容整理自本人课程资料，仅供个人学习使用；如需引用请自行核对原始出处。

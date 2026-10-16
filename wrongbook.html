@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>错题本 · MediLearn</title>
+<meta name="description" content="错题本：自动收录答错的题目，支持按科目筛选、重做与移除，考前集中攻克薄弱环节。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap" id="root"></div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="js/core.js"></script>
+<script src="data/xssx.js"></script>
+<script src="data/ethics.js"></script>
+<script src="data/bigdata.js"></script>
+<script src="data/statistics.js"></script>
+<script src="data/pharmacology.js"></script>
+<script src="data/medical-english.js"></script>
+<script src="js/fx.js"></script>
+<script>
+(function () {
+  WB.mountChrome('wrong');
+  var root = document.getElementById('root');
+  var filter = WB.qs('s') || 'all';
+
+  function render() {
+    var all = WB.store.wrongList();
+
+    if (!all.length) {
+      root.innerHTML =
+        WB.crumb([{ text: '首页', href: 'index.html' }, { text: '错题本' }]) +
+        WB.empty('🎯', '错题本还是空的', '做错的题会自动出现在这里。先去练习几道题吧！',
+          '<a class="gbtn gbtn-primary" href="subjects.html">去练习</a>' +
+          '<a class="gbtn" href="' + WB.link('quiz.html', { mode: 'random' }) + '">随机抽 20 题</a>');
+      WB.fx.init(); return;
+    }
+
+    /* 按科目统计 */
+    var bySub = {};
+    all.forEach(function (w) { bySub[w.subjectId] = (bySub[w.subjectId] || 0) + 1; });
+
+    var list = filter === 'all' ? all : all.filter(function (w) { return w.subjectId === filter; });
+
+    root.innerHTML =
+      WB.crumb([{ text: '首页', href: 'index.html' }, { text: '错题本' }]) +
+
+      '<section class="hero hero-fx rv" style="padding:30px 32px">' +
+        '<span class="orb o1"></span><span class="orb o2"></span>' +
+        '<div class="hero-tag"><span class="badge-dot"></span> 自动收录 · 本地保存</div>' +
+        '<h1 style="font-size:clamp(23px,3vw,31px)">错题本</h1>' +
+        '<p class="lead">共 <b data-count="' + all.length + '">0</b> 道错题，涉及 <b>' + Object.keys(bySub).length + '</b> 个科目。反复出错的知识点，就是你的提分点。</p>' +
+        '<div class="hero-actions">' +
+          '<a class="gbtn gbtn-primary gbtn-lg" href="' + WB.link('quiz.html', { mode: 'wrong' }) + '"><span class="gbtn-ico">↻</span> 重做全部错题</a>' +
+          '<button class="gbtn gbtn-lg" id="exportBtn"><span class="gbtn-ico">⇩</span> 导出错题</button>' +
+          '<button class="gbtn gbtn-lg" id="clearBtn"><span class="gbtn-ico">✕</span> 清空</button>' +
+        '</div>' +
+      '</section>' +
+
+      '<div class="tabs mt-3 rv rv-d1" id="tabs">' +
+        tab('all', '全部', all.length) +
+        WB.subjects().map(function (s) {
+          return bySub[s.id] ? tab(s.id, s.icon + ' ' + s.name, bySub[s.id]) : '';
+        }).join('') +
+      '</div>' +
+
+      '<div id="list">' +
+        (list.length ? list.map(row).join('') :
+          '<div class="card card-pad center muted rv">该科目暂无错题</div>') +
+      '</div>';
+
+    function tab(id, label, n) {
+      return '<button class="tab' + (filter === id ? ' on' : '') + '" data-f="' + id + '">' + WB.esc(label) +
+        ' <span style="opacity:.7">' + n + '</span></button>';
+    }
+
+    function row(w) {
+      var s = WB.getSubject(w.subjectId);
+      var acc = s ? s.accent : 'var(--bad)';
+      var accSoft = s ? s.accentSoft : 'var(--bad-soft)';
+      var k = s ? WB.getKnowledge(w.subjectId, w.kid) : null;
+      return '<div class="wrow spot rv" style="--accent:' + acc + ';border-left:4px solid ' + acc + '">' +
+        '<div class="wrow-hd">' +
+          '<span class="chip" style="background:' + accSoft + ';color:' + acc + '">' + (s ? s.icon + ' ' + WB.esc(s.name) : '—') + '</span>' +
+          '<span class="chip chip-line">' + WB.typeLabel(w.type) + '</span>' +
+          '<span class="chip chip-line">' + WB.esc(w.chapterTitle || '') + '</span>' +
+          '<span class="chip chip-bad">错 ' + w.times + ' 次</span>' +
+          '<div class="spacer"></div>' +
+          '<span class="tiny dim">' + WB.fmtDate(w.ts) + '</span>' +
+        '</div>' +
+        '<div class="wrow-q">' + WB.rich(w.stem) + '</div>' +
+        '<div class="wrow-line">我的答案：<b style="color:var(--bad)">' + WB.esc(WB.myAnswerText(w, w.myAnswer)) + '</b></div>' +
+        '<div class="wrow-line">正确答案：<b style="color:var(--ok)">' + WB.esc(WB.answerText(w)) + '</b></div>' +
+        (w.explain ? '<div class="wrow-line muted mt-1" style="line-height:1.75">' + WB.rich(w.explain) + '</div>' : '') +
+        '<div class="mt-2 row" style="flex-wrap:wrap">' +
+          (k ? '<a class="gbtn gbtn-sm" href="' + WB.link('knowledge.html', { s: w.subjectId, k: w.kid }) + '">📖 复习知识点</a>' : '') +
+          '<a class="gbtn gbtn-sm" href="' + WB.link('quiz.html', { s: w.subjectId, k: w.kid }) + '">◉ 重做该知识点</a>' +
+          '<button class="gbtn gbtn-sm" data-rm="' + WB.esc(w.uid) + '">✕ 移除</button>' +
+        '</div>' +
+      '</div>';
+    }
+
+    /* 交互 */
+    document.getElementById('tabs').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-f]'); if (!b) return;
+      filter = b.getAttribute('data-f'); render(); window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('list').addEventListener('click', function (e) {
+      var rm = e.target.closest('[data-rm]'); if (!rm) return;
+      var uid = rm.getAttribute('data-rm');
+      if (confirm('确定从错题本中移除这道题吗？')) {
+        WB.store.removeWrong(uid); WB.toast('已移除'); render();
+      }
+    });
+
+    document.getElementById('clearBtn').addEventListener('click', function () {
+      if (confirm('确定清空全部错题吗？该操作不可恢复。')) {
+        var w = WB.store.wrong(); Object.keys(w).forEach(function (k2) { WB.store.removeWrong(k2); });
+        WB.toast('错题本已清空'); render();
+      }
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', function () {
+      var lines = ['# MediLearn 错题本', '', '> 导出时间：' + WB.fmtDate(Date.now()) + '　共 ' + all.length + ' 道错题', '', '---', ''];
+      all.forEach(function (w, i) {
+        lines.push('## ' + (i + 1) + '. ' + WB.plain(w.stem));
+        lines.push('');
+        lines.push('- 科目：' + (w.subjectName || '—') + '　章节：' + (w.chapterTitle || '—') + '　知识点：' + (w.kTitle || '—'));
+        lines.push('- 题型：' + WB.typeLabel(w.type) + '　错误次数：' + w.times);
+        if (w.options) w.options.forEach(function (o, oi) { lines.push('  - ' + 'ABCDEF'[oi] + '. ' + WB.plain(o)); });
+        lines.push('- 我的答案：' + WB.plain(WB.myAnswerText(w, w.myAnswer)));
+        lines.push('- 正确答案：' + WB.plain(WB.answerText(w)));
+        if (w.explain) lines.push('- 解析：' + WB.plain(w.explain));
+        lines.push('');
+      });
+      WB.downloadModal('导出错题本', [
+        { icon: '📕', label: '下载为 Markdown', desc: '含题干、选项、我的答案、正确答案与解析',
+          run: function () { WB.download('MediLearn-错题本-' + WB.fmtDate(Date.now()).slice(0, 10) + '.md', lines.join('\n')); WB.toast('已开始下载'); } },
+        { icon: '📋', label: '复制为 Markdown', desc: '直接复制到剪贴板',
+          run: function () { WB.copy(lines.join('\n')); } },
+        { icon: '🖨', label: '打印 / 另存为 PDF', desc: '使用浏览器打印功能', run: function () { window.print(); } }
+      ]);
+    });
+
+    WB.fx.init();
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

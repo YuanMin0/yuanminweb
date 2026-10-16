@@ -7,6 +7,9 @@
 <meta name="description" content="MediLearn 全部科目列表：按关键词搜索知识点，按科目进入章节与练习。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/style.css">
+<!-- 访问门禁：未登录直接跳转登录页（置于 head 内，避免内容闪现） -->
+<script src="js/auth.js"></script>
+<script>if(window.WB&&WB.auth)WB.auth.guard();</script>
 </head>
 <body>
 <header class="hdr" data-hdr></header>

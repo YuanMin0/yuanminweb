@@ -6,8 +6,9 @@
 (function () {
   'use strict';
 
-  var WB = {};
-  window.WB = WB;
+  /* 复用已存在的命名空间（auth.js 可能已在 <head> 中先于本文件加载），
+     不能直接覆盖，否则会丢掉先前挂载的 WB.auth。 */
+  var WB = window.WB || (window.WB = {});
 
   /* ---------------- 数据注册表 ---------------- */
   var _subjects = [];
@@ -225,10 +226,26 @@
         '<nav class="nav" data-nav>' + links + '</nav>' +
         '<div class="hdr-tools">' +
         '<button class="icon-btn" data-theme-btn title="切换主题">☀</button>' +
+        '<button class="icon-btn" data-logout-btn title="退出登录">⏻</button>' +
         '<button class="icon-btn menu-btn" data-menu-btn title="菜单">☰</button>' +
         '</div></div>';
       var mb = hdr.querySelector('[data-menu-btn]'), nav = hdr.querySelector('[data-nav]');
       if (mb) mb.addEventListener('click', function () { nav.classList.toggle('open'); });
+      var lb = hdr.querySelector('[data-logout-btn]');
+      if (lb) lb.addEventListener('click', function () {
+        var days = WB.auth ? WB.auth.daysLeft() : 0;
+        WB.confirm({
+          title: '退出登录',
+          desc: '退出后需要重新输入访问密钥。' +
+            (days ? '（当前登录状态原本还将保持 ' + days + ' 天）' : ''),
+          ok: '退出',
+          cancel: '再想想',
+          onOk: function () {
+            if (WB.auth) WB.auth.logout();
+            location.replace('login.html');
+          }
+        });
+      });
     }
     var ftr = document.querySelector('[data-ftr]');
     if (ftr) {
@@ -452,6 +469,17 @@
     return (a > 0 ? '…' : '') + hay.slice(a, b).replace(/[{}[\]"]/g, ' ').replace(/\s+/g, ' ') + (b < hay.length ? '…' : '');
   }
 
+  /* ---------------- 遮罩显隐 ----------------
+     .mask 默认 opacity:0 / pointer-events:none，必须加上 .on 才可见可点。
+     仅用 requestAnimationFrame 会在 rAF 被节流时（后台标签页、省电模式、
+     打印、部分引擎）导致弹窗永远不显示，故用 setTimeout 兜底。 */
+  function showMask(mask) {
+    var done = false;
+    function on() { if (done) return; done = true; mask.classList.add('on'); }
+    requestAnimationFrame(on);
+    setTimeout(on, 60);
+  }
+
   /* ---------------- 下载选择弹窗 ---------------- */
   WB.downloadModal = function (title, opts) {
     // opts: [{icon, label, desc, run}]
@@ -472,7 +500,37 @@
     mask.querySelector('[data-close]').addEventListener('click', function () { mask.remove(); });
     mask.addEventListener('click', function (e) { if (e.target === mask) mask.remove(); });
     document.body.appendChild(mask);
-    requestAnimationFrame(function () { mask.classList.add('on'); });
+    showMask(mask);
+  };
+
+  /* ---------------- 通用确认弹窗 ---------------- */
+  WB.confirm = function (opts) {
+    opts = opts || {};
+    var mask = document.createElement('div');
+    mask.className = 'mask';
+    mask.innerHTML = '<div class="modal"><h3>' + WB.esc(opts.title || '请确认') + '</h3>' +
+      (opts.desc ? '<p class="small muted">' + WB.esc(opts.desc) + '</p>' : '') +
+      '<div class="mt-3 row" style="justify-content:flex-end">' +
+      '<button class="btn" data-no>' + WB.esc(opts.cancel || '取消') + '</button>' +
+      '<button class="btn btn-primary" data-yes>' + WB.esc(opts.ok || '确定') + '</button>' +
+      '</div></div>';
+    function close() {
+      mask.classList.remove('on');
+      setTimeout(function () { if (mask.parentNode) mask.remove(); }, 260);
+    }
+    mask.querySelector('[data-no]').addEventListener('click', close);
+    mask.querySelector('[data-yes]').addEventListener('click', function () {
+      close();
+      if (opts.onOk) opts.onOk();
+    });
+    mask.addEventListener('click', function (e) { if (e.target === mask) close(); });
+    document.addEventListener('keydown', function esc(e) {
+      if (e.key === 'Escape') { close(); document.removeEventListener('keydown', esc); }
+    });
+    document.body.appendChild(mask);
+    showMask(mask);
+    var y = mask.querySelector('[data-yes]');
+    if (y) y.focus();
   };
 
   /* ---------------- 面包屑 ---------------- */

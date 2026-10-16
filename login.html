@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>访问验证 · MediLearn 医学学习站</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<script>
+/* 首屏防闪：尽早套用已保存主题（与全站使用同一存储键） */
+(function () {
+  try {
+    var t = localStorage.getItem('medilearn.theme');
+    if (t !== 'dark' && t !== 'light') t = 'light';
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+})();
+</script>
+<script src="js/auth.js"></script>
+<style>
+/* ==========================================================================
+   登录页专属样式（仅本页使用）
+   ========================================================================== */
+.lg-body {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 28px 18px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ---------- 粒子画布 ---------- */
+#ptc {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none; opacity: .55;
+}
+
+/* ---------- 舞台 ---------- */
+.lg-stage {
+  position: relative; z-index: 2;
+  width: 100%; max-width: 430px;
+  animation: lgEnter .82s cubic-bezier(.16, 1, .3, 1) both;
+}
+@keyframes lgEnter {
+  from { opacity: 0; transform: translateY(30px) scale(.965); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- 玻璃卡片 ---------- */
+.lg-card {
+  position: relative;
+  padding: 38px 34px 30px;
+  border-radius: var(--r-xl);
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border-2) 70%, transparent);
+  box-shadow:
+    0 28px 70px -18px rgba(15, 23, 42, .28),
+    0 2px 10px rgba(15, 23, 42, .05),
+    inset 0 1px 0 rgba(255, 255, 255, .55);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  backdrop-filter: blur(22px) saturate(160%);
+  transition: transform .32s var(--ease), box-shadow .32s var(--ease);
+  will-change: transform;
+  overflow: hidden;
+}
+html[data-theme="dark"] .lg-card {
+  background: color-mix(in srgb, #0f1729 76%, transparent);
+  border-color: #2a3550;
+  box-shadow:
+    0 28px 70px -18px rgba(0, 0, 0, .62),
+    0 2px 10px rgba(0, 0, 0, .3),
+    inset 0 1px 0 rgba(255, 255, 255, .07);
+}
+.lg-card:hover {
+  box-shadow:
+    0 34px 84px -18px rgba(15, 23, 42, .34),
+    0 2px 10px rgba(15, 23, 42, .05),
+    inset 0 1px 0 rgba(255, 255, 255, .6);
+}
+/* 卡片顶部流光 */
+.lg-card::before {
+  content: ''; position: absolute; inset: 0 0 auto; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--brand), var(--teal), var(--violet), transparent);
+  background-size: 220% 100%;
+  animation: lgFlow 5.5s linear infinite;
+  opacity: .85;
+}
+@keyframes lgFlow { from { background-position: 220% 0; } to { background-position: -220% 0; } }
+
+/* 鼠标光斑 */
+.lg-card.spot::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--brand) 14%, transparent), transparent 62%);
+  opacity: 0; transition: opacity .34s var(--ease);
+}
+.lg-card.spot:hover::after { opacity: 1; }
+
+/* ---------- 品牌 ---------- */
+.lg-brand { display: flex; align-items: center; gap: 13px; margin-bottom: 26px; }
+.lg-logo {
+  width: 48px; height: 48px; flex: none;
+  border-radius: 15px;
+  display: grid; place-items: center;
+  font-size: 25px; font-weight: 700; color: #fff;
+  background: linear-gradient(140deg, var(--brand), var(--teal));
+  box-shadow: 0 10px 26px -8px color-mix(in srgb, var(--brand) 62%, transparent);
+  animation: lgPulse 3.4s ease-in-out infinite;
+}
+@keyframes lgPulse {
+  0%, 100% { box-shadow: 0 10px 26px -8px color-mix(in srgb, var(--brand) 62%, transparent); }
+  50%      { box-shadow: 0 12px 34px -6px color-mix(in srgb, var(--brand) 85%, transparent); }
+}
+.lg-name { font-size: 19px; font-weight: 800; letter-spacing: -.3px; line-height: 1.2; }
+.lg-sub  { font-size: 12.5px; color: var(--text-3); margin-top: 2px; letter-spacing: .4px; }
+
+/* ---------- 标题 ---------- */
+.lg-title {
+  font-size: 27px; font-weight: 800; letter-spacing: -.5px;
+  margin: 0 0 9px; line-height: 1.25;
+}
+.lg-lead { font-size: 14px; color: var(--text-2); margin: 0 0 24px; line-height: 1.7; }
+.lg-lead b { color: var(--brand); }
+
+/* ---------- 输入框 ---------- */
+.lg-field {
+  position: relative; display: flex; align-items: center; gap: 11px;
+  padding: 0 14px; height: 56px;
+  border-radius: var(--r-md);
+  background: color-mix(in srgb, var(--surface-2) 88%, transparent);
+  border: 1.5px solid var(--border-2);
+  transition: border-color .24s var(--ease), box-shadow .24s var(--ease),
+              background .24s var(--ease), transform .24s var(--ease);
+}
+.lg-field:focus-within {
+  border-color: var(--brand);
+  background: var(--surface);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 15%, transparent);
+  transform: translateY(-1px);
+}
+.lg-field .lg-ico { font-size: 17px; opacity: .5; flex: none; transition: opacity .24s, transform .24s; }
+.lg-field:focus-within .lg-ico { opacity: 1; transform: scale(1.08); }
+.lg-field input {
+  flex: 1; min-width: 0; height: 100%;
+  border: 0; outline: 0; background: transparent;
+  font-size: 16px; color: var(--text); font-family: var(--font);
+  letter-spacing: .6px;
+}
+.lg-field input::placeholder { color: var(--text-3); letter-spacing: 0; }
+.lg-field input::-ms-reveal,
+.lg-field input::-ms-clear { display: none; }
+
+.lg-eye {
+  flex: none; width: 34px; height: 34px; border: 0; border-radius: 9px;
+  background: transparent; color: var(--text-3);
+  font-size: 15px; cursor: pointer; display: grid; place-items: center;
+  transition: background .2s, color .2s, transform .2s;
+}
+.lg-eye:hover { background: var(--surface-3); color: var(--text); transform: scale(1.06); }
+.lg-eye:active { transform: scale(.94); }
+
+/* 错误抖动 */
+.lg-shake { animation: lgShake .46s cubic-bezier(.36, .07, .19, .97) both; }
+@keyframes lgShake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-7px); }
+  40%, 60% { transform: translateX(7px); }
+}
+.lg-field.is-bad {
+  border-color: var(--bad);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--bad) 14%, transparent);
+}
+.lg-field.is-ok {
+  border-color: var(--ok);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 15%, transparent);
+}
+
+/* ---------- 提示区 ---------- */
+.lg-hint {
+  min-height: 22px; margin: 11px 2px 15px;
+  font-size: 13px; line-height: 1.55;
+  display: flex; align-items: center; gap: 7px;
+  opacity: 0; transform: translateY(-4px);
+  transition: opacity .26s var(--ease), transform .26s var(--ease);
+}
+.lg-hint.show { opacity: 1; transform: none; }
+.lg-hint.bad  { color: var(--bad); }
+.lg-hint.warn { color: var(--amber); }
+.lg-hint.ok   { color: var(--ok); }
+
+/* ---------- 提交按钮 ---------- */
+#submit { height: 54px; font-size: 15.5px; }
+#submit[disabled] { opacity: .55; cursor: not-allowed; transform: none !important; }
+.lg-spin {
+  width: 15px; height: 15px; flex: none;
+  border: 2px solid rgba(255, 255, 255, .4);
+  border-top-color: #fff; border-radius: 50%;
+  animation: lgSpin .62s linear infinite;
+}
+@keyframes lgSpin { to { transform: rotate(360deg); } }
+
+/* ---------- 尝试次数圆点 ---------- */
+.lg-dots {
+  display: flex; align-items: center; justify-content: center;
+  gap: 9px; margin-top: 22px;
+}
+.lg-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--border-2);
+  transition: background .3s var(--ease), transform .3s var(--ease), box-shadow .3s;
+}
+.lg-dot.used { background: var(--bad); transform: scale(1.18); box-shadow: 0 0 0 3px color-mix(in srgb, var(--bad) 18%, transparent); }
+.lg-dots-label { font-size: 11.5px; color: var(--text-3); margin-left: 5px; letter-spacing: .3px; }
+
+/* ---------- 锁定倒计时环 ---------- */
+.lg-lock {
+  display: none; align-items: center; gap: 14px;
+  margin-top: 20px; padding: 14px 16px;
+  border-radius: var(--r-md);
+  background: color-mix(in srgb, var(--bad) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--bad) 24%, transparent);
+}
+.lg-lock.show { display: flex; animation: lgEnter .4s ease both; }
+.lg-ring { position: relative; width: 46px; height: 46px; flex: none; }
+.lg-ring svg { transform: rotate(-90deg); }
+.lg-ring circle { fill: none; stroke-width: 4; stroke-linecap: round; }
+.lg-ring .bg { stroke: color-mix(in srgb, var(--bad) 20%, transparent); }
+.lg-ring .fg {
+  stroke: var(--bad);
+  transition: stroke-dashoffset 1s linear;
+}
+.lg-ring-txt {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-size: 13px; font-weight: 700; color: var(--bad);
+  font-variant-numeric: tabular-nums;
+}
+.lg-lock-t { font-size: 13px; line-height: 1.6; color: var(--text-2); }
+.lg-lock-t b { color: var(--bad); }
+
+/* ---------- 页脚 ---------- */
+.lg-foot {
+  margin-top: 22px; text-align: center;
+  font-size: 11.5px; color: var(--text-3); line-height: 1.85;
+}
+.lg-foot a { color: var(--text-3); text-decoration: underline; text-underline-offset: 2px; }
+.lg-foot a:hover { color: var(--brand); }
+
+/* ---------- 右上角工具 ---------- */
+.lg-tools { position: fixed; top: 16px; right: 16px; z-index: 5; display: flex; gap: 9px; }
+
+/* ---------- 成功遮罩 ---------- */
+.lg-done {
+  position: fixed; inset: 0; z-index: 40;
+  display: none; place-items: center;
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
+.lg-done.show { display: grid; animation: lgEnter .4s ease both; }
+.lg-done-inner { text-align: center; }
+.lg-check {
+  width: 92px; height: 92px; margin: 0 auto 20px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background: color-mix(in srgb, var(--ok) 13%, transparent);
+  border: 2px solid color-mix(in srgb, var(--ok) 40%, transparent);
+  animation: lgPop .5s cubic-bezier(.16, 1.3, .3, 1) both;
+}
+@keyframes lgPop { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
+.lg-check svg { width: 44px; height: 44px; }
+.lg-check path {
+  fill: none; stroke: var(--ok); stroke-width: 6;
+  stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 60; stroke-dashoffset: 60;
+  animation: lgDraw .52s .16s var(--ease) forwards;
+}
+@keyframes lgDraw { to { stroke-dashoffset: 0; } }
+.lg-done-t { font-size: 19px; font-weight: 800; letter-spacing: -.3px; }
+.lg-done-d { font-size: 13px; color: var(--text-2); margin-top: 7px; }
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 460px) {
+  .lg-card { padding: 30px 22px 24px; border-radius: var(--r-lg); }
+  .lg-title { font-size: 23px; }
+  .lg-logo { width: 42px; height: 42px; font-size: 22px; border-radius: 13px; }
+}
+
+/* ---------- 降低动态效果 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .lg-stage, .lg-card::before, .lg-logo, .lg-check, .lg-check path { animation: none !important; }
+  .lg-check path { stroke-dashoffset: 0; }
+  .lg-shake { animation: none !important; }
+  #ptc { display: none; }
+}
+</style>
+</head>
+<body class="lg-body">
+
+<canvas id="ptc" aria-hidden="true"></canvas>
+
+<div class="lg-tools">
+  <button class="gbtn gbtn-sm" id="themeBtn" type="button" title="切换主题">☀</button>
+</div>
+
+<main class="lg-stage">
+  <div class="lg-card spot" id="card" data-tilt="5">
+
+    <div class="lg-brand">
+      <div class="lg-logo">+</div>
+      <div>
+        <div class="lg-name">MediLearn</div>
+        <div class="lg-sub">医学学习站 · 私人空间</div>
+      </div>
+    </div>
+
+    <h1 class="lg-title"><span class="grad-anim">访问验证</span></h1>
+    <p class="lg-lead">本站为私人学习空间，请输入<b>访问密钥</b>后进入。</p>
+
+    <form id="form" autocomplete="off" novalidate>
+      <label class="lg-field" id="field">
+        <span class="lg-ico">🔑</span>
+        <input type="password" id="key" placeholder="请输入访问密钥"
+               autocomplete="off" autocapitalize="off" autocorrect="off"
+               spellcheck="false" aria-label="访问密钥">
+        <button type="button" class="lg-eye" id="eye" aria-label="显示密钥">👁</button>
+      </label>
+
+      <div class="lg-hint" id="hint" role="status" aria-live="polite"></div>
+
+      <button type="submit" class="gbtn gbtn-primary gbtn-lg gbtn-block" id="submit">
+        <span class="gbtn-ico">→</span> 进入学习站
+      </button>
+    </form>
+
+    <div class="lg-dots" id="dots"></div>
+
+    <div class="lg-lock" id="lock">
+      <div class="lg-ring">
+        <svg width="46" height="46" viewBox="0 0 46 46">
+          <circle class="bg" cx="23" cy="23" r="19"></circle>
+          <circle class="fg" id="ringFg" cx="23" cy="23" r="19"></circle>
+        </svg>
+        <div class="lg-ring-txt" id="ringTxt">60</div>
+      </div>
+      <div class="lg-lock-t">
+        尝试次数过多，已暂时锁定。<br>
+        请等待 <b id="lockLeft">60</b> 秒后再试。
+      </div>
+    </div>
+  </div>
+
+  <div class="lg-foot">
+    密钥仅保存在你的浏览器本地 · 本站不收集任何信息<br>
+    <a href="#" id="forgot">忘记密钥？</a>
+  </div>
+</main>
+
+<div class="lg-done" id="done">
+  <div class="lg-done-inner">
+    <div class="lg-check">
+      <svg viewBox="0 0 52 52"><path d="M14 27l8 8 16-17"></path></svg>
+    </div>
+    <div class="lg-done-t">验证通过</div>
+    <div class="lg-done-d" id="doneDesc">正在进入学习站…</div>
+  </div>
+</div>
+
+<script src="js/fx.js"></script>
+<script>
+(function () {
+  'use strict';
+  var A = WB.auth;
+
+  var form   = document.getElementById('form');
+  var field  = document.getElementById('field');
+  var input  = document.getElementById('key');
+  var eye    = document.getElementById('eye');
+  var submit = document.getElementById('submit');
+  var hint   = document.getElementById('hint');
+  var dots   = document.getElementById('dots');
+  var lockBox= document.getElementById('lock');
+  var lockLeft=document.getElementById('lockLeft');
+  var ringFg = document.getElementById('ringFg');
+  var ringTxt= document.getElementById('ringTxt');
+  var done   = document.getElementById('done');
+  var doneDesc=document.getElementById('doneDesc');
+
+  var REDUCE = false;
+  try { REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+  /* ---------- 已登录则直接放行 ---------- */
+  if (A.isAuthed()) {
+    location.replace(A.nextTarget());
+    return;
+  }
+
+  /* ---------- 特效层 ---------- */
+  try {
+    WB.fx.aurora();
+    WB.fx.spotlight(document);
+    WB.fx.ripple(document);
+    WB.fx.tilt(document);
+  } catch (e) {}
+
+  /* ---------- 粒子背景 ---------- */
+  (function particles() {
+    if (REDUCE) return;
+    var cv = document.getElementById('ptc');
+    var ctx = cv.getContext('2d');
+    var dots2 = [], raf = 0, W = 0, H = 0;
+
+    function resize() {
+      W = cv.width = innerWidth;
+      H = cv.height = innerHeight;
+    }
+    function seed() {
+      var n = Math.min(64, Math.round(innerWidth / 22));
+      dots2 = [];
+      for (var i = 0; i < n; i++) {
+        dots2.push({
+          x: Math.random() * W, y: Math.random() * H,
+          vx: (Math.random() - .5) * .34,
+          vy: (Math.random() - .5) * .34,
+          r: .9 + Math.random() * 1.9
+        });
+      }
+    }
+    function color() {
+      var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      return dark ? '180,205,255' : '37,99,235';
+    }
+    var C = color();
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < dots2.length; i++) {
+        var d = dots2[i];
+        d.x += d.vx; d.y += d.vy;
+        if (d.x < 0 || d.x > W) d.vx *= -1;
+        if (d.y < 0 || d.y > H) d.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.r, 0, 6.2832);
+        ctx.fillStyle = 'rgba(' + C + ',.5)';
+        ctx.fill();
+        /* 近邻连线 */
+        for (var j = i + 1; j < dots2.length; j++) {
+          var e = dots2[j];
+          var dx = d.x - e.x, dy = d.y - e.y;
+          var dist = dx * dx + dy * dy;
+          if (dist < 15000) {
+            ctx.beginPath();
+            ctx.moveTo(d.x, d.y); ctx.lineTo(e.x, e.y);
+            ctx.strokeStyle = 'rgba(' + C + ',' + (.2 * (1 - dist / 15000)).toFixed(3) + ')';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+      raf = requestAnimationFrame(draw);
+    }
+    resize(); seed(); draw();
+    addEventListener('resize', function () { resize(); seed(); });
+    /* 主题切换后重取颜色 */
+    document.getElementById('themeBtn').addEventListener('click', function () { C = color(); });
+  })();
+
+  /* ---------- 主题切换 ---------- */
+  var tb = document.getElementById('themeBtn');
+  function syncThemeBtn() {
+    tb.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☾' : '☀';
+  }
+  syncThemeBtn();
+  tb.addEventListener('click', function () {
+    var t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    try { localStorage.setItem('medilearn.theme', t); } catch (e) {}
+    syncThemeBtn();
+  });
+
+  /* ---------- 提示 ---------- */
+  var hintTimer = 0;
+  function say(msg, kind) {
+    clearTimeout(hintTimer);
+    hint.className = 'lg-hint show ' + (kind || '');
+    hint.textContent = msg;
+    if (kind !== 'bad' && kind !== 'warn') {
+      hintTimer = setTimeout(function () { hint.className = 'lg-hint'; }, 4200);
+    }
+  }
+  function clearSay() { hint.className = 'lg-hint'; hint.textContent = ''; }
+
+  /* ---------- 尝试圆点 ---------- */
+  function drawDots() {
+    var left = A.triesLeft();
+    var html = '';
+    for (var i = 0; i < 5; i++) {
+      html += '<span class="lg-dot' + (i < (5 - left) ? ' used' : '') + '"></span>';
+    }
+    if (left < 5) html += '<span class="lg-dots-label">剩余 ' + left + ' 次</span>';
+    dots.innerHTML = html;
+  }
+  drawDots();
+
+  /* ---------- 锁定倒计时 ---------- */
+  var RING_LEN = 2 * Math.PI * 19;
+  ringFg.style.strokeDasharray = RING_LEN;
+  var lockTimer = 0;
+  function startLock(sec) {
+    var total = sec, left = sec;
+    lockBox.classList.add('show');
+    submit.disabled = true;
+    input.disabled = true;
+    clearSay();
+    tick();
+    function tick() {
+      lockLeft.textContent = left;
+      ringTxt.textContent = left;
+      ringFg.style.strokeDashoffset = (RING_LEN * (1 - left / total)).toFixed(2);
+      if (left <= 0) { endLock(); return; }
+      left--;
+      lockTimer = setTimeout(tick, 1000);
+    }
+  }
+  function endLock() {
+    clearTimeout(lockTimer);
+    lockBox.classList.remove('show');
+    submit.disabled = false;
+    input.disabled = false;
+    input.focus();
+    say('锁定已解除，可以重新输入密钥。', 'warn');
+    drawDots();
+  }
+  if (A.lockLeft() > 0) startLock(A.lockLeft());
+
+  /* ---------- 显示 / 隐藏密钥 ---------- */
+  eye.addEventListener('click', function () {
+    var show = input.type === 'password';
+    input.type = show ? 'text' : 'password';
+    eye.textContent = show ? '🙈' : '👁';
+    eye.setAttribute('aria-label', show ? '隐藏密钥' : '显示密钥');
+    input.focus();
+  });
+
+  /* ---------- 大写锁定提醒 ---------- */
+  input.addEventListener('keyup', function (e) {
+    if (e.getModifierState && e.getModifierState('CapsLock')) {
+      say('已开启大写锁定（Caps Lock）', 'warn');
+    }
+  });
+
+  /* ---------- 提交 ---------- */
+  var busy = false;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (busy || submit.disabled) return;
+
+    var v = input.value;
+    if (!v) {
+      bad('请先输入访问密钥');
+      input.focus();
+      return;
+    }
+    if (A.lockLeft() > 0) { startLock(A.lockLeft()); return; }
+
+    busy = true;
+    submit.innerHTML = '<span class="lg-spin"></span> 验证中…';
+
+    /* 轻微延迟，让「验证中」有反馈感，同时避免时序抖动 */
+    setTimeout(function () {
+      var r = A.verify(v);
+      busy = false;
+      submit.innerHTML = '<span class="gbtn-ico">→</span> 进入学习站';
+
+      if (r.ok) { success(); return; }
+
+      if (r.reason === 'locked') {
+        field.classList.remove('is-bad', 'lg-shake');
+        startLock(r.lock || 60);
+        return;
+      }
+      bad('密钥不正确，请检查后重试（还可尝试 ' + r.left + ' 次）');
+      drawDots();
+      input.select();
+    }, 380);
+  });
+
+  function bad(msg) {
+    say(msg, 'bad');
+    field.classList.remove('lg-shake');
+    void field.offsetWidth;           /* 强制重排以重启动画 */
+    field.classList.add('lg-shake', 'is-bad');
+    setTimeout(function () { field.classList.remove('is-bad'); }, 1400);
+  }
+
+  /* ---------- 成功 ---------- */
+  function success() {
+    field.classList.add('is-ok');
+    clearSay();
+    doneDesc.textContent = '正在进入学习站…';
+    done.classList.add('show');
+    try { WB.fx.confetti(90); } catch (e) {}
+
+    var target = A.nextTarget();
+    setTimeout(function () { location.replace(target); }, REDUCE ? 260 : 1050);
+  }
+
+  /* ---------- 忘记密钥 ---------- */
+  document.getElementById('forgot').addEventListener('click', function (e) {
+    e.preventDefault();
+    say('密钥由站点所有者设定。若忘记，请联系站点所有者，或在源码 js/auth.js 中更换新密钥。', 'warn');
+  });
+
+  /* ---------- 自动聚焦 ---------- */
+  if (!submit.disabled) setTimeout(function () { input.focus(); }, 420);
+})();
+</script>
+</body>
+</html>

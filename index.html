@@ -7,6 +7,9 @@
 <meta name="description" content="MediLearn 医学学习站：医学英语、医学伦理学、医学大数据、医学统计学、药理学、习近平新时代中国特色社会主义思想概论，支持知识点浏览、在线刷题与讲义下载。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/style.css">
+<!-- 访问门禁：未登录直接跳转登录页（置于 head 内，避免内容闪现） -->
+<script src="js/auth.js"></script>
+<script>if(window.WB&&WB.auth)WB.auth.guard();</script>
 </head>
 <body>
 <header class="hdr" data-hdr></header>
@@ -17,7 +20,7 @@
     <!-- ============ HERO ============ -->
     <section class="hero hero-fx rv" id="hero">
       <span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span>
-      <div class="hero-tag"><span class="badge-dot"></span><span data-tw>期末复习 · 全站离线可用 · 无需登录</span></div>
+      <div class="hero-tag"><span class="badge-dot"></span><span data-tw>期末复习 · 全站离线可用 · 私人空间</span></div>
       <h1><span class="grad-anim">MediLearn</span> 医学学习站</h1>
       <p class="lead">
         把「知识点浏览 → 在线刷题 → 错题回顾 → 讲义下载」串成一条闭环。
@@ -172,7 +175,7 @@
   /* ---------- 启动特效 ---------- */
   WB.fx.init();
   WB.fx.typewriter(document.querySelector('[data-tw]'),
-    ['期末复习 · 全站离线可用 · 无需登录', '知识点 · 刷题 · 错题本 · 讲义下载'], { speed: 46, pause: 2400 });
+    ['期末复习 · 全站离线可用 · 私人空间', '知识点 · 刷题 · 错题本 · 讲义下载'], { speed: 46, pause: 2400 });
 })();
 </script>
 </body>

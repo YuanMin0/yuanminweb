@@ -666,6 +666,28 @@ html[data-theme="dark"] .gbtn {
               inset 0 1px 0 rgba(255, 255, 255, .42);
 }
 .gbtn-primary:hover { color: #fff; border-color: var(--brand-ink); }
+/* 深色模式必须显式覆盖：上面 html[data-theme="dark"] .gbtn（0,2,1）
+   的特异性高于 .gbtn-primary（0,1,0），若不覆盖，主按钮会退化成普通玻璃按钮，
+   全站的主按钮都会失去品牌色。深色下 --brand 为浅蓝，故用深色文字保证对比度。 */
+html[data-theme="dark"] .gbtn-primary {
+  border-color: color-mix(in srgb, var(--brand) 58%, transparent);
+  background: linear-gradient(135deg, var(--brand), var(--brand-ink));
+  color: #0b1220;
+  box-shadow: 0 14px 34px -10px color-mix(in srgb, var(--brand) 58%, transparent),
+              inset 0 1px 0 rgba(255, 255, 255, .5);
+}
+html[data-theme="dark"] .gbtn-primary:hover {
+  border-color: var(--brand-ink);
+  background: linear-gradient(135deg, var(--brand-ink), var(--brand));
+  color: #0b1220;
+}
+html[data-theme="dark"] .gbtn-accent {
+  border-color: color-mix(in srgb, var(--accent, var(--brand)) 46%, transparent);
+  background: linear-gradient(135deg,
+      color-mix(in srgb, var(--accent, var(--brand)) 26%, transparent),
+      color-mix(in srgb, var(--accent, var(--brand)) 12%, transparent));
+  color: var(--accent, var(--brand));
+}
 .gbtn-accent {
   border-color: color-mix(in srgb, var(--accent, var(--brand)) 58%, transparent);
   background: linear-gradient(135deg,

@@ -7,6 +7,9 @@
 <meta name="description" content="关于 MediLearn 医学学习站：站点结构、功能说明、数据来源、部署方法与使用建议。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/style.css">
+<!-- 访问门禁：未登录直接跳转登录页（置于 head 内，避免内容闪现） -->
+<script src="js/auth.js"></script>
+<script>if(window.WB&&WB.auth)WB.auth.guard();</script>
 </head>
 <body>
 <header class="hdr" data-hdr></header>
@@ -126,6 +129,7 @@
   }).join('');
 
   document.getElementById('pages').innerHTML = [
+    ['🔒', '访问验证 login.html', '密钥登录、粒子背景、玻璃卡片、失败抖动与锁定倒计时'],
     ['◈', '总览 index.html', '全站统计、快捷入口、科目卡片与学习进度环'],
     ['▤', '科目列表 subjects.html', '全部科目卡片 + 全站知识点搜索（按 / 快速聚焦搜索框）'],
     ['▦', '科目详情 subject.html', '章节手风琴、知识点列表、标记已学、下载全册讲义'],
@@ -154,6 +158,8 @@
   });
 
   var faqs = [
+    ['登录密钥安全吗？', '本站是纯静态站点，没有服务端，因此登录属于「前端门禁」：能挡住随手点进来的访客，但懂技术的人查看源码可以绕过。它适合用来做私人学习空间的门槛，不等同于真正的账号密码安全。源码中只保存密钥的 SHA-256 哈希，不保存明文。'],
+    ['怎么更换登录密钥？', '打开 js/auth.js，在控制台执行 WB.auth.sha256(\'新密钥\') 得到哈希，把 CFG.HASH 的值换成它即可。登录状态记住天数（DAYS）、锁定阈值（MAX_FAIL）与锁定时长（LOCK_SEC）也在同一处配置。详见 README 的「访问门禁」章节。'],
     ['进度会同步到其他设备吗？', '不会。所有数据都保存在当前浏览器的 localStorage 中，站点不连接任何后端服务，因此换设备或换浏览器后进度是独立的。'],
     ['为什么富文本只支持加粗和行内代码？', '为了保证渲染安全与样式统一。任意 HTML 会被转义，避免破坏版面或引入不可控样式。'],
     ['可以离线使用吗？', '可以。站点没有构建步骤、没有外部依赖，把整个目录拷到 U 盘，直接打开 index.html 即可使用（除打印外全部功能可用）。'],

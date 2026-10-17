@@ -274,7 +274,7 @@
       var st = WB.stats();
       ftr.innerHTML =
         '<div class="wrap ftr-in">' +
-        '<div>MediLearn · 医学学习站 · 纯静态站点，可离线使用</div>' +
+        '<div>MediLearn · 医学学习站</div>' +
         '<div class="ftr-author">作者 <b>元泯</b> · ' +
           '<a href="mailto:1959940664@qq.com" title="给作者发邮件">1959940664@qq.com</a></div>' +
         '<div class="small">' + st.subjects + ' 个科目 · ' + st.knowledge + ' 个知识点 · ' + st.quiz + ' 道题</div>' +

@@ -2,9 +2,9 @@
 <html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>关于 · MediLearn</title>
-<meta name="description" content="关于 MediLearn 医学学习站：站点结构、功能说明、数据来源、部署方法与使用建议。">
+<meta name="description" content="关于 MediLearn 医学学习站：站点数据统计与各科目资料来源。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/style.css">
 <!-- 访问门禁：未登录直接跳转登录页（置于 head 内，避免内容闪现） -->
@@ -12,6 +12,13 @@
 <script>if(window.WB&&WB.auth)WB.auth.guard();</script>
 </head>
 <body>
+<noscript>
+<div style="max-width:600px;margin:64px auto;padding:24px 26px;border:1px solid #e3e8f0;border-radius:16px;background:#fff;color:#0f172a;font:15px/1.85 -apple-system,'PingFang SC','Microsoft YaHei',sans-serif">
+  <b style="font-size:17px">需要启用 JavaScript</b>
+  <p style="margin:8px 0 0;color:#475569">本站是纯前端站点，内容与练习均由浏览器脚本渲染。请在浏览器设置中开启 JavaScript 后刷新页面。</p>
+</div>
+</noscript>
+
 <header class="hdr" data-hdr></header>
 
 <main class="page">
@@ -32,63 +39,31 @@
     </section>
 
     <section class="mt-4">
-      <div class="sec-head rv"><div><h2>站点数据</h2><div class="sub">实时统计</div></div></div>
-      <div class="stats" id="stats"></div>
+      <div class="author-card spot rv">
+        <div class="author-av">元</div>
+        <div class="author-main">
+          <div class="author-name">元泯</div>
+          <div class="author-role">作者 · 内容整理与前端实现</div>
+          <p class="author-desc">
+            课程资料的整理者，也是这个站点的开发者。知识点来自课堂讲义与教材的逐条比对，
+            题目与解析为配套自测而编写。发现内容有误、或有想补充的科目，欢迎来信。
+          </p>
+          <div class="author-links">
+            <a class="gbtn gbtn-sm gbtn-primary" href="mailto:1959940664@qq.com"><span class="gbtn-ico">✉</span> 1959940664@qq.com</a>
+            <a class="gbtn gbtn-sm" href="subjects.html">去看看科目</a>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="mt-4">
-      <div class="sec-head rv"><div><h2>功能说明</h2><div class="sub">每个页面做什么</div></div></div>
-      <div class="tiles" id="pages"></div>
-    </section>
-
-    <section class="mt-4 rv">
-      <div class="sec-head"><div><h2>内容组织方式</h2><div class="sub">知识点由「内容块」拼装，保证结构统一</div></div></div>
-      <div class="card card-pad spot" style="--accent:var(--brand)">
-        <div class="blk-table">
-          <table>
-            <thead><tr><th>内容块</th><th>用途</th><th>示例场景</th></tr></thead>
-            <tbody>
-              <tr><td><code>table</code></td><td>对比、分类、清单</td><td>前缀对照表、两类错误对照表</td></tr>
-              <tr><td><code>note</code></td><td>重点 / 提示 / 警示</td><td>「必考」「易错」「记忆点」</td></tr>
-              <tr><td><code>terms</code></td><td>术语卡片网格</td><td>英文词根、化学结构名称</td></tr>
-              <tr><td><code>kv</code></td><td>键值对照行</td><td>缩写对照、参数取值</td></tr>
-              <tr><td><code>list</code></td><td>有序 / 无序列表</td><td>操作步骤、构成要素</td></tr>
-              <tr><td><code>code</code></td><td>等宽公式块</td><td>统计公式、SPSS 操作</td></tr>
-              <tr><td><code>quote</code></td><td>引用 / 口诀</td><td>记忆口诀、名人论断</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="small muted mb-0">
-          富文本仅支持 <code>**加粗**</code>、<code>[[行内代码]]</code> 与 <code>&lt;br&gt;</code>，
-          其余标签会被转义显示，避免出现样式失控。
-        </p>
-      </div>
+      <div class="sec-head rv"><div><h2>站点数据</h2><div class="sub">实时统计</div></div></div>
+      <div class="stats" id="stats"></div>
     </section>
 
     <section class="mt-4 rv">
       <div class="sec-head"><div><h2>数据来源</h2><div class="sub">知识点均来自本人课程资料，未编造数值与条文</div></div></div>
       <div class="acc" id="srcList"></div>
-    </section>
-
-    <section class="mt-4 rv">
-      <div class="sec-head"><div><h2>部署到 GitHub + Cloudflare Pages</h2><div class="sub">三步上线，零成本</div></div></div>
-      <div class="card card-pad spot" style="--accent:var(--teal)">
-        <ol style="margin:0;padding-left:20px;line-height:1.9">
-          <li>把 <code>medilearn</code> 目录推到 GitHub 仓库（分支 <code>main</code>）。</li>
-          <li>登录 Cloudflare Dashboard → <b>Workers &amp; Pages</b> → <b>Create</b> → <b>Pages</b> → <b>Connect to Git</b>，选择该仓库。</li>
-          <li>构建设置留空（<b>Build command</b> 不填、<b>Build output directory</b> 填 <code>/</code> 或 <code>.</code>），点击 <b>Save and Deploy</b>。</li>
-        </ol>
-        <div class="note note-info mt-3 mb-0">
-          <div class="note-t">ℹ 本地预览</div>
-          站点无构建步骤，直接双击 <code>index.html</code> 即可打开。若浏览器对本地文件有限制，
-          在该目录执行 <code>python -m http.server 8080</code>，再访问 <code>http://localhost:8080</code>。
-        </div>
-      </div>
-    </section>
-
-    <section class="mt-4 rv">
-      <div class="sec-head"><div><h2>常见问题</h2><div class="sub">FAQ</div></div></div>
-      <div class="acc" id="faq"></div>
     </section>
 
     <section class="mt-4 rv">
@@ -114,7 +89,12 @@
 <script src="data/bigdata.js"></script>
 <script src="data/statistics.js"></script>
 <script src="data/pharmacology.js"></script>
-<script src="data/medical-english.js"></script>
+<script src="data/respiratory.js"></script>
+<script src="data/cardiology.js"></script>
+<script src="data/hematology.js"></script>
+<script src="data/endocrinology.js"></script>
+<script src="data/diagnostics.js"></script>
+<script src="data/surgery.js"></script>
 <script src="js/fx.js"></script>
 <script>
 (function () {
@@ -126,21 +106,6 @@
     [WB.store.wrongList().length, '错题本'], [WB.subjects().reduce(function (a, s) { return a + (s.cheatsheet || []).length; }, 0), '速查模块']
   ].map(function (p) {
     return '<div class="stat spot rv" style="--accent:var(--teal)"><div class="stat-n"><span data-count="' + p[0] + '">0</span></div><div class="stat-l">' + p[1] + '</div></div>';
-  }).join('');
-
-  document.getElementById('pages').innerHTML = [
-    ['🔒', '访问验证 login.html', '密钥登录、粒子背景、玻璃卡片、失败抖动与锁定倒计时'],
-    ['◈', '总览 index.html', '全站统计、快捷入口、科目卡片与学习进度环'],
-    ['▤', '科目列表 subjects.html', '全部科目卡片 + 全站知识点搜索（按 / 快速聚焦搜索框）'],
-    ['▦', '科目详情 subject.html', '章节手风琴、知识点列表、标记已学、下载全册讲义'],
-    ['📖', '知识点 knowledge.html', '正文渲染、右侧目录高亮、上/下条切换、下载与打印'],
-    ['◉', '在线练习 quiz.html', '四种题型、即时解析、进度条与计时、结果页与彩带庆祝'],
-    ['✦', '错题本 wrongbook.html', '按科目筛选、查看解析、重做、移除、导出 Markdown'],
-    ['◐', '关于 about.html', '站点说明、数据来源、部署方法与 FAQ']
-  ].map(function (p, i) {
-    return '<div class="tile spot rv rv-d' + ((i % 3) + 1) + '" style="--accent:var(--brand);cursor:default">' +
-      '<div class="tile-ico">' + p[0] + '</div><div style="min-width:0">' +
-      '<div class="tile-t">' + p[1] + '</div><div class="tile-d">' + p[2] + '</div></div></div>';
   }).join('');
 
   document.getElementById('srcList').innerHTML = WB.subjects().map(function (s, i) {
@@ -157,29 +122,16 @@
     var hd = e.target.closest('.chapter-hd'); if (hd) hd.parentNode.classList.toggle('open');
   });
 
-  var faqs = [
-    ['登录密钥安全吗？', '本站是纯静态站点，没有服务端，因此登录属于「前端门禁」：能挡住随手点进来的访客，但懂技术的人查看源码可以绕过。它适合用来做私人学习空间的门槛，不等同于真正的账号密码安全。源码中只保存密钥的 SHA-256 哈希，不保存明文。'],
-    ['怎么更换登录密钥？', '打开 js/auth.js，在控制台执行 WB.auth.sha256(\'新密钥\') 得到哈希，把 CFG.HASH 的值换成它即可。登录状态记住天数（DAYS）、锁定阈值（MAX_FAIL）与锁定时长（LOCK_SEC）也在同一处配置。详见 README 的「访问门禁」章节。'],
-    ['进度会同步到其他设备吗？', '不会。所有数据都保存在当前浏览器的 localStorage 中，站点不连接任何后端服务，因此换设备或换浏览器后进度是独立的。'],
-    ['为什么富文本只支持加粗和行内代码？', '为了保证渲染安全与样式统一。任意 HTML 会被转义，避免破坏版面或引入不可控样式。'],
-    ['可以离线使用吗？', '可以。站点没有构建步骤、没有外部依赖，把整个目录拷到 U 盘，直接打开 index.html 即可使用（除打印外全部功能可用）。'],
-    ['下载的 Markdown 怎么用？', '可用 Typora、Obsidian、Notion 等工具打开；也可以直接导入 Anki 或自己常用的笔记软件做二次整理。'],
-    ['题目做错了会怎样？', '答错的题会自动写入错题本，并记录错误次数与最近一次作答时间。在错题本里可以重做、复习对应知识点，或直接移除。']
-  ];
-  document.getElementById('faq').innerHTML = faqs.map(function (f, i) {
-    return '<div class="chapter' + (i === 0 ? ' open' : '') + '" style="--accent:var(--violet);--accent-soft:var(--violet-soft)">' +
-      '<div class="chapter-hd"><div class="chapter-no">?</div>' +
-        '<div style="flex:1"><div class="chapter-t">' + WB.esc(f[0]) + '</div></div><span class="caret">▶</span></div>' +
-      '<div class="chapter-bd"><div style="padding:14px 18px;font-size:14px;color:var(--text-2);line-height:1.8">' + WB.esc(f[1]) + '</div></div></div>';
-  }).join('');
-  document.getElementById('faq').addEventListener('click', function (e) {
-    var hd = e.target.closest('.chapter-hd'); if (hd) hd.parentNode.classList.toggle('open');
-  });
-
   document.getElementById('resetBtn').addEventListener('click', function () {
-    if (confirm('确定重置全部学习数据吗？包括学习进度、错题本与做题记录，该操作不可恢复。')) {
-      WB.store.reset(); WB.toast('已重置全部数据'); setTimeout(function () { location.reload(); }, 600);
-    }
+    WB.confirm({
+      title: '重置全部学习数据',
+      desc: '包括学习进度、错题本与做题记录。该操作不可恢复。',
+      ok: '确认重置', cancel: '取消',
+      onOk: function () {
+        WB.store.reset(); WB.toast('已重置全部数据');
+        setTimeout(function () { location.reload(); }, 700);
+      }
+    });
   });
 
   WB.fx.init();

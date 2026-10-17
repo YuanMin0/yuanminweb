@@ -2,9 +2,9 @@
 <html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MediLearn · 医学学习站 — 知识点 · 刷题 · 下载</title>
-<meta name="description" content="MediLearn 医学学习站：医学英语、医学伦理学、医学大数据、医学统计学、药理学、习近平新时代中国特色社会主义思想概论，支持知识点浏览、在线刷题与讲义下载。">
+<meta name="description" content="MediLearn 医学学习站：涵盖习近平新时代中国特色社会主义思想概论、医学伦理学、医学大数据、医学统计学、药理学、呼吸系统、心血管系统、血液系统、内分泌系统、诊断学、外科学与治疗共 11 个科目，支持知识点浏览、在线刷题与讲义下载。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/style.css">
 <!-- 访问门禁：未登录直接跳转登录页（置于 head 内，避免内容闪现） -->
@@ -12,6 +12,13 @@
 <script>if(window.WB&&WB.auth)WB.auth.guard();</script>
 </head>
 <body>
+<noscript>
+<div style="max-width:600px;margin:64px auto;padding:24px 26px;border:1px solid #e3e8f0;border-radius:16px;background:#fff;color:#0f172a;font:15px/1.85 -apple-system,'PingFang SC','Microsoft YaHei',sans-serif">
+  <b style="font-size:17px">需要启用 JavaScript</b>
+  <p style="margin:8px 0 0;color:#475569">本站是纯前端站点，内容与练习均由浏览器脚本渲染。请在浏览器设置中开启 JavaScript 后刷新页面。</p>
+</div>
+</noscript>
+
 <header class="hdr" data-hdr></header>
 
 <main class="page">
@@ -24,7 +31,7 @@
       <h1><span class="grad-anim">MediLearn</span> 医学学习站</h1>
       <p class="lead">
         把「知识点浏览 → 在线刷题 → 错题回顾 → 讲义下载」串成一条闭环。
-        覆盖 <b data-count="6">6</b> 个科目、<b data-count="108">108</b> 个知识点、<b data-count="602">602</b> 道练习，
+        覆盖 <b data-count="11">11</b> 个科目、<b data-count="151">151</b> 个知识点、<b data-count="850">850</b> 道练习，
         纯静态站点，可一键部署到 GitHub Pages / Cloudflare Pages。
       </p>
       <div class="hero-actions">
@@ -98,7 +105,12 @@
 <script src="data/bigdata.js"></script>
 <script src="data/statistics.js"></script>
 <script src="data/pharmacology.js"></script>
-<script src="data/medical-english.js"></script>
+<script src="data/respiratory.js"></script>
+<script src="data/cardiology.js"></script>
+<script src="data/hematology.js"></script>
+<script src="data/endocrinology.js"></script>
+<script src="data/diagnostics.js"></script>
+<script src="data/surgery.js"></script>
 <script src="js/fx.js"></script>
 <script>
 (function () {

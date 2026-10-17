@@ -187,7 +187,11 @@
     document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
     try { localStorage.setItem(K.theme, t); } catch (e) {}
     var b = document.querySelector('[data-theme-btn]');
-    if (b) { b.textContent = t === 'dark' ? '☾' : '☀'; b.title = t === 'dark' ? '切换到浅色' : '切换到深色'; }
+    if (b) {
+      b.textContent = '◑';
+      b.title = t === 'dark' ? '切换到浅色' : '切换到深色';
+      b.setAttribute('aria-label', b.title);
+    }
   };
   WB.initTheme = function () {
     var saved = null;
@@ -223,14 +227,32 @@
       hdr.innerHTML =
         '<div class="wrap hdr-in">' +
         '<a class="logo" href="index.html"><span class="logo-mark">✚</span><span>MediLearn</span></a>' +
-        '<nav class="nav" data-nav>' + links + '</nav>' +
+        '<nav class="nav" id="site-nav" data-nav>' + links + '</nav>' +
         '<div class="hdr-tools">' +
-        '<button class="icon-btn" data-theme-btn title="切换主题">☀</button>' +
+        '<button class="icon-btn" data-theme-btn title="切换主题" aria-label="切换主题">◑</button>' +
         '<button class="icon-btn" data-logout-btn title="退出登录">⏻</button>' +
-        '<button class="icon-btn menu-btn" data-menu-btn title="菜单">☰</button>' +
+        '<button class="icon-btn menu-btn" data-menu-btn title="菜单" aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav">☰</button>' +
         '</div></div>';
       var mb = hdr.querySelector('[data-menu-btn]'), nav = hdr.querySelector('[data-nav]');
-      if (mb) mb.addEventListener('click', function () { nav.classList.toggle('open'); });
+      if (mb && nav) {
+        var scrim = document.createElement('div');
+        scrim.className = 'nav-scrim';
+        document.body.appendChild(scrim);
+        var setNav = function (open) {
+          nav.classList.toggle('open', open);
+          scrim.classList.toggle('on', open);
+          document.body.classList.toggle('nav-lock', open);
+          mb.setAttribute('aria-expanded', open ? 'true' : 'false');
+          mb.setAttribute('aria-label', open ? '关闭菜单' : '打开菜单');
+          mb.textContent = open ? '✕' : '☰';
+        };
+        mb.addEventListener('click', function () { setNav(!nav.classList.contains('open')); });
+        scrim.addEventListener('click', function () { setNav(false); });
+        nav.addEventListener('click', function (e) { if (e.target.closest('a')) setNav(false); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setNav(false); });
+        window.addEventListener('resize', function () { if (window.innerWidth > 760) setNav(false); });
+        window.addEventListener('orientationchange', function () { setNav(false); });
+      }
       var lb = hdr.querySelector('[data-logout-btn]');
       if (lb) lb.addEventListener('click', function () {
         var days = WB.auth ? WB.auth.daysLeft() : 0;
@@ -253,6 +275,8 @@
       ftr.innerHTML =
         '<div class="wrap ftr-in">' +
         '<div>MediLearn · 医学学习站 · 纯静态站点，可离线使用</div>' +
+        '<div class="ftr-author">作者 <b>元泯</b> · ' +
+          '<a href="mailto:1959940664@qq.com" title="给作者发邮件">1959940664@qq.com</a></div>' +
         '<div class="small">' + st.subjects + ' 个科目 · ' + st.knowledge + ' 个知识点 · ' + st.quiz + ' 道题</div>' +
         '</div>';
     }
@@ -316,6 +340,8 @@
           return '<div class="blk-table"><pre style="margin:0;padding:14px 16px;font-family:var(--font-mono);font-size:13px;overflow:auto"><code>' + WB.esc(b.text) + '</code></pre></div>';
         case 'quote':
           return '<blockquote style="margin:0 0 18px;padding:10px 18px;border-left:3px solid var(--border-2);color:var(--text-2)">' + WB.rich(b.text) + '</blockquote>';
+        case 'viz':
+          return '<div class="viz-slot" data-viz="' + WB.esc(b.kind) + '"></div>';
         default:
           return '';
       }
@@ -358,6 +384,7 @@
         case 'svg': L.push('> [图示] ' + (b.caption || ''), ''); break;
         case 'code': L.push('```', b.text, '```', ''); break;
         case 'quote': L.push('> ' + plain(b.text), ''); break;
+        case 'viz': L.push('> [交互图示] 见网页版', ''); break;
       }
     });
     return L.join('\n').replace(/\n{3,}/g, '\n\n').trim();
@@ -560,18 +587,36 @@
   WB.typeLabel = function (t) {
     return { single: '单选题', multiple: '多选题', judge: '判断题', fill: '填空题' }[t] || '题目';
   };
-  WB.answerText = function (q) {
-    if (q.type === 'single') return 'ABCDEF'[q.answer] + '. ' + plain((q.options || [])[q.answer] || '');
-    if (q.type === 'multiple') return (q.answer || []).map(function (i) { return 'ABCDEF'[i]; }).join('、');
+  /* perm 可选：显示位次 → 原始下标 的映射数组；用于选项乱序后仍输出正确的字母标号 */
+  function letterOf(i, perm) {
+    var d = perm ? perm.indexOf(i) : i;
+    return d > -1 && d < 6 ? 'ABCDEF'[d] : '?';
+  }
+  function lettersOf(arr, perm) {
+    return (arr || []).map(function (i) { return letterOf(i, perm); }).sort().join('、');
+  }
+  WB.answerText = function (q, perm) {
+    if (q.type === 'single') return letterOf(q.answer, perm) + '. ' + plain((q.options || [])[q.answer] || '');
+    if (q.type === 'multiple') return lettersOf(q.answer, perm);
     if (q.type === 'judge') return q.answer ? '正确' : '错误';
     return (q.answer || []).join(' / ');
   };
-  WB.myAnswerText = function (q, ans) {
+  WB.myAnswerText = function (q, ans, perm) {
     if (ans === undefined || ans === null || ans === '' || (Array.isArray(ans) && !ans.length)) return '（未作答）';
-    if (q.type === 'single') return 'ABCDEF'[ans] + '. ' + plain((q.options || [])[ans] || '');
-    if (q.type === 'multiple') return (ans || []).map(function (i) { return 'ABCDEF'[i]; }).join('、');
+    if (q.type === 'single') return letterOf(ans, perm) + '. ' + plain((q.options || [])[ans] || '');
+    if (q.type === 'multiple') return lettersOf(ans, perm);
     if (q.type === 'judge') return ans ? '正确' : '错误';
     return String(ans);
+  };
+  /* 不带字母标号的答案文本：选项顺序被打乱过、或不在同一页面时使用，避免字母误导 */
+  WB.answerPlain = function (q, ans) {
+    var arr = arguments.length > 1 ? ans : q.answer;
+    if (arr === undefined || arr === null || arr === '' || (Array.isArray(arr) && !arr.length)) return '（未作答）';
+    if (q.type === 'single') return plain((q.options || [])[arr] || '');
+    if (q.type === 'multiple') return (arr || []).map(function (i) { return plain((q.options || [])[i] || ''); }).join('；');
+    if (q.type === 'judge') return arr ? '正确' : '错误';
+    if (q.type === 'fill') return (arr || []).join(' / ');
+    return String(arr == null ? '' : arr);
   };
   WB.plain = plain;
 

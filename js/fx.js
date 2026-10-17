@@ -204,11 +204,41 @@
         '<span>' + WB.esc(it.label) + '</span></a>';
     }).join('');
     document.body.appendChild(d);
-    requestAnimationFrame(function () { d.classList.add('on'); });
-    // 滚过一屏后出现
-    function toggle() { d.classList.toggle('on', window.scrollY > 260); }
-    window.addEventListener('scroll', toggle, { passive: true });
-    toggle();
+    requestAnimationFrame(function () { d.classList.toggle('on', window.scrollY > 260); });
+
+    /* 出现规则：滚过一屏后常驻；向下阅读时自动收起，避免压住正文；
+       向上滚一段、鼠标移到屏幕底部、或键盘聚焦时才再次出现。 */
+    var lastY = window.scrollY, acc = 0, peekT = null;
+
+    function show() { d.classList.remove('hide'); }
+    function hide() { if (d.classList.contains('on')) d.classList.add('hide'); }
+    function peek() {
+      show();
+      clearTimeout(peekT);
+      peekT = setTimeout(function () {
+        if (!d.matches(':hover') && document.activeElement && !d.contains(document.activeElement)) hide();
+      }, 2800);
+    }
+
+    function onScroll() {
+      var y = window.scrollY, dy = y - lastY;
+      lastY = y;
+      var on = y > 260;
+      d.classList.toggle('on', on);
+      if (!on) { acc = 0; show(); return; }
+      if (dy > 0) { acc = 0; hide(); }
+      else if (dy < 0) {
+        acc += -dy;
+        if (acc > 90) { acc = 0; peek(); }
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    document.addEventListener('mousemove', function (e) {
+      if (e.clientY > window.innerHeight - 130) { clearTimeout(peekT); show(); }
+    }, { passive: true });
+    d.addEventListener('mouseenter', function () { clearTimeout(peekT); show(); });
+    d.addEventListener('focusin', function () { clearTimeout(peekT); show(); });
+    onScroll();
   };
 
   /* ---------------- 8. 彩带庆祝 ---------------- */

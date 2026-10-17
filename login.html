@@ -2,7 +2,7 @@
 <html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>访问验证 · MediLearn 医学学习站</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
@@ -247,6 +247,7 @@ html[data-theme="dark"] .lg-card {
 }
 .lg-foot a { color: var(--text-3); text-decoration: underline; text-underline-offset: 2px; }
 .lg-foot a:hover { color: var(--brand); }
+.lg-dot-sep { opacity: .45; margin: 0 6px; }
 
 /* ---------- 右上角工具 ---------- */
 .lg-tools { position: fixed; top: 16px; right: 16px; z-index: 5; display: flex; gap: 9px; }
@@ -301,7 +302,7 @@ html[data-theme="dark"] .lg-card {
 <canvas id="ptc" aria-hidden="true"></canvas>
 
 <div class="lg-tools">
-  <button class="gbtn gbtn-sm" id="themeBtn" type="button" title="切换主题">☀</button>
+  <button class="gbtn gbtn-sm" id="themeBtn" type="button" title="切换主题" aria-label="切换主题">◑</button>
 </div>
 
 <main class="lg-stage">
@@ -354,6 +355,8 @@ html[data-theme="dark"] .lg-card {
   <div class="lg-foot">
     密钥仅保存在你的浏览器本地 · 本站不收集任何信息<br>
     <a href="#" id="forgot">忘记密钥？</a>
+    <span class="lg-dot-sep">·</span>
+    作者 元泯 · <a href="mailto:1959940664@qq.com">1959940664@qq.com</a>
   </div>
 </main>
 
@@ -468,7 +471,7 @@ html[data-theme="dark"] .lg-card {
   /* ---------- 主题切换 ---------- */
   var tb = document.getElementById('themeBtn');
   function syncThemeBtn() {
-    tb.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☾' : '☀';
+    tb.textContent = '◑';
   }
   syncThemeBtn();
   tb.addEventListener('click', function () {

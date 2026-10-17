@@ -2,7 +2,7 @@
 <html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>错题本 · MediLearn</title>
 <meta name="description" content="错题本：自动收录答错的题目，支持按科目筛选、重做与移除，考前集中攻克薄弱环节。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
@@ -12,6 +12,13 @@
 <script>if(window.WB&&WB.auth)WB.auth.guard();</script>
 </head>
 <body>
+<noscript>
+<div style="max-width:600px;margin:64px auto;padding:24px 26px;border:1px solid #e3e8f0;border-radius:16px;background:#fff;color:#0f172a;font:15px/1.85 -apple-system,'PingFang SC','Microsoft YaHei',sans-serif">
+  <b style="font-size:17px">需要启用 JavaScript</b>
+  <p style="margin:8px 0 0;color:#475569">本站是纯前端站点，内容与练习均由浏览器脚本渲染。请在浏览器设置中开启 JavaScript 后刷新页面。</p>
+</div>
+</noscript>
+
 <header class="hdr" data-hdr></header>
 
 <main class="page">
@@ -26,7 +33,12 @@
 <script src="data/bigdata.js"></script>
 <script src="data/statistics.js"></script>
 <script src="data/pharmacology.js"></script>
-<script src="data/medical-english.js"></script>
+<script src="data/respiratory.js"></script>
+<script src="data/cardiology.js"></script>
+<script src="data/hematology.js"></script>
+<script src="data/endocrinology.js"></script>
+<script src="data/diagnostics.js"></script>
+<script src="data/surgery.js"></script>
 <script src="js/fx.js"></script>
 <script>
 (function () {
@@ -99,8 +111,8 @@
           '<span class="tiny dim">' + WB.fmtDate(w.ts) + '</span>' +
         '</div>' +
         '<div class="wrow-q">' + WB.rich(w.stem) + '</div>' +
-        '<div class="wrow-line">我的答案：<b style="color:var(--bad)">' + WB.esc(WB.myAnswerText(w, w.myAnswer)) + '</b></div>' +
-        '<div class="wrow-line">正确答案：<b style="color:var(--ok)">' + WB.esc(WB.answerText(w)) + '</b></div>' +
+        '<div class="wrow-line">我的答案：<b style="color:var(--bad)">' + WB.esc(WB.answerPlain(w, w.myAnswer)) + '</b></div>' +
+        '<div class="wrow-line">正确答案：<b style="color:var(--ok)">' + WB.esc(WB.answerPlain(w)) + '</b></div>' +
         (w.explain ? '<div class="wrow-line muted mt-1" style="line-height:1.75">' + WB.rich(w.explain) + '</div>' : '') +
         '<div class="mt-2 row" style="flex-wrap:wrap">' +
           (k ? '<a class="gbtn gbtn-sm" href="' + WB.link('knowledge.html', { s: w.subjectId, k: w.kid }) + '">📖 复习知识点</a>' : '') +
@@ -139,8 +151,8 @@
         lines.push('- 科目：' + (w.subjectName || '—') + '　章节：' + (w.chapterTitle || '—') + '　知识点：' + (w.kTitle || '—'));
         lines.push('- 题型：' + WB.typeLabel(w.type) + '　错误次数：' + w.times);
         if (w.options) w.options.forEach(function (o, oi) { lines.push('  - ' + 'ABCDEF'[oi] + '. ' + WB.plain(o)); });
-        lines.push('- 我的答案：' + WB.plain(WB.myAnswerText(w, w.myAnswer)));
-        lines.push('- 正确答案：' + WB.plain(WB.answerText(w)));
+        lines.push('- 我的答案：' + WB.answerPlain(w, w.myAnswer));
+        lines.push('- 正确答案：' + WB.answerPlain(w));
         if (w.explain) lines.push('- 解析：' + WB.plain(w.explain));
         lines.push('');
       });

@@ -569,7 +569,7 @@ WB.register({
             { type: 'p', text: '影像智能分析聚焦肿瘤领域三大场景：**诊断**（病理分型、术前转移判断）、**疗效评估**（判断治疗响应，避免过度治疗）、**预后预测**（总生存期、复发风险）。' },
             { type: 'h', level: 3, text: '六、形态特征计算（计算题）' },
             { type: 'p', text: '已知 ADC 图 pixel spacing = 5 mm，二值化图像中 1 表示目标区域：' },
-            { type: 'code', text: '长径 = 最长像素跨度 × pixel spacing = 13 × 5 = 65 mm\n短径 = 最短像素跨度 × pixel spacing = 6 × 5 = 30 mm\n面积 = 有效像素数 × (pixel spacing)^2 = (6×13 − 13) × 25 = 16.25 mm^2' },
+            { type: 'code', text: '长径 = 最长像素跨度 × pixel spacing = 13 × 5 = 65 mm\n短径 = 最短像素跨度 × pixel spacing = 6 × 5 = 30 mm\n面积 = 有效像素数 × (pixel spacing)^2 = 65 × 25 = 1625 mm^2' },
             { type: 'note', variant: 'tip', title: 'GLCM 构建要点', text: '**0° 方向指水平相邻像素对**，统计每对灰度值 (i, j) 出现次数填矩阵。例如 (1,2) 出现 5 次、(2,1) 出现 3 次。45° 则统计对角线相邻像素对。' }
           ],
           quiz: [
@@ -672,6 +672,7 @@ WB.register({
               ['0.5~0.69', '较差'],
               ['< 0.5', '需重新定义阴阳属性']
             ]},
+            { type: 'viz', kind: 'roc' },
             { type: 'note', variant: 'warn', title: '为什么不用准确率', text: '准确率**易受样本分布影响**：罕见病样本少时，模型全部判为阴性也能得到很高的准确率。敏感度与特异度分别聚焦患病与未患病群体，评估更精准。' }
           ],
           quiz: [

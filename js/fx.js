@@ -308,7 +308,35 @@
     fx.autoCount(document);
     fx.reveal(document);
     fx.tilt(document);
+    fx.toTop();
     if (opts.dock) fx.dock(opts.dock);
+  };
+
+  /** 返回顶部：滚动超过一屏后浮现 */
+  fx.toTop = function () {
+    if (document.querySelector('.to-top')) return;
+    var b = document.createElement('button');
+    b.className = 'to-top';
+    b.type = 'button';
+    b.setAttribute('aria-label', '返回顶部');
+    b.title = '返回顶部';
+    b.innerHTML = '↑';
+    b.addEventListener('click', function () {
+      try { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); }
+      catch (e) { window.scrollTo(0, 0); }
+    });
+    document.body.appendChild(b);
+
+    var shown = false;
+    function onScroll() {
+      var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+      var want = y > (window.innerHeight || 600) * 0.9;
+      if (want === shown) return;
+      shown = want;
+      b.classList.toggle('on', shown);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   };
 
   /** 内容动态插入后调用，重新绑定特效 */

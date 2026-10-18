@@ -153,7 +153,90 @@ HASH: '313e7f9bd2dc3b6a1f921165506c3c2dc195613fc89e06b74cfd32a3829f4ca1',
 
 另有 **资料汇总** 页（`materials.html`）：扫描本机 `F:\学习资料` 生成 12 个科目组、100 条资料索引，
 只收录**整理好、可直接背诵**的资料（往年真题 8 / 题库练习 27 / 重点归纳 21 / 讲义笔记 38 / 病例分析 6），
-**PPT 课件、压缩包与截图目录已全部剔除**。支持按科目/类别筛选、文件名搜索、PDF 页内预览与一键打开原始文件。
+**PPT 课件、压缩包与截图目录已全部剔除**。网站代码放 GitHub，资料 PDF/DOC/DOCX 和扫描页图放 Cloudflare R2；
+资料索引按 `R2_BASE + R2_PREFIX + 对象键` 访问，支持页内预览（缩放 / 全屏）与一键下载。
+
+---
+
+## GitHub + Cloudflare 部署（当前实际配置）
+
+站点由 Cloudflare 连接 GitHub 仓库 `YuanMin0/yuanminweb` 自动部署，域名为
+**https://www.yuanminstudy.uk/**；资料原件放在 Cloudflare R2 桶 **study**，
+通过自定义域名 **https://files.yuanminstudy.uk/** 公开读取。
+
+### 三层分工
+
+| 层 | 放什么 | 说明 |
+|---|---|---|
+| GitHub | HTML / CSS / JS / 知识点数据 / 阅读页 HTML | 约 1.5 MB，单文件都远小于限制 |
+| R2（桶 `study`） | 100 份 PDF/DOC/DOCX + 179 张扫描页 JPEG | 约 856 MB，前缀 `materials/` |
+| Cloudflare | 构建、CDN、HTTPS、自定义域名 | 推送到 GitHub 后自动重新部署 |
+
+`.gitignore` 已排除 `materials/`、`reader/*/*/*.jpg`、`r2-upload-manifest.json`、`.env`，
+**不要 `git add -f` 这些内容**。
+
+### 唯一的配置文件：`data/r2-config.js`
+
+```js
+window.R2_BASE = 'https://files.yuanminstudy.uk/';  // 桶的公共域名，末尾带 /
+window.R2_PREFIX = 'materials/';                    // 对象键前缀；文件在桶根则留空 ''
+```
+
+页面加载时会用 `HEAD` 依次探测 `materials/`、空、`study/materials/` 三种前缀，
+哪个返回 200 就自动采用，所以前缀填错也能自愈；全部失败时页面顶部会列出尝试过的完整 URL。
+
+### R2 控制台需要确认的三项
+
+1. **Custom Domain**（必须）：桶 `study` → Settings → Custom Domains → Add → `files.yuanminstudy.uk`。
+   域名在同一 Cloudflare 账号下会自动建 CNAME，通常几分钟生效。
+   临时测试也可用 Settings → Public Development URL 的 `r2.dev` 地址，但有速率限制、不适合长期使用。
+2. **CORS Policy**（建议）：Settings → CORS Policy → Add，粘贴 `_tools/r2-cors.json` 的内容。
+   不配 CORS 时 PDF 仍可预览，但「下载」会退回新窗口打开，前缀自动探测也会失效。
+3. **对象键**：桶内路径需为 `materials/<科目id>/<原文件名>`，例如
+   `materials/pharmacology/药理整理.docx`；扫描页图在
+   `materials/reader/<科目id>/<slug>/pNNN.jpg`（即把 `reader` 文件夹放进 `materials/` 里）。
+
+### 重新生成与上传
+
+```powershell
+# 1) 生成索引 / 阅读页 / 上传清单（读本机 F:\学习资料）
+C:/Users/38815/.workbuddy-ai/binaries/python/versions/3.13.12/python.exe _tools/gen_materials.py
+C:/Users/38815/.workbuddy-ai/binaries/python/envs/default/Scripts/python.exe _tools/build_readers.py
+
+# 2) 预检（不上传）
+C:/Users/38815/.workbuddy-ai/binaries/python/envs/default/Scripts/python.exe _tools/upload_r2.py
+```
+
+真正上传前在本机终端设置（凭据只留在当前会话，绝不写入仓库）：
+
+```powershell
+$env:MEDILEARN_R2_ACCOUNT_ID = "430fdb4b93c9bc9b7afdd6026efd3d2"
+$env:MEDILEARN_R2_BUCKET     = "study"
+$env:MEDILEARN_R2_ENDPOINT   = "https://430fdb4b93c9bc9b7afdd6026efd3d2.r2.cloudflarestorage.com"
+$env:MEDILEARN_R2_KEY_PREFIX = "materials"
+$env:AWS_ACCESS_KEY_ID       = "<R2_ACCESS_KEY_ID>"
+$env:AWS_SECRET_ACCESS_KEY   = "<R2_SECRET_ACCESS_KEY>"
+
+C:/Users/38815/.workbuddy-ai/binaries/python/envs/default/Scripts/python.exe _tools/upload_r2.py --upload --verify
+```
+
+`MEDILEARN_R2_KEY_PREFIX` 必须与 `data/r2-config.js` 的 `R2_PREFIX` 保持一致，
+否则网站拼出来的地址和桶里的键对不上。
+
+### 预览与下载
+
+`materials.html` 里 PDF 点「预览」打开浮层：
+
+| 操作 | 按钮 | 快捷键 |
+|---|---|---|
+| 放大 / 缩小 | `+` / `−` | `+` / `-` |
+| 适应宽度（回到 100%） | 适应 | `0` |
+| 全屏 | 全屏 | `F` |
+| 关闭 | `✕` | `Esc`（或点浮层空白处） |
+| 下载 | 下载 | — |
+
+「下载」优先用 `fetch` 取 blob 强制保存为原文件名；跨域被拒时自动退回新窗口打开。
+Word 文档浏览器无法内嵌预览，只提供下载。
 
 ---
 

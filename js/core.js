@@ -289,12 +289,40 @@
     var ftr = document.querySelector('[data-ftr]');
     if (ftr) {
       var st = WB.stats();
+      var col = function (title, links) {
+        return '<div class="ftr-col"><h4>' + title + '</h4>' +
+          links.map(function (l) {
+            return '<a href="' + l[1] + '">' + l[0] + '</a>';
+          }).join('') + '</div>';
+      };
       ftr.innerHTML =
-        '<div class="wrap ftr-in">' +
-        '<div>MediLearn · 医学学习站</div>' +
-        '<div class="ftr-author">作者 <b>元泯</b> · ' +
-          '<a href="mailto:1959940664@qq.com" title="给作者发邮件">1959940664@qq.com</a></div>' +
-        '<div class="small">' + st.subjects + ' 个科目 · ' + st.knowledge + ' 个知识点 · ' + st.quiz + ' 道题</div>' +
+        '<div class="wrap">' +
+          '<div class="ftr-grid">' +
+            '<div class="ftr-brand">' +
+              '<a class="logo" href="index.html"><span class="logo-mark">✚</span><span>MediLearn</span></a>' +
+              '<p>把课程资料整理成结构化知识点，配自测题与错题本，' +
+                '串起「看 → 练 → 回顾 → 带走」的学习闭环。</p>' +
+              '<div class="ftr-stat">' + st.subjects + ' 个科目 · ' + st.knowledge + ' 个知识点 · ' + st.quiz + ' 道题</div>' +
+            '</div>' +
+            col('学习', [
+              ['总览', 'index.html'],
+              ['全部科目', 'subjects.html'],
+              ['错题本', 'wrongbook.html']
+            ]) +
+            col('资料', [
+              ['资料汇总', 'materials.html'],
+              ['关于本站', 'about.html']
+            ]) +
+            '<div class="ftr-col"><h4>联系</h4>' +
+              '<span class="ftr-author">作者 <b>元泯</b></span>' +
+              '<a href="mailto:1959940664@qq.com" title="给作者发邮件">1959940664@qq.com</a>' +
+              '<span class="ftr-note">本站仅作学习交流使用</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="ftr-bottom">' +
+            '<span>© ' + new Date().getFullYear() + ' MediLearn · 医学学习站</span>' +
+            '<span>知识点整理自个人课程资料，仅供复习参考</span>' +
+          '</div>' +
         '</div>';
     }
     WB.initTheme();

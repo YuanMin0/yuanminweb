@@ -4,9 +4,65 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>资料汇总 · MediLearn</title>
-<meta name="description" content="MediLearn 资料汇总：按科目浏览本机原始讲义、往年真题、题库与课件。">
+<meta name="description" content="MediLearn 资料汇总：按科目浏览可直接背诵的整理稿，支持在线预览、缩放全屏与下载。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/style.css">
+<style>
+  /* ---------- 资料行操作按钮 ---------- */
+  .mrow-act { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+  @media (max-width: 720px) {
+    .mrow-act { justify-content: flex-start; margin-top: 8px; }
+  }
+
+  /* ---------- PDF 预览浮层 ---------- */
+  .pv-mask {
+    position: fixed; inset: 0; z-index: 9000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 18px; background: rgba(8, 11, 18, .74);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    animation: pvFade .18s ease both;
+  }
+  @keyframes pvFade { from { opacity: 0 } to { opacity: 1 } }
+  .pv-box {
+    width: min(1200px, 97vw); height: min(90vh, 940px);
+    display: flex; flex-direction: column;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, .48);
+    animation: pvRise .2s cubic-bezier(.2,.8,.3,1) both;
+  }
+  @keyframes pvRise { from { transform: translateY(10px) scale(.99) } to { transform: none } }
+  @media (prefers-reduced-motion: reduce) {
+    .pv-mask, .pv-box { animation: none; }
+  }
+  .pv-box:fullscreen, .pv-box:-webkit-full-screen {
+    width: 100vw; height: 100vh; border-radius: 0; border: 0;
+  }
+  .pv-bar {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    padding: 9px 12px; border-bottom: 1px solid var(--border);
+    background: var(--surface-2); flex: none;
+  }
+  .pv-name {
+    flex: 1; min-width: 140px; font-size: 14px; font-weight: 650;
+    color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .pv-tools { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .pv-tools .gbtn { padding: 5px 10px; font-size: 12.5px; line-height: 1.5; }
+  .pv-z { min-width: 46px; text-align: center; font-size: 12px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+  .pv-body { flex: 1; min-height: 0; overflow: auto; background: #5a5f66; }
+  .pv-body iframe { display: block; width: 100%; height: 100%; border: 0; background: #fff; }
+  .pv-body .pv-msg {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 12px; height: 100%; color: #e6e9ef; font-size: 14px; text-align: center; padding: 30px;
+  }
+  .pv-body .pv-msg code { font-size: 12px; opacity: .75; word-break: break-all; }
+  @media (max-width: 720px) {
+    .pv-mask { padding: 0; }
+    .pv-box { width: 100vw; height: 100vh; border-radius: 0; border: 0; }
+    .pv-name { flex-basis: 100%; }
+  }
+</style>
 <!-- 访问门禁：未登录直接跳转登录页（置于 head 内，避免内容闪现） -->
 <script src="js/auth.js"></script>
 <script>if(window.WB&&WB.auth)WB.auth.guard();</script>
@@ -27,7 +83,7 @@
     <div class="sec-head rv">
       <div>
         <h2 style="font-size:24px">资料汇总</h2>
-        <div class="sub">共 <span id="gCount">0</span> 个科目 · <span id="fCount">0</span> 份资料 · <span id="sCount">0</span> 份已随站点打包</div>
+        <div class="sub">共 <span id="gCount">0</span> 个科目 · <span id="fCount">0</span> 份资料 · <span id="sCount">0</span> 份可在线预览或下载</div>
       </div>
       <a class="gbtn gbtn-sm" href="subjects.html">← 返回科目</a>
     </div>
@@ -36,10 +92,16 @@
       <div class="note-t">ℹ 使用说明</div>
       这里只收录<b>整理好的、可直接背诵的资料</b>——往年真题、题库练习、重点归纳、讲义笔记、病例分析；
       <mark class="hl">PPT 课件、压缩包与截图已全部剔除</mark>。<br>
-      <b>22MB 以内的资料已复制进站点</b>，线上、本地都能直接点「打开」；
-      标了 <mark class="hl">仅本机</mark> 的是超大文件（未打包），只有在本机打开本站时才能访问。
-      PDF 支持页内预览，Word 文件会下载后用系统默认程序打开。
-      <br><mark class="hl">在本机打开本站时，行内会出现「所在文件夹」按钮</mark>，可直接跳到资源管理器里的原始位置。
+      资料原件托管在 <b>Cloudflare R2</b>，站点代码在 GitHub，因此没有单文件体积限制。
+      PDF 点「预览」即可在页内打开，<mark class="hl">可缩放、可全屏</mark>；所有文件都能一键<b>下载</b>。
+      超大文件另附<b>站内阅读页</b>（逐页图片），不必先下载上百 MB 的原件。
+    </div>
+
+    <div class="note note-warn rv rv-d1 hide" id="r2Warn" style="margin-bottom:18px">
+      <div class="note-t">⚠ R2 尚未就绪</div>
+      当前 R2 公共访问地址没有配置，或文件路径对不上，资料只能显示本机路径。
+      请检查 <code>data/r2-config.js</code> 里的 <code>R2_BASE</code>（桶的自定义域名）
+      与 <code>R2_PREFIX</code>（对象键前缀）。<span id="r2Detail"></span>
     </div>
 
     <div class="toolbar rv rv-d1">
@@ -88,6 +150,7 @@
 <script src="data/exam-diagnostics.js"></script>
 <script src="data/surgery.js"></script>
 <script src="data/exam-surgery.js"></script>
+<script src="data/r2-config.js"></script>
 <script src="data/materials.js"></script>
 <script src="data/readers.js"></script>
 <script src="js/fx.js"></script>
@@ -96,6 +159,7 @@
   WB.mountChrome('materials');
 
   var GROUPS = window.MATERIALS || [];
+  var READERS = window.READERS || {};
   var ROOT = window.MATERIAL_ROOT || 'F:/学习资料/';
   var curSubj = (function () {
     var m = /[?&]s=([^&#]+)/.exec(location.search);
@@ -115,33 +179,85 @@
     IMG:  { ico: '🖼', cls: 'chip-violet' }
   };
 
+  /* ================= Cloudflare R2 ================= */
+  var R2 = {
+    base: String(window.R2_BASE || '').replace(/\/+$/, ''),
+    prefix: String(window.R2_PREFIX || ''),
+    ready: false,
+    probed: false
+  };
+  R2.ready = /^https?:\/\//.test(R2.base) && R2.base.indexOf('R2-DOMAIN-HERE') < 0;
+
+  function encPath(p) {
+    return String(p).split('/').map(encodeURIComponent).join('/');
+  }
+  function r2Url(key) {
+    if (!R2.ready || !key) return '';
+    return R2.base + '/' + R2.prefix + encPath(key);
+  }
+
+  /* 探测对象键前缀：桶里可能是 materials/<科目>/<文件名>，也可能直接从科目开始。
+     需要 R2 配置 CORS 才能读到状态码；读不到就保留 config 里的默认值。 */
+  function detectPrefix() {
+    if (!R2.ready || R2.probed) return;
+    var probe = '';
+    outer:
+    for (var i = 0; i < GROUPS.length; i++) {
+      for (var j = 0; j < GROUPS[i].files.length; j++) {
+        var f = GROUPS[i].files[j];
+        if (f.key && /\.pdf$/i.test(f.key)) { probe = f.key; break outer; }
+      }
+    }
+    if (!probe) return;
+    R2.probed = true;
+
+    var cands = [R2.prefix, '', 'materials/', 'study/materials/'];
+    var seen = {}, list = [];
+    cands.forEach(function (p) { if (!seen[p]) { seen[p] = 1; list.push(p); } });
+
+    var idx = 0;
+    (function next() {
+      if (idx >= list.length) {
+        document.getElementById('r2Warn').classList.remove('hide');
+        document.getElementById('r2Detail').innerHTML =
+          '<br>已尝试：' + list.map(function (p) {
+            return '<code>' + WB.esc(R2.base + '/' + p + encPath(probe)) + '</code>';
+          }).join('、');
+        return;
+      }
+      var p = list[idx++];
+      var url = R2.base + '/' + p + encPath(probe);
+      fetch(url, { method: 'HEAD', cache: 'reload' }).then(function (r) {
+        if (!r.ok) { next(); return; }
+        if (p !== R2.prefix) { R2.prefix = p; render(); }
+        document.getElementById('r2Warn').classList.add('hide');
+      }).catch(function () {
+        // 无 CORS / 网络失败：保留默认前缀，不阻塞页面
+        R2.probed = true;
+      });
+    })();
+  }
+
+  /* ================= 路径工具 ================= */
   function fileUrl(p) {
-    // 逐段编码，保留路径分隔符；盘符冒号必须原样保留，否则 file:// 无法解析
     var root = ROOT.split('/').filter(Boolean).map(function (seg, i) {
       return i === 0 && /^[A-Za-z]:$/.test(seg) ? seg : encodeURIComponent(seg);
     }).join('/');
     return 'file:///' + root + '/' + p.split('/').map(encodeURIComponent).join('/');
   }
-  /* 站内相对路径（materials/xxx/yyy.pdf）→ 逐段编码的相对 URL，线上与本地都可用 */
-  function relUrl(p) {
-    return p.split('/').map(encodeURIComponent).join('/');
-  }
-  /* 本地磁盘目录 → file:// URL（逐段编码，盘符冒号保留原样） */
+  function relUrl(p) { return encPath(p); }
+
   function dirToFileUrl(dir) {
     var segs = dir.split('/').filter(Boolean).map(function (seg, i) {
       return i === 0 && /^[A-Za-z]:$/.test(seg) ? seg : encodeURIComponent(seg);
     });
     return 'file:///' + segs.join('/') + '/';
   }
-  /* 「所在文件夹」按钮的链接。
-     inSite=files 已复制进站点 → 打开 medilearn/materials/<gid>/
-     否则（大文件的阅读页）→ 打开 F:\学习资料 里的原始目录
-     只在以 file:// 协议浏览本站时才提供（线上 https 无法跳转本地目录） */
   function dirUrl(f, inSite) {
     if (location.protocol !== 'file:') return '';
-    if (inSite) {
+    if (inSite && f.rel) {
       var base = decodeURIComponent(location.pathname).replace(/\\/g, '/').replace(/\/[^\/]*$/, '');
-      if (!/^\/[A-Za-z]:/.test(base)) return '';   // 非 Windows 盘符路径
+      if (!/^\/[A-Za-z]:/.test(base)) return '';
       return dirToFileUrl(base + '/' + f.rel.split('/').slice(0, -1).join('/'));
     }
     return dirToFileUrl(ROOT + f.p.split('/').slice(0, -1).join('/'));
@@ -160,11 +276,126 @@
     return s.replace(re, '<mark>$1</mark>');
   }
 
-  /* 科目筛选条 */
+  /* ================= 下载 ================= */
+  function download(url, name) {
+    if (!url) return;
+    WB.toast('正在准备下载…', 1600);
+    fetch(url, { mode: 'cors', cache: 'reload' }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.blob();
+    }).then(function (blob) {
+      var a = document.createElement('a');
+      var href = URL.createObjectURL(blob);
+      a.href = href;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function () { URL.revokeObjectURL(href); }, 5000);
+      WB.toast('已开始下载：' + name, 2200);
+    }).catch(function () {
+      // 跨域读不到内容（未配 CORS）时退回新窗口，浏览器会自行下载或预览
+      window.open(url, '_blank', 'noopener');
+    });
+  }
+
+  /* ================= PDF 预览浮层 ================= */
+  var pv = null;
+
+  function closePreview() {
+    if (!pv) return;
+    if (document.fullscreenElement) {
+      try { document.exitFullscreen(); } catch (e) {}
+    }
+    var box = pv.mask;
+    box.classList.remove('on');
+    setTimeout(function () { box.remove(); }, 180);
+    document.removeEventListener('keydown', onPvKey);
+    pv = null;
+  }
+
+  function setZoom(z) {
+    if (!pv) return;
+    pv.zoom = Math.min(3, Math.max(0.5, Math.round(z * 20) / 20));
+    pv.frame.style.width = (pv.zoom * 100) + '%';
+    pv.zlabel.textContent = Math.round(pv.zoom * 100) + '%';
+  }
+
+  function toggleFullscreen() {
+    if (!pv) return;
+    var el = pv.box;
+    if (document.fullscreenElement) {
+      try { document.exitFullscreen(); } catch (e) {}
+      return;
+    }
+    var fn = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+    if (fn) {
+      try { fn.call(el); } catch (e) { WB.toast('当前浏览器不支持全屏'); }
+    } else {
+      WB.toast('当前浏览器不支持全屏，可用「新窗口打开」');
+    }
+  }
+
+  function onPvKey(e) {
+    if (!pv) return;
+    if (e.key === 'Escape') { closePreview(); return; }
+    if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); return; }
+    if (e.key === '+' || e.key === '=') { setZoom(pv.zoom + 0.25); return; }
+    if (e.key === '-') { setZoom(pv.zoom - 0.25); return; }
+    if (e.key === '0') { setZoom(1); }
+  }
+
+  function openPreview(url, name) {
+    if (pv) closePreview();
+
+    var mask = document.createElement('div');
+    mask.className = 'pv-mask';
+    mask.innerHTML =
+      '<div class="pv-box" role="dialog" aria-modal="true" aria-label="资料预览">' +
+        '<div class="pv-bar">' +
+          '<div class="pv-name" title="' + WB.esc(name) + '">' + WB.esc(name) + '</div>' +
+          '<div class="pv-tools">' +
+            '<button class="gbtn gbtn-sm" data-z="out" title="缩小（-）">−</button>' +
+            '<span class="pv-z" data-zlabel>100%</span>' +
+            '<button class="gbtn gbtn-sm" data-z="in" title="放大（+）">+</button>' +
+            '<button class="gbtn gbtn-sm" data-z="fit" title="适应宽度（0）">适应</button>' +
+            '<button class="gbtn gbtn-sm" data-fs title="全屏（F）">全屏</button>' +
+            '<button class="gbtn gbtn-sm gbtn-primary" data-dl title="下载到本地">下载</button>' +
+            '<a class="gbtn gbtn-sm" href="' + WB.esc(url) + '" target="_blank" rel="noopener">新窗口</a>' +
+            '<button class="gbtn gbtn-sm" data-close title="关闭（Esc）">✕</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="pv-body"><iframe src="' + WB.esc(url) + '#view=FitH" title="' + WB.esc(name) + '"></iframe></div>' +
+      '</div>';
+
+    document.body.appendChild(mask);
+    requestAnimationFrame(function () { mask.classList.add('on'); });
+    setTimeout(function () { mask.classList.add('on'); }, 30);
+
+    pv = {
+      mask: mask,
+      box: mask.querySelector('.pv-box'),
+      frame: mask.querySelector('iframe'),
+      zlabel: mask.querySelector('[data-zlabel]'),
+      zoom: 1
+    };
+
+    mask.querySelector('[data-z="in"]').addEventListener('click', function () { setZoom(pv.zoom + 0.25); });
+    mask.querySelector('[data-z="out"]').addEventListener('click', function () { setZoom(pv.zoom - 0.25); });
+    mask.querySelector('[data-z="fit"]').addEventListener('click', function () { setZoom(1); });
+    mask.querySelector('[data-fs]').addEventListener('click', toggleFullscreen);
+    mask.querySelector('[data-dl]').addEventListener('click', function () { download(url, name); });
+    mask.querySelector('[data-close]').addEventListener('click', closePreview);
+    mask.addEventListener('click', function (e) { if (e.target === mask) closePreview(); });
+    document.addEventListener('keydown', onPvKey);
+  }
+
+  /* ================= 列表 ================= */
   function renderSubjSeg() {
     var html = '<button class="' + (curSubj ? '' : 'on') + '" data-subj="">全部科目</button>';
     GROUPS.forEach(function (g) {
-      html += '<button class="' + (curSubj === g.id ? 'on' : '') + '" data-subj="' + g.id + '">' + WB.esc(g.name) + ' <span class="tiny dim">' + g.files.length + '</span></button>';
+      html += '<button class="' + (curSubj === g.id ? 'on' : '') + '" data-subj="' + g.id + '">' +
+        WB.esc(g.name) + ' <span class="tiny dim">' + g.files.length + '</span></button>';
     });
     document.getElementById('subjSeg').innerHTML = html;
   }
@@ -178,20 +409,39 @@
   function fileRow(f, accent, gid) {
     var m = TYPE_META[f.t] || { ico: '📄', cls: 'chip-line' };
     var isPdf = f.t === 'PDF';
-    // 优先级：站内原文件 > 站内阅读页 > 本机 file://
-    var reader = (window.READERS || {})[gid + '/' + f.n];
-    var inSite = !!f.rel;
-    var readable = !inSite && !!reader;
-    // 既没打包也没阅读页 → 只能回落到本机路径；线上点不动，只能复制路径手动打开
-    var localOnly = !inSite && !readable;
+    var reader = READERS[gid + '/' + f.n];
+    var r2 = r2Url(f.key);
     var isLocalSite = location.protocol === 'file:';
-    var url = inSite ? relUrl(f.rel) : (readable ? reader : (isLocalSite ? fileUrl(f.p) : ''));
-    var localPath = 'F:\\学习资料\\' + f.p.replace(/\//g, '\\');
+    var hasLocalCopy = !!f.rel;
+    var localOnly = !r2 && !reader && !(isLocalSite && hasLocalCopy);
+
     var sizeTxt = fmtSize(f.s);
     var catCls = f.c === '往年真题' ? 'chip-hot'
       : (f.c === '题库练习' ? 'chip-amber'
         : (f.c === '重点归纳' ? 'chip-key'
           : (f.c === '讲义笔记' ? 'chip-brand' : 'chip-line')));
+
+    var acts = '';
+    if (r2) {
+      if (isPdf) {
+        acts += '<button class="gbtn gbtn-sm gbtn-primary" data-prev="' + WB.esc(r2) + '" data-name="' + WB.esc(f.n) + '">预览</button>';
+      }
+      acts += '<button class="gbtn gbtn-sm" data-dl="' + WB.esc(r2) + '" data-name="' + WB.esc(f.n) + '">下载</button>';
+      acts += '<a class="gbtn gbtn-sm" href="' + WB.esc(r2) + '" target="_blank" rel="noopener">打开</a>';
+    } else if (reader) {
+      acts += '<a class="gbtn gbtn-sm gbtn-primary" href="' + WB.esc(reader) + '" target="_blank" rel="noopener">阅读</a>';
+    } else if (isLocalSite && hasLocalCopy) {
+      acts += '<a class="gbtn gbtn-sm gbtn-primary" href="' + WB.esc(relUrl(f.rel)) + '" target="_blank" rel="noopener">打开</a>';
+    } else if (isLocalSite) {
+      acts += '<a class="gbtn gbtn-sm" href="' + WB.esc(fileUrl(f.p)) + '" target="_blank" rel="noopener">本机打开</a>';
+    }
+    if (localOnly) {
+      acts += '<button class="gbtn gbtn-sm" data-copy="' + WB.esc('F:\\学习资料\\' + f.p.replace(/\//g, '\\')) + '" title="复制文件完整路径">复制路径</button>';
+    }
+    var dv = dirUrl(f, r2 || (isLocalSite && hasLocalCopy));
+    if (dv) {
+      acts += '<a class="gbtn gbtn-sm" href="' + WB.esc(dv) + '" target="_blank" rel="noopener" title="在资源管理器中打开所在位置">所在文件夹</a>';
+    }
 
     return '<div class="mrow" style="--accent:' + accent + '">' +
       '<div class="mrow-ico">' + m.ico + '</div>' +
@@ -201,31 +451,27 @@
           '<span class="chip ' + m.cls + '">' + f.t + '</span>' +
           '<span class="chip ' + catCls + '">' + WB.esc(f.c) + '</span>' +
           (sizeTxt ? '<span class="chip chip-line">' + sizeTxt + '</span>' : '') +
-          (readable ? '<span class="chip chip-teal" title="超大文件已转成站内阅读页">站内阅读</span>' : '') +
-          (localOnly ? '<span class="chip chip-mid" title="该文件未打包进站点，只能在本机浏览本站时打开">仅本机</span>' : '') +
+          (r2 ? '<span class="chip chip-ok" title="文件托管在 Cloudflare R2">R2</span>' : '') +
+          (!r2 && reader ? '<span class="chip chip-teal" title="超大文件已转成站内阅读页">站内阅读</span>' : '') +
+          (localOnly ? '<span class="chip chip-mid" title="该文件未托管到 R2，只能在本机浏览本站时打开">仅本机</span>' : '') +
         '</div>' +
       '</div>' +
-      '<div class="mrow-act">' +
-        ((isPdf && inSite) ? '<button class="gbtn gbtn-sm" data-prev="' + WB.esc(url) + '" data-name="' + WB.esc(f.n) + '">预览</button>' : '') +
-        (url ? '<a class="gbtn gbtn-sm gbtn-primary" href="' + WB.esc(url) + '" target="_blank" rel="noopener">' +
-          (readable ? '阅读' : (inSite ? '打开' : '本机打开')) + '</a>' : '') +
-        (localOnly ? '<button class="gbtn gbtn-sm" data-copy="' + WB.esc(localPath) + '" title="复制文件完整路径">复制路径</button>' : '') +
-        (dirUrl(f, inSite)
-          ? '<a class="gbtn gbtn-sm" href="' + WB.esc(dirUrl(f, inSite)) + '" target="_blank" rel="noopener" title="在资源管理器中打开所在位置">所在文件夹</a>'
-          : '') +
-      '</div>' +
+      '<div class="mrow-act">' + acts + '</div>' +
     '</div>';
   }
 
   function render() {
-    var html = '', total = 0, shown = 0, packed = 0;
+    var html = '', total = 0, shown = 0, ready = 0;
     GROUPS.forEach(function (g) {
       if (curSubj && curSubj !== g.id) return;
       var files = g.files.filter(match);
       total += g.files.length;
       if (!files.length) return;
       shown += files.length;
-      packed += files.filter(function (f) { return !!f.rel; }).length;
+      ready += files.filter(function (f) {
+        return !!r2Url(f.key) || !!READERS[g.id + '/' + f.n];
+      }).length;
+
       var s = WB.getSubject(g.id);
       var accent = s ? s.accent : 'var(--brand)';
       var icon = s ? s.icon : '📚';
@@ -243,16 +489,22 @@
 
     document.getElementById('gCount').textContent = GROUPS.length;
     document.getElementById('fCount').textContent = shown || total;
-    document.getElementById('sCount').textContent = packed;
+    document.getElementById('sCount').textContent = ready;
 
-    document.getElementById('list').innerHTML = html || WB.empty('📂', '没有匹配的资料', '换个关键词或切换类别试试');
+    var list = document.getElementById('list');
+    list.innerHTML = html || WB.empty('📂', '没有匹配的资料', '换个关键词或切换类别试试');
 
-    // 绑定预览
-    document.getElementById('list').querySelectorAll('[data-prev]').forEach(function (b) {
-      b.addEventListener('click', function () { openPreview(b.getAttribute('data-prev'), b.getAttribute('data-name')); });
+    list.querySelectorAll('[data-prev]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        openPreview(b.getAttribute('data-prev'), b.getAttribute('data-name'));
+      });
     });
-    // 绑定复制路径
-    document.getElementById('list').querySelectorAll('[data-copy]').forEach(function (b) {
+    list.querySelectorAll('[data-dl]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        download(b.getAttribute('data-dl'), b.getAttribute('data-name'));
+      });
+    });
+    list.querySelectorAll('[data-copy]').forEach(function (b) {
       b.addEventListener('click', function () {
         WB.copy(b.getAttribute('data-copy'), '路径已复制，粘贴到资源管理器地址栏即可打开');
       });
@@ -260,28 +512,10 @@
     WB.fx.refresh();
   }
 
-  /* PDF 预览弹窗 */
-  function openPreview(url, name) {
-    var mask = document.createElement('div');
-    mask.className = 'mask';
-    mask.innerHTML = '<div class="modal modal-wide">' +
-      '<div class="row" style="align-items:center;gap:10px;margin-bottom:12px">' +
-        '<b style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + WB.esc(name) + '</b>' +
-        '<a class="gbtn gbtn-sm" href="' + WB.esc(url) + '" target="_blank" rel="noopener">新窗口打开</a>' +
-        '<button class="btn" data-close>关闭</button>' +
-      '</div>' +
-      '<iframe src="' + WB.esc(url) + '" style="width:100%;height:70vh;border:1px solid var(--border-2);border-radius:12px;background:#fff"></iframe>' +
-      '<p class="small muted" style="margin:10px 0 0">若预览空白，说明浏览器禁止本地文件内嵌，请点「新窗口打开」。</p>' +
-    '</div>';
-    mask.querySelector('[data-close]').addEventListener('click', function () { mask.remove(); });
-    mask.addEventListener('click', function (e) { if (e.target === mask) mask.remove(); });
-    document.body.appendChild(mask);
-    requestAnimationFrame(function () { mask.classList.add('on'); });
-    setTimeout(function () { mask.classList.add('on'); }, 60);
-  }
-
   renderSubjSeg();
+  if (!R2.ready) document.getElementById('r2Warn').classList.remove('hide');
   render();
+  detectPrefix();
 
   document.getElementById('subjSeg').addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;

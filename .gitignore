@@ -37,3 +37,14 @@ pnpm-debug.log*
 .vercel/
 .netlify/
 .wrangler/
+
+# 本机离线复制件（线上资料从 R2 读取）
+/materials/
+# 扫描 PDF 转出的站内阅读图片同样上传 R2
+/reader/*/*/*.jpg
+# 上传清单含 F: 本机源路径、未公开域名等本机信息
+/r2-upload-manifest.json
+# 本机环境变量文件可能含 R2 凭据
+.env
+.env.*
+!.env.example

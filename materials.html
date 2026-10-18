@@ -34,11 +34,12 @@
 
     <div class="note note-info rv rv-d1" style="margin-bottom:18px">
       <div class="note-t">ℹ 使用说明</div>
-      这里只收录**整理好的、可直接背诵的资料**——往年真题、题库练习、重点归纳、讲义笔记、病例分析；
-      ==PPT 课件、压缩包与截图已全部剔除==。<br>
-      **22MB 以内的资料已复制进站点**，线上、本地都能直接点「打开」；
-      标了 ==仅本机== 的是超大文件（未打包），只有在本机打开本站时才能访问。
+      这里只收录<b>整理好的、可直接背诵的资料</b>——往年真题、题库练习、重点归纳、讲义笔记、病例分析；
+      <mark class="hl">PPT 课件、压缩包与截图已全部剔除</mark>。<br>
+      <b>22MB 以内的资料已复制进站点</b>，线上、本地都能直接点「打开」；
+      标了 <mark class="hl">仅本机</mark> 的是超大文件（未打包），只有在本机打开本站时才能访问。
       PDF 支持页内预览，Word 文件会下载后用系统默认程序打开。
+      <br><mark class="hl">在本机打开本站时，行内会出现「所在文件夹」按钮</mark>，可直接跳到资源管理器里的原始位置。
     </div>
 
     <div class="toolbar rv rv-d1">
@@ -125,6 +126,26 @@
   function relUrl(p) {
     return p.split('/').map(encodeURIComponent).join('/');
   }
+  /* 本地磁盘目录 → file:// URL（逐段编码，盘符冒号保留原样） */
+  function dirToFileUrl(dir) {
+    var segs = dir.split('/').filter(Boolean).map(function (seg, i) {
+      return i === 0 && /^[A-Za-z]:$/.test(seg) ? seg : encodeURIComponent(seg);
+    });
+    return 'file:///' + segs.join('/') + '/';
+  }
+  /* 「所在文件夹」按钮的链接。
+     inSite=files 已复制进站点 → 打开 medilearn/materials/<gid>/
+     否则（大文件的阅读页）→ 打开 F:\学习资料 里的原始目录
+     只在以 file:// 协议浏览本站时才提供（线上 https 无法跳转本地目录） */
+  function dirUrl(f, inSite) {
+    if (location.protocol !== 'file:') return '';
+    if (inSite) {
+      var base = decodeURIComponent(location.pathname).replace(/\\/g, '/').replace(/\/[^\/]*$/, '');
+      if (!/^\/[A-Za-z]:/.test(base)) return '';   // 非 Windows 盘符路径
+      return dirToFileUrl(base + '/' + f.rel.split('/').slice(0, -1).join('/'));
+    }
+    return dirToFileUrl(ROOT + f.p.split('/').slice(0, -1).join('/'));
+  }
   function fmtSize(b) {
     if (!b) return '';
     if (b < 1024) return b + ' B';
@@ -160,8 +181,12 @@
     // 优先级：站内原文件 > 站内阅读页 > 本机 file://
     var reader = (window.READERS || {})[gid + '/' + f.n];
     var inSite = !!f.rel;
-    var url = inSite ? relUrl(f.rel) : (reader || fileUrl(f.p));
     var readable = !inSite && !!reader;
+    // 既没打包也没阅读页 → 只能回落到本机路径；线上点不动，只能复制路径手动打开
+    var localOnly = !inSite && !readable;
+    var isLocalSite = location.protocol === 'file:';
+    var url = inSite ? relUrl(f.rel) : (readable ? reader : (isLocalSite ? fileUrl(f.p) : ''));
+    var localPath = 'F:\\学习资料\\' + f.p.replace(/\//g, '\\');
     var sizeTxt = fmtSize(f.s);
     var catCls = f.c === '往年真题' ? 'chip-hot'
       : (f.c === '题库练习' ? 'chip-amber'
@@ -177,13 +202,17 @@
           '<span class="chip ' + catCls + '">' + WB.esc(f.c) + '</span>' +
           (sizeTxt ? '<span class="chip chip-line">' + sizeTxt + '</span>' : '') +
           (readable ? '<span class="chip chip-teal" title="超大文件已转成站内阅读页">站内阅读</span>' : '') +
-          (inSite || readable ? '' : '<span class="chip chip-mid" title="文件过大且未生成阅读页，需在本机打开本站">仅本机</span>') +
+          (localOnly ? '<span class="chip chip-mid" title="该文件未打包进站点，只能在本机浏览本站时打开">仅本机</span>' : '') +
         '</div>' +
       '</div>' +
       '<div class="mrow-act">' +
         ((isPdf && inSite) ? '<button class="gbtn gbtn-sm" data-prev="' + WB.esc(url) + '" data-name="' + WB.esc(f.n) + '">预览</button>' : '') +
-        '<a class="gbtn gbtn-sm gbtn-primary" href="' + WB.esc(url) + '" target="_blank" rel="noopener">' +
-          (readable ? '阅读' : (inSite ? '打开' : '本机打开')) + '</a>' +
+        (url ? '<a class="gbtn gbtn-sm gbtn-primary" href="' + WB.esc(url) + '" target="_blank" rel="noopener">' +
+          (readable ? '阅读' : (inSite ? '打开' : '本机打开')) + '</a>' : '') +
+        (localOnly ? '<button class="gbtn gbtn-sm" data-copy="' + WB.esc(localPath) + '" title="复制文件完整路径">复制路径</button>' : '') +
+        (dirUrl(f, inSite)
+          ? '<a class="gbtn gbtn-sm" href="' + WB.esc(dirUrl(f, inSite)) + '" target="_blank" rel="noopener" title="在资源管理器中打开所在位置">所在文件夹</a>'
+          : '') +
       '</div>' +
     '</div>';
   }
@@ -221,6 +250,12 @@
     // 绑定预览
     document.getElementById('list').querySelectorAll('[data-prev]').forEach(function (b) {
       b.addEventListener('click', function () { openPreview(b.getAttribute('data-prev'), b.getAttribute('data-name')); });
+    });
+    // 绑定复制路径
+    document.getElementById('list').querySelectorAll('[data-copy]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        WB.copy(b.getAttribute('data-copy'), '路径已复制，粘贴到资源管理器地址栏即可打开');
+      });
     });
     WB.fx.refresh();
   }

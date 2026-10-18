@@ -112,6 +112,7 @@
       <mark class="hl">PPT 课件、压缩包与截图已全部剔除</mark>。<br>
       资料原件托管在 <b>Cloudflare R2</b>，站点代码在 GitHub，因此没有单文件体积限制。
       PDF 点「预览」会在页面内直接渲染，<mark class="hl">手机、平板也能看，可缩放、可全屏</mark>；
+      Word 文档点「阅读」进入<mark class="hl">重新排版的文字版</mark>，带目录、可直接复制；
       所有文件都能一键<b>下载</b>。
     </div>
 
@@ -171,6 +172,7 @@
 <script src="data/r2-config.js"></script>
 <script src="data/materials.js"></script>
 <script src="data/readers.js"></script>
+<script src="data/docs.js"></script>
 <script src="js/vendor/pdf.min.js"></script>
 <script src="js/fx.js"></script>
 <script>
@@ -507,6 +509,7 @@
     var isPdf = f.t === 'PDF';
     var missing = (window.R2_MISSING || []).indexOf(f.key) > -1;
     var reader = (!missing && !window.R2_READERS_BROKEN) ? READERS[gid + '/' + f.n] : '';
+    var docPage = missing ? '' : ((window.DOCS || {})[gid + '/' + f.n] || '');
     var r2 = (!missing && R2.ready) ? r2Url(f.key) : '';
     var isLocalSite = location.protocol === 'file:';
     var hasLocalCopy = !!f.rel;
@@ -519,7 +522,10 @@
           : (f.c === '讲义笔记' ? 'chip-brand' : 'chip-line')));
 
     var acts = '';
-    if (r2) {
+    if (docPage) {
+      acts += '<a class="gbtn gbtn-sm gbtn-primary" href="' + WB.esc(docPage) + '">阅读</a>';
+      if (r2) acts += '<button class="gbtn gbtn-sm" data-dl="' + WB.esc(r2) + '" data-name="' + WB.esc(f.n) + '">下载</button>';
+    } else if (r2) {
       if (isPdf) {
         acts += '<button class="gbtn gbtn-sm gbtn-primary" data-prev="' + WB.esc(r2) + '" data-name="' + WB.esc(f.n) + '">预览</button>';
       }
@@ -548,6 +554,7 @@
           '<span class="chip ' + catCls + '">' + WB.esc(f.c) + '</span>' +
           (sizeTxt ? '<span class="chip chip-line">' + sizeTxt + '</span>' : '') +
           (r2 ? '<span class="chip chip-ok" title="文件托管在 Cloudflare R2">R2</span>' : '') +
+          (docPage ? '<span class="chip chip-brand" title="已提取文字，可在站内直接阅读">可阅读</span>' : '') +
           (!r2 && reader ? '<span class="chip chip-teal" title="超大文件已转成站内阅读页">站内阅读</span>' : '') +
           (missing ? '<span class="chip chip-mid" title="该文件还没有上传到 R2">待上传</span>' : '') +
           (!missing && localOnly ? '<span class="chip chip-mid" title="该文件未托管到 R2，只能在本机浏览本站时打开">仅本机</span>' : '') +
@@ -567,6 +574,7 @@
       shown += files.length;
       ready += files.filter(function (f) {
         if ((window.R2_MISSING || []).indexOf(f.key) > -1) return false;
+        if ((window.DOCS || {})[g.id + '/' + f.n]) return true;
         return (R2.ready && !!f.key) || (!window.R2_READERS_BROKEN && !!READERS[g.id + '/' + f.n]);
       }).length;
 

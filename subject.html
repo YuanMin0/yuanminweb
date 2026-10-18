@@ -29,16 +29,28 @@
 
 <script src="js/core.js"></script>
 <script src="data/xssx.js"></script>
+<script src="data/exam-xssx.js"></script>
 <script src="data/ethics.js"></script>
+<script src="data/exam-ethics.js"></script>
 <script src="data/bigdata.js"></script>
+<script src="data/exam-bigdata.js"></script>
 <script src="data/statistics.js"></script>
+<script src="data/exam-statistics.js"></script>
 <script src="data/pharmacology.js"></script>
+<script src="data/exam-pharmacology.js"></script>
 <script src="data/respiratory.js"></script>
+<script src="data/exam-respiratory.js"></script>
 <script src="data/cardiology.js"></script>
+<script src="data/exam-cardiology.js"></script>
 <script src="data/hematology.js"></script>
+<script src="data/exam-hematology.js"></script>
 <script src="data/endocrinology.js"></script>
+<script src="data/exam-endocrinology.js"></script>
 <script src="data/diagnostics.js"></script>
+<script src="data/exam-diagnostics.js"></script>
 <script src="data/surgery.js"></script>
+<script src="data/exam-surgery.js"></script>
+<script src="data/materials.js"></script>
 <script src="js/fx.js"></script>
 <script>
 (function () {
@@ -84,6 +96,12 @@
         '<a class="gbtn gbtn-primary" href="' + WB.link('quiz.html', { s: s.id }) + '"><span class="gbtn-ico">◉</span> 开始全科练习</a>' +
         '<button class="gbtn" id="dlBtn"><span class="gbtn-ico">⇩</span> 下载全册讲义</button>' +
         '<a class="gbtn" href="' + WB.link('quiz.html', { s: s.id, mode: 'random' }) + '"><span class="gbtn-ico">⚡</span> 随机抽题</a>' +
+        (function () {
+          var mg = (window.MATERIALS || []).filter(function (g) { return g.id === s.id; })[0];
+          return mg && mg.files.length
+            ? '<a class="gbtn" href="materials.html?s=' + encodeURIComponent(s.id) + '"><span class="gbtn-ico">📂</span> 资料汇总 ' + mg.files.length + '</a>'
+            : '';
+        })() +
       '</div>' +
     '</section>' +
     '<div class="card card-pad mt-3 rv rv-d1 small muted"><b>素材来源</b>：' + WB.esc(s.source || '—') + '</div>';

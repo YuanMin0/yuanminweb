@@ -29,16 +29,27 @@
 
 <script src="js/core.js"></script>
 <script src="data/xssx.js"></script>
+<script src="data/exam-xssx.js"></script>
 <script src="data/ethics.js"></script>
+<script src="data/exam-ethics.js"></script>
 <script src="data/bigdata.js"></script>
+<script src="data/exam-bigdata.js"></script>
 <script src="data/statistics.js"></script>
+<script src="data/exam-statistics.js"></script>
 <script src="data/pharmacology.js"></script>
+<script src="data/exam-pharmacology.js"></script>
 <script src="data/respiratory.js"></script>
+<script src="data/exam-respiratory.js"></script>
 <script src="data/cardiology.js"></script>
+<script src="data/exam-cardiology.js"></script>
 <script src="data/hematology.js"></script>
+<script src="data/exam-hematology.js"></script>
 <script src="data/endocrinology.js"></script>
+<script src="data/exam-endocrinology.js"></script>
 <script src="data/diagnostics.js"></script>
+<script src="data/exam-diagnostics.js"></script>
 <script src="data/surgery.js"></script>
+<script src="data/exam-surgery.js"></script>
 <script src="js/fx.js"></script>
 <script>
 (function () {
@@ -106,6 +117,7 @@
           '<span class="chip" style="background:' + accSoft + ';color:' + acc + '">' + (s ? s.icon + ' ' + WB.esc(s.name) : '—') + '</span>' +
           '<span class="chip chip-line">' + WB.typeLabel(w.type) + '</span>' +
           '<span class="chip chip-line">' + WB.esc(w.chapterTitle || '') + '</span>' +
+          WB.quizTags(w) +
           '<span class="chip chip-bad">错 ' + w.times + ' 次</span>' +
           '<div class="spacer"></div>' +
           '<span class="tiny dim">' + WB.fmtDate(w.ts) + '</span>' +

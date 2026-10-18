@@ -15,7 +15,23 @@
 
   WB.register = function (s) {
     if (!s || !s.id) return;
-    // 预计算索引
+    indexSubject(s);
+    _subjects.push(s);
+    _subjects.sort(function (a, b) { return (a.order || 99) - (b.order || 99); });
+    return s;
+  };
+
+  /* 为科目追加章节（用于「往年真题精析」等外挂模块），并重建索引与统计 */
+  WB.registerExam = function (sid, chapters) {
+    var s = WB.getSubject(sid);
+    if (!s || !chapters || !chapters.length) return null;
+    chapters.forEach(function (ch) { ch._exam = true; s.chapters.push(ch); });
+    indexSubject(s);
+    return s;
+  };
+
+  /* 预计算科目索引：章节 id、知识点 id、计数、扁平索引 */
+  function indexSubject(s) {
     var kIndex = {}, chapters = s.chapters || [], n = 0, q = 0;
     chapters.forEach(function (ch, ci) {
       ch.id = ch.id || (s.id + '-c' + (ci + 1));
@@ -34,10 +50,8 @@
     });
     s._kIndex = kIndex;
     s._count = { chapters: chapters.length, knowledge: n, quiz: q };
-    _subjects.push(s);
-    _subjects.sort(function (a, b) { return (a.order || 99) - (b.order || 99); });
     return s;
-  };
+  }
 
   WB.subjects = function () { return _subjects.slice(); };
   WB.getSubject = function (id) {
@@ -88,6 +102,8 @@
     out = out.replace(/&lt;(\/?)(b|strong|em|i|code|br|mark|sub|sup)\s*\/?&gt;/g, '<$1$2>');
     out = out.replace(/\[\[([^\]]+)\]\]/g, '<code>$1</code>');
     out = out.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+    // ==重点== → 红色高亮（考点/重难点强调）
+    out = out.replace(/==([^=]+)==/g, '<mark class="hl">$1</mark>');
     return out;
   };
   WB.pct = function (a, b) { return b ? Math.round((a / b) * 100) : 0; };
@@ -215,6 +231,7 @@
   var NAV = [
     { href: 'index.html', label: '总览', key: 'home' },
     { href: 'subjects.html', label: '全部科目', key: 'subjects' },
+    { href: 'materials.html', label: '资料汇总', key: 'materials' },
     { href: 'wrongbook.html', label: '错题本', key: 'wrong' },
     { href: 'about.html', label: '关于', key: 'about' }
   ];
@@ -586,6 +603,25 @@
   };
   WB.typeLabel = function (t) {
     return { single: '单选题', multiple: '多选题', judge: '判断题', fill: '填空题' }[t] || '题目';
+  };
+  /* 考频 / 重难点 / 年份 标记 → chip HTML
+     q.freq  ∈ '高频' | '中频' | '低频'（也可直接写次数，如 '5 次'）
+     q.level ∈ '重点' | '难点' | '易错'（可数组）
+     q.years = [2023, 2022, ...] */
+  WB.quizTags = function (q) {
+    var h = '', f = q.freq || '', lv = q.level || '', ys = q.years || [];
+    if (f) {
+      var cls = /高/.test(f) ? 'chip-hot' : (/中/.test(f) ? 'chip-mid' : 'chip-low');
+      h += '<span class="chip ' + cls + '">考频 ' + WB.esc(f) + '</span>';
+    }
+    (Array.isArray(lv) ? lv : (lv ? [lv] : [])).forEach(function (v) {
+      var c = /难/.test(v) ? 'chip-diff' : (/易/.test(v) ? 'chip-mid' : 'chip-key');
+      h += '<span class="chip ' + c + '">' + WB.esc(v) + '</span>';
+    });
+    if (ys && ys.length) {
+      h += '<span class="chip chip-year">' + ys.slice(0, 6).map(function (y) { return WB.esc(String(y)); }).join(' · ') + '</span>';
+    }
+    return h;
   };
   /* perm 可选：显示位次 → 原始下标 的映射数组；用于选项乱序后仍输出正确的字母标号 */
   function letterOf(i, perm) {

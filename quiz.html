@@ -29,16 +29,27 @@
 
 <script src="js/core.js"></script>
 <script src="data/xssx.js"></script>
+<script src="data/exam-xssx.js"></script>
 <script src="data/ethics.js"></script>
+<script src="data/exam-ethics.js"></script>
 <script src="data/bigdata.js"></script>
+<script src="data/exam-bigdata.js"></script>
 <script src="data/statistics.js"></script>
+<script src="data/exam-statistics.js"></script>
 <script src="data/pharmacology.js"></script>
+<script src="data/exam-pharmacology.js"></script>
 <script src="data/respiratory.js"></script>
+<script src="data/exam-respiratory.js"></script>
 <script src="data/cardiology.js"></script>
+<script src="data/exam-cardiology.js"></script>
 <script src="data/hematology.js"></script>
+<script src="data/exam-hematology.js"></script>
 <script src="data/endocrinology.js"></script>
+<script src="data/exam-endocrinology.js"></script>
 <script src="data/diagnostics.js"></script>
+<script src="data/exam-diagnostics.js"></script>
 <script src="data/surgery.js"></script>
+<script src="data/exam-surgery.js"></script>
 <script src="js/fx.js"></script>
 <script>
 (function () {
@@ -76,6 +87,7 @@
     WB.store.wrongList().forEach(function (w) {
       pool.push({
         uid: w.uid, type: w.type, stem: w.stem, options: w.options, answer: w.answer, explain: w.explain,
+        freq: w.freq, level: w.level, years: w.years,
         subjectId: w.subjectId, subjectName: w.subjectName, kid: w.kid, kTitle: w.kTitle,
         chapterTitle: w.chapterTitle, accent: 'var(--rose)', accentSoft: 'var(--rose-soft)'
       });
@@ -253,6 +265,7 @@
           '<span class="q-num">' + (st.i + 1) + '</span>' +
           '<span class="chip chip-line">' + WB.typeLabel(q.type) + '</span>' +
           (q.type === 'multiple' ? '<span class="chip chip-amber">多选，需全对</span>' : '') +
+          WB.quizTags(q) +
         '</div>' +
         '<div class="q-stem">' + WB.rich(q.stem) + '</div>' +
         body + fb +

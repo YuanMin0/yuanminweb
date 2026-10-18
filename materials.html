@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>资料汇总 · MediLearn</title>
+<meta name="description" content="MediLearn 资料汇总：按科目浏览本机原始讲义、往年真题、题库与课件。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<!-- 访问门禁：未登录直接跳转登录页（置于 head 内，避免内容闪现） -->
+<script src="js/auth.js"></script>
+<script>if(window.WB&&WB.auth)WB.auth.guard();</script>
+</head>
+<body>
+<noscript>
+<div style="max-width:600px;margin:64px auto;padding:24px 26px;border:1px solid #e3e8f0;border-radius:16px;background:#fff;color:#0f172a;font:15px/1.85 -apple-system,'PingFang SC','Microsoft YaHei',sans-serif">
+  <b style="font-size:17px">需要启用 JavaScript</b>
+  <p style="margin:8px 0 0;color:#475569">本站是纯前端站点，资料索引由浏览器脚本渲染。请在浏览器设置中开启 JavaScript 后刷新页面。</p>
+</div>
+</noscript>
+
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap">
+
+    <div class="sec-head rv">
+      <div>
+        <h2 style="font-size:24px">资料汇总</h2>
+        <div class="sub">共 <span id="gCount">0</span> 个科目 · <span id="fCount">0</span> 份资料 · 直接打开本机原始文件</div>
+      </div>
+      <a class="gbtn gbtn-sm" href="subjects.html">← 返回科目</a>
+    </div>
+
+    <div class="note note-info rv rv-d1" style="margin-bottom:18px">
+      <div class="note-t">ℹ 使用说明</div>
+      这里只收录**整理好的、可直接背诵的资料**——往年真题、题库练习、重点归纳、讲义笔记、病例分析；
+      ==PPT 课件、压缩包与截图已全部剔除==。资料链接指向本机 <code>F:\学习资料</code>，
+      **请在本机用浏览器打开本站**后点击即可查看；部署到线上时这些链接不可用（仅保留索引）。
+      PDF 支持页内预览，Word 会调用系统默认程序打开。
+    </div>
+
+    <div class="toolbar rv rv-d1">
+      <div class="search" style="position:relative">
+        <input type="search" id="q" placeholder="搜索文件名、类别…（如 往年题、重点、题库）" autocomplete="off">
+      </div>
+      <div class="seg" id="catSeg">
+        <button class="on" data-cat="">全部类别</button>
+        <button data-cat="往年真题">往年真题</button>
+        <button data-cat="题库练习">题库练习</button>
+        <button data-cat="重点归纳">重点归纳</button>
+        <button data-cat="讲义笔记">讲义笔记</button>
+        <button data-cat="病例分析">病例分析</button>
+      </div>
+    </div>
+
+    <div class="seg rv rv-d2" id="subjSeg" style="margin-bottom:22px;flex-wrap:wrap"></div>
+
+    <div id="list"></div>
+
+  </div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="js/core.js"></script>
+<script src="data/xssx.js"></script>
+<script src="data/exam-xssx.js"></script>
+<script src="data/ethics.js"></script>
+<script src="data/exam-ethics.js"></script>
+<script src="data/bigdata.js"></script>
+<script src="data/exam-bigdata.js"></script>
+<script src="data/statistics.js"></script>
+<script src="data/exam-statistics.js"></script>
+<script src="data/pharmacology.js"></script>
+<script src="data/exam-pharmacology.js"></script>
+<script src="data/respiratory.js"></script>
+<script src="data/exam-respiratory.js"></script>
+<script src="data/cardiology.js"></script>
+<script src="data/exam-cardiology.js"></script>
+<script src="data/hematology.js"></script>
+<script src="data/exam-hematology.js"></script>
+<script src="data/endocrinology.js"></script>
+<script src="data/exam-endocrinology.js"></script>
+<script src="data/diagnostics.js"></script>
+<script src="data/exam-diagnostics.js"></script>
+<script src="data/surgery.js"></script>
+<script src="data/exam-surgery.js"></script>
+<script src="data/materials.js"></script>
+<script src="js/fx.js"></script>
+<script>
+(function () {
+  WB.mountChrome('materials');
+
+  var GROUPS = window.MATERIALS || [];
+  var ROOT = window.MATERIAL_ROOT || 'F:/学习资料/';
+  var curSubj = (function () {
+    var m = /[?&]s=([^&#]+)/.exec(location.search);
+    return m ? decodeURIComponent(m[1]) : '';
+  })();
+  var curCat = '', kw = '';
+
+  var TYPE_META = {
+    PDF:  { ico: '📕', cls: 'chip-bad' },
+    DOCX: { ico: '📄', cls: 'chip-brand' },
+    DOC:  { ico: '📄', cls: 'chip-brand' },
+    PPTX: { ico: '📊', cls: 'chip-amber' },
+    PPT:  { ico: '📊', cls: 'chip-amber' },
+    ZIP:  { ico: '🗜', cls: 'chip-line' },
+    RAR:  { ico: '🗜', cls: 'chip-line' },
+    XLSX: { ico: '📈', cls: 'chip-teal' },
+    IMG:  { ico: '🖼', cls: 'chip-violet' }
+  };
+
+  function fileUrl(p) {
+    // 逐段编码，保留路径分隔符；盘符冒号必须原样保留，否则 file:// 无法解析
+    var root = ROOT.split('/').filter(Boolean).map(function (seg, i) {
+      return i === 0 && /^[A-Za-z]:$/.test(seg) ? seg : encodeURIComponent(seg);
+    }).join('/');
+    return 'file:///' + root + '/' + p.split('/').map(encodeURIComponent).join('/');
+  }
+  function fmtSize(b) {
+    if (!b) return '';
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b / 1024).toFixed(0) + ' KB';
+    if (b < 1073741824) return (b / 1048576).toFixed(1) + ' MB';
+    return (b / 1073741824).toFixed(2) + ' GB';
+  }
+  function hlName(t, q) {
+    var s = WB.esc(t);
+    if (!q) return s;
+    var re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
+    return s.replace(re, '<mark>$1</mark>');
+  }
+
+  /* 科目筛选条 */
+  function renderSubjSeg() {
+    var html = '<button class="' + (curSubj ? '' : 'on') + '" data-subj="">全部科目</button>';
+    GROUPS.forEach(function (g) {
+      html += '<button class="' + (curSubj === g.id ? 'on' : '') + '" data-subj="' + g.id + '">' + WB.esc(g.name) + ' <span class="tiny dim">' + g.files.length + '</span></button>';
+    });
+    document.getElementById('subjSeg').innerHTML = html;
+  }
+
+  function match(f) {
+    if (curCat && f.c !== curCat) return false;
+    if (!kw) return true;
+    return (f.n + ' ' + f.c + ' ' + f.t).toLowerCase().indexOf(kw) > -1;
+  }
+
+  function fileRow(f, accent) {
+    var m = TYPE_META[f.t] || { ico: '📄', cls: 'chip-line' };
+    var isPdf = f.t === 'PDF';
+    var isImg = f.t === 'IMG';
+    var url = fileUrl(f.p);
+    var sizeTxt = isImg ? (f.count + ' 张') : fmtSize(f.s);
+    var catCls = f.c === '往年真题' ? 'chip-hot'
+      : (f.c === '题库练习' ? 'chip-amber'
+        : (f.c === '重点归纳' ? 'chip-key'
+          : (f.c === '讲义笔记' ? 'chip-brand' : 'chip-line')));
+
+    return '<div class="mrow" style="--accent:' + accent + '">' +
+      '<div class="mrow-ico">' + m.ico + '</div>' +
+      '<div class="mrow-main">' +
+        '<div class="mrow-n">' + hlName(f.n, kw) + '</div>' +
+        '<div class="mrow-m">' +
+          '<span class="chip ' + m.cls + '">' + f.t + '</span>' +
+          '<span class="chip ' + catCls + '">' + WB.esc(f.c) + '</span>' +
+          (sizeTxt ? '<span class="chip chip-line">' + sizeTxt + '</span>' : '') +
+        '</div>' +
+      '</div>' +
+      '<div class="mrow-act">' +
+        (isPdf ? '<button class="gbtn gbtn-sm" data-prev="' + WB.esc(url) + '" data-name="' + WB.esc(f.n) + '">预览</button>' : '') +
+        (isImg ? '' : '<a class="gbtn gbtn-sm gbtn-primary" href="' + WB.esc(url) + '" target="_blank" rel="noopener">打开</a>') +
+        (isImg ? '<a class="gbtn gbtn-sm gbtn-primary" href="' + WB.esc(fileUrl(f.p)) + '" target="_blank" rel="noopener">打开文件夹</a>' : '') +
+      '</div>' +
+    '</div>';
+  }
+
+  function render() {
+    var html = '', total = 0, shown = 0;
+    GROUPS.forEach(function (g) {
+      if (curSubj && curSubj !== g.id) return;
+      var files = g.files.filter(match);
+      total += g.files.length;
+      if (!files.length) return;
+      shown += files.length;
+      var s = WB.getSubject(g.id);
+      var accent = s ? s.accent : 'var(--brand)';
+      var icon = s ? s.icon : '📚';
+      html += '<section class="rv" style="margin-bottom:34px">' +
+        '<div class="sec-head" style="margin-bottom:12px">' +
+          '<div>' +
+            '<h3 style="font-size:18px;margin:0">' + icon + ' ' + WB.esc(g.name) + '</h3>' +
+            '<div class="sub">' + files.length + ' 份资料 · ' + WB.esc(g.dir) + '</div>' +
+          '</div>' +
+          (s ? '<a class="gbtn gbtn-sm" href="' + WB.link('subject.html', { s: g.id }) + '">进入科目 →</a>' : '') +
+        '</div>' +
+        files.map(function (f) { return fileRow(f, accent); }).join('') +
+      '</section>';
+    });
+
+    document.getElementById('gCount').textContent = GROUPS.length;
+    document.getElementById('fCount').textContent = shown || total;
+
+    document.getElementById('list').innerHTML = html || WB.empty('📂', '没有匹配的资料', '换个关键词或切换类别试试');
+
+    // 绑定预览
+    document.getElementById('list').querySelectorAll('[data-prev]').forEach(function (b) {
+      b.addEventListener('click', function () { openPreview(b.getAttribute('data-prev'), b.getAttribute('data-name')); });
+    });
+    WB.fx.refresh();
+  }
+
+  /* PDF 预览弹窗 */
+  function openPreview(url, name) {
+    var mask = document.createElement('div');
+    mask.className = 'mask';
+    mask.innerHTML = '<div class="modal modal-wide">' +
+      '<div class="row" style="align-items:center;gap:10px;margin-bottom:12px">' +
+        '<b style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + WB.esc(name) + '</b>' +
+        '<a class="gbtn gbtn-sm" href="' + WB.esc(url) + '" target="_blank" rel="noopener">新窗口打开</a>' +
+        '<button class="btn" data-close>关闭</button>' +
+      '</div>' +
+      '<iframe src="' + WB.esc(url) + '" style="width:100%;height:70vh;border:1px solid var(--border-2);border-radius:12px;background:#fff"></iframe>' +
+      '<p class="small muted" style="margin:10px 0 0">若预览空白，说明浏览器禁止本地文件内嵌，请点「新窗口打开」。</p>' +
+    '</div>';
+    mask.querySelector('[data-close]').addEventListener('click', function () { mask.remove(); });
+    mask.addEventListener('click', function (e) { if (e.target === mask) mask.remove(); });
+    document.body.appendChild(mask);
+    requestAnimationFrame(function () { mask.classList.add('on'); });
+    setTimeout(function () { mask.classList.add('on'); }, 60);
+  }
+
+  renderSubjSeg();
+  render();
+
+  document.getElementById('subjSeg').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    this.querySelectorAll('button').forEach(function (x) { x.classList.remove('on'); });
+    b.classList.add('on'); curSubj = b.getAttribute('data-subj'); render();
+  });
+  document.getElementById('catSeg').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    this.querySelectorAll('button').forEach(function (x) { x.classList.remove('on'); });
+    b.classList.add('on'); curCat = b.getAttribute('data-cat'); render();
+  });
+  var tmr = null;
+  document.getElementById('q').addEventListener('input', function () {
+    clearTimeout(tmr);
+    var v = this.value.trim().toLowerCase();
+    tmr = setTimeout(function () { kw = v; render(); }, 150);
+  });
+
+  WB.fx.init();
+})();
+</script>
+</body>
+</html>

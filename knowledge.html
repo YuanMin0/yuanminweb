@@ -76,6 +76,33 @@
   var prev = idx > 0 ? flat[idx - 1] : null;
   var next = idx < flat.length - 1 ? flat[idx + 1] : null;
 
+  /* 相关知识点：先取同章其余，再用本科目其他章补足 3 条 */
+  var relatedItems = flat.filter(function (x) {
+    return x.id !== k.id && x.chapterId === k.chapterId;
+  });
+  if (relatedItems.length < 3) {
+    flat.forEach(function (x) {
+      if (relatedItems.length >= 3) return;
+      if (x.id === k.id || x.chapterId === k.chapterId) return;
+      relatedItems.push(x);
+    });
+  }
+  relatedItems = relatedItems.slice(0, 3);
+  var related = relatedItems.length
+    ? '<section class="related no-print">' +
+        '<div class="related-h">继续看 · 同科相关知识点</div>' +
+        '<div class="related-grid">' +
+        relatedItems.map(function (x) {
+          return '<a class="related-card spot" style="--accent:' + s.accent + '" href="' +
+            WB.link('knowledge.html', { s: s.id, k: x.id }) + '">' +
+            '<div class="related-ch">' + WB.esc(x.chapterTitle) + '</div>' +
+            '<div class="related-t">' + WB.esc(x.title) + '</div>' +
+            '<div class="related-m">' + (x.quiz || []).length + ' 题</div>' +
+          '</a>';
+        }).join('') +
+        '</div></section>'
+    : '';
+
   /* 目录 */
   var toc = WB.outline(k.content);
 
@@ -124,6 +151,7 @@
         '<div class="mt-3 no-print" style="text-align:center">' +
           '<a class="gbtn gbtn-primary gbtn-lg" href="' + WB.link('quiz.html', { s: s.id, k: k.id }) + '">开始自测（' + k.quiz.length + ' 题）</a>' +
         '</div>' +
+        related +
       '</article>' +
     '</div>';
 

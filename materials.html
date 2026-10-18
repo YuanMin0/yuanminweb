@@ -27,7 +27,7 @@
     <div class="sec-head rv">
       <div>
         <h2 style="font-size:24px">资料汇总</h2>
-        <div class="sub">共 <span id="gCount">0</span> 个科目 · <span id="fCount">0</span> 份资料 · 直接打开本机原始文件</div>
+        <div class="sub">共 <span id="gCount">0</span> 个科目 · <span id="fCount">0</span> 份资料 · <span id="sCount">0</span> 份已随站点打包</div>
       </div>
       <a class="gbtn gbtn-sm" href="subjects.html">← 返回科目</a>
     </div>
@@ -35,9 +35,10 @@
     <div class="note note-info rv rv-d1" style="margin-bottom:18px">
       <div class="note-t">ℹ 使用说明</div>
       这里只收录**整理好的、可直接背诵的资料**——往年真题、题库练习、重点归纳、讲义笔记、病例分析；
-      ==PPT 课件、压缩包与截图已全部剔除==。资料链接指向本机 <code>F:\学习资料</code>，
-      **请在本机用浏览器打开本站**后点击即可查看；部署到线上时这些链接不可用（仅保留索引）。
-      PDF 支持页内预览，Word 会调用系统默认程序打开。
+      ==PPT 课件、压缩包与截图已全部剔除==。<br>
+      **22MB 以内的资料已复制进站点**，线上、本地都能直接点「打开」；
+      标了 ==仅本机== 的是超大文件（未打包），只有在本机打开本站时才能访问。
+      PDF 支持页内预览，Word 文件会下载后用系统默认程序打开。
     </div>
 
     <div class="toolbar rv rv-d1">
@@ -87,6 +88,7 @@
 <script src="data/surgery.js"></script>
 <script src="data/exam-surgery.js"></script>
 <script src="data/materials.js"></script>
+<script src="data/readers.js"></script>
 <script src="js/fx.js"></script>
 <script>
 (function () {
@@ -119,6 +121,10 @@
     }).join('/');
     return 'file:///' + root + '/' + p.split('/').map(encodeURIComponent).join('/');
   }
+  /* 站内相对路径（materials/xxx/yyy.pdf）→ 逐段编码的相对 URL，线上与本地都可用 */
+  function relUrl(p) {
+    return p.split('/').map(encodeURIComponent).join('/');
+  }
   function fmtSize(b) {
     if (!b) return '';
     if (b < 1024) return b + ' B';
@@ -148,12 +154,15 @@
     return (f.n + ' ' + f.c + ' ' + f.t).toLowerCase().indexOf(kw) > -1;
   }
 
-  function fileRow(f, accent) {
+  function fileRow(f, accent, gid) {
     var m = TYPE_META[f.t] || { ico: '📄', cls: 'chip-line' };
     var isPdf = f.t === 'PDF';
-    var isImg = f.t === 'IMG';
-    var url = fileUrl(f.p);
-    var sizeTxt = isImg ? (f.count + ' 张') : fmtSize(f.s);
+    // 优先级：站内原文件 > 站内阅读页 > 本机 file://
+    var reader = (window.READERS || {})[gid + '/' + f.n];
+    var inSite = !!f.rel;
+    var url = inSite ? relUrl(f.rel) : (reader || fileUrl(f.p));
+    var readable = !inSite && !!reader;
+    var sizeTxt = fmtSize(f.s);
     var catCls = f.c === '往年真题' ? 'chip-hot'
       : (f.c === '题库练习' ? 'chip-amber'
         : (f.c === '重点归纳' ? 'chip-key'
@@ -167,24 +176,27 @@
           '<span class="chip ' + m.cls + '">' + f.t + '</span>' +
           '<span class="chip ' + catCls + '">' + WB.esc(f.c) + '</span>' +
           (sizeTxt ? '<span class="chip chip-line">' + sizeTxt + '</span>' : '') +
+          (readable ? '<span class="chip chip-teal" title="超大文件已转成站内阅读页">站内阅读</span>' : '') +
+          (inSite || readable ? '' : '<span class="chip chip-mid" title="文件过大且未生成阅读页，需在本机打开本站">仅本机</span>') +
         '</div>' +
       '</div>' +
       '<div class="mrow-act">' +
-        (isPdf ? '<button class="gbtn gbtn-sm" data-prev="' + WB.esc(url) + '" data-name="' + WB.esc(f.n) + '">预览</button>' : '') +
-        (isImg ? '' : '<a class="gbtn gbtn-sm gbtn-primary" href="' + WB.esc(url) + '" target="_blank" rel="noopener">打开</a>') +
-        (isImg ? '<a class="gbtn gbtn-sm gbtn-primary" href="' + WB.esc(fileUrl(f.p)) + '" target="_blank" rel="noopener">打开文件夹</a>' : '') +
+        ((isPdf && inSite) ? '<button class="gbtn gbtn-sm" data-prev="' + WB.esc(url) + '" data-name="' + WB.esc(f.n) + '">预览</button>' : '') +
+        '<a class="gbtn gbtn-sm gbtn-primary" href="' + WB.esc(url) + '" target="_blank" rel="noopener">' +
+          (readable ? '阅读' : (inSite ? '打开' : '本机打开')) + '</a>' +
       '</div>' +
     '</div>';
   }
 
   function render() {
-    var html = '', total = 0, shown = 0;
+    var html = '', total = 0, shown = 0, packed = 0;
     GROUPS.forEach(function (g) {
       if (curSubj && curSubj !== g.id) return;
       var files = g.files.filter(match);
       total += g.files.length;
       if (!files.length) return;
       shown += files.length;
+      packed += files.filter(function (f) { return !!f.rel; }).length;
       var s = WB.getSubject(g.id);
       var accent = s ? s.accent : 'var(--brand)';
       var icon = s ? s.icon : '📚';
@@ -196,12 +208,13 @@
           '</div>' +
           (s ? '<a class="gbtn gbtn-sm" href="' + WB.link('subject.html', { s: g.id }) + '">进入科目 →</a>' : '') +
         '</div>' +
-        files.map(function (f) { return fileRow(f, accent); }).join('') +
+        files.map(function (f) { return fileRow(f, accent, g.id); }).join('') +
       '</section>';
     });
 
     document.getElementById('gCount').textContent = GROUPS.length;
     document.getElementById('fCount').textContent = shown || total;
+    document.getElementById('sCount').textContent = packed;
 
     document.getElementById('list').innerHTML = html || WB.empty('📂', '没有匹配的资料', '换个关键词或切换类别试试');
 

@@ -4,14 +4,14 @@
    全站只有这一个文件需要改。修改后刷新页面即可生效。
 
    R2_BASE   ：R2 桶的公共访问地址，末尾带 /
-               当前用 R2 的公共开发地址（r2.dev），已验证可读取。
-               若要更稳定，可在桶 Settings → Custom Domains 添加
-               files.yuanminstudy.uk，然后把这里换成 https://files.yuanminstudy.uk/
+               当前用绑定到桶的自定义域名 pdf.yuanminstudy.uk（已验证可读取）。
+               备用：R2 的公共开发地址 https://pub-187b4a1562f046bf8ee3f7f8f4d792a9.r2.dev/
+               （r2.dev 有限流，仅作应急，换成它只需改这一行）
    R2_PREFIX ：对象键的统一前缀。桶内文件都在 materials/ 目录下，故为 'materials/'。
    R2_AUTOPROBE：是否在页面加载时用 HEAD 探测前缀。前缀已确认，保持 false 即可；
                若以后改了桶内目录结构，改成 true 可自动寻找。
    ========================================================================== */
-window.R2_BASE = 'https://pub-187b4a1562f046bf8ee3f7f8f4d792a9.r2.dev/';
+window.R2_BASE = 'https://pdf.yuanminstudy.uk/';
 window.R2_PREFIX = 'materials/';
 window.R2_AUTOPROBE = false;
 

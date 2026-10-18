@@ -162,7 +162,7 @@ HASH: '313e7f9bd2dc3b6a1f921165506c3c2dc195613fc89e06b74cfd32a3829f4ca1',
 
 站点由 Cloudflare 连接 GitHub 仓库 `YuanMin0/yuanminweb` 自动部署，域名为
 **https://www.yuanminstudy.uk/**；资料原件放在 Cloudflare R2 桶 **study**，
-通过自定义域名 **https://files.yuanminstudy.uk/** 公开读取。
+通过自定义域名 **https://pdf.yuanminstudy.uk/** 公开读取。
 
 ### 三层分工
 
@@ -178,7 +178,7 @@ HASH: '313e7f9bd2dc3b6a1f921165506c3c2dc195613fc89e06b74cfd32a3829f4ca1',
 ### 唯一的配置文件：`data/r2-config.js`
 
 ```js
-window.R2_BASE = 'https://files.yuanminstudy.uk/';  // 桶的公共域名，末尾带 /
+window.R2_BASE = 'https://pdf.yuanminstudy.uk/';  // 桶的公共域名，末尾带 /
 window.R2_PREFIX = 'materials/';                    // 对象键前缀；文件在桶根则留空 ''
 ```
 
@@ -187,7 +187,7 @@ window.R2_PREFIX = 'materials/';                    // 对象键前缀；文件�
 
 ### R2 控制台需要确认的三项
 
-1. **Custom Domain**（必须）：桶 `study` → Settings → Custom Domains → Add → `files.yuanminstudy.uk`。
+1. **Custom Domain**（必须）：桶 `study` → Settings → Custom Domains → Add → `pdf.yuanminstudy.uk`。
    域名在同一 Cloudflare 账号下会自动建 CNAME，通常几分钟生效。
    临时测试也可用 Settings → Public Development URL 的 `r2.dev` 地址，但有速率限制、不适合长期使用。
 2. **CORS Policy**（建议）：Settings → CORS Policy → Add，粘贴 `_tools/r2-cors.json` 的内容。

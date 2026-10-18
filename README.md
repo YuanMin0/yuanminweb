@@ -151,8 +151,8 @@ HASH: '313e7f9bd2dc3b6a1f921165506c3c2dc195613fc89e06b74cfd32a3829f4ca1',
 题目带 **考频**（高频/中频/低频）、**重难点**（重点/难点/易错）与 **年份** 标记；
 目前 285 道题带考频与重难点标记、94 道题标注了具体年份。
 
-另有 **资料汇总** 页（`materials.html`）：扫描本机 `F:\学习资料` 生成 12 个科目组、100 条资料索引，
-只收录**整理好、可直接背诵**的资料（往年真题 8 / 题库练习 27 / 重点归纳 21 / 讲义笔记 38 / 病例分析 6），
+另有 **资料汇总** 页（`materials.html`）：扫描本机 `F:\学习资料` 生成 14 个科目组、122 条资料索引，
+只收录**整理好、可直接背诵**的资料（往年真题 8 / 题库练习 33 / 重点归纳 36 / 讲义笔记 39 / 病例分析 6），
 **PPT 课件、压缩包与截图目录已全部剔除**。网站代码放 GitHub，资料 PDF/DOC/DOCX 和扫描页图放 Cloudflare R2；
 资料索引按 `R2_BASE + R2_PREFIX + 对象键` 访问，支持页内预览（缩放 / 全屏）与一键下载。
 
@@ -169,7 +169,7 @@ HASH: '313e7f9bd2dc3b6a1f921165506c3c2dc195613fc89e06b74cfd32a3829f4ca1',
 | 层 | 放什么 | 说明 |
 |---|---|---|
 | GitHub | HTML / CSS / JS / 知识点数据 / 阅读页 HTML | 约 1.5 MB，单文件都远小于限制 |
-| R2（桶 `study`） | 100 份 PDF/DOC/DOCX + 179 张扫描页 JPEG | 约 856 MB，前缀 `materials/` |
+| R2（桶 `study`） | 122 份 PDF/DOC/DOCX + 179 张扫描页 JPEG | 约 1.1 GB，前缀 `materials/` |
 | Cloudflare | 构建、CDN、HTTPS、自定义域名 | 推送到 GitHub 后自动重新部署 |
 
 `.gitignore` 已排除 `materials/`、`reader/*/*/*.jpg`、`r2-upload-manifest.json`、`.env`，
@@ -235,6 +235,8 @@ C:/Users/38815/.workbuddy-ai/binaries/python/envs/default/Scripts/python.exe _to
 | 关闭 | `✕` | `Esc`（或点浮层空白处） |
 | 下载 | 下载 | — |
 
+预览用 **PDF.js 在页面内渲染成 canvas**，不依赖系统 PDF 组件，所以手机 / 平板浏览器不会再变成「下载」。
+只渲染视口附近的页面、远处自动释放，长文档也不会撑爆内存。
 「下载」优先用 `fetch` 取 blob 强制保存为原文件名；跨域被拒时自动退回新窗口打开。
 Word 文档浏览器无法内嵌预览，只提供下载。
 

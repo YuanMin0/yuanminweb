@@ -1,5 +1,5 @@
 /* 资料汇总索引：由 _tools/gen_materials.py 扫描 F:\学习资料 生成，请勿手改 */
-/* R2 公共地址与前缀统一在 data/r2-config.js 配置 */
+/* R2 公共地址与前缀统一在 data/r2-config.js 配置，此处不再写死，避免覆盖 */
 window.MATERIAL_ROOT = "F:/学习资料/";
 window.MATERIALS = [
  {
@@ -412,6 +412,14 @@ window.MATERIALS = [
     "rel": "materials/pharmacology/药理选择填空.pdf"
    },
    {
+    "n": "药品汇总表格 有笔记.pdf",
+    "p": "大三上/药理/药品汇总表格 有笔记.pdf",
+    "t": "PDF",
+    "s": 27132705,
+    "c": "重点归纳",
+    "key": "pharmacology/药品汇总表格 有笔记.pdf"
+   },
+   {
     "n": "药理整理.docx",
     "p": "大三上/药理/药理整理.docx",
     "t": "DOCX",
@@ -428,14 +436,6 @@ window.MATERIALS = [
     "c": "重点归纳",
     "key": "pharmacology/药理名解，简答，论述.pdf",
     "rel": "materials/pharmacology/药理名解，简答，论述.pdf"
-   },
-   {
-    "n": "药品汇总表格 有笔记.pdf",
-    "p": "大三上/药理/药品汇总表格 有笔记.pdf",
-    "t": "PDF",
-    "s": 27132705,
-    "c": "讲义笔记",
-    "key": "pharmacology/药品汇总表格 有笔记.pdf"
    },
    {
     "n": "罗药理学.pdf",
@@ -975,6 +975,216 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "skills/医学生期末复习资料合集.docx",
     "rel": "materials/skills/医学生期末复习资料合集.docx"
+   }
+  ]
+ },
+ {
+  "id": "surgery-nursing",
+  "name": "外科护理学",
+  "dir": "外科护理学",
+  "files": [
+   {
+    "n": "外科护理学题库(分章节)及答案.pdf",
+    "p": "外科护理学/外科护理学/外科护理学题库(分章节)及答案.pdf",
+    "t": "PDF",
+    "s": 5927894,
+    "c": "题库练习",
+    "key": "surgery-nursing/外科护理学题库(分章节)及答案.pdf",
+    "rel": "materials/surgery-nursing/外科护理学题库(分章节)及答案.pdf"
+   },
+   {
+    "n": "外科护理学试题+答案.pdf",
+    "p": "外科护理学/外科护理学/外科护理学试题+答案.pdf",
+    "t": "PDF",
+    "s": 816548,
+    "c": "题库练习",
+    "key": "surgery-nursing/外科护理学试题+答案.pdf",
+    "rel": "materials/surgery-nursing/外科护理学试题+答案.pdf"
+   },
+   {
+    "n": "外科护理学试题(附答案).pdf",
+    "p": "外科护理学/外科护理学/外科护理学试题(附答案).pdf",
+    "t": "PDF",
+    "s": 307727,
+    "c": "题库练习",
+    "key": "surgery-nursing/外科护理学试题(附答案).pdf",
+    "rel": "materials/surgery-nursing/外科护理学试题(附答案).pdf"
+   },
+   {
+    "n": "《外科护理学》试题答案.pdf",
+    "p": "外科护理学/外科护理学/《外科护理学》试题答案.pdf",
+    "t": "PDF",
+    "s": 237287,
+    "c": "题库练习",
+    "key": "surgery-nursing/《外科护理学》试题答案.pdf",
+    "rel": "materials/surgery-nursing/《外科护理学》试题答案.pdf"
+   },
+   {
+    "n": "外科速记脑图完整版(5).pdf",
+    "p": "外科护理学/外科护理学/外科速记脑图完整版(5).pdf",
+    "t": "PDF",
+    "s": 78568653,
+    "c": "重点归纳",
+    "key": "surgery-nursing/外科速记脑图完整版(5).pdf"
+   },
+   {
+    "n": "(完整版)外科护理学知识点整理.pdf",
+    "p": "外科护理学/外科护理学/(完整版)外科护理学知识点整理.pdf",
+    "t": "PDF",
+    "s": 5951164,
+    "c": "重点归纳",
+    "key": "surgery-nursing/(完整版)外科护理学知识点整理.pdf",
+    "rel": "materials/surgery-nursing/(完整版)外科护理学知识点整理.pdf"
+   },
+   {
+    "n": "外科护理学复习重点.pdf",
+    "p": "外科护理学/外科护理学/外科护理学复习重点.pdf",
+    "t": "PDF",
+    "s": 3896616,
+    "c": "重点归纳",
+    "key": "surgery-nursing/外科护理学复习重点.pdf",
+    "rel": "materials/surgery-nursing/外科护理学复习重点.pdf"
+   },
+   {
+    "n": "外科护理学知识点整理.pdf",
+    "p": "外科护理学/外科护理学/外科护理学知识点整理.pdf",
+    "t": "PDF",
+    "s": 1373309,
+    "c": "重点归纳",
+    "key": "surgery-nursing/外科护理学知识点整理.pdf",
+    "rel": "materials/surgery-nursing/外科护理学知识点整理.pdf"
+   },
+   {
+    "n": "外科护理学各章重点.pdf",
+    "p": "外科护理学/外科护理学/外科护理学各章重点.pdf",
+    "t": "PDF",
+    "s": 675472,
+    "c": "重点归纳",
+    "key": "surgery-nursing/外科护理学各章重点.pdf",
+    "rel": "materials/surgery-nursing/外科护理学各章重点.pdf"
+   },
+   {
+    "n": "外科护理学重点.pdf",
+    "p": "外科护理学/外科护理学/外科护理学重点.pdf",
+    "t": "PDF",
+    "s": 659856,
+    "c": "重点归纳",
+    "key": "surgery-nursing/外科护理学重点.pdf",
+    "rel": "materials/surgery-nursing/外科护理学重点.pdf"
+   },
+   {
+    "n": "外科护理学复习重点(精要总结).pdf",
+    "p": "外科护理学/外科护理学/外科护理学复习重点(精要总结).pdf",
+    "t": "PDF",
+    "s": 331463,
+    "c": "重点归纳",
+    "key": "surgery-nursing/外科护理学复习重点(精要总结).pdf",
+    "rel": "materials/surgery-nursing/外科护理学复习重点(精要总结).pdf"
+   },
+   {
+    "n": "外科护理学重点(名词解释).pdf",
+    "p": "外科护理学/外科护理学/外科护理学重点(名词解释).pdf",
+    "t": "PDF",
+    "s": 173891,
+    "c": "重点归纳",
+    "key": "surgery-nursing/外科护理学重点(名词解释).pdf",
+    "rel": "materials/surgery-nursing/外科护理学重点(名词解释).pdf"
+   },
+   {
+    "n": "外科护理学复习题(各章节)含答案.doc",
+    "p": "外科护理学/外科护理学/外科护理学复习题(各章节)含答案.doc",
+    "t": "DOC",
+    "s": 410112,
+    "c": "讲义笔记",
+    "key": "surgery-nursing/外科护理学复习题(各章节)含答案.doc",
+    "rel": "materials/surgery-nursing/外科护理学复习题(各章节)含答案.doc"
+   },
+   {
+    "n": "外科护理学复习题(有答案).pdf",
+    "p": "外科护理学/外科护理学/外科护理学复习题(有答案).pdf",
+    "t": "PDF",
+    "s": 384978,
+    "c": "讲义笔记",
+    "key": "surgery-nursing/外科护理学复习题(有答案).pdf",
+    "rel": "materials/surgery-nursing/外科护理学复习题(有答案).pdf"
+   }
+  ]
+ },
+ {
+  "id": "internal-nursing",
+  "name": "内科护理学",
+  "dir": "内科护理学",
+  "files": [
+   {
+    "n": "内科护理学-复习题库(按章节).pdf",
+    "p": "内科护理学/内科护理学/内科护理学-复习题库(按章节).pdf",
+    "t": "PDF",
+    "s": 4801119,
+    "c": "题库练习",
+    "key": "internal-nursing/内科护理学-复习题库(按章节).pdf",
+    "rel": "materials/internal-nursing/内科护理学-复习题库(按章节).pdf"
+   },
+   {
+    "n": "内科护理学试题库及答案大全.pdf",
+    "p": "内科护理学/内科护理学/内科护理学试题库及答案大全.pdf",
+    "t": "PDF",
+    "s": 1708505,
+    "c": "题库练习",
+    "key": "internal-nursing/内科护理学试题库及答案大全.pdf",
+    "rel": "materials/internal-nursing/内科护理学试题库及答案大全.pdf"
+   },
+   {
+    "n": "内科速记脑图完整版(2).pdf",
+    "p": "内科护理学/内科护理学/内科速记脑图完整版(2).pdf",
+    "t": "PDF",
+    "s": 117809276,
+    "c": "重点归纳",
+    "key": "internal-nursing/内科速记脑图完整版(2).pdf"
+   },
+   {
+    "n": "内科护理学重点.pdf",
+    "p": "内科护理学/内科护理学/内科护理学重点.pdf",
+    "t": "PDF",
+    "s": 2852757,
+    "c": "重点归纳",
+    "key": "internal-nursing/内科护理学重点.pdf",
+    "rel": "materials/internal-nursing/内科护理学重点.pdf"
+   },
+   {
+    "n": "本科-内科护理学重点知识总结.pdf",
+    "p": "内科护理学/内科护理学/本科-内科护理学重点知识总结.pdf",
+    "t": "PDF",
+    "s": 859768,
+    "c": "重点归纳",
+    "key": "internal-nursing/本科-内科护理学重点知识总结.pdf",
+    "rel": "materials/internal-nursing/本科-内科护理学重点知识总结.pdf"
+   },
+   {
+    "n": "内科护理学考试重点-1.pdf",
+    "p": "内科护理学/内科护理学/内科护理学考试重点-1.pdf",
+    "t": "PDF",
+    "s": 702971,
+    "c": "重点归纳",
+    "key": "internal-nursing/内科护理学考试重点-1.pdf",
+    "rel": "materials/internal-nursing/内科护理学考试重点-1.pdf"
+   },
+   {
+    "n": "内科护理学重点考点整理.pdf",
+    "p": "内科护理学/内科护理学/内科护理学重点考点整理.pdf",
+    "t": "PDF",
+    "s": 593848,
+    "c": "重点归纳",
+    "key": "internal-nursing/内科护理学重点考点整理.pdf",
+    "rel": "materials/internal-nursing/内科护理学重点考点整理.pdf"
+   },
+   {
+    "n": "内科护理学期末考试名词解释汇总.pdf",
+    "p": "内科护理学/内科护理学/内科护理学期末考试名词解释汇总.pdf",
+    "t": "PDF",
+    "s": 249920,
+    "c": "重点归纳",
+    "key": "internal-nursing/内科护理学期末考试名词解释汇总.pdf",
+    "rel": "materials/internal-nursing/内科护理学期末考试名词解释汇总.pdf"
    }
   ]
  }

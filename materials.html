@@ -14,7 +14,7 @@
     .mrow-act { justify-content: flex-start; margin-top: 8px; }
   }
 
-  /* ---------- PDF 预览浮层 ---------- */
+  /* ---------- 预览浮层 ---------- */
   .pv-mask {
     position: fixed; inset: 0; z-index: 9000;
     display: flex; align-items: center; justify-content: center;
@@ -50,17 +50,35 @@
   .pv-tools { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
   .pv-tools .gbtn { padding: 5px 10px; font-size: 12.5px; line-height: 1.5; }
   .pv-z { min-width: 46px; text-align: center; font-size: 12px; color: var(--text-3); font-variant-numeric: tabular-nums; }
-  .pv-body { flex: 1; min-height: 0; overflow: auto; background: #5a5f66; }
-  .pv-body iframe { display: block; width: 100%; height: 100%; border: 0; background: #fff; }
-  .pv-body .pv-msg {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 12px; height: 100%; color: #e6e9ef; font-size: 14px; text-align: center; padding: 30px;
+
+  /* PDF 画布容器 */
+  .pv-body { flex: 1; min-height: 0; overflow: auto; background: #4b5058; -webkit-overflow-scrolling: touch; }
+  .pv-doc { margin: 0 auto; padding: 14px; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; }
+  .pv-page {
+    width: 100%; background: #fff; border-radius: 3px; overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, .35);
+    aspect-ratio: var(--ar, .707);
   }
-  .pv-body .pv-msg code { font-size: 12px; opacity: .75; word-break: break-all; }
+  .pv-page.done { aspect-ratio: auto; }
+  .pv-page canvas { display: block; width: 100%; height: auto; }
+  .pv-state {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 10px 14px; font-size: 13px; color: #e8ebf0;
+    background: rgba(0, 0, 0, .45); text-align: center;
+  }
+  .pv-state.hide { display: none; }
+  .pv-fail {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 14px; height: 100%; padding: 30px; text-align: center;
+    color: #e8ebf0; font-size: 14px; line-height: 1.8;
+  }
+  .pv-fail code { font-size: 12px; opacity: .7; word-break: break-all; }
+
   @media (max-width: 720px) {
     .pv-mask { padding: 0; }
     .pv-box { width: 100vw; height: 100vh; border-radius: 0; border: 0; }
     .pv-name { flex-basis: 100%; }
+    .pv-doc { padding: 8px; gap: 8px; }
   }
 </style>
 <!-- 访问门禁：未登录直接跳转登录页（置于 head 内，避免内容闪现） -->
@@ -93,15 +111,15 @@
       这里只收录<b>整理好的、可直接背诵的资料</b>——往年真题、题库练习、重点归纳、讲义笔记、病例分析；
       <mark class="hl">PPT 课件、压缩包与截图已全部剔除</mark>。<br>
       资料原件托管在 <b>Cloudflare R2</b>，站点代码在 GitHub，因此没有单文件体积限制。
-      PDF 点「预览」即可在页内打开，<mark class="hl">可缩放、可全屏</mark>；所有文件都能一键<b>下载</b>。
-      超大文件另附<b>站内阅读页</b>（逐页图片），不必先下载上百 MB 的原件。
+      PDF 点「预览」会在页面内直接渲染，<mark class="hl">手机、平板也能看，可缩放、可全屏</mark>；
+      所有文件都能一键<b>下载</b>。
     </div>
 
     <div class="note note-warn rv rv-d1 hide" id="r2Warn" style="margin-bottom:18px">
       <div class="note-t">⚠ R2 尚未就绪</div>
       当前 R2 公共访问地址没有配置，或文件路径对不上，资料只能显示本机路径。
-      请检查 <code>data/r2-config.js</code> 里的 <code>R2_BASE</code>（桶的自定义域名）
-      与 <code>R2_PREFIX</code>（对象键前缀）。<span id="r2Detail"></span>
+      请检查 <code>data/r2-config.js</code> 里的 <code>R2_BASE</code> 与 <code>R2_PREFIX</code>。
+      <span id="r2Detail"></span>
     </div>
 
     <div class="toolbar rv rv-d1">
@@ -153,6 +171,7 @@
 <script src="data/r2-config.js"></script>
 <script src="data/materials.js"></script>
 <script src="data/readers.js"></script>
+<script src="js/vendor/pdf.min.js"></script>
 <script src="js/fx.js"></script>
 <script>
 (function () {
@@ -183,8 +202,7 @@
   var R2 = {
     base: String(window.R2_BASE || '').replace(/\/+$/, ''),
     prefix: String(window.R2_PREFIX || ''),
-    ready: false,
-    probed: false
+    ready: false
   };
   R2.ready = /^https?:\/\//.test(R2.base) && R2.base.indexOf('R2-DOMAIN-HERE') < 0;
 
@@ -194,48 +212,6 @@
   function r2Url(key) {
     if (!R2.ready || !key) return '';
     return R2.base + '/' + R2.prefix + encPath(key);
-  }
-
-  /* 探测对象键前缀：桶里可能是 materials/<科目>/<文件名>，也可能直接从科目开始。
-     需要 R2 配置 CORS 才能读到状态码；读不到就保留 config 里的默认值。 */
-  function detectPrefix() {
-    if (!R2.ready || R2.probed || window.R2_AUTOPROBE !== true) return;
-    var probe = '';
-    outer:
-    for (var i = 0; i < GROUPS.length; i++) {
-      for (var j = 0; j < GROUPS[i].files.length; j++) {
-        var f = GROUPS[i].files[j];
-        if (f.key && /\.pdf$/i.test(f.key)) { probe = f.key; break outer; }
-      }
-    }
-    if (!probe) return;
-    R2.probed = true;
-
-    var cands = [R2.prefix, '', 'materials/', 'study/materials/'];
-    var seen = {}, list = [];
-    cands.forEach(function (p) { if (!seen[p]) { seen[p] = 1; list.push(p); } });
-
-    var idx = 0;
-    (function next() {
-      if (idx >= list.length) {
-        document.getElementById('r2Warn').classList.remove('hide');
-        document.getElementById('r2Detail').innerHTML =
-          '<br>已尝试：' + list.map(function (p) {
-            return '<code>' + WB.esc(R2.base + '/' + p + encPath(probe)) + '</code>';
-          }).join('、');
-        return;
-      }
-      var p = list[idx++];
-      var url = R2.base + '/' + p + encPath(probe);
-      fetch(url, { method: 'HEAD', cache: 'reload' }).then(function (r) {
-        if (!r.ok) { next(); return; }
-        if (p !== R2.prefix) { R2.prefix = p; render(); }
-        document.getElementById('r2Warn').classList.add('hide');
-      }).catch(function () {
-        // 无 CORS / 网络失败：保留默认前缀，不阻塞页面
-        R2.probed = true;
-      });
-    })();
   }
 
   /* ================= 路径工具 ================= */
@@ -291,37 +267,39 @@
       document.body.appendChild(a);
       a.click();
       a.remove();
-      setTimeout(function () { URL.revokeObjectURL(href); }, 5000);
+      setTimeout(function () { URL.revokeObjectURL(href); }, 8000);
       WB.toast('已开始下载：' + name, 2200);
     }).catch(function () {
-      // 跨域读不到内容（未配 CORS）时退回新窗口，浏览器会自行下载或预览
+      // 跨域读不到内容时退回直接打开，由浏览器自身下载
       window.open(url, '_blank', 'noopener');
     });
   }
 
-  /* ================= PDF 预览浮层 ================= */
+  /* ================= PDF 预览（PDF.js 渲染，不依赖系统组件） ================= */
   var pv = null;
+  if (window.pdfjsLib) {
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'js/vendor/pdf.worker.min.js';
+  }
 
-  function closePreview() {
+  function pvClose() {
     if (!pv) return;
-    if (document.fullscreenElement) {
-      try { document.exitFullscreen(); } catch (e) {}
-    }
-    var box = pv.mask;
-    box.classList.remove('on');
-    setTimeout(function () { box.remove(); }, 180);
-    document.removeEventListener('keydown', onPvKey);
+    if (document.fullscreenElement) { try { document.exitFullscreen(); } catch (e) {} }
+    if (pv.io) { try { pv.io.disconnect(); } catch (e) {} }
+    var m = pv.mask;
+    m.classList.remove('on');
+    setTimeout(function () { m.remove(); }, 180);
+    document.removeEventListener('keydown', pvKey);
     pv = null;
   }
 
-  function setZoom(z) {
+  function pvSetZoom(z) {
     if (!pv) return;
     pv.zoom = Math.min(3, Math.max(0.5, Math.round(z * 20) / 20));
-    pv.frame.style.width = (pv.zoom * 100) + '%';
+    pv.doc.style.width = (pv.zoom * 100) + '%';
     pv.zlabel.textContent = Math.round(pv.zoom * 100) + '%';
   }
 
-  function toggleFullscreen() {
+  function pvFullscreen() {
     if (!pv) return;
     var el = pv.box;
     if (document.fullscreenElement) {
@@ -329,24 +307,135 @@
       return;
     }
     var fn = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
-    if (fn) {
-      try { fn.call(el); } catch (e) { WB.toast('当前浏览器不支持全屏'); }
-    } else {
-      WB.toast('当前浏览器不支持全屏，可用「新窗口打开」');
-    }
+    if (fn) { try { fn.call(el); } catch (e) { WB.toast('当前浏览器不支持全屏'); } }
+    else { WB.toast('当前浏览器不支持全屏'); }
   }
 
-  function onPvKey(e) {
+  function pvKey(e) {
     if (!pv) return;
-    if (e.key === 'Escape') { closePreview(); return; }
-    if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); return; }
-    if (e.key === '+' || e.key === '=') { setZoom(pv.zoom + 0.25); return; }
-    if (e.key === '-') { setZoom(pv.zoom - 0.25); return; }
-    if (e.key === '0') { setZoom(1); }
+    if (e.key === 'Escape') { pvClose(); return; }
+    if (e.key === 'f' || e.key === 'F') { pvFullscreen(); return; }
+    if (e.key === '+' || e.key === '=') { pvSetZoom(pv.zoom + 0.25); return; }
+    if (e.key === '-') { pvSetZoom(pv.zoom - 0.25); return; }
+    if (e.key === '0') { pvSetZoom(1); }
+  }
+
+  function pvError(msg) {
+    if (!pv) return;
+    pv.state.classList.add('hide');
+    pv.body.innerHTML =
+      '<div class="pv-fail">' +
+        '<div>😕 ' + WB.esc(msg) + '</div>' +
+        '<div>可以点上方「下载」保存到本机再打开，或用「新窗口」交给系统处理。</div>' +
+        '<code>' + WB.esc(pv.url) + '</code>' +
+      '</div>';
+  }
+
+  function pvBuildPages(st, n, ratio) {
+    var frag = document.createDocumentFragment();
+    st.pages = [];
+    for (var i = 1; i <= n; i++) {
+      var d = document.createElement('div');
+      d.className = 'pv-page';
+      d.style.setProperty('--ar', ratio);
+      d.setAttribute('data-page', i);
+      frag.appendChild(d);
+      st.pages.push({ el: d, num: i, done: false, busy: false });
+    }
+    st.doc.appendChild(frag);
+  }
+
+  function pvRenderPage(st, num, pageObj) {
+    var rec = st.pages[num - 1];
+    if (!rec || rec.done || rec.busy) return;
+    rec.busy = true;
+    (pageObj ? Promise.resolve(pageObj) : st.pdf.getPage(num)).then(function (page) {
+      if (pv !== st) return;
+      var vp1 = page.getViewport({ scale: 1 });
+      var cssW = Math.max(300, st.doc.clientWidth);
+      var cap = window.innerWidth < 900 ? 1500 : 2000;
+      var target = Math.min(cap, cssW * 2);
+      var vp = page.getViewport({ scale: target / vp1.width });
+      var c = document.createElement('canvas');
+      c.width = Math.round(vp.width);
+      c.height = Math.round(vp.height);
+      return page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise.then(function () {
+        if (pv !== st) return;
+        rec.el.innerHTML = '';
+        rec.el.appendChild(c);
+        rec.el.classList.add('done');
+        rec.done = true;
+        rec.busy = false;
+      });
+    }).catch(function () { rec.busy = false; });
+  }
+
+  /* 只渲染视口附近的页，远处的释放掉，避免平板内存爆掉 */
+  function pvReleaseFar(st) {
+    var top = st.body.scrollTop, h = st.body.clientHeight;
+    st.pages.forEach(function (r) {
+      if (!r.done) return;
+      var t = r.el.offsetTop, b = t + r.el.offsetHeight;
+      if (b < top - h || t > top + h * 2) {
+        r.el.innerHTML = '';
+        r.el.classList.remove('done');
+        r.done = false;
+      }
+    });
+  }
+
+  function pvStartObserver(st) {
+    if (!('IntersectionObserver' in window)) {
+      st.pages.forEach(function (r) { pvRenderPage(st, r.num); });
+      return;
+    }
+    st.io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var num = +en.target.getAttribute('data-page');
+        pvRenderPage(st, num);
+      });
+    }, { root: st.body, rootMargin: '600px 0px' });
+    st.pages.forEach(function (r) { st.io.observe(r.el); });
+
+    var tick = null;
+    st.body.addEventListener('scroll', function () {
+      if (tick) return;
+      tick = setTimeout(function () { tick = null; if (pv === st) pvReleaseFar(st); }, 250);
+    });
+  }
+
+  function pvLoad(st, url) {
+    if (!window.pdfjsLib) { pvError('预览组件未加载'); return; }
+    window.pdfjsLib.getDocument({ url: url, isEvalSupported: false }).promise
+      .then(function (pdf) {
+        if (pv !== st) return;
+        st.pdf = pdf;
+        return pdf.getPage(1).then(function (page) {
+          if (pv !== st) return;
+          var vp = page.getViewport({ scale: 1 });
+          st.ratio = (vp.width / vp.height).toFixed(4);
+          pvBuildPages(st, pdf.numPages, st.ratio);
+          st.state.classList.add('hide');
+          pvRenderPage(st, 1, page);
+          pvStartObserver(st);
+        });
+      })
+      .catch(function (err) {
+        if (pv !== st) return;
+        var name = (err && err.name) || '';
+        if (name === 'MissingPDFException' || name === 'UnexpectedResponseException') {
+          pvError('文件读取失败，可能还没上传到 R2');
+        } else if (name === 'InvalidPDFException') {
+          pvError('这个文件不是有效的 PDF');
+        } else {
+          pvError('无法在页面内渲染（' + (name || '跨域限制') + '）');
+        }
+      });
   }
 
   function openPreview(url, name) {
-    if (pv) closePreview();
+    if (pv) pvClose();
 
     var mask = document.createElement('div');
     mask.className = 'pv-mask';
@@ -365,7 +454,10 @@
             '<button class="gbtn gbtn-sm" data-close title="关闭（Esc）">✕</button>' +
           '</div>' +
         '</div>' +
-        '<div class="pv-body"><iframe src="' + WB.esc(url) + '#view=FitH" title="' + WB.esc(name) + '"></iframe></div>' +
+        '<div class="pv-body" style="position:relative">' +
+          '<div class="pv-doc"></div>' +
+          '<div class="pv-state">正在加载 PDF…</div>' +
+        '</div>' +
       '</div>';
 
     document.body.appendChild(mask);
@@ -375,19 +467,23 @@
     pv = {
       mask: mask,
       box: mask.querySelector('.pv-box'),
-      frame: mask.querySelector('iframe'),
+      body: mask.querySelector('.pv-body'),
+      doc: mask.querySelector('.pv-doc'),
+      state: mask.querySelector('.pv-state'),
       zlabel: mask.querySelector('[data-zlabel]'),
-      zoom: 1
+      zoom: 1, pages: [], pdf: null, io: null, url: url, name: name
     };
 
-    mask.querySelector('[data-z="in"]').addEventListener('click', function () { setZoom(pv.zoom + 0.25); });
-    mask.querySelector('[data-z="out"]').addEventListener('click', function () { setZoom(pv.zoom - 0.25); });
-    mask.querySelector('[data-z="fit"]').addEventListener('click', function () { setZoom(1); });
-    mask.querySelector('[data-fs]').addEventListener('click', toggleFullscreen);
+    mask.querySelector('[data-z="in"]').addEventListener('click', function () { pvSetZoom(pv.zoom + 0.25); });
+    mask.querySelector('[data-z="out"]').addEventListener('click', function () { pvSetZoom(pv.zoom - 0.25); });
+    mask.querySelector('[data-z="fit"]').addEventListener('click', function () { pvSetZoom(1); });
+    mask.querySelector('[data-fs]').addEventListener('click', pvFullscreen);
     mask.querySelector('[data-dl]').addEventListener('click', function () { download(url, name); });
-    mask.querySelector('[data-close]').addEventListener('click', closePreview);
-    mask.addEventListener('click', function (e) { if (e.target === mask) closePreview(); });
-    document.addEventListener('keydown', onPvKey);
+    mask.querySelector('[data-close]').addEventListener('click', pvClose);
+    mask.addEventListener('click', function (e) { if (e.target === mask) pvClose(); });
+    document.addEventListener('keydown', pvKey);
+
+    pvLoad(pv, url);
   }
 
   /* ================= 列表 ================= */
@@ -428,7 +524,6 @@
         acts += '<button class="gbtn gbtn-sm gbtn-primary" data-prev="' + WB.esc(r2) + '" data-name="' + WB.esc(f.n) + '">预览</button>';
       }
       acts += '<button class="gbtn gbtn-sm" data-dl="' + WB.esc(r2) + '" data-name="' + WB.esc(f.n) + '">下载</button>';
-      acts += '<a class="gbtn gbtn-sm" href="' + WB.esc(r2) + '" target="_blank" rel="noopener">打开</a>';
     } else if (reader) {
       acts += '<a class="gbtn gbtn-sm gbtn-primary" href="' + WB.esc(reader) + '" target="_blank" rel="noopener">阅读</a>';
     } else if (isLocalSite && hasLocalCopy) {
@@ -518,7 +613,6 @@
   renderSubjSeg();
   if (!R2.ready) document.getElementById('r2Warn').classList.remove('hide');
   render();
-  detectPrefix();
 
   document.getElementById('subjSeg').addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;

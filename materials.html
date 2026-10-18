@@ -199,7 +199,7 @@
   /* 探测对象键前缀：桶里可能是 materials/<科目>/<文件名>，也可能直接从科目开始。
      需要 R2 配置 CORS 才能读到状态码；读不到就保留 config 里的默认值。 */
   function detectPrefix() {
-    if (!R2.ready || R2.probed) return;
+    if (!R2.ready || R2.probed || window.R2_AUTOPROBE !== true) return;
     var probe = '';
     outer:
     for (var i = 0; i < GROUPS.length; i++) {
@@ -409,8 +409,9 @@
   function fileRow(f, accent, gid) {
     var m = TYPE_META[f.t] || { ico: '📄', cls: 'chip-line' };
     var isPdf = f.t === 'PDF';
-    var reader = READERS[gid + '/' + f.n];
-    var r2 = r2Url(f.key);
+    var missing = (window.R2_MISSING || []).indexOf(f.key) > -1;
+    var reader = (!missing && !window.R2_READERS_BROKEN) ? READERS[gid + '/' + f.n] : '';
+    var r2 = (!missing && R2.ready) ? r2Url(f.key) : '';
     var isLocalSite = location.protocol === 'file:';
     var hasLocalCopy = !!f.rel;
     var localOnly = !r2 && !reader && !(isLocalSite && hasLocalCopy);
@@ -453,7 +454,8 @@
           (sizeTxt ? '<span class="chip chip-line">' + sizeTxt + '</span>' : '') +
           (r2 ? '<span class="chip chip-ok" title="文件托管在 Cloudflare R2">R2</span>' : '') +
           (!r2 && reader ? '<span class="chip chip-teal" title="超大文件已转成站内阅读页">站内阅读</span>' : '') +
-          (localOnly ? '<span class="chip chip-mid" title="该文件未托管到 R2，只能在本机浏览本站时打开">仅本机</span>' : '') +
+          (missing ? '<span class="chip chip-mid" title="该文件还没有上传到 R2">待上传</span>' : '') +
+          (!missing && localOnly ? '<span class="chip chip-mid" title="该文件未托管到 R2，只能在本机浏览本站时打开">仅本机</span>' : '') +
         '</div>' +
       '</div>' +
       '<div class="mrow-act">' + acts + '</div>' +
@@ -469,7 +471,8 @@
       if (!files.length) return;
       shown += files.length;
       ready += files.filter(function (f) {
-        return !!r2Url(f.key) || !!READERS[g.id + '/' + f.n];
+        if ((window.R2_MISSING || []).indexOf(f.key) > -1) return false;
+        return (R2.ready && !!f.key) || (!window.R2_READERS_BROKEN && !!READERS[g.id + '/' + f.n]);
       }).length;
 
       var s = WB.getSubject(g.id);

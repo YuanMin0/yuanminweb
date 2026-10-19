@@ -53,6 +53,7 @@
 <script src="data/exam-surgery.js"></script>
 <script src="data/surgery-nursing.js"></script>
 <script src="data/internal-nursing.js"></script>
+<script src="data/organ3.js"></script>
 <script src="data/materials.js"></script>
 <script src="js/fx.js"></script>
 <script>
@@ -84,7 +85,7 @@
         '<div style="flex:1;min-width:260px">' +
           '<h1 style="font-size:27px">' + WB.esc(s.name) + '</h1>' +
           '<div class="subj-en" style="margin-top:2px">' + WB.esc(s.en || '') + '</div>' +
-          '<p class="muted mt-2 mb-0" style="max-width:720px">' + WB.esc(s.intro || s.desc) + '</p>' +
+          '<p class="muted mt-2 mb-0" style="max-width:720px">' + WB.rich(s.intro || s.desc) + '</p>' +
           '<div class="metric-strip">' +
             '<div class="metric"><b data-count="' + s._count.chapters + '">0</b><span>章节</span></div>' +
             '<div class="metric"><b data-count="' + s._count.knowledge + '">0</b><span>知识点</span></div>' +

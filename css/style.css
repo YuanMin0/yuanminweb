@@ -1399,3 +1399,75 @@ html[data-theme="dark"] .vz-kv { background: var(--surface-2); }
   .article h3 { break-after: avoid; }
   .blk-table, .note, .term-grid, .kv, .fig { break-inside: avoid; }
 }
+
+/* ==========================================================================
+   阅读体验与动效打磨（v1.0.4）
+   ========================================================================== */
+
+/* ---------- 中文正文排版 ---------- */
+.article p,
+.article li {
+  letter-spacing: .012em;
+  line-height: 1.95;
+}
+.article p { margin-bottom: 1.05em; }
+.article h3 { letter-spacing: -.005em; }
+.article b, .article strong { letter-spacing: 0; }
+
+/* 段首标点悬挂，中文段落右侧更整齐 */
+.article p { hanging-punctuation: allow-end; }
+
+/* ---------- 键盘焦点可见 ---------- */
+:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--brand) 70%, transparent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+.gbtn:focus-visible, .chip:focus-visible { outline-offset: 3px; }
+
+/* ---------- 按钮按压反馈 ---------- */
+.gbtn:active:not(:disabled) { transform: translateY(1px) scale(.985); }
+.card-hover:active { transform: translateY(0) scale(.997); }
+
+/* ---------- 顶部阅读进度 ---------- */
+#mlProg {
+  position: fixed; left: 0; top: 0; height: 2.5px; width: 0;
+  z-index: 9000; pointer-events: none; border-radius: 0 3px 3px 0;
+  background: linear-gradient(90deg, var(--brand), var(--violet));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--brand) 55%, transparent);
+  opacity: 0; transition: opacity .25s var(--ease), width .1s linear;
+}
+#mlProg.on { opacity: 1; }
+
+/* ---------- 回到顶部 ---------- */
+#mlTop {
+  position: fixed; right: 20px; bottom: 24px; z-index: 8999;
+  width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
+  display: grid; place-items: center; font-size: 16px; font-weight: 700;
+  color: var(--text-2); background: var(--surface);
+  border: 1px solid var(--border-2);
+  box-shadow: var(--shadow-md);
+  opacity: 0; transform: translateY(10px) scale(.94); pointer-events: none;
+  transition: opacity .24s var(--ease), transform .24s var(--ease),
+              color .18s, border-color .18s, box-shadow .18s;
+}
+#mlTop.on { opacity: 1; transform: none; pointer-events: auto; }
+#mlTop:hover {
+  color: var(--brand); border-color: color-mix(in srgb, var(--brand) 45%, var(--border-2));
+  box-shadow: 0 10px 26px -12px color-mix(in srgb, var(--brand) 55%, transparent);
+  transform: translateY(-2px);
+}
+#mlTop:active { transform: translateY(0) scale(.95); }
+
+@media (max-width: 720px) {
+  #mlTop { right: 14px; bottom: 18px; width: 38px; height: 38px; }
+}
+
+/* ---------- 尊重「减少动态效果」 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rv { transition: none !important; opacity: 1 !important; transform: none !important; }
+  * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; }
+  #mlProg { transition: none; }
+  #mlTop { transition: opacity .01s; }
+}

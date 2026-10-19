@@ -16,9 +16,53 @@
   .doc-tip { font-size: 13px; color: var(--text-3); background: var(--surface-2);
     border: 1px solid var(--border); border-left: 3px solid var(--brand);
     border-radius: 10px; padding: 10px 14px; margin-bottom: 20px; line-height: 1.7; }
+  /* ---------- 正文排版 ---------- */
+  .dg-body, .article { font-size: 15.8px; }
+  .article p {
+    line-height: 2.02; letter-spacing: .015em; margin-bottom: 1.15em;
+    text-indent: 2em; hanging-punctuation: allow-end;
+  }
+  .article p.dt-li, .article li p { text-indent: 0; }
+  .article ul, .article ol { margin-bottom: 1.2em; }
+  .article li { line-height: 1.95; letter-spacing: .015em; }
+  .article h3 {
+    font-size: 18.5px; margin: 38px 0 14px; padding-left: 14px;
+    border-left: 3.5px solid var(--accent, var(--brand));
+    letter-spacing: -.005em; line-height: 1.5;
+  }
+  .article h3::after {
+    content: ''; display: block; height: 1px; margin-top: 10px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+  /* 章节进入动画 */
+  .article h3 { opacity: 0; transform: translateX(-8px); }
+  .article h3.in { opacity: 1; transform: none;
+    transition: opacity .5s var(--ease), transform .5s var(--ease); }
+  @media (prefers-reduced-motion: reduce) {
+    .article h3 { opacity: 1 !important; transform: none !important; }
+  }
+  /* 表格更精致 */
+  .article .blk-table table { border-radius: 12px; overflow: hidden; }
+  .article .blk-table thead th { position: sticky; top: 0; z-index: 1; }
+
+  /* 阅读进度与回到顶部 */
+  #dgProg { position: fixed; left: 0; top: 0; height: 2.5px; width: 0; z-index: 9000;
+    background: linear-gradient(90deg, var(--brand), var(--violet));
+    box-shadow: 0 0 12px color-mix(in srgb, var(--brand) 55%, transparent);
+    pointer-events: none; transition: width .1s linear; }
+  #dgTop { position: fixed; right: 20px; bottom: 24px; z-index: 8999;
+    width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
+    display: grid; place-items: center; font-size: 16px; font-weight: 700;
+    color: var(--text-2); background: var(--surface); border: 1px solid var(--border-2);
+    box-shadow: var(--shadow-md); opacity: 0; transform: translateY(10px) scale(.94);
+    pointer-events: none; transition: opacity .24s var(--ease), transform .24s var(--ease); }
+  #dgTop.on { opacity: 1; transform: none; pointer-events: auto; }
+  #dgTop:hover { color: var(--brand); transform: translateY(-2px); }
+
   @media (max-width: 900px) {
     .klayout { grid-template-columns: 1fr; }
     .toc { position: static; margin-bottom: 8px; }
+    .article p { text-indent: 2em; }
   }
   @media print { .toc, .doc-tip, .hdr, .ftr, .doc-head .gbtn { display: none; } .klayout { display: block; } }
 </style>
@@ -44,9 +88,9 @@
     <div class="klayout">
       <aside class="toc">
         <div class="toc-h">本页目录</div>
-        __TOC__
+        <a href="#s1">单选题</a><a href="#s2">多选题</a><a href="#s3">判断题</a><a href="#s4">单选题</a><a href="#s5">多选题</a><a href="#s6">判断题</a><a href="#s7">单选题</a><a href="#s8">单选题</a><a href="#s9">判断题</a><a href="#s10">多选题</a><a href="#s11">单选题</a><a href="#s12">单选题</a><a href="#s13">计算题</a><a href="#s14">单选题</a><a href="#s15">判断题</a><a href="#s16">单选题</a><a href="#s17">多选题</a><a href="#s18">单选题</a><a href="#s19">单选题</a><a href="#s20">单选题</a><a href="#s21">填空题</a>
         <div class="toc-h" style="margin-top:20px">文档信息</div>
-        <div class="small dim" style="padding:0 11px;line-height:1.9">__INFO__</div>
+        <div class="small dim" style="padding:0 11px;line-height:1.9">段落 646<br>表格 10<br>小节 21</div>
       </aside>
       <article class="article">
         <div id="body"></div>
@@ -103,6 +147,42 @@
   }
   window.addEventListener('scroll', paint, { passive: true });
   paint();
+})();
+
+/* ---------- 阅读进度、回到顶部、章节入场 ---------- */
+(function () {
+  var bar = document.createElement('div'); bar.id = 'dgProg';
+  var top = document.createElement('button'); top.id = 'dgTop';
+  top.type = 'button'; top.setAttribute('aria-label', '回到顶部'); top.textContent = '↑';
+  document.body.appendChild(bar); document.body.appendChild(top);
+
+  var raf = 0;
+  function paint() {
+    raf = 0;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var y = window.scrollY || 0;
+    bar.style.width = (max > 0 ? Math.min(1, y / max) * 100 : 0).toFixed(2) + '%';
+    top.classList.toggle('on', y > 520);
+  }
+  window.addEventListener('scroll', function () {
+    if (!raf) raf = requestAnimationFrame(paint);
+  }, { passive: true });
+  window.addEventListener('resize', paint, { passive: true });
+  top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  paint();
+
+  var hs = [].slice.call(document.querySelectorAll('.article h3'));
+  if (!('IntersectionObserver' in window) || !hs.length) {
+    hs.forEach(function (h) { h.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { rootMargin: '0px 0px -8% 0px' });
+  hs.forEach(function (h) { io.observe(h); });
+  setTimeout(function () { hs.forEach(function (h) { h.classList.add('in'); }); }, 2500);
 })();
 </script>
 

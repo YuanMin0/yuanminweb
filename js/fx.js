@@ -347,3 +347,50 @@
     fx.tilt(document);
   };
 })();
+
+/* ==========================================================================
+   阅读进度条 + 回到顶部（全站通用）
+   ========================================================================== */
+(function () {
+  if (typeof document === 'undefined' || document.getElementById('mlProg')) return;
+
+  function init() {
+    if (!document.body) return;
+
+    var bar = document.createElement('div');
+    bar.id = 'mlProg';
+    var top = document.createElement('button');
+    top.id = 'mlTop';
+    top.type = 'button';
+    top.setAttribute('aria-label', '回到顶部');
+    top.textContent = '↑';
+    document.body.appendChild(bar);
+    document.body.appendChild(top);
+
+    var raf = 0;
+    function paint() {
+      raf = 0;
+      var doc = document.documentElement;
+      var max = doc.scrollHeight - window.innerHeight;
+      var y = window.scrollY || doc.scrollTop || 0;
+      var ratio = max > 240 ? Math.min(1, y / max) : 0;
+      bar.style.width = (ratio * 100).toFixed(2) + '%';
+      bar.classList.toggle('on', max > 240 && y > 40);
+      top.classList.toggle('on', y > 520);
+    }
+    function onScroll() { if (!raf) raf = requestAnimationFrame(paint); }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    top.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    paint();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();

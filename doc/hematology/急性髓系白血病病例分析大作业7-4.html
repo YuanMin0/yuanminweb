@@ -6,6 +6,7 @@
 <title>急性髓系白血病病例分析大作业7.4 · 资料阅读 · MediLearn</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../../css/style.css">
+
 <script src="../../js/auth.js"></script>
 <script>if(window.WB&&WB.auth)WB.auth.guard();</script>
 <style>
@@ -38,6 +39,8 @@
 
     <div class="doc-tip">本文由 Word 原文提取并重新排版，<b>加粗内容已标红</b>；表格与公式可能有出入，需要精确版式请下载原文。</div>
 
+    
+    <div id="paneRead">
     <div class="klayout">
       <aside class="toc">
         <div class="toc-h">本页目录</div>
@@ -49,6 +52,8 @@
         <div id="body"></div>
       </article>
     </div>
+    </div>
+    <div id="paneQuiz" class="hide"></div>
   </div>
 </main>
 
@@ -74,6 +79,18 @@
     dl.style.display = 'none';
   }
 
+  // 阅读 / 练习 切换
+  var tabs = [].slice.call(document.querySelectorAll('.doc-tabs button'));
+  tabs.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var p = b.getAttribute('data-pane');
+      tabs.forEach(function (x) { x.classList.toggle('on', x === b); });
+      document.getElementById('paneRead').classList.toggle('hide', p !== 'read');
+      document.getElementById('paneQuiz').classList.toggle('hide', p !== 'quiz');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
   var links = [].slice.call(document.querySelectorAll('.toc a[href^="#"]'));
   if (!links.length) return;
   var heads = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
@@ -86,5 +103,6 @@
   paint();
 })();
 </script>
+
 </body>
 </html>

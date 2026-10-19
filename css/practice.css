@@ -1,0 +1,201 @@
+/* ==========================================================================
+   资料练习模式 · 卡片式刷题
+   依赖：无（纯 CSS），配合 js/practice.js 使用
+   ========================================================================== */
+
+.doc-tabs {
+  display: flex; gap: 8px; margin: 4px 0 22px;
+  border-bottom: 1px solid var(--border); padding-bottom: 0;
+}
+.doc-tabs button {
+  position: relative; border: 0; background: none; cursor: pointer;
+  padding: 10px 16px 13px; font-size: 14.5px; font-weight: 650;
+  color: var(--text-3); border-radius: 10px 10px 0 0;
+  transition: color .2s, background .2s;
+}
+.doc-tabs button:hover { color: var(--text); background: var(--surface-2); }
+.doc-tabs button.on { color: var(--brand-ink); }
+.doc-tabs button.on::after {
+  content: ''; position: absolute; left: 12px; right: 12px; bottom: -1px;
+  height: 2.5px; border-radius: 3px; background: var(--brand);
+  animation: tabIn .28s cubic-bezier(.2,.8,.3,1) both;
+}
+@keyframes tabIn { from { transform: scaleX(.2); opacity: 0 } to { transform: none; opacity: 1 } }
+.doc-tabs .cnt {
+  display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px;
+  background: var(--brand-soft); color: var(--brand-ink); font-size: 11.5px; font-weight: 700;
+}
+
+/* ---------- 练习容器 ---------- */
+.qp { max-width: 860px; margin: 0 auto; }
+
+.qp-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.qp-bar {
+  flex: 1; height: 8px; border-radius: 999px; background: var(--surface-3);
+  overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,.06);
+}
+.qp-bar i {
+  display: block; height: 100%; width: 0; border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand), var(--violet));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--brand) 55%, transparent);
+  transition: width .45s cubic-bezier(.2,.8,.3,1);
+}
+.qp-meta {
+  display: flex; gap: 14px; font-size: 12.5px; color: var(--text-3);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.qp-meta b { color: var(--text); font-weight: 700; }
+.qp-meta .ok { color: var(--teal); font-weight: 700; }
+.qp-meta .no { color: var(--rose); font-weight: 700; }
+
+/* ---------- 题卡 ---------- */
+.qcard {
+  position: relative; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 20px;
+  padding: 30px 32px 26px;
+  box-shadow: 0 18px 50px -18px rgba(15, 23, 42, .18), 0 2px 6px rgba(15, 23, 42, .04);
+  overflow: hidden;
+}
+.qcard::before {
+  content: ''; position: absolute; inset: 0 0 auto; height: 3px;
+  background: linear-gradient(90deg, var(--brand), var(--violet), var(--teal));
+  opacity: .85;
+}
+.qcard.enter { animation: qIn .32s cubic-bezier(.2,.8,.3,1); }
+@keyframes qIn {
+  from { transform: translateY(14px) scale(.985) }
+  to { transform: none }
+}
+.qcard.shake { animation: qShake .42s cubic-bezier(.36,.07,.19,.97) both; }
+@keyframes qShake {
+  10%, 90% { transform: translateX(-2px) }
+  20%, 80% { transform: translateX(4px) }
+  30%, 50%, 70% { transform: translateX(-7px) }
+  40%, 60% { transform: translateX(7px) }
+}
+.qcard.pop { animation: qPop .45s cubic-bezier(.2,.8,.3,1) both; }
+@keyframes qPop {
+  0% { transform: none }
+  35% { transform: scale(1.012) }
+  100% { transform: none }
+}
+
+.q-num {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 800; letter-spacing: .12em;
+  color: var(--brand-ink); background: var(--brand-soft);
+  padding: 4px 10px; border-radius: 999px; margin-bottom: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.q-stem {
+  font-size: 21px; line-height: 1.72; font-weight: 700;
+  color: var(--text); letter-spacing: -.01em; margin-bottom: 22px;
+}
+.q-stem .kw { color: var(--rose); }
+
+/* ---------- 选项 ---------- */
+.q-opts { display: flex; flex-direction: column; gap: 10px; }
+.q-opt {
+  display: flex; align-items: flex-start; gap: 13px;
+  width: 100%; text-align: left; cursor: pointer;
+  padding: 14px 16px; border-radius: 14px;
+  border: 1.5px solid var(--border-2); background: var(--surface);
+  font-size: 15.5px; line-height: 1.65; color: var(--text-2);
+  transition: transform .18s cubic-bezier(.2,.8,.3,1), border-color .18s,
+              background .18s, box-shadow .18s, color .18s;
+}
+.q-opt:hover:not(.locked) {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--brand) 45%, var(--border-2));
+  box-shadow: 0 10px 24px -12px color-mix(in srgb, var(--brand) 45%, transparent);
+  color: var(--text);
+}
+.q-opt:active:not(.locked) { transform: translateY(0) scale(.995); }
+.q-opt .badge {
+  flex: none; width: 26px; height: 26px; border-radius: 8px;
+  display: grid; place-items: center;
+  font-size: 12.5px; font-weight: 800; font-variant-numeric: tabular-nums;
+  background: var(--surface-3); color: var(--text-3);
+  transition: background .2s, color .2s, transform .2s;
+}
+.q-opt:hover:not(.locked) .badge { background: var(--brand-soft); color: var(--brand-ink); }
+
+.q-opt.locked { cursor: default; }
+.q-opt.right {
+  border-color: var(--teal); background: color-mix(in srgb, var(--teal-soft) 70%, var(--surface));
+  color: var(--text); box-shadow: 0 8px 22px -14px color-mix(in srgb, var(--teal) 60%, transparent);
+  animation: optPop .34s cubic-bezier(.2,.8,.3,1) both;
+}
+.q-opt.right .badge { background: var(--teal); color: #fff; }
+.q-opt.wrong {
+  border-color: var(--rose); background: color-mix(in srgb, var(--rose-soft) 70%, var(--surface));
+  color: var(--text); animation: optWrong .38s ease both;
+}
+.q-opt.wrong .badge { background: var(--rose); color: #fff; }
+.q-opt.dim { opacity: .48; }
+
+@keyframes optPop { 0% { transform: scale(1) } 45% { transform: scale(1.018) } 100% { transform: none } }
+@keyframes optWrong { 0%,100% { transform: none } 25% { transform: translateX(-5px) } 75% { transform: translateX(5px) } }
+
+/* ---------- 反馈条 ---------- */
+.q-fb {
+  margin-top: 18px; padding: 0 16px; max-height: 0; overflow: hidden;
+  border-radius: 12px; font-size: 14px; line-height: 1.7;
+  transition: max-height .32s ease, padding .32s ease, opacity .25s ease;
+  opacity: 0;
+}
+.q-fb.on { max-height: 160px; padding: 13px 16px; opacity: 1; }
+.q-fb.ok { background: color-mix(in srgb, var(--teal-soft) 65%, var(--surface)); color: var(--text); border-left: 3px solid var(--teal); }
+.q-fb.no { background: color-mix(in srgb, var(--rose-soft) 65%, var(--surface)); color: var(--text); border-left: 3px solid var(--rose); }
+.q-fb b { font-weight: 800; }
+
+/* ---------- 底部按钮 ---------- */
+.qp-actions {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-top: 20px;
+}
+.qp-actions .gbtn { padding: 10px 22px; font-size: 14px; }
+.qp-hint { font-size: 12.5px; color: var(--text-3); }
+.qp-hint kbd {
+  display: inline-block; padding: 1px 6px; margin: 0 1px; border-radius: 5px;
+  border: 1px solid var(--border-2); background: var(--surface-2);
+  font-family: var(--font-mono); font-size: 11.5px;
+}
+
+/* ---------- 结算 ---------- */
+.qdone { text-align: center; padding: 46px 20px 60px; animation: qIn .4s cubic-bezier(.2,.8,.3,1); }
+.qdone .ring {
+  width: 148px; height: 148px; margin: 0 auto 22px; position: relative;
+}
+.qdone .ring svg { transform: rotate(-90deg); }
+.qdone .ring .val {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-size: 34px; font-weight: 800; letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+.qdone h3 { font-size: 22px; margin: 0 0 8px; }
+.qdone p { color: var(--text-3); font-size: 14px; margin: 0 0 24px; }
+.qdone .acts { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+/* ---------- 答对粒子 ---------- */
+.spark {
+  position: fixed; width: 7px; height: 7px; border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  animation: sparkFly .72s cubic-bezier(.2,.7,.3,1) forwards;
+}
+@keyframes sparkFly {
+  0% { transform: translate(0,0) scale(1); opacity: 1 }
+  100% { transform: translate(var(--dx), var(--dy)) scale(.2); opacity: 0 }
+}
+
+@media (max-width: 720px) {
+  .qcard { padding: 22px 18px 20px; border-radius: 16px; }
+  .q-stem { font-size: 18.5px; }
+  .q-opt { font-size: 14.8px; padding: 12px 14px; }
+  .qp-actions .gbtn { flex: 1; }
+  .qp-hint { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .qcard, .q-opt, .q-fb, .qp-bar i, .doc-tabs button.on::after { animation: none !important; transition: none !important; }
+}

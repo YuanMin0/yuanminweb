@@ -41,3 +41,14 @@ window.DOCS = {
  "skills/医学生期末复习资料合集.docx": "doc/skills/医学生期末复习资料合集.html",
  "surgery-nursing/外科护理学复习题(各章节)含答案.doc": "doc/surgery-nursing/外科护理学复习题-各章节-含答案.html"
 };
+window.DOC_QUIZ = {
+ "ethics/伦理ai医学堂选择题.docx": 47,
+ "diagnostics/诊断学400多道试题 (1).docx": 396,
+ "diagnostics/诊断学006.docx": 132,
+ "diagnostics/诊断学005.docx": 131,
+ "diagnostics/诊断学004.docx": 132,
+ "diagnostics/诊断学003.docx": 87,
+ "diagnostics/诊断学002.docx": 89,
+ "diagnostics/诊断学001.docx": 88,
+ "surgery-nursing/外科护理学复习题(各章节)含答案.doc": 427
+};

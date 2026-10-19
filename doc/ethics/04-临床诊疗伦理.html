@@ -2,179 +2,69 @@
 <html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>04-临床诊疗伦理 · 资料阅读 · MediLearn</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../../css/style.css">
-<script src="../../data/r2-config.js"></script>
+<script src="../../js/auth.js"></script>
+<script>if(window.WB&&WB.auth)WB.auth.guard();</script>
 <style>
-  body { background: var(--bg); }
-  .dg-top {
-    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 10px;
-    padding: 10px 16px; background: color-mix(in srgb, var(--surface) 88%, transparent);
-    border-bottom: 1px solid var(--border); backdrop-filter: blur(12px);
-  }
-  .dg-top h1 { font-size: 15px; margin: 0; flex: 1; min-width: 0;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .dg-top .meta { font-size: 12px; color: var(--text-3); white-space: nowrap; }
-  .dg-wrap { max-width: 880px; margin: 0 auto; padding: 26px 20px 90px; }
-  .dg-tip { font-size: 13px; color: var(--text-3); background: var(--surface-2);
+  .doc-head { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+  .doc-head h1 { font-size: 26px; margin: 0; letter-spacing: -.02em; flex: 1; min-width: 240px; }
+  .doc-sub { color: var(--text-3); font-size: 13px; margin: 8px 0 18px; }
+  .doc-tip { font-size: 13px; color: var(--text-3); background: var(--surface-2);
     border: 1px solid var(--border); border-left: 3px solid var(--brand);
     border-radius: 10px; padding: 10px 14px; margin-bottom: 20px; line-height: 1.7; }
-  .dg-toc { background: var(--surface); border: 1px solid var(--border);
-    border-radius: 14px; padding: 16px 18px; margin-bottom: 26px; }
-  .dg-toc-t { font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--text-3); margin-bottom: 8px; }
-  .dt-toc-a { display: block; padding: 5px 0; font-size: 14px; color: var(--text-2);
-    text-decoration: none; border-bottom: 1px dashed transparent; }
-  .dt-toc-a:hover { color: var(--brand); border-bottom-color: var(--brand); }
-  .dt-toc-a.lv2 { font-weight: 650; color: var(--text); }
-  .dt-toc-a.lv3 { padding-left: 14px; }
-  .dg-body { background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; padding: 30px 34px; font-size: 15.5px; line-height: 1.95;
-    color: var(--text); }
-  .dg-body h2 { font-size: 21px; margin: 34px 0 14px; padding-bottom: 8px;
-    border-bottom: 2px solid var(--border); scroll-margin-top: 70px; }
-  .dg-body h2:first-child { margin-top: 0; }
-  .dg-body h3 { font-size: 17px; margin: 26px 0 10px; color: var(--brand);
-    scroll-margin-top: 70px; }
-  .dg-body p { margin: 0 0 12px; }
-  .dg-body strong { color: var(--text); font-weight: 700; }
-  .dg-ul { margin: 6px 0 14px; padding-left: 22px; }
-  .dg-ul li { margin-bottom: 5px; }
-  .dt-wrap { overflow-x: auto; margin: 14px 0 18px; }
-  .dt { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .dt th, .dt td { border: 1px solid var(--border); padding: 8px 11px; text-align: left;
-    vertical-align: top; }
-  .dt th { background: var(--surface-2); font-weight: 650; white-space: nowrap; }
-  .dt tr:nth-child(even) td { background: color-mix(in srgb, var(--surface-2) 45%, transparent); }
-  @media (max-width: 720px) {
-    .dg-wrap { padding: 18px 12px 70px; }
-    .dg-body { padding: 20px 16px; font-size: 15px; }
-    .dg-top h1 { font-size: 14px; }
-    .dg-top .meta { display: none; }
+  @media (max-width: 900px) {
+    .klayout { grid-template-columns: 1fr; }
+    .toc { position: static; margin-bottom: 8px; }
   }
-  @media print { .dg-top, .dg-toc, .dg-tip { display: none; } .dg-body { border: 0; padding: 0; } }
+  @media print { .toc, .doc-tip, .hdr, .ftr, .doc-head .gbtn { display: none; } .klayout { display: block; } }
 </style>
 </head>
 <body>
-<div class="dg-top">
-  <a class="gbtn gbtn-sm" href="../../materials.html">← 资料汇总</a>
-  <h1>04-临床诊疗伦理</h1>
-  <span class="meta">106 段 · 0 表 · 1 小节</span>
-  <a class="gbtn gbtn-sm" id="dgDl" data-key="ethics/04-临床诊疗伦理.docx" href="#" target="_blank" rel="noopener">下载原文</a>
-</div>
-<div class="dg-wrap">
-  <div class="dg-tip">这份内容由 Word 原文提取后重新排版，便于在手机、平板上阅读；<b>表格与公式可能略有出入</b>，需要精确版式请下载原文。</div>
-  
-  <article class="dg-body"><h2 id="h0">第四章 临床诊疗伦理</h2>
-<p>学习目标：掌握临床诊疗的四大伦理原则；掌握临床诊断、临床治疗、特殊科室诊疗的伦理要求。</p>
-<p>一、临床诊疗的伦理背景</p>
-<ul class="dt-ul"><li>①诊疗技术的双重性</li>
-<li>②服务对象的特殊性</li>
-<li>③疾病过程的复杂性</li>
-<li>④医务人员的差异性</li>
-</ul><p>吴孟超："我们要治的不是人的病，而是病的人。"</p>
-<p>二、临床诊疗的伦理原则</p>
-<p>（一）生命至上</p>
-<ul class="dt-ul"><li>是临床诊疗的出发点/落脚点，是医德教育/医德评价的依据，是培养医德情感、锻炼医德意志、坚守医德高地的动力。</li>
-<li>《黄帝内经》："天覆地载，万物悉备，莫贵于人。"</li>
-<li>《千金方》："人命至重，有贵千金，一方济之，德逾于此。"</li>
-<li>二十大报告：坚持人民至上、生命至上……最大限度保护了人民生命安全和身体健康。</li>
-</ul><p>（二）最优化原则</p>
-<ul class="dt-ul"><li>实际是一项技术原则：技术手段的正确选择、运用，对就医者的高度负责、真诚关爱。</li>
-<li>要求：痛苦最小、耗费最少、效果最好、安全度最高。</li>
-<li>收益（理想预期）与损害（现实情况）的权衡；以医疗技术为基础，以因人而异的病情为依据。</li>
-<li>表4-3：不同医疗情境下患方选择倾向（治疗效果、治疗花费、身体痛苦、安全性四个维度的权重因情境而异）。</li>
-</ul><p>（三）知情同意（informed consent）</p>
-<ul class="dt-ul"><li>定义：医务人员在确定和实施诊疗措施前，应向患者作详尽的解释说明，并取得患者在充分理解基础上自由表示出来的同意。是医学伦理基本原则的临床实践体现。</li>
-<li>要件：告知、理解、能力、自由。</li>
-<li>形式：口头同意、书面同意。</li>
-<li>主体：18岁以上、有自主行为能力者。特殊情况可直接行使医疗特权，无须患者同意。</li>
-<li>发展历程：</li>
-<li>1947年《纽伦堡法典》：包含十条医学人体试验伦理准则，是医学科研知情同意原则的先声；</li>
-<li>1964年《赫尔辛基宣言》：世界医学联合会通过，第一次明确知情同意问题，区分"治疗性研究"和"非治疗性研究"；</li>
-<li>1973年美国《病人权利法案》：将其作为重要患者权利以成文形式确立；</li>
-<li>2024年10月，第75届世界医学会全体大会（芬兰赫尔辛基）通过《赫尔辛基宣言》最新修订本（第25-29条详述知情同意）。</li>
-<li>国内法规：《医院诊所管理暂行条例》（1951）规定施行大手术或特殊治疗须取得患者及关系人同意签字；不能自立之未成年病人或病人已失去知觉且无关系人时可不取得同意，但须共同签字鉴证。</li>
-</ul><p>（四）保守医密</p>
-<ul class="dt-ul"><li>保密范围：患者信息、病历资料、经济状况、病史相关信息、性生活信息、家庭信息等；形式涵盖文、图、声。</li>
-</ul><p>小结：临床诊疗伦理原则——生命至上、最优化、知情同意、保守医密。诊疗中要兼顾：身体上治疗、心理上关怀、经济上考虑、政策上指导、文化上尊重。</p>
-<p>三、临床诊断的伦理要求</p>
-<p>（一）问诊</p>
-<ul class="dt-ul"><li>举止端庄，态度热情</li>
-<li>全神贯注，耐心倾听</li>
-<li>语言得当，正确引导</li>
-<li>适度接触，适当辅诊</li>
-</ul><p>（看、听、说、触）</p>
-<p>（二）体格检查</p>
-<ul class="dt-ul"><li>中医：望诊、闻诊、问诊、切诊；西医：望诊、触诊、叩诊、听诊。</li>
-<li>伦理要求：全面系统，认真细致；关心体贴，减少痛苦；尊重患者，心正无私。</li>
-</ul><p>（三）辅助检查</p>
-<p>（一）医生：</p>
-<ul class="dt-ul"><li>审慎确定检查项目</li>
-<li>知情同意，尽职尽责</li>
-<li>综合分析检查结果</li>
-<li>通俗解释临床诊断（案例：西安医生连续10年手绘术前指导，用画图方式让患者理解专业词汇）</li>
-</ul><p>（二）医技人员：</p>
-<ul class="dt-ul"><li>严谨求实，防止差错</li>
-<li>尊重患者，工作敏捷</li>
-<li>精心管理，保证安全</li>
-<li>积极进取，加强协作</li>
-</ul><p>（反面案例：日本医院忘接氧气管致患者昏迷——缺少双人核对机制、警报疲劳）</p>
-<p>四、临床治疗的伦理要求</p>
-<p>治疗分类：药物治疗、手术治疗、营养治疗、心理治疗、康复治疗。</p>
-<p>（一）药物治疗的伦理要求</p>
-<p>（一）医生：</p>
-<ul class="dt-ul"><li>对症下药，剂量安全：明确诊断和药物性能、适应证和禁忌证，标本兼治；因人而异（年龄、体重、体质、重要脏器功能状况）掌握剂量。</li>
-<li>合理配伍，细致观察：掌握配伍禁忌、限制药位数；杜绝滥用联合用药、预警耐药性；了解疗效和副作用，视情调整。</li>
-<li>节约费用，公正分配：常用药、国产低价药优先于贵重药、进口药；不开大处方、"人情方"；进口药、贵重药公正分配。</li>
-</ul><p>（二）药剂工作人员：</p>
-<ul class="dt-ul"><li>规定必须皮试的药品，处方医师应注明过敏试验及结果；</li>
-<li>操作正规，质量达标：不将就凑合、不能掺假；</li>
-<li>忠于职守，廉洁奉公：抵制假劣药进库、清查在库药品、执行毒麻药品管理规定、合理分配药品资源。</li>
-</ul><p>（反面案例：桐庐县第一人民医院药剂科王晓俊受贿1200余万元，被判有期徒刑14年）</p>
-<p>（二）手术治疗的伦理要求</p>
-<p>（一）手术前：</p>
-<ul class="dt-ul"><li>准确掌握指征，手术动机纯正：适宜手术——手术是最理想疗法、当前术式是最优解、具备实施条件；不适宜手术——有更优疗法、手术可做可不做、可能加速病情恶化甚至死亡、需手术但条件不具备。</li>
-<li>患者或其家属知情同意。</li>
-<li>认真做好术前准备：医——方案、技术、设备、药品；患——生理、心理、经济。</li>
-<li>新术式/新技术的伦理审查。</li>
-<li>术前讨论：主持——非常熟悉患者病情的主治医生；参加——科室或院负责人（重大、危重病例）；内容——①疾病诊断情况 ②手术治疗的必要性 ③手术方式选择依据 ④术中术后可能并发症及意外 ⑤拟采取的预防措施 ⑥手术治疗的预后和经费估计。</li>
-<li>（案例：CBD感染期间孕妇剖宫产"小平安"）</li>
-</ul><p>（二）手术中：</p>
-<ul class="dt-ul"><li>关心患者，体贴入微（适度共情、及时安慰）；</li>
-<li>态度严肃，作风严谨（操作稳、准、轻、快）；</li>
-<li>精诚团结，密切协作（团结、开放、承担）。</li>
-</ul><p>（三）手术后：</p>
-<ul class="dt-ul"><li>严密观察，勤于护理；</li>
-<li>减轻痛苦，加速康复。</li>
-</ul><p>（三）其他治疗的伦理要求</p>
-<p>心理治疗：熟练掌握心理治疗的知识与技巧；感同身受；心态健康、积极、稳定；保守患者秘密与隐私。</p>
-<p>饮食营养治疗：营养安全科学；创造良好环境；满足患者的饮食习惯和营养需求。</p>
-<p>康复治疗：理解与尊重（平等、真诚相待）；关怀与帮助（鼓励主动、长期治疗）；联系与协作（医务人员、工程技术人员、社会工作者、特种教育工作者）。</p>
-<p>五、特殊科室诊疗的伦理要求</p>
-<p>（一）急诊科诊疗</p>
-<p>时间紧、任务重；患者心理波动大，医患沟通难以充分，需多学科合作。要求：维护患者利益；迅速准确处置；尊重患者权利；如实真诚沟通；尊重患者隐私；医际公正诚实。</p>
-<p>（二）妇产科诊疗</p>
-<p>兼顾孕妇和胎儿两方面，从单纯疾病诊治和产科处理扩展到围生期、妇女保健和优生优育。要求：尊重妇女的人格；保护患者隐私；弘扬奉献精神；慎重对待女性生殖器官疾病（当下+未来）。</p>
-<p>（三）老年病科诊疗</p>
-<p>病程长、恢复慢；无明显症状体征、初期不易察觉、合并症多。要求：尊重老者的身心感受；转变理念，合理管理和治疗；有节制、可持续治疗；重视心理关怀。（国家卫健委推10项举措帮助老年人就医；"互联网+护理服务"）</p>
-<p>（四）ICU诊疗</p>
-<ul class="dt-ul"><li>冲突：生命维持与生存质量抉择；技术密集与人文支持矛盾；情感决策与理智选择冲突；资源分配与价值公正拉扯。</li>
-<li>应对：心理支持、情感沟通；公平收治、资源分配；经济伦理、适度医疗；终末期决策、放弃治疗。</li>
-</ul><p>六、知识点总结</p>
-<ul class="dt-ul"><li>诊疗原则：生命至上；最优化原则；知情同意；保守医密</li>
-<li>诊断要求：问诊④ / 体格检查③ / 辅助检查④＋④</li>
-<li>治疗要求：</li>
-<li>药物：医生④ / 药剂人员④</li>
-<li>手术：术前（准确掌握指征、动机纯正、知情同意、术前准备、伦理审查）；术中（关心体贴、态度严肃作风严谨、精诚团结密切协作）；术后（严密观察护理、减轻痛苦加速康复）</li>
-<li>其他：心理④ / 营养③ / 康复③</li>
-<li>特殊诊疗要求：急诊科 / 妇产科 / 老年病科 / ICU</li>
-</ul><p>七、课后思考</p>
-<p>江西儿科医生韩某因漏诊嵌顿疝致患儿死亡。法院一审以医疗事故罪判处有期徒刑一年、缓刑一年，禁止从事医疗行业三年，二审维持原判。请从伦理角度分析其行为是否存在伦理过错及原因。</p></article>
-</div>
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap">
+    <div class="crumb"><a href="../../materials.html">资料汇总</a> / <span>04-临床诊疗伦理</span></div>
+
+    <div class="doc-head">
+      <h1>04-临床诊疗伦理</h1>
+      <a class="gbtn gbtn-sm" href="../../materials.html">← 返回资料汇总</a>
+      <a class="gbtn gbtn-sm gbtn-primary" id="dgDl" data-key="ethics/04-临床诊疗伦理.docx" href="#" target="_blank" rel="noopener">下载原文</a>
+    </div>
+    <div class="doc-sub">106 个段落 · 0 张表格 · 29 个小节</div>
+
+    <div class="doc-tip">本文由 Word 原文提取并重新排版，<b>加粗内容已标红</b>；表格与公式可能有出入，需要精确版式请下载原文。</div>
+
+    <div class="klayout">
+      <aside class="toc">
+        <div class="toc-h">本页目录</div>
+        <a href="#s1">第四章 临床诊疗伦理</a><a href="#s2">一、临床诊疗的伦理背景</a><a href="#s3">二、临床诊疗的伦理原则</a><a href="#s4">（一）生命至上</a><a href="#s5">（二）最优化原则</a><a href="#s6">（三）知情同意（informed consent）</a><a href="#s7">（四）保守医密</a><a href="#s8">三、临床诊断的伦理要求</a><a href="#s9">（一）问诊</a><a href="#s10">（二）体格检查</a><a href="#s11">（三）辅助检查</a><a href="#s12">（一）医生：</a><a href="#s13">（二）医技人员：</a><a href="#s14">四、临床治疗的伦理要求</a><a href="#s15">（一）药物治疗的伦理要求</a><a href="#s16">（一）医生：</a><a href="#s17">（二）药剂工作人员：</a><a href="#s18">（二）手术治疗的伦理要求</a><a href="#s19">（一）手术前：</a><a href="#s20">（二）手术中：</a><a href="#s21">（三）手术后：</a><a href="#s22">（三）其他治疗的伦理要求</a><a href="#s23">五、特殊科室诊疗的伦理要求</a><a href="#s24">（一）急诊科诊疗</a><a href="#s25">（二）妇产科诊疗</a><a href="#s26">（三）老年病科诊疗</a><a href="#s27">（四）ICU诊疗</a><a href="#s28">六、知识点总结</a><a href="#s29">七、课后思考</a>
+        <div class="toc-h" style="margin-top:20px">文档信息</div>
+        <div class="small dim" style="padding:0 11px;line-height:1.9">段落 106<br>表格 0<br>小节 29</div>
+      </aside>
+      <article class="article">
+        <div id="body"></div>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="../../js/core.js"></script>
+<script src="../../data/r2-config.js"></script>
+<script>window.__DOC_BLOCKS = [{"type": "h", "level": 3, "id": "s1", "text": "第四章 临床诊疗伦理"}, {"type": "p", "text": "学习目标：掌握临床诊疗的四大伦理原则；掌握临床诊断、临床治疗、特殊科室诊疗的伦理要求。"}, {"type": "h", "level": 3, "id": "s2", "text": "一、临床诊疗的伦理背景"}, {"type": "list", "items": ["①诊疗技术的双重性", "②服务对象的特殊性", "③疾病过程的复杂性", "④医务人员的差异性"]}, {"type": "p", "text": "吴孟超：\"我们要治的不是人的病，而是病的人。\""}, {"type": "h", "level": 3, "id": "s3", "text": "二、临床诊疗的伦理原则"}, {"type": "h", "level": 3, "id": "s4", "text": "（一）生命至上"}, {"type": "list", "items": ["是临床诊疗的出发点/落脚点，是医德教育/医德评价的依据，是培养医德情感、锻炼医德意志、坚守医德高地的动力。", "《黄帝内经》：\"天覆地载，万物悉备，莫贵于人。\"", "《千金方》：\"人命至重，有贵千金，一方济之，德逾于此。\"", "二十大报告：坚持人民至上、生命至上……最大限度保护了人民生命安全和身体健康。"]}, {"type": "h", "level": 3, "id": "s5", "text": "（二）最优化原则"}, {"type": "list", "items": ["实际是一项技术原则：技术手段的正确选择、运用，对就医者的高度负责、真诚关爱。", "要求：痛苦最小、耗费最少、效果最好、安全度最高。", "收益（理想预期）与损害（现实情况）的权衡；以医疗技术为基础，以因人而异的病情为依据。", "表4-3：不同医疗情境下患方选择倾向（治疗效果、治疗花费、身体痛苦、安全性四个维度的权重因情境而异）。"]}, {"type": "h", "level": 3, "id": "s6", "text": "（三）知情同意（informed consent）"}, {"type": "list", "items": ["定义：医务人员在确定和实施诊疗措施前，应向患者作详尽的解释说明，并取得患者在充分理解基础上自由表示出来的同意。是医学伦理基本原则的临床实践体现。", "要件：告知、理解、能力、自由。", "形式：口头同意、书面同意。", "主体：18岁以上、有自主行为能力者。特殊情况可直接行使医疗特权，无须患者同意。", "发展历程：", "1947年《纽伦堡法典》：包含十条医学人体试验伦理准则，是医学科研知情同意原则的先声；", "1964年《赫尔辛基宣言》：世界医学联合会通过，第一次明确知情同意问题，区分\"治疗性研究\"和\"非治疗性研究\"；", "1973年美国《病人权利法案》：将其作为重要患者权利以成文形式确立；", "2024年10月，第75届世界医学会全体大会（芬兰赫尔辛基）通过《赫尔辛基宣言》最新修订本（第25-29条详述知情同意）。", "国内法规：《医院诊所管理暂行条例》（1951）规定施行大手术或特殊治疗须取得患者及关系人同意签字；不能自立之未成年病人或病人已失去知觉且无关系人时可不取得同意，但须共同签字鉴证。"]}, {"type": "h", "level": 3, "id": "s7", "text": "（四）保守医密"}, {"type": "list", "items": ["保密范围：患者信息、病历资料、经济状况、病史相关信息、性生活信息、家庭信息等；形式涵盖文、图、声。"]}, {"type": "note", "variant": "key", "title": "小结", "text": "临床诊疗伦理原则——生命至上、最优化、知情同意、保守医密。诊疗中要兼顾：身体上治疗、心理上关怀、经济上考虑、政策上指导、文化上尊重。"}, {"type": "h", "level": 3, "id": "s8", "text": "三、临床诊断的伦理要求"}, {"type": "h", "level": 3, "id": "s9", "text": "（一）问诊"}, {"type": "list", "items": ["举止端庄，态度热情", "全神贯注，耐心倾听", "语言得当，正确引导", "适度接触，适当辅诊"]}, {"type": "p", "text": "（看、听、说、触）"}, {"type": "h", "level": 3, "id": "s10", "text": "（二）体格检查"}, {"type": "list", "items": ["中医：望诊、闻诊、问诊、切诊；西医：望诊、触诊、叩诊、听诊。", "伦理要求：全面系统，认真细致；关心体贴，减少痛苦；尊重患者，心正无私。"]}, {"type": "h", "level": 3, "id": "s11", "text": "（三）辅助检查"}, {"type": "h", "level": 3, "id": "s12", "text": "（一）医生："}, {"type": "list", "items": ["审慎确定检查项目", "知情同意，尽职尽责", "综合分析检查结果", "通俗解释临床诊断（案例：西安医生连续10年手绘术前指导，用画图方式让患者理解专业词汇）"]}, {"type": "h", "level": 3, "id": "s13", "text": "（二）医技人员："}, {"type": "list", "items": ["严谨求实，防止差错", "尊重患者，工作敏捷", "精心管理，保证安全", "积极进取，加强协作"]}, {"type": "p", "text": "（反面案例：日本医院忘接氧气管致患者昏迷——缺少双人核对机制、警报疲劳）"}, {"type": "h", "level": 3, "id": "s14", "text": "四、临床治疗的伦理要求"}, {"type": "p", "text": "治疗分类：药物治疗、手术治疗、营养治疗、心理治疗、康复治疗。"}, {"type": "h", "level": 3, "id": "s15", "text": "（一）药物治疗的伦理要求"}, {"type": "h", "level": 3, "id": "s16", "text": "（一）医生："}, {"type": "list", "items": ["对症下药，剂量安全：明确诊断和药物性能、适应证和禁忌证，标本兼治；因人而异（年龄、体重、体质、重要脏器功能状况）掌握剂量。", "合理配伍，细致观察：掌握配伍禁忌、限制药位数；杜绝滥用联合用药、预警耐药性；了解疗效和副作用，视情调整。", "节约费用，公正分配：常用药、国产低价药优先于贵重药、进口药；不开大处方、\"人情方\"；进口药、贵重药公正分配。"]}, {"type": "h", "level": 3, "id": "s17", "text": "（二）药剂工作人员："}, {"type": "list", "items": ["规定必须皮试的药品，处方医师应注明过敏试验及结果；", "操作正规，质量达标：不将就凑合、不能掺假；", "忠于职守，廉洁奉公：抵制假劣药进库、清查在库药品、执行毒麻药品管理规定、合理分配药品资源。"]}, {"type": "p", "text": "（反面案例：桐庐县第一人民医院药剂科王晓俊受贿1200余万元，被判有期徒刑14年）"}, {"type": "h", "level": 3, "id": "s18", "text": "（二）手术治疗的伦理要求"}, {"type": "h", "level": 3, "id": "s19", "text": "（一）手术前："}, {"type": "list", "items": ["准确掌握指征，手术动机纯正：适宜手术——手术是最理想疗法、当前术式是最优解、具备实施条件；不适宜手术——有更优疗法、手术可做可不做、可能加速病情恶化甚至死亡、需手术但条件不具备。", "患者或其家属知情同意。", "认真做好术前准备：医——方案、技术、设备、药品；患——生理、心理、经济。", "新术式/新技术的伦理审查。", "术前讨论：主持——非常熟悉患者病情的主治医生；参加——科室或院负责人（重大、危重病例）；内容——①疾病诊断情况 ②手术治疗的必要性 ③手术方式选择依据 ④术中术后可能并发症及意外 ⑤拟采取的预防措施 ⑥手术治疗的预后和经费估计。", "（案例：CBD感染期间孕妇剖宫产\"小平安\"）"]}, {"type": "h", "level": 3, "id": "s20", "text": "（二）手术中："}, {"type": "list", "items": ["关心患者，体贴入微（适度共情、及时安慰）；", "态度严肃，作风严谨（操作稳、准、轻、快）；", "精诚团结，密切协作（团结、开放、承担）。"]}, {"type": "h", "level": 3, "id": "s21", "text": "（三）手术后："}, {"type": "list", "items": ["严密观察，勤于护理；", "减轻痛苦，加速康复。"]}, {"type": "h", "level": 3, "id": "s22", "text": "（三）其他治疗的伦理要求"}, {"type": "p", "text": "心理治疗：熟练掌握心理治疗的知识与技巧；感同身受；心态健康、积极、稳定；保守患者秘密与隐私。"}, {"type": "p", "text": "饮食营养治疗：营养安全科学；创造良好环境；满足患者的饮食习惯和营养需求。"}, {"type": "p", "text": "康复治疗：理解与尊重（平等、真诚相待）；关怀与帮助（鼓励主动、长期治疗）；联系与协作（医务人员、工程技术人员、社会工作者、特种教育工作者）。"}, {"type": "h", "level": 3, "id": "s23", "text": "五、特殊科室诊疗的伦理要求"}, {"type": "h", "level": 3, "id": "s24", "text": "（一）急诊科诊疗"}, {"type": "p", "text": "时间紧、任务重；患者心理波动大，医患沟通难以充分，需多学科合作。要求：维护患者利益；迅速准确处置；尊重患者权利；如实真诚沟通；尊重患者隐私；医际公正诚实。"}, {"type": "h", "level": 3, "id": "s25", "text": "（二）妇产科诊疗"}, {"type": "p", "text": "兼顾孕妇和胎儿两方面，从单纯疾病诊治和产科处理扩展到围生期、妇女保健和优生优育。要求：尊重妇女的人格；保护患者隐私；弘扬奉献精神；慎重对待女性生殖器官疾病（当下+未来）。"}, {"type": "h", "level": 3, "id": "s26", "text": "（三）老年病科诊疗"}, {"type": "p", "text": "病程长、恢复慢；无明显症状体征、初期不易察觉、合并症多。要求：尊重老者的身心感受；转变理念，合理管理和治疗；有节制、可持续治疗；重视心理关怀。（国家卫健委推10项举措帮助老年人就医；\"互联网+护理服务\"）"}, {"type": "h", "level": 3, "id": "s27", "text": "（四）ICU诊疗"}, {"type": "list", "items": ["冲突：生命维持与生存质量抉择；技术密集与人文支持矛盾；情感决策与理智选择冲突；资源分配与价值公正拉扯。", "应对：心理支持、情感沟通；公平收治、资源分配；经济伦理、适度医疗；终末期决策、放弃治疗。"]}, {"type": "h", "level": 3, "id": "s28", "text": "六、知识点总结"}, {"type": "list", "items": ["诊疗原则：生命至上；最优化原则；知情同意；保守医密", "诊断要求：问诊④ / 体格检查③ / 辅助检查④＋④", "治疗要求：", "药物：医生④ / 药剂人员④", "手术：术前（准确掌握指征、动机纯正、知情同意、术前准备、伦理审查）；术中（关心体贴、态度严肃作风严谨、精诚团结密切协作）；术后（严密观察护理、减轻痛苦加速康复）", "其他：心理④ / 营养③ / 康复③", "特殊诊疗要求：急诊科 / 妇产科 / 老年病科 / ICU"]}, {"type": "h", "level": 3, "id": "s29", "text": "七、课后思考"}, {"type": "p", "text": "江西儿科医生韩某因漏诊嵌顿疝致患儿死亡。法院一审以医疗事故罪判处有期徒刑一年、缓刑一年，禁止从事医疗行业三年，二审维持原判。请从伦理角度分析其行为是否存在伦理过错及原因。"}];</script>
 <script>
 (function () {
+  if (WB.mountChrome) WB.mountChrome('materials');
+
+  var body = document.getElementById('body');
+  body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
+  if (WB.fx && WB.fx.init) WB.fx.init();
+
   var base = (window.R2_BASE || '').replace(/\/+$/, '');
   var prefix = window.R2_PREFIX || '';
   var dl = document.getElementById('dgDl');
@@ -183,6 +73,17 @@
   } else if (dl) {
     dl.style.display = 'none';
   }
+
+  var links = [].slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  if (!links.length) return;
+  var heads = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function paint() {
+    var top = window.scrollY + 120, idx = 0;
+    heads.forEach(function (h, i) { if (h && h.offsetTop <= top) idx = i; });
+    links.forEach(function (a, i) { a.classList.toggle('on', i === idx); });
+  }
+  window.addEventListener('scroll', paint, { passive: true });
+  paint();
 })();
 </script>
 </body>

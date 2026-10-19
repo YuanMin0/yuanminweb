@@ -2,102 +2,69 @@
 <html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>急性髓系白血病病例分析大作业7.4 · 资料阅读 · MediLearn</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../../css/style.css">
-<script src="../../data/r2-config.js"></script>
+<script src="../../js/auth.js"></script>
+<script>if(window.WB&&WB.auth)WB.auth.guard();</script>
 <style>
-  body { background: var(--bg); }
-  .dg-top {
-    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 10px;
-    padding: 10px 16px; background: color-mix(in srgb, var(--surface) 88%, transparent);
-    border-bottom: 1px solid var(--border); backdrop-filter: blur(12px);
-  }
-  .dg-top h1 { font-size: 15px; margin: 0; flex: 1; min-width: 0;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .dg-top .meta { font-size: 12px; color: var(--text-3); white-space: nowrap; }
-  .dg-wrap { max-width: 880px; margin: 0 auto; padding: 26px 20px 90px; }
-  .dg-tip { font-size: 13px; color: var(--text-3); background: var(--surface-2);
+  .doc-head { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+  .doc-head h1 { font-size: 26px; margin: 0; letter-spacing: -.02em; flex: 1; min-width: 240px; }
+  .doc-sub { color: var(--text-3); font-size: 13px; margin: 8px 0 18px; }
+  .doc-tip { font-size: 13px; color: var(--text-3); background: var(--surface-2);
     border: 1px solid var(--border); border-left: 3px solid var(--brand);
     border-radius: 10px; padding: 10px 14px; margin-bottom: 20px; line-height: 1.7; }
-  .dg-toc { background: var(--surface); border: 1px solid var(--border);
-    border-radius: 14px; padding: 16px 18px; margin-bottom: 26px; }
-  .dg-toc-t { font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--text-3); margin-bottom: 8px; }
-  .dt-toc-a { display: block; padding: 5px 0; font-size: 14px; color: var(--text-2);
-    text-decoration: none; border-bottom: 1px dashed transparent; }
-  .dt-toc-a:hover { color: var(--brand); border-bottom-color: var(--brand); }
-  .dt-toc-a.lv2 { font-weight: 650; color: var(--text); }
-  .dt-toc-a.lv3 { padding-left: 14px; }
-  .dg-body { background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; padding: 30px 34px; font-size: 15.5px; line-height: 1.95;
-    color: var(--text); }
-  .dg-body h2 { font-size: 21px; margin: 34px 0 14px; padding-bottom: 8px;
-    border-bottom: 2px solid var(--border); scroll-margin-top: 70px; }
-  .dg-body h2:first-child { margin-top: 0; }
-  .dg-body h3 { font-size: 17px; margin: 26px 0 10px; color: var(--brand);
-    scroll-margin-top: 70px; }
-  .dg-body p { margin: 0 0 12px; }
-  .dg-body strong { color: var(--text); font-weight: 700; }
-  .dg-ul { margin: 6px 0 14px; padding-left: 22px; }
-  .dg-ul li { margin-bottom: 5px; }
-  .dt-wrap { overflow-x: auto; margin: 14px 0 18px; }
-  .dt { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .dt th, .dt td { border: 1px solid var(--border); padding: 8px 11px; text-align: left;
-    vertical-align: top; }
-  .dt th { background: var(--surface-2); font-weight: 650; white-space: nowrap; }
-  .dt tr:nth-child(even) td { background: color-mix(in srgb, var(--surface-2) 45%, transparent); }
-  @media (max-width: 720px) {
-    .dg-wrap { padding: 18px 12px 70px; }
-    .dg-body { padding: 20px 16px; font-size: 15px; }
-    .dg-top h1 { font-size: 14px; }
-    .dg-top .meta { display: none; }
+  @media (max-width: 900px) {
+    .klayout { grid-template-columns: 1fr; }
+    .toc { position: static; margin-bottom: 8px; }
   }
-  @media print { .dg-top, .dg-toc, .dg-tip { display: none; } .dg-body { border: 0; padding: 0; } }
+  @media print { .toc, .doc-tip, .hdr, .ftr, .doc-head .gbtn { display: none; } .klayout { display: block; } }
 </style>
 </head>
 <body>
-<div class="dg-top">
-  <a class="gbtn gbtn-sm" href="../../materials.html">← 资料汇总</a>
-  <h1>急性髓系白血病病例分析大作业7.4</h1>
-  <span class="meta">29 段 · 0 表 · 0 小节</span>
-  <a class="gbtn gbtn-sm" id="dgDl" data-key="hematology/急性髓系白血病病例分析大作业7.4.docx" href="#" target="_blank" rel="noopener">下载原文</a>
-</div>
-<div class="dg-wrap">
-  <div class="dg-tip">这份内容由 Word 原文提取后重新排版，便于在手机、平板上阅读；<b>表格与公式可能略有出入</b>，需要精确版式请下载原文。</div>
-  
-  <article class="dg-body"><p>一、</p>
-<p>大家好，今天我将为大家分享一例急性髓系白血病的病例分析。我们将从病例回顾出发，深入探讨其诊断、鉴别诊断以及现代诊疗策略。希望通过这次分享，能帮助大家更好地理解和掌握这类疾病的临床思维。</p>
-<p>二、本次汇报将分为四个部分。首先，我们将回顾患者的基本情况和关键的临床发现。其次，我们将依据MICM分型系统，详细解读患者的诊断依据。接着，我们会讨论需要与哪些疾病进行鉴别诊断。最后，我们将重点介绍针对该患者的系统性治疗方案。</p>
-<p>三、</p>
-<p>我们来看一下患者的基本情况。患者是一位56岁的女性，主因“发热伴咳嗽1周”入院。她的病史比较简单，没有特殊的既往病史。这些看似普通的症状，背后却隐藏着严重的血液系统疾病。</p>
-<p>四、</p>
-<p>入院后的检查结果揭示了病情的严重性。体格检查发现了贫血、出血点和胸骨压痛等典型白血病体征。血常规呈现出“一高两低”的白血病血象，血涂片和骨髓穿刺更是直接发现了大量的原始和幼稚细胞。流式细胞学和分子生物学检查进一步明确了细胞来源和预后相关的基因突变。</p>
-<p>五、综合以上信息，我们可以初步诊断为急性髓系白血病，也就是AML。诊断依据非常充分：患者有典型的感染、贫血和出血症状；血常规提示白细胞异常升高伴两系减少；血涂片和骨髓形态学检查都发现了大量的原始细胞，比例高达67%，远超WHO规定的20%的诊断标准。</p>
-<p>六、为了更精确地诊断，我们需要进行MICM分型。首先是形态学（M），骨髓涂片显示原始粒细胞占67%，符合AML的特征。其次是免疫学（I），流式细胞学结果显示细胞表达CD13、CD33等髓系抗原，这有力地证实了白血病细胞来源于髓系，而不是淋系。</p>
-<p>七</p>
-<p>接下来是细胞遗传学（C）和分子生物学（M）。遗憾的是，本例没有提供染色体核型结果，这对于预后判断是一个缺憾。但分子生物学检测发现了WT1基因阳性。大量研究表明，WT1高表达是AML预后不良的独立危险因素，这意味着患者的复发风险更高，生存期可能更短。因此，我们应将其归为中高危组。</p>
-<p>八</p>
-<p>综上所述，我们可以给出最终的诊断：急性髓系白血病，非急性早幼粒细胞白血病亚型，伴有WT1阳性。这个诊断不仅明确了疾病类型，还通过分子生物学标记提示了其不良的预后倾向，为后续的治疗决策提供了重要依据。</p>
-<p>九</p>
-<p>在诊断过程中，我们需要与一些疾病进行鉴别。首先是骨髓增生异常综合征，也就是MDS。两者都可能有血细胞减少和幼稚细胞。但核心区别在于原始细胞的比例，AML要求≥20%，而MDS则&lt;20%。本例患者高达67%，因此可以轻松排除MDS。</p>
-<p>十</p>
-<p>其次是再生障碍性贫血，AA。两者都可能出现严重的全血细胞减少。但骨髓穿刺结果截然不同：AA的骨髓是空虚的，造血细胞被脂肪取代，表现为增生低下；而AML的骨髓则是“爆满”的，充满了白血病细胞，表现为增生极度活跃。本例显然符合后者。</p>
-<p>十一</p>
-<p>还需要与急性淋巴细胞白血病（ALL）和类白血病反应鉴别。与ALL的鉴别主要依靠流式细胞学，看细胞表达的是髓系还是淋系抗原，本例明确是髓系。而类白血病反应通常有明确的诱因，如严重感染，且不会出现如此严重的贫血和血小板减少，骨髓中也不会有这么多原始细胞。</p>
-<p>十二</p>
-<p>明确诊断后，治疗刻不容缓。第一步是紧急支持治疗。患者当时存在严重的感染和出血风险，因此必须立即进行抗感染治疗和输注血小板。同时，纠正贫血和后续使用升白针等支持治疗也是必不可少的，这为后续的化疗保驾护航。</p>
-<p>十三</p>
-<p>支持治疗稳定后，就进入了核心的诱导缓解化疗阶段。对于这位56岁的患者，标准的“7+3”方案是首选。考虑到她WT1阳性的不良预后因素，也可以考虑使用FLAG-IDA等更强的诱导方案，以期获得更深层次的缓解。</p>
-<p>十四</p>
-<p>诱导化疗成功后，我们需要进行巩固强化治疗，以清除微小残留病。对于这位预后不良的患者，异基因造血干细胞移植是首选方案，它能显著降低复发率，改善长期生存。因此，一旦患者达到完全缓解，就应尽快寻找合适的供者进行移植。</p>
-<p>十五</p>
-<p>最后，针对患者WT1阳性这一特点，我们需要采取一些特定策略。首先，要定期监测WT1的水平，作为评估疗效和复发的风向标。其次，对于无法移植或移植后的患者，可以考虑使用去甲基化药物进行维持治疗。此外，一些新兴的免疫疗法，如WT1疫苗和CAR-T，也为这类患者带来了新的希望。</p>
-<p>十六</p>
-<p>我的汇报到此结束，感谢大家的聆听。如果大家对病例分析或诊疗策略有任何疑问，欢迎提问交流。</p></article>
-</div>
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap">
+    <div class="crumb"><a href="../../materials.html">资料汇总</a> / <span>急性髓系白血病病例分析大作业7.4</span></div>
+
+    <div class="doc-head">
+      <h1>急性髓系白血病病例分析大作业7.4</h1>
+      <a class="gbtn gbtn-sm" href="../../materials.html">← 返回资料汇总</a>
+      <a class="gbtn gbtn-sm gbtn-primary" id="dgDl" data-key="hematology/急性髓系白血病病例分析大作业7.4.docx" href="#" target="_blank" rel="noopener">下载原文</a>
+    </div>
+    <div class="doc-sub">29 个段落 · 0 张表格 · 0 个小节</div>
+
+    <div class="doc-tip">本文由 Word 原文提取并重新排版，<b>加粗内容已标红</b>；表格与公式可能有出入，需要精确版式请下载原文。</div>
+
+    <div class="klayout">
+      <aside class="toc">
+        <div class="toc-h">本页目录</div>
+        <div class="small dim" style="padding:0 11px">本文没有明显小节</div>
+        <div class="toc-h" style="margin-top:20px">文档信息</div>
+        <div class="small dim" style="padding:0 11px;line-height:1.9">段落 29<br>表格 0<br>小节 0</div>
+      </aside>
+      <article class="article">
+        <div id="body"></div>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="../../js/core.js"></script>
+<script src="../../data/r2-config.js"></script>
+<script>window.__DOC_BLOCKS = [{"type": "p", "text": "一、"}, {"type": "p", "text": "大家好，今天我将为大家分享一例急性髓系白血病的病例分析。我们将从病例回顾出发，深入探讨其诊断、鉴别诊断以及现代诊疗策略。希望通过这次分享，能帮助大家更好地理解和掌握这类疾病的临床思维。"}, {"type": "p", "text": "二、本次汇报将分为四个部分。首先，我们将回顾患者的基本情况和关键的临床发现。其次，我们将依据MICM分型系统，详细解读患者的诊断依据。接着，我们会讨论需要与哪些疾病进行鉴别诊断。最后，我们将重点介绍针对该患者的系统性治疗方案。"}, {"type": "p", "text": "三、"}, {"type": "p", "text": "我们来看一下患者的基本情况。患者是一位56岁的女性，主因“发热伴咳嗽1周”入院。她的病史比较简单，没有特殊的既往病史。这些看似普通的症状，背后却隐藏着严重的血液系统疾病。"}, {"type": "p", "text": "四、"}, {"type": "p", "text": "入院后的检查结果揭示了病情的严重性。体格检查发现了贫血、出血点和胸骨压痛等典型白血病体征。血常规呈现出“一高两低”的白血病血象，血涂片和骨髓穿刺更是直接发现了大量的原始和幼稚细胞。流式细胞学和分子生物学检查进一步明确了细胞来源和预后相关的基因突变。"}, {"type": "p", "text": "五、综合以上信息，我们可以初步诊断为急性髓系白血病，也就是AML。诊断依据非常充分：患者有典型的感染、贫血和出血症状；血常规提示白细胞异常升高伴两系减少；血涂片和骨髓形态学检查都发现了大量的原始细胞，比例高达67%，远超WHO规定的20%的诊断标准。"}, {"type": "p", "text": "六、为了更精确地诊断，我们需要进行MICM分型。首先是形态学（M），骨髓涂片显示原始粒细胞占67%，符合AML的特征。其次是免疫学（I），流式细胞学结果显示细胞表达CD13、CD33等髓系抗原，这有力地证实了白血病细胞来源于髓系，而不是淋系。"}, {"type": "p", "text": "七"}, {"type": "p", "text": "接下来是细胞遗传学（C）和分子生物学（M）。遗憾的是，本例没有提供染色体核型结果，这对于预后判断是一个缺憾。但分子生物学检测发现了WT1基因阳性。大量研究表明，WT1高表达是AML预后不良的独立危险因素，这意味着患者的复发风险更高，生存期可能更短。因此，我们应将其归为中高危组。"}, {"type": "p", "text": "八"}, {"type": "p", "text": "综上所述，我们可以给出最终的诊断：急性髓系白血病，非急性早幼粒细胞白血病亚型，伴有WT1阳性。这个诊断不仅明确了疾病类型，还通过分子生物学标记提示了其不良的预后倾向，为后续的治疗决策提供了重要依据。"}, {"type": "p", "text": "九"}, {"type": "p", "text": "在诊断过程中，我们需要与一些疾病进行鉴别。首先是骨髓增生异常综合征，也就是MDS。两者都可能有血细胞减少和幼稚细胞。但核心区别在于原始细胞的比例，AML要求≥20%，而MDS则<20%。本例患者高达67%，因此可以轻松排除MDS。"}, {"type": "p", "text": "十"}, {"type": "p", "text": "其次是再生障碍性贫血，AA。两者都可能出现严重的全血细胞减少。但骨髓穿刺结果截然不同：AA的骨髓是空虚的，造血细胞被脂肪取代，表现为增生低下；而AML的骨髓则是“爆满”的，充满了白血病细胞，表现为增生极度活跃。本例显然符合后者。"}, {"type": "p", "text": "十一"}, {"type": "p", "text": "还需要与急性淋巴细胞白血病（ALL）和类白血病反应鉴别。与ALL的鉴别主要依靠流式细胞学，看细胞表达的是髓系还是淋系抗原，本例明确是髓系。而类白血病反应通常有明确的诱因，如严重感染，且不会出现如此严重的贫血和血小板减少，骨髓中也不会有这么多原始细胞。"}, {"type": "p", "text": "十二"}, {"type": "p", "text": "明确诊断后，治疗刻不容缓。第一步是紧急支持治疗。患者当时存在严重的感染和出血风险，因此必须立即进行抗感染治疗和输注血小板。同时，纠正贫血和后续使用升白针等支持治疗也是必不可少的，这为后续的化疗保驾护航。"}, {"type": "p", "text": "十三"}, {"type": "p", "text": "支持治疗稳定后，就进入了核心的诱导缓解化疗阶段。对于这位56岁的患者，标准的“7+3”方案是首选。考虑到她WT1阳性的不良预后因素，也可以考虑使用FLAG-IDA等更强的诱导方案，以期获得更深层次的缓解。"}, {"type": "p", "text": "十四"}, {"type": "p", "text": "诱导化疗成功后，我们需要进行巩固强化治疗，以清除微小残留病。对于这位预后不良的患者，异基因造血干细胞移植是首选方案，它能显著降低复发率，改善长期生存。因此，一旦患者达到完全缓解，就应尽快寻找合适的供者进行移植。"}, {"type": "p", "text": "十五"}, {"type": "p", "text": "最后，针对患者WT1阳性这一特点，我们需要采取一些特定策略。首先，要定期监测WT1的水平，作为评估疗效和复发的风向标。其次，对于无法移植或移植后的患者，可以考虑使用去甲基化药物进行维持治疗。此外，一些新兴的免疫疗法，如WT1疫苗和CAR-T，也为这类患者带来了新的希望。"}, {"type": "p", "text": "十六"}, {"type": "p", "text": "我的汇报到此结束，感谢大家的聆听。如果大家对病例分析或诊疗策略有任何疑问，欢迎提问交流。"}];</script>
 <script>
 (function () {
+  if (WB.mountChrome) WB.mountChrome('materials');
+
+  var body = document.getElementById('body');
+  body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
+  if (WB.fx && WB.fx.init) WB.fx.init();
+
   var base = (window.R2_BASE || '').replace(/\/+$/, '');
   var prefix = window.R2_PREFIX || '';
   var dl = document.getElementById('dgDl');
@@ -106,6 +73,17 @@
   } else if (dl) {
     dl.style.display = 'none';
   }
+
+  var links = [].slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  if (!links.length) return;
+  var heads = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function paint() {
+    var top = window.scrollY + 120, idx = 0;
+    heads.forEach(function (h, i) { if (h && h.offsetTop <= top) idx = i; });
+    links.forEach(function (a, i) { a.classList.toggle('on', i === idx); });
+  }
+  window.addEventListener('scroll', paint, { passive: true });
+  paint();
 })();
 </script>
 </body>

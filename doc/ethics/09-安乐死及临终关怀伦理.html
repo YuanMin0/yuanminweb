@@ -2,219 +2,69 @@
 <html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>09-安乐死及临终关怀伦理 · 资料阅读 · MediLearn</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../../css/style.css">
-<script src="../../data/r2-config.js"></script>
+<script src="../../js/auth.js"></script>
+<script>if(window.WB&&WB.auth)WB.auth.guard();</script>
 <style>
-  body { background: var(--bg); }
-  .dg-top {
-    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 10px;
-    padding: 10px 16px; background: color-mix(in srgb, var(--surface) 88%, transparent);
-    border-bottom: 1px solid var(--border); backdrop-filter: blur(12px);
-  }
-  .dg-top h1 { font-size: 15px; margin: 0; flex: 1; min-width: 0;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .dg-top .meta { font-size: 12px; color: var(--text-3); white-space: nowrap; }
-  .dg-wrap { max-width: 880px; margin: 0 auto; padding: 26px 20px 90px; }
-  .dg-tip { font-size: 13px; color: var(--text-3); background: var(--surface-2);
+  .doc-head { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+  .doc-head h1 { font-size: 26px; margin: 0; letter-spacing: -.02em; flex: 1; min-width: 240px; }
+  .doc-sub { color: var(--text-3); font-size: 13px; margin: 8px 0 18px; }
+  .doc-tip { font-size: 13px; color: var(--text-3); background: var(--surface-2);
     border: 1px solid var(--border); border-left: 3px solid var(--brand);
     border-radius: 10px; padding: 10px 14px; margin-bottom: 20px; line-height: 1.7; }
-  .dg-toc { background: var(--surface); border: 1px solid var(--border);
-    border-radius: 14px; padding: 16px 18px; margin-bottom: 26px; }
-  .dg-toc-t { font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--text-3); margin-bottom: 8px; }
-  .dt-toc-a { display: block; padding: 5px 0; font-size: 14px; color: var(--text-2);
-    text-decoration: none; border-bottom: 1px dashed transparent; }
-  .dt-toc-a:hover { color: var(--brand); border-bottom-color: var(--brand); }
-  .dt-toc-a.lv2 { font-weight: 650; color: var(--text); }
-  .dt-toc-a.lv3 { padding-left: 14px; }
-  .dg-body { background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; padding: 30px 34px; font-size: 15.5px; line-height: 1.95;
-    color: var(--text); }
-  .dg-body h2 { font-size: 21px; margin: 34px 0 14px; padding-bottom: 8px;
-    border-bottom: 2px solid var(--border); scroll-margin-top: 70px; }
-  .dg-body h2:first-child { margin-top: 0; }
-  .dg-body h3 { font-size: 17px; margin: 26px 0 10px; color: var(--brand);
-    scroll-margin-top: 70px; }
-  .dg-body p { margin: 0 0 12px; }
-  .dg-body strong { color: var(--text); font-weight: 700; }
-  .dg-ul { margin: 6px 0 14px; padding-left: 22px; }
-  .dg-ul li { margin-bottom: 5px; }
-  .dt-wrap { overflow-x: auto; margin: 14px 0 18px; }
-  .dt { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .dt th, .dt td { border: 1px solid var(--border); padding: 8px 11px; text-align: left;
-    vertical-align: top; }
-  .dt th { background: var(--surface-2); font-weight: 650; white-space: nowrap; }
-  .dt tr:nth-child(even) td { background: color-mix(in srgb, var(--surface-2) 45%, transparent); }
-  @media (max-width: 720px) {
-    .dg-wrap { padding: 18px 12px 70px; }
-    .dg-body { padding: 20px 16px; font-size: 15px; }
-    .dg-top h1 { font-size: 14px; }
-    .dg-top .meta { display: none; }
+  @media (max-width: 900px) {
+    .klayout { grid-template-columns: 1fr; }
+    .toc { position: static; margin-bottom: 8px; }
   }
-  @media print { .dg-top, .dg-toc, .dg-tip { display: none; } .dg-body { border: 0; padding: 0; } }
+  @media print { .toc, .doc-tip, .hdr, .ftr, .doc-head .gbtn { display: none; } .klayout { display: block; } }
 </style>
 </head>
 <body>
-<div class="dg-top">
-  <a class="gbtn gbtn-sm" href="../../materials.html">← 资料汇总</a>
-  <h1>09-安乐死及临终关怀伦理</h1>
-  <span class="meta">146 段 · 0 表 · 12 小节</span>
-  <a class="gbtn gbtn-sm" id="dgDl" data-key="ethics/09-安乐死及临终关怀伦理.docx" href="#" target="_blank" rel="noopener">下载原文</a>
-</div>
-<div class="dg-wrap">
-  <div class="dg-tip">这份内容由 Word 原文提取后重新排版，便于在手机、平板上阅读；<b>表格与公式可能略有出入</b>，需要精确版式请下载原文。</div>
-  <nav class="dt-toc"><div class="dt-toc-t">目录</div><a class="dt-toc-a lv2" href="#h0">第九章 安乐死及临终关怀伦理</a><a class="dt-toc-a lv2" href="#h1">第一节 人体死亡标准</a><a class="dt-toc-a lv3" href="#h2">• 脑死亡四条判定标准：</a><a class="dt-toc-a lv3" href="#h3">• 脑死亡与植物人的区别：</a><a class="dt-toc-a lv2" href="#h4">第二节 安乐死的伦理问题</a><a class="dt-toc-a lv3" href="#h5">案例分析：</a><a class="dt-toc-a lv3" href="#h6">• 支持安乐死的依据：</a><a class="dt-toc-a lv3" href="#h7">• 反对安乐死的依据：</a><a class="dt-toc-a lv2" href="#h8">第三节 临终关怀的伦理问题</a><a class="dt-toc-a lv3" href="#h9">• 伦理要素：</a><a class="dt-toc-a lv3" href="#h10">小结</a><a class="dt-toc-a lv3" href="#h11">互动</a></nav>
-  <article class="dg-body"><h2 id="h0">第九章 安乐死及临终关怀伦理</h2>
-<p>来源：军事医学伦理学教研室 吴雁</p>
-<p>主题：第十一专题 生命伦理学热点问题之二</p>
-<p>"生如夏花之绚烂，死若秋叶之静美"——死的问题？</p>
-<h2 id="h1">第一节 人体死亡标准</h2>
-<p>一、死亡标准</p>
-<ul class="dt-ul"><li>心肺死亡标准：长期以来，人们判定人死亡以心肺功能的停止为标准。人死亡怎么判断呢？有没有呼吸？心还跳不跳？</li>
-<li>脑死亡标准：1968年召开的世界第22届医学大会上，美国哈佛大学医学院死亡定义审查委员会提出"脑功能不可逆性丧失"作为新的死亡标准（脑死亡）。大脑和脑干是人类生命的中枢和本质所在。</li>
-</ul><h3 id="h2">• 脑死亡四条判定标准：</h3>
-<ul class="dt-ul"><li>出现不可逆的昏迷；</li>
-<li>自主的肌肉运动和自主呼吸消失；</li>
-<li>诱导反射缺失；</li>
-<li>脑电波平直。</li>
-</ul><p>以上四条标准持续24小时观察和反复测试结果无变化，即可宣布死亡。</p>
-<ul class="dt-ul"><li>脑死亡定义：脑死亡是指脑干或脑干以上中枢神经系统永久性地丧失功能，有别于传统以心跳和呼吸停止为标准的心肺死亡判断标准。</li>
-</ul><h3 id="h3">• 脑死亡与植物人的区别：</h3>
-<ul class="dt-ul"><li>脑死亡者：没有脑干反应、没有自主呼吸，只有在呼吸机等仪器帮助下才能维持心跳呼吸，大脑萎缩、腐烂，无法复生（案例：韩国拳王崔尧三脑死亡不治身亡；凤凰台女主播刘海若被诊断为"脑死亡"）；</li>
-<li>植物人：大脑没有死亡，有脑干反应、有自主呼吸、能消化食物，并且有苏醒的可能。</li>
-<li>"脑死亡"的判定应有一个法定标准：1987年台湾公布《脑死亡判定步骤》；1996年香港确立脑死亡法；2002年卫生部组织专家制订《脑死亡诊断标准》。</li>
-</ul><p>二、执行脑死亡标准的道德意义</p>
-<ul class="dt-ul"><li>更科学地判定人的死亡：脑死亡后作为人的本质特征的意识和自我意识已经丧失，有意义的生命个体不复存在（案例：重庆一女孩在火化前复活）；</li>
-<li>维护了死者的尊严；</li>
-<li>有利于节约医疗资源；</li>
-<li>有利于器官移植。</li>
-</ul><h2 id="h4">第二节 安乐死的伦理问题</h2>
-<p>一、安乐死的含义及分类</p>
-<ul class="dt-ul"><li>安乐死的含义</li>
-<li>词源：euthanasia = eu(good, well) + thanato(death)，Good death = "好死""无痛苦地死亡""幸福地死亡""寿终正寝""无疾而终"。</li>
-<li>现代阐释：目前医学条件下患有不治之症、濒临死亡且非常痛苦的患者，由本人或家属诚恳委托医生使用药物或其他方式以尽可能无痛苦状态下结束生命的一种临终处置方式。（本原意义→现代阐释：状态→方式）</li>
-<li>医伦角度：身患不治之症的患者在危重濒死状态时，由于躯体和精神的极端痛苦难以忍受，在患者或其家属的合理及迫切要求下，经过医生、权威的医学专家机构鉴定确定，符合法律规定，按照法律程序，用人为的、仁慈的医学方法使患者在无痛苦状态下度过死亡阶段而终结生命的全过程。</li>
-<li>安乐死的分类</li>
-<li>按执行方式分为：主动安乐死、被动安乐死；</li>
-<li>按患者同意方式分为：自愿安乐死、非自愿安乐死。</li>
-<li>主动安乐死：通过医生之手运用药物等手段加速结束病人的生命，争议很大（Mercy killing，仁慈助死；案例：澳大利亚医生菲利普·尼奇克）。</li>
-<li>被动安乐死：撤除患者赖以维持生命、拖延时日的生命维持系统，或放弃必要的医疗抢救措施，使之等待死神的降临自然逝去，争议比较少（Letting Die，听任死亡）。</li>
-</ul><p>二、安乐死的伦理争论</p>
-<h3 id="h5">案例分析：</h3>
-<ul class="dt-ul"><li>Case I：一位75岁的老年患者身患不治之症，住院三个月病情不断恶化，无法挽救。老人周身疼痛、肌肉抽搐，因痛苦将自己身上抓得鲜血直流，甚至将舌头咬断。医生在其口腔内垫上棉花并固定手脚。经医院讨论，同意患者本人要求，由三位医师及病人家属在场，撤去氧气并注射一支致命药剂，老人在平静中死亡。</li>
-<li>Case II：一名40岁男病人诊断为肝癌，多方治疗病情恶化，出现急性肾功能衰竭、肝肾综合征、肝昏迷、消化道出血等。病危时家属提出希望病人在昏迷中"睡"过去。医护人员撤除了人工呼吸机等设备，患者度过了生命最后时刻。</li>
-<li>瑞士"尊严"诊所17年助近2000人安乐死，邻里愤怒抗议，叫它"恐怖屋"（路德维希·米内利）。</li>
-<li>安乐死伦理争论的观点</li>
-</ul><p>【支持的观点】</p>
-<ul class="dt-ul"><li>安乐死帮助患者结束生命，免除了临终难以忍受的痛苦，符合人道主义（案例：宁夏"癌症女孩"李燕丧失吃、喝、拉、撒、睡的自理能力，请求人大代表递交"安乐死"议案——"我爱生命 但我不愿活"）。</li>
-</ul><h3 id="h6">• 支持安乐死的依据：</h3>
-<ul class="dt-ul"><li>人权主义的观点：人生抉择的自主性和自由在于个人，每个人有权利根据自己的处境选择生存和死亡；</li>
-<li>功利主义的观点：宗旨是追求"最大多数人的最大幸福"；</li>
-<li>医学人道主义观点：让罹患绝症的病患安乐死是减轻其痛苦，比让其活得很痛苦更人道；</li>
-<li>生命质量论和生命价值论的观点：医学伦理学的基本理论，是指导医务人员临床行为的重要伦理依据。</li>
-</ul><p>【反对的观点】</p>
-<h3 id="h7">• 反对安乐死的依据：</h3>
-<ul class="dt-ul"><li>生命神圣论的观点：无论在何种情形下都应该尽力保存病人的生命；</li>
-<li>医学人道主义观点：安乐死是变相杀人，有违医学人道主义；</li>
-<li>不可逆的诊断未必绝对：实施安乐死可能使病人丧失很多机会；</li>
-<li>违背传统血缘亲情观念：会使病人家属放任亲人的死亡，甚至参与结束亲人的生命；</li>
-<li>自愿安乐死中的"自愿"值得怀疑："自愿"的安乐死不可信；</li>
-<li>实施安乐死可能给社会带来消极后果（家庭、心理、负面看法等）。</li>
-<li>道德忧思（角色混淆、观念冲突）：会不会引起医务人员对安乐死的滥用？（Euthanasia No Thanks!）</li>
-<li>实施安乐死在一定程度上使医务人员放弃探索"不治之症"的责任，可能导致一些患者错过转危为安的机会，医学科研也会受到影响。</li>
-<li>反对者观点：安乐死是变相杀人，与医务人员救死扶伤的神圣职责背道而驰（"是谋杀，不是怜悯！"——夏沃"插管"之争）。</li>
-<li>正确对待安乐死</li>
-<li>正确认识安乐死这一概念：调查显示仅10%的人对安乐死理解较深刻，60%略有耳闻，30%一点也不了解；</li>
-<li>进行死亡教育：帮助人们树立正确的死亡态度，感悟"生亦快乐，死亦安乐"的美好，培养良好的死亡适应心理。</li>
-<li>安乐死必须符合伦理条件</li>
-<li>晚期恶性肿瘤失去治愈机会者；</li>
-<li>重要生命脏器严重衰竭且不可逆转者；</li>
-<li>因各种疾病或伤残致使大脑功能丧失的"植物人"状态的患者；</li>
-<li>有严重缺陷的新生儿；</li>
-<li>患有严重精神病症、本人无正常感觉知觉和认识、经长期治疗也不可能恢复正常者；</li>
-<li>先天性智力丧失、无独立生活能力且不可能恢复正常者。</li>
-<li>国际上安乐死的立法状况</li>
-<li>1935年，全世界第一个提倡自愿安乐死的团体在英国正式成立；</li>
-<li>1976年，美国加利福尼亚州颁布《自然死亡法》——人类历史上第一个有关安乐死的法案；</li>
-<li>1977年，美国40个州通过《死亡权利法案》，要求医生尊重患者临终不采用人工手段延长生命的意愿；</li>
-<li>1992年10月1日，丹麦实验了停止延长无药可救病人生命的法律；</li>
-<li>1993年2月4日，英国最高法院裁定英国首例安乐死案件（同意给21岁患者停止输入营养液）；</li>
-<li>1993年2月9日，荷兰议会通过默认安乐死的法律，此后放宽合法化尺度；</li>
-<li>1995年6月16日，澳洲北部领土议会通过"临终患者权利法案"（The Right of the Terminally Ill Act），允许开业医生按一定准则结束患者生命，但被澳大利亚联邦政府否决（79岁利塞蒂遗言："我不想坐等无法尊严死去的那一天！""我健康，我快乐，但我活够了"）；</li>
-<li>2001年，荷兰通过《安乐死法案》，成为世界上第一个安乐死合法的国家（荷兰民意调查：86%的人认为与其让已无药可救的病人承受极大痛苦，不如……）；</li>
-<li>2002年，比利时通过法案允许医生在特殊情况下实行安乐死，成为世界第二个安乐死合法化国家（比利时93岁老妇要求安乐死；过去6年中共2700人申请"安乐死"）；</li>
-<li>原则：只有法律部门才能量刑结束一个人的生命，任何其他部门或个人、特别是医务人员没有这个权利。</li>
-<li>我国安乐死的立法状况</li>
-<li>从1992年起，每年的全国人民代表大会上提案组都会收到有关安乐死的提案；</li>
-<li>目前，我国尚没有安乐死的成文法；</li>
-<li>调查：北京地区近千人问卷调查，91%以上赞成安乐死，85%认为应立法（赞成者主要是老年人和高知识阶层人士）。</li>
-<li>国外相关案例</li>
-<li>韩国：2009年5月21日，韩国大法院长李容勋批准对76岁植物人患者停止续命治疗并摘除呼吸机——韩国大法院首次批准执行安乐死；</li>
-<li>意大利：38岁的埃鲁娜1992年遭遇车祸成为植物人，其父为争取女儿死亡权利斗争10多年；2008年1月意最高法院裁决同意停止为其进食，2009年2月6日家人移除进食管；</li>
-<li>观点：人有生的权利，也应有选择死亡方式的权利，这是社会进步和人类文明的标志；</li>
-<li>案例：林恩患有慢性疲劳综合征；盖德戴尔与女儿林恩——"无私而尽责的"母亲无罪、"符合常理、庄重而有人性"。</li>
-</ul><h2 id="h8">第三节 临终关怀的伦理问题</h2>
-<p>一、临终关怀的内涵及道德要求</p>
-<ul class="dt-ul"><li>临终关怀的定义及伦理要素</li>
-<li>《医学主题词表》定义："临终关怀（Hospice Care）是对临终病人和家属提供姑息性和支持性的医护措施。"</li>
-<li>Cure（治疗）vs Care（照护）：从"以治疗为中心"转向"以照护为中心"。</li>
-</ul><h3 id="h9">• 伦理要素：</h3>
-<ul class="dt-ul"><li>关怀对象：临终病人、病人家属；</li>
-<li>关怀机构：独立的临终关怀医院、医院附设的临终关怀病区、临终关怀家庭病床；</li>
-<li>关怀目的：维护病人尊严，提升病人临终阶段生命品质；</li>
-<li>关怀方式：疼痛控制、症状处理、生活护理、心理护理、家属情感支持。</li>
-<li>如何界定临终病人？（terminally-ill patients）：患有在当前医学技术条件下无法治愈的疾病，估计在六个月内将要走到生命终点、结束人生旅途的患者（通行标准：六个月；国内成果：280天）。</li>
-<li>疼痛的全貌（Total Pain）：躯体的痛苦、心理的焦虑、社会的孤立、精神的空虚（癌症造成的症状与治疗副作用、生存被剥夺感、失去工作能力收入、失去社会家中角色、希望感到绝望、备感屈辱等）。</li>
-<li>库伯勒·罗斯理论：晚期临终病人心理活动的五个阶段——否认期、愤怒期、协议期、抑郁期、接受期。</li>
-<li>伦理要素：触摸脆弱的心理、宽容多变的情绪、分担失落与愁苦。</li>
-<li>临终关怀团队：医生、护士、社会志愿者、宗教人士、营养师等（Hospice Patient、Family、Friends、Medical Doctor、Attending Physician、Registered Nurse、Social Worker、Dietitian、Chaplain、Volunteers &amp; Bereavement Support）。</li>
-<li>临终关怀的道德要求</li>
-<li>以照料为中心；</li>
-<li>维护病人尊严；</li>
-<li>提高临终生活质量；</li>
-<li>共同面对死亡；</li>
-<li>协助病人安静地、有尊严地死去。</li>
-</ul><p>二、临终关怀的伦理意义</p>
-<ul class="dt-ul"><li>彰显医学人道主义的真谛：人的自然属性、社会属性、精神属性（对应肉体痛苦、精神危机、情感需要、心理需求）。生得顺利、活得幸福、死得安详；生理上无疼痛、心理上无恐惧、精神上无遗憾；死者无憾、生者无愧、死者安详、生者坦然。</li>
-<li>体现生命神圣论、生命质量论与生命价值论的统一：孙思邈"人命至重，有贵千金……"；《黄帝内经》"天覆地载，万物悉备，莫贵于人。"</li>
-<li>符合社会道德和人类文明发展要求：社会与个人——增强幸福感；医学与个人——减少后顾之忧；家庭与个人——增强社会和谐度。</li>
-</ul><p>（同学感言：马文辉"从他们身上学到了生活的哲理"；冉昊"生命是一件易碎品，从老人身上看到了生命的价值"；田晓龙"用无条件地爱对待老人，就是爱我们自己"）</p>
-<p>三、发展状况及传统伦理观念影响</p>
-<ul class="dt-ul"><li>现代临终关怀的起源</li>
-<li>雏型：Hospice Care——朝圣者或旅行者途中休息、重新补充体力的驿站；现代临终关怀发祥地英国；</li>
-<li>创始人：桑德斯博士（Dame Cicely Saunders，1918～2005）；</li>
-<li>第一家机构：1967年世界第一家现代临终关怀医院——圣克里斯托弗临终关怀院（St Christopher's Hospice）；</li>
-<li>核心理念："St. Christopher's is a living place. It's about seizing every minute and making the very most of it."</li>
-<li>桑德斯名言："You matter to the last moment of your life, and we will do all we can not only to help you die peacefully, but live until you die."</li>
-<li>社会沃母（social womb）：北京松堂关怀医院（10年、12000病例）。</li>
-<li>国内临终发展状况（四个里程碑）</li>
-<li>第一个里程碑：1988年创建我国第一个临终关怀研究中心——天津医学院临终关怀研究中心（崔以泰教授被誉为"中国临终关怀之父"）；</li>
-<li>第二个里程碑：1990年天津医学院开设我国第一家临终关怀病房（并举办学术研讨会、临终关怀讲习班）；</li>
-<li>第三个里程碑：李嘉诚基金会在大陆建立宁养院（全国宁养院分布地图——"生命尽头，24个宁静的港湾"）；</li>
-<li>第四个里程碑：2006年建立国家一级学会——中国生命关怀协会（全国性行业管理的社会团体）。</li>
-<li>香港："善终服务"。</li>
-<li>现实问题："病房空"、"叫好不叫座"。</li>
-<li>传统伦理观念的影响（案例讨论）</li>
-<li>案例：2007年，一位老人因患肺癌住进北京一家医院。原本老人晚年生活幸福、儿女绕膝、子孙满堂，可这场突如其来的变故打破了一切。大儿子带头表态："虽然她老人家治好的希望很小，但咱们不能不治啊！咱们就是再苦再累，也要给老人继续治疗，不能让亲戚朋友戳我们的脊梁骨！"</li>
-<li>主管医生："其实，这样只能给病人增加痛苦。病人现在只能用鼻饲进食，接连几次的化疗极大损害了病人的免疫系统，全身抵抗能力下降，而且放疗还导致了放射性肺炎，使病人高烧不退，呼吸困难。""对于这种生命不可逆转的病人，怎样帮他减轻临死前的痛苦才是最重要的。"</li>
-<li>老人痛苦难耐，提出停止放、化疗。儿女们跪在病床旁，苦苦哀求："您要为我们着想一下呵，我们现在如果对您放弃治疗，人们会怎么看我们，我们今后还怎么做人。您要听话呵……"临终前，老人说了一句话："你们倒是讲道德了，我的罪可受够了！"</li>
-<li>思考：案例中三方分别是什么态度？儿女们不放弃治疗的原因是什么？他们认为怎样做是对老人敬孝心？他们尽的"孝道"使老人善终了吗？以子女们的观念，他们会接受临终关怀吗？</li>
-<li>传统观念：传统孝道观、传统生命观、传统死亡观；</li>
-<li>医学格言：To cure sometimes, To relieve often, To comfort always.（有时，去治愈；常常，去帮助；总是，去安慰。——爱德华·杜鲁道，美国病理学家）</li>
-<li>养老理念：尊老敬老、老有所养、老有所医、老能善终；</li>
-<li>英国小学生的思考题：如果生命只有三天，你会怎么安排、你最想做什么？如果给自己写墓志铭，你会怎么写？</li>
-</ul><h3 id="h10">小结</h3>
-<ul class="dt-ul"><li>安乐死的伦理争论</li>
-<li>临终关怀的发展现状</li>
-<li>临终关怀的伦理意义</li>
-</ul><h3 id="h11">互动</h3>
-<p>你是如何看待安乐死的？</p>
-<p>说明：本章课件中共有 60 张截图，其中 1 张（文件：屏幕截图 2026-10-01 184017.png）因系统内容识别限制未能提取文字（该页为临终关怀在各地发展状况的区域对照页），其余 59 张均已完整提取。</p></article>
-</div>
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap">
+    <div class="crumb"><a href="../../materials.html">资料汇总</a> / <span>09-安乐死及临终关怀伦理</span></div>
+
+    <div class="doc-head">
+      <h1>09-安乐死及临终关怀伦理</h1>
+      <a class="gbtn gbtn-sm" href="../../materials.html">← 返回资料汇总</a>
+      <a class="gbtn gbtn-sm gbtn-primary" id="dgDl" data-key="ethics/09-安乐死及临终关怀伦理.docx" href="#" target="_blank" rel="noopener">下载原文</a>
+    </div>
+    <div class="doc-sub">146 个段落 · 0 张表格 · 32 个小节</div>
+
+    <div class="doc-tip">本文由 Word 原文提取并重新排版，<b>加粗内容已标红</b>；表格与公式可能有出入，需要精确版式请下载原文。</div>
+
+    <div class="klayout">
+      <aside class="toc">
+        <div class="toc-h">本页目录</div>
+        <a href="#s1">第九章 安乐死及临终关怀伦理</a><a href="#s2">第一节 人体死亡标准</a><a href="#s3">一、死亡标准</a><a href="#s4">• 脑死亡四条判定标准：</a><a href="#s5">• 脑死亡与植物人的区别：</a><a href="#s6">二、执行脑死亡标准的道德意义</a><a href="#s7">第二节 安乐死的伦理问题</a><a href="#s8">一、安乐死的含义及分类</a><a href="#s9">1. 安乐死的含义</a><a href="#s10">2. 安乐死的分类</a><a href="#s11">二、安乐死的伦理争论</a><a href="#s12">案例分析：</a><a href="#s13">1. 安乐死伦理争论的观点</a><a href="#s14">• 支持安乐死的依据：</a><a href="#s15">• 反对安乐死的依据：</a><a href="#s16">2. 正确对待安乐死</a><a href="#s17">3. 安乐死必须符合伦理条件</a><a href="#s18">4. 国际上安乐死的立法状况</a><a href="#s19">5. 我国安乐死的立法状况</a><a href="#s20">6. 国外相关案例</a><a href="#s21">第三节 临终关怀的伦理问题</a><a href="#s22">一、临终关怀的内涵及道德要求</a><a href="#s23">1. 临终关怀的定义及伦理要素</a><a href="#s24">• 伦理要素：</a><a href="#s25">2. 临终关怀的道德要求</a><a href="#s26">二、临终关怀的伦理意义</a><a href="#s27">三、发展状况及传统伦理观念影响</a><a href="#s28">1. 现代临终关怀的起源</a><a href="#s29">2. 国内临终发展状况（四个里程碑）</a><a href="#s30">3. 传统伦理观念的影响（案例讨论）</a><a href="#s31">小结</a><a href="#s32">互动</a>
+        <div class="toc-h" style="margin-top:20px">文档信息</div>
+        <div class="small dim" style="padding:0 11px;line-height:1.9">段落 146<br>表格 0<br>小节 32</div>
+      </aside>
+      <article class="article">
+        <div id="body"></div>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="../../js/core.js"></script>
+<script src="../../data/r2-config.js"></script>
+<script>window.__DOC_BLOCKS = [{"type": "h", "level": 3, "id": "s1", "text": "第九章 安乐死及临终关怀伦理"}, {"type": "p", "text": "来源：军事医学伦理学教研室 吴雁"}, {"type": "p", "text": "主题：第十一专题 生命伦理学热点问题之二"}, {"type": "p", "text": "\"生如夏花之绚烂，死若秋叶之静美\"——死的问题？"}, {"type": "h", "level": 3, "id": "s2", "text": "第一节 人体死亡标准"}, {"type": "h", "level": 3, "id": "s3", "text": "一、死亡标准"}, {"type": "list", "items": ["心肺死亡标准：长期以来，人们判定人死亡以心肺功能的停止为标准。人死亡怎么判断呢？有没有呼吸？心还跳不跳？", "脑死亡标准：1968年召开的世界第22届医学大会上，美国哈佛大学医学院死亡定义审查委员会提出\"脑功能不可逆性丧失\"作为新的死亡标准（脑死亡）。大脑和脑干是人类生命的中枢和本质所在。"]}, {"type": "h", "level": 3, "id": "s4", "text": "• 脑死亡四条判定标准："}, {"type": "list", "items": ["出现不可逆的昏迷；", "自主的肌肉运动和自主呼吸消失；", "诱导反射缺失；", "脑电波平直。"]}, {"type": "p", "text": "以上四条标准持续24小时观察和反复测试结果无变化，即可宣布死亡。"}, {"type": "list", "items": ["脑死亡定义：脑死亡是指脑干或脑干以上中枢神经系统永久性地丧失功能，有别于传统以心跳和呼吸停止为标准的心肺死亡判断标准。"]}, {"type": "h", "level": 3, "id": "s5", "text": "• 脑死亡与植物人的区别："}, {"type": "list", "items": ["脑死亡者：没有脑干反应、没有自主呼吸，只有在呼吸机等仪器帮助下才能维持心跳呼吸，大脑萎缩、腐烂，无法复生（案例：韩国拳王崔尧三脑死亡不治身亡；凤凰台女主播刘海若被诊断为\"脑死亡\"）；", "植物人：大脑没有死亡，有脑干反应、有自主呼吸、能消化食物，并且有苏醒的可能。", "\"脑死亡\"的判定应有一个法定标准：1987年台湾公布《脑死亡判定步骤》；1996年香港确立脑死亡法；2002年卫生部组织专家制订《脑死亡诊断标准》。"]}, {"type": "h", "level": 3, "id": "s6", "text": "二、执行脑死亡标准的道德意义"}, {"type": "list", "items": ["更科学地判定人的死亡：脑死亡后作为人的本质特征的意识和自我意识已经丧失，有意义的生命个体不复存在（案例：重庆一女孩在火化前复活）；", "维护了死者的尊严；", "有利于节约医疗资源；", "有利于器官移植。"]}, {"type": "h", "level": 3, "id": "s7", "text": "第二节 安乐死的伦理问题"}, {"type": "h", "level": 3, "id": "s8", "text": "一、安乐死的含义及分类"}, {"type": "h", "level": 3, "id": "s9", "text": "1. 安乐死的含义"}, {"type": "list", "items": ["词源：euthanasia = eu(good, well) + thanato(death)，Good death = \"好死\"\"无痛苦地死亡\"\"幸福地死亡\"\"寿终正寝\"\"无疾而终\"。", "现代阐释：目前医学条件下患有不治之症、濒临死亡且非常痛苦的患者，由本人或家属诚恳委托医生使用药物或其他方式以尽可能无痛苦状态下结束生命的一种临终处置方式。（本原意义→现代阐释：状态→方式）", "医伦角度：身患不治之症的患者在危重濒死状态时，由于躯体和精神的极端痛苦难以忍受，在患者或其家属的合理及迫切要求下，经过医生、权威的医学专家机构鉴定确定，符合法律规定，按照法律程序，用人为的、仁慈的医学方法使患者在无痛苦状态下度过死亡阶段而终结生命的全过程。"]}, {"type": "h", "level": 3, "id": "s10", "text": "2. 安乐死的分类"}, {"type": "list", "items": ["按执行方式分为：主动安乐死、被动安乐死；", "按患者同意方式分为：自愿安乐死、非自愿安乐死。", "主动安乐死：通过医生之手运用药物等手段加速结束病人的生命，争议很大（Mercy killing，仁慈助死；案例：澳大利亚医生菲利普·尼奇克）。", "被动安乐死：撤除患者赖以维持生命、拖延时日的生命维持系统，或放弃必要的医疗抢救措施，使之等待死神的降临自然逝去，争议比较少（Letting Die，听任死亡）。"]}, {"type": "h", "level": 3, "id": "s11", "text": "二、安乐死的伦理争论"}, {"type": "h", "level": 3, "id": "s12", "text": "案例分析："}, {"type": "list", "items": ["Case I：一位75岁的老年患者身患不治之症，住院三个月病情不断恶化，无法挽救。老人周身疼痛、肌肉抽搐，因痛苦将自己身上抓得鲜血直流，甚至将舌头咬断。医生在其口腔内垫上棉花并固定手脚。经医院讨论，同意患者本人要求，由三位医师及病人家属在场，撤去氧气并注射一支致命药剂，老人在平静中死亡。", "Case II：一名40岁男病人诊断为肝癌，多方治疗病情恶化，出现急性肾功能衰竭、肝肾综合征、肝昏迷、消化道出血等。病危时家属提出希望病人在昏迷中\"睡\"过去。医护人员撤除了人工呼吸机等设备，患者度过了生命最后时刻。", "瑞士\"尊严\"诊所17年助近2000人安乐死，邻里愤怒抗议，叫它\"恐怖屋\"（路德维希·米内利）。"]}, {"type": "h", "level": 3, "id": "s13", "text": "1. 安乐死伦理争论的观点"}, {"type": "p", "text": "【支持的观点】"}, {"type": "list", "items": ["安乐死帮助患者结束生命，免除了临终难以忍受的痛苦，符合人道主义（案例：宁夏\"癌症女孩\"李燕丧失吃、喝、拉、撒、睡的自理能力，请求人大代表递交\"安乐死\"议案——\"我爱生命 但我不愿活\"）。"]}, {"type": "h", "level": 3, "id": "s14", "text": "• 支持安乐死的依据："}, {"type": "list", "items": ["人权主义的观点：人生抉择的自主性和自由在于个人，每个人有权利根据自己的处境选择生存和死亡；", "功利主义的观点：宗旨是追求\"最大多数人的最大幸福\"；", "医学人道主义观点：让罹患绝症的病患安乐死是减轻其痛苦，比让其活得很痛苦更人道；", "生命质量论和生命价值论的观点：医学伦理学的基本理论，是指导医务人员临床行为的重要伦理依据。"]}, {"type": "p", "text": "【反对的观点】"}, {"type": "h", "level": 3, "id": "s15", "text": "• 反对安乐死的依据："}, {"type": "list", "items": ["生命神圣论的观点：无论在何种情形下都应该尽力保存病人的生命；", "医学人道主义观点：安乐死是变相杀人，有违医学人道主义；", "不可逆的诊断未必绝对：实施安乐死可能使病人丧失很多机会；", "违背传统血缘亲情观念：会使病人家属放任亲人的死亡，甚至参与结束亲人的生命；", "自愿安乐死中的\"自愿\"值得怀疑：\"自愿\"的安乐死不可信；", "实施安乐死可能给社会带来消极后果（家庭、心理、负面看法等）。", "道德忧思（角色混淆、观念冲突）：会不会引起医务人员对安乐死的滥用？（Euthanasia No Thanks!）", "实施安乐死在一定程度上使医务人员放弃探索\"不治之症\"的责任，可能导致一些患者错过转危为安的机会，医学科研也会受到影响。", "反对者观点：安乐死是变相杀人，与医务人员救死扶伤的神圣职责背道而驰（\"是谋杀，不是怜悯！\"——夏沃\"插管\"之争）。"]}, {"type": "h", "level": 3, "id": "s16", "text": "2. 正确对待安乐死"}, {"type": "list", "items": ["正确认识安乐死这一概念：调查显示仅10%的人对安乐死理解较深刻，60%略有耳闻，30%一点也不了解；", "进行死亡教育：帮助人们树立正确的死亡态度，感悟\"生亦快乐，死亦安乐\"的美好，培养良好的死亡适应心理。"]}, {"type": "h", "level": 3, "id": "s17", "text": "3. 安乐死必须符合伦理条件"}, {"type": "list", "items": ["晚期恶性肿瘤失去治愈机会者；", "重要生命脏器严重衰竭且不可逆转者；", "因各种疾病或伤残致使大脑功能丧失的\"植物人\"状态的患者；", "有严重缺陷的新生儿；", "患有严重精神病症、本人无正常感觉知觉和认识、经长期治疗也不可能恢复正常者；", "先天性智力丧失、无独立生活能力且不可能恢复正常者。"]}, {"type": "h", "level": 3, "id": "s18", "text": "4. 国际上安乐死的立法状况"}, {"type": "list", "items": ["1935年，全世界第一个提倡自愿安乐死的团体在英国正式成立；", "1976年，美国加利福尼亚州颁布《自然死亡法》——人类历史上第一个有关安乐死的法案；", "1977年，美国40个州通过《死亡权利法案》，要求医生尊重患者临终不采用人工手段延长生命的意愿；", "1992年10月1日，丹麦实验了停止延长无药可救病人生命的法律；", "1993年2月4日，英国最高法院裁定英国首例安乐死案件（同意给21岁患者停止输入营养液）；", "1993年2月9日，荷兰议会通过默认安乐死的法律，此后放宽合法化尺度；", "1995年6月16日，澳洲北部领土议会通过\"临终患者权利法案\"（The Right of the Terminally Ill Act），允许开业医生按一定准则结束患者生命，但被澳大利亚联邦政府否决（79岁利塞蒂遗言：\"我不想坐等无法尊严死去的那一天！\"\"我健康，我快乐，但我活够了\"）；", "2001年，荷兰通过《安乐死法案》，成为世界上第一个安乐死合法的国家（荷兰民意调查：86%的人认为与其让已无药可救的病人承受极大痛苦，不如……）；", "2002年，比利时通过法案允许医生在特殊情况下实行安乐死，成为世界第二个安乐死合法化国家（比利时93岁老妇要求安乐死；过去6年中共2700人申请\"安乐死\"）；", "原则：只有法律部门才能量刑结束一个人的生命，任何其他部门或个人、特别是医务人员没有这个权利。"]}, {"type": "h", "level": 3, "id": "s19", "text": "5. 我国安乐死的立法状况"}, {"type": "list", "items": ["从1992年起，每年的全国人民代表大会上提案组都会收到有关安乐死的提案；", "目前，我国尚没有安乐死的成文法；", "调查：北京地区近千人问卷调查，91%以上赞成安乐死，85%认为应立法（赞成者主要是老年人和高知识阶层人士）。"]}, {"type": "h", "level": 3, "id": "s20", "text": "6. 国外相关案例"}, {"type": "list", "items": ["韩国：2009年5月21日，韩国大法院长李容勋批准对76岁植物人患者停止续命治疗并摘除呼吸机——韩国大法院首次批准执行安乐死；", "意大利：38岁的埃鲁娜1992年遭遇车祸成为植物人，其父为争取女儿死亡权利斗争10多年；2008年1月意最高法院裁决同意停止为其进食，2009年2月6日家人移除进食管；", "观点：人有生的权利，也应有选择死亡方式的权利，这是社会进步和人类文明的标志；", "案例：林恩患有慢性疲劳综合征；盖德戴尔与女儿林恩——\"无私而尽责的\"母亲无罪、\"符合常理、庄重而有人性\"。"]}, {"type": "h", "level": 3, "id": "s21", "text": "第三节 临终关怀的伦理问题"}, {"type": "h", "level": 3, "id": "s22", "text": "一、临终关怀的内涵及道德要求"}, {"type": "h", "level": 3, "id": "s23", "text": "1. 临终关怀的定义及伦理要素"}, {"type": "list", "items": ["《医学主题词表》定义：\"临终关怀（Hospice Care）是对临终病人和家属提供姑息性和支持性的医护措施。\"", "Cure（治疗）vs Care（照护）：从\"以治疗为中心\"转向\"以照护为中心\"。"]}, {"type": "h", "level": 3, "id": "s24", "text": "• 伦理要素："}, {"type": "list", "items": ["关怀对象：临终病人、病人家属；", "关怀机构：独立的临终关怀医院、医院附设的临终关怀病区、临终关怀家庭病床；", "关怀目的：维护病人尊严，提升病人临终阶段生命品质；", "关怀方式：疼痛控制、症状处理、生活护理、心理护理、家属情感支持。", "如何界定临终病人？（terminally-ill patients）：患有在当前医学技术条件下无法治愈的疾病，估计在六个月内将要走到生命终点、结束人生旅途的患者（通行标准：六个月；国内成果：280天）。", "疼痛的全貌（Total Pain）：躯体的痛苦、心理的焦虑、社会的孤立、精神的空虚（癌症造成的症状与治疗副作用、生存被剥夺感、失去工作能力收入、失去社会家中角色、希望感到绝望、备感屈辱等）。", "库伯勒·罗斯理论：晚期临终病人心理活动的五个阶段——否认期、愤怒期、协议期、抑郁期、接受期。", "伦理要素：触摸脆弱的心理、宽容多变的情绪、分担失落与愁苦。", "临终关怀团队：医生、护士、社会志愿者、宗教人士、营养师等（Hospice Patient、Family、Friends、Medical Doctor、Attending Physician、Registered Nurse、Social Worker、Dietitian、Chaplain、Volunteers & Bereavement Support）。"]}, {"type": "h", "level": 3, "id": "s25", "text": "2. 临终关怀的道德要求"}, {"type": "list", "items": ["以照料为中心；", "维护病人尊严；", "提高临终生活质量；", "共同面对死亡；", "协助病人安静地、有尊严地死去。"]}, {"type": "h", "level": 3, "id": "s26", "text": "二、临终关怀的伦理意义"}, {"type": "list", "items": ["彰显医学人道主义的真谛：人的自然属性、社会属性、精神属性（对应肉体痛苦、精神危机、情感需要、心理需求）。生得顺利、活得幸福、死得安详；生理上无疼痛、心理上无恐惧、精神上无遗憾；死者无憾、生者无愧、死者安详、生者坦然。", "体现生命神圣论、生命质量论与生命价值论的统一：孙思邈\"人命至重，有贵千金……\"；《黄帝内经》\"天覆地载，万物悉备，莫贵于人。\"", "符合社会道德和人类文明发展要求：社会与个人——增强幸福感；医学与个人——减少后顾之忧；家庭与个人——增强社会和谐度。"]}, {"type": "p", "text": "（同学感言：马文辉\"从他们身上学到了生活的哲理\"；冉昊\"生命是一件易碎品，从老人身上看到了生命的价值\"；田晓龙\"用无条件地爱对待老人，就是爱我们自己\"）"}, {"type": "h", "level": 3, "id": "s27", "text": "三、发展状况及传统伦理观念影响"}, {"type": "h", "level": 3, "id": "s28", "text": "1. 现代临终关怀的起源"}, {"type": "list", "items": ["雏型：Hospice Care——朝圣者或旅行者途中休息、重新补充体力的驿站；现代临终关怀发祥地英国；", "创始人：桑德斯博士（Dame Cicely Saunders，1918～2005）；", "第一家机构：1967年世界第一家现代临终关怀医院——圣克里斯托弗临终关怀院（St Christopher's Hospice）；", "核心理念：\"St. Christopher's is a living place. It's about seizing every minute and making the very most of it.\"", "桑德斯名言：\"You matter to the last moment of your life, and we will do all we can not only to help you die peacefully, but live until you die.\"", "社会沃母（social womb）：北京松堂关怀医院（10年、12000病例）。"]}, {"type": "h", "level": 3, "id": "s29", "text": "2. 国内临终发展状况（四个里程碑）"}, {"type": "list", "items": ["第一个里程碑：1988年创建我国第一个临终关怀研究中心——天津医学院临终关怀研究中心（崔以泰教授被誉为\"中国临终关怀之父\"）；", "第二个里程碑：1990年天津医学院开设我国第一家临终关怀病房（并举办学术研讨会、临终关怀讲习班）；", "第三个里程碑：李嘉诚基金会在大陆建立宁养院（全国宁养院分布地图——\"生命尽头，24个宁静的港湾\"）；", "第四个里程碑：2006年建立国家一级学会——中国生命关怀协会（全国性行业管理的社会团体）。", "香港：\"善终服务\"。", "现实问题：\"病房空\"、\"叫好不叫座\"。"]}, {"type": "h", "level": 3, "id": "s30", "text": "3. 传统伦理观念的影响（案例讨论）"}, {"type": "list", "items": ["案例：2007年，一位老人因患肺癌住进北京一家医院。原本老人晚年生活幸福、儿女绕膝、子孙满堂，可这场突如其来的变故打破了一切。大儿子带头表态：\"虽然她老人家治好的希望很小，但咱们不能不治啊！咱们就是再苦再累，也要给老人继续治疗，不能让亲戚朋友戳我们的脊梁骨！\"", "主管医生：\"其实，这样只能给病人增加痛苦。病人现在只能用鼻饲进食，接连几次的化疗极大损害了病人的免疫系统，全身抵抗能力下降，而且放疗还导致了放射性肺炎，使病人高烧不退，呼吸困难。\"\"对于这种生命不可逆转的病人，怎样帮他减轻临死前的痛苦才是最重要的。\"", "老人痛苦难耐，提出停止放、化疗。儿女们跪在病床旁，苦苦哀求：\"您要为我们着想一下呵，我们现在如果对您放弃治疗，人们会怎么看我们，我们今后还怎么做人。您要听话呵……\"临终前，老人说了一句话：\"你们倒是讲道德了，我的罪可受够了！\"", "思考：案例中三方分别是什么态度？儿女们不放弃治疗的原因是什么？他们认为怎样做是对老人敬孝心？他们尽的\"孝道\"使老人善终了吗？以子女们的观念，他们会接受临终关怀吗？", "传统观念：传统孝道观、传统生命观、传统死亡观；", "医学格言：To cure sometimes, To relieve often, To comfort always.（有时，去治愈；常常，去帮助；总是，去安慰。——爱德华·杜鲁道，美国病理学家）", "养老理念：尊老敬老、老有所养、老有所医、老能善终；", "英国小学生的思考题：如果生命只有三天，你会怎么安排、你最想做什么？如果给自己写墓志铭，你会怎么写？"]}, {"type": "h", "level": 3, "id": "s31", "text": "小结"}, {"type": "list", "items": ["安乐死的伦理争论", "临终关怀的发展现状", "临终关怀的伦理意义"]}, {"type": "h", "level": 3, "id": "s32", "text": "互动"}, {"type": "p", "text": "你是如何看待安乐死的？"}, {"type": "p", "text": "说明：本章课件中共有 60 张截图，其中 1 张（文件：屏幕截图 2026-10-01 184017.png）因系统内容识别限制未能提取文字（该页为临终关怀在各地发展状况的区域对照页），其余 59 张均已完整提取。"}];</script>
 <script>
 (function () {
+  if (WB.mountChrome) WB.mountChrome('materials');
+
+  var body = document.getElementById('body');
+  body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
+  if (WB.fx && WB.fx.init) WB.fx.init();
+
   var base = (window.R2_BASE || '').replace(/\/+$/, '');
   var prefix = window.R2_PREFIX || '';
   var dl = document.getElementById('dgDl');
@@ -223,6 +73,17 @@
   } else if (dl) {
     dl.style.display = 'none';
   }
+
+  var links = [].slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  if (!links.length) return;
+  var heads = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function paint() {
+    var top = window.scrollY + 120, idx = 0;
+    heads.forEach(function (h, i) { if (h && h.offsetTop <= top) idx = i; });
+    links.forEach(function (a, i) { a.classList.toggle('on', i === idx); });
+  }
+  window.addEventListener('scroll', paint, { passive: true });
+  paint();
 })();
 </script>
 </body>

@@ -2,218 +2,69 @@
 <html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>外科往届题目(1) · 资料阅读 · MediLearn</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../../css/style.css">
-<script src="../../data/r2-config.js"></script>
+<script src="../../js/auth.js"></script>
+<script>if(window.WB&&WB.auth)WB.auth.guard();</script>
 <style>
-  body { background: var(--bg); }
-  .dg-top {
-    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 10px;
-    padding: 10px 16px; background: color-mix(in srgb, var(--surface) 88%, transparent);
-    border-bottom: 1px solid var(--border); backdrop-filter: blur(12px);
-  }
-  .dg-top h1 { font-size: 15px; margin: 0; flex: 1; min-width: 0;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .dg-top .meta { font-size: 12px; color: var(--text-3); white-space: nowrap; }
-  .dg-wrap { max-width: 880px; margin: 0 auto; padding: 26px 20px 90px; }
-  .dg-tip { font-size: 13px; color: var(--text-3); background: var(--surface-2);
+  .doc-head { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+  .doc-head h1 { font-size: 26px; margin: 0; letter-spacing: -.02em; flex: 1; min-width: 240px; }
+  .doc-sub { color: var(--text-3); font-size: 13px; margin: 8px 0 18px; }
+  .doc-tip { font-size: 13px; color: var(--text-3); background: var(--surface-2);
     border: 1px solid var(--border); border-left: 3px solid var(--brand);
     border-radius: 10px; padding: 10px 14px; margin-bottom: 20px; line-height: 1.7; }
-  .dg-toc { background: var(--surface); border: 1px solid var(--border);
-    border-radius: 14px; padding: 16px 18px; margin-bottom: 26px; }
-  .dg-toc-t { font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--text-3); margin-bottom: 8px; }
-  .dt-toc-a { display: block; padding: 5px 0; font-size: 14px; color: var(--text-2);
-    text-decoration: none; border-bottom: 1px dashed transparent; }
-  .dt-toc-a:hover { color: var(--brand); border-bottom-color: var(--brand); }
-  .dt-toc-a.lv2 { font-weight: 650; color: var(--text); }
-  .dt-toc-a.lv3 { padding-left: 14px; }
-  .dg-body { background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; padding: 30px 34px; font-size: 15.5px; line-height: 1.95;
-    color: var(--text); }
-  .dg-body h2 { font-size: 21px; margin: 34px 0 14px; padding-bottom: 8px;
-    border-bottom: 2px solid var(--border); scroll-margin-top: 70px; }
-  .dg-body h2:first-child { margin-top: 0; }
-  .dg-body h3 { font-size: 17px; margin: 26px 0 10px; color: var(--brand);
-    scroll-margin-top: 70px; }
-  .dg-body p { margin: 0 0 12px; }
-  .dg-body strong { color: var(--text); font-weight: 700; }
-  .dg-ul { margin: 6px 0 14px; padding-left: 22px; }
-  .dg-ul li { margin-bottom: 5px; }
-  .dt-wrap { overflow-x: auto; margin: 14px 0 18px; }
-  .dt { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .dt th, .dt td { border: 1px solid var(--border); padding: 8px 11px; text-align: left;
-    vertical-align: top; }
-  .dt th { background: var(--surface-2); font-weight: 650; white-space: nowrap; }
-  .dt tr:nth-child(even) td { background: color-mix(in srgb, var(--surface-2) 45%, transparent); }
-  @media (max-width: 720px) {
-    .dg-wrap { padding: 18px 12px 70px; }
-    .dg-body { padding: 20px 16px; font-size: 15px; }
-    .dg-top h1 { font-size: 14px; }
-    .dg-top .meta { display: none; }
+  @media (max-width: 900px) {
+    .klayout { grid-template-columns: 1fr; }
+    .toc { position: static; margin-bottom: 8px; }
   }
-  @media print { .dg-top, .dg-toc, .dg-tip { display: none; } .dg-body { border: 0; padding: 0; } }
+  @media print { .toc, .doc-tip, .hdr, .ftr, .doc-head .gbtn { display: none; } .klayout { display: block; } }
 </style>
 </head>
 <body>
-<div class="dg-top">
-  <a class="gbtn gbtn-sm" href="../../materials.html">← 资料汇总</a>
-  <h1>外科往届题目(1)</h1>
-  <span class="meta">145 段 · 0 表 · 38 小节</span>
-  <a class="gbtn gbtn-sm" id="dgDl" data-key="surgery/外科往届题目(1).docx" href="#" target="_blank" rel="noopener">下载原文</a>
-</div>
-<div class="dg-wrap">
-  <div class="dg-tip">这份内容由 Word 原文提取后重新排版，便于在手机、平板上阅读；<b>表格与公式可能略有出入</b>，需要精确版式请下载原文。</div>
-  <nav class="dt-toc"><div class="dt-toc-t">目录</div><a class="dt-toc-a lv3" href="#h0">橘皮症</a><a class="dt-toc-a lv3" href="#h1">battle征（乳突瘀斑）</a><a class="dt-toc-a lv3" href="#h2">心肺复苏</a><a class="dt-toc-a lv3" href="#h3">低渗性脱水</a><a class="dt-toc-a lv3" href="#h4">脓毒症</a><a class="dt-toc-a lv3" href="#h5">骨筋膜室综合征</a><a class="dt-toc-a lv3" href="#h6">酸碱平衡</a><a class="dt-toc-a lv3" href="#h7">Cushing 反应</a><a class="dt-toc-a lv3" href="#h8">前哨淋巴结</a><a class="dt-toc-a lv3" href="#h9">体外冲击波碎石</a><a class="dt-toc-a lv3" href="#h10">颅内压正常值，增高的临床表现</a><a class="dt-toc-a lv3" href="#h11">休克的一般监测项目</a><a class="dt-toc-a lv3" href="#h12">休克的治疗原则和措施</a><a class="dt-toc-a lv3" href="#h13">椎管内麻醉根据位置不同分为哪四种</a><a class="dt-toc-a lv3" href="#h14">膀胱非浸润癌治疗</a><a class="dt-toc-a lv3" href="#h15">等渗性脱水诊断要点治疗原则注意事项</a><a class="dt-toc-a lv3" href="#h16">诊断:</a><a class="dt-toc-a lv3" href="#h17">治疗:</a><a class="dt-toc-a lv3" href="#h18">高渗性缺水，定义，临表，诊断，治疗</a><a class="dt-toc-a lv3" href="#h19">临床表现：</a><a class="dt-toc-a lv3" href="#h20">诊断：</a><a class="dt-toc-a lv3" href="#h21">治疗：</a><a class="dt-toc-a lv3" href="#h22">colles骨折临床表现、治疗原则</a><a class="dt-toc-a lv3" href="#h23">骨折的急救措施及目的</a><a class="dt-toc-a lv3" href="#h24">骨折晚期并发症</a><a class="dt-toc-a lv3" href="#h25">股骨颈骨折的三种分型</a><a class="dt-toc-a lv3" href="#h26">烧伤的分类及临床表现</a><a class="dt-toc-a lv3" href="#h27">烧伤严重程度分类</a><a class="dt-toc-a lv3" href="#h28">腹腔内实质性器官损伤和空腔脏器损伤的临床表现的区别</a><a class="dt-toc-a lv3" href="#h29">腹部损伤中行剖腹探查的手术指征</a><a class="dt-toc-a lv3" href="#h30">急性梗阻性化脓性胆管炎治疗原则及方法</a><a class="dt-toc-a lv3" href="#h31">急性弥漫性腹膜炎的临床表现</a><a class="dt-toc-a lv3" href="#h32">晚期肺癌可有什么征象</a><a class="dt-toc-a lv3" href="#h33">胃大部切除术适应症，禁忌症</a><a class="dt-toc-a lv3" href="#h34">禁忌症：</a><a class="dt-toc-a lv3" href="#h35">胃癌，诊断依据鉴别诊断检查手段治疗原则</a><a class="dt-toc-a lv3" href="#h36">肩关节脱位诊断伴发损伤治疗方法</a><a class="dt-toc-a lv3" href="#h37">腰椎间盘突出</a></nav>
-  <article class="dg-body"><h3 id="h0">橘皮症</h3>
-<p>由于癌细胞浸润浅表组织淋巴管，使得淋巴管阻塞，淋巴液回流障碍，进而造成真皮水肿，由于皮肤毛囊与皮下组织粘连较紧密，在真皮水肿时毛囊处即会形成许多点状小孔，形成了凹凸不平的橘皮样改变</p>
-<h3 id="h1">battle征（乳突瘀斑）</h3>
-<p>是颅底骨折的其中一种征象，多见于颅中窝或者颅后窝骨折。临床表现是乳突处的皮肤，逐渐出现淤青，多发生在颅脑损伤后，为慢性皮下出血的表现，是颅底骨折以后发生出血，出血集聚在后枕部筋膜下所导致的。一侧出现battle征，还提示同侧颞骨骨折可能，同时还会出现同侧耳道内流血或流出脑脊液，有时还有面神经或者听神经损害。</p>
-<h3 id="h2">心肺复苏</h3>
-<p>CPR，是针对骤停的心脏和呼吸采取的救命技术。是为了恢复患者自主呼吸和自主循环</p>
-<h3 id="h3">低渗性脱水</h3>
-<p>又称继发性脱水或伴有细胞外液减少的低钠血症，其特征是失钠多于失水，血清钠浓度＜135mmol/L，血浆渗透压＜280mOsm／L。失钠多于失水引起细胞外液渗透压降低，是导致低渗性脱水时病理生理变化的主要环节。</p>
-<h3 id="h4">脓毒症</h3>
-<p>由感染引起的全身炎症反应综合征，是机体对感染性因素的一种极端反应。该病常见于严重感染、严重创伤、烧伤、休克及外科手术后，是一种临床危重病症，具有高患病率、高病死率和高治疗费用的特点。</p>
-<h3 id="h5">骨筋膜室综合征</h3>
-<p>指由骨、骨间膜、肌间隔和深筋膜所构成的骨筋膜室内的肌肉、神经因急性缺血、缺氧而产生的一系列症状和体征。</p>
-<h3 id="h6">酸碱平衡</h3>
-<p>酸碱平衡是指在正常生理状态下，血液的酸碱度（pH值）通常维持在一个范围内，即动脉血pH值稳定在7.35～7.45（平均7.40）之间的稳定状态。</p>
-<h3 id="h7">Cushing 反应</h3>
-<p>随着颅内压的持续增高，患者出现脉搏慢、呼吸慢、血压高的三联征。</p>
-<h3 id="h8">前哨淋巴结</h3>
-<p>原发肿瘤引流区淋巴结中的特殊淋巴结，原发肿瘤发生淋巴结转移必经的第一批淋巴结</p>
-<h3 id="h9">体外冲击波碎石</h3>
-<p>通过体外碎石机产生冲击波，由机器聚焦后对准结石，经过多次释放能量而击碎体内的结石，使之随尿液排除体外。</p>
-<h3 id="h10">颅内压正常值，增高的临床表现</h3>
-<p>成人70~200mmH2O，儿童50~100mmH2O。</p>
-<p>临床表现：①头痛：最常见，持续性头痛，阵发性加剧，脑膜血管和神经受刺激所致。②呕吐：多呈喷射状，可伴恶心，迷走神经受激惹所致。③视神经盘水肿：视神经受压、眼底静脉回流受阻所致。</p>
-<h3 id="h11">休克的一般监测项目</h3>
-<ul class="dt-ul"><li>RBC、Hb、HCt：估计失血和血稀释程度</li>
-<li>肝、肾功、电解质、心肌酶谱</li>
-<li>体液分析：尿液，胃液等</li>
-</ul><h3 id="h12">休克的治疗原则和措施</h3>
-<p>原则：尽早去除病因、尽快改善全身组织灌流、纠正细胞缺氧和代谢紊乱、保护内脏器官，积极防治并发症</p>
-<p>措施：</p>
-<ul class="dt-ul"><li>病因治疗：</li>
-</ul><p>失血性休克：止血（优先于补充血容量）</p>
-<p>感染性休克：去除感染病灶，早期大量联合使用抗生素</p>
-<ul class="dt-ul"><li>紧急治疗：</li>
-</ul><p>体位：抗休克体位；保暖/降温；</p>
-<p>吸氧：保持呼吸道通畅，必要时插管或气管切开</p>
-<ul class="dt-ul"><li>补充血容量（扩容）：</li>
-</ul><p>心功能良好者及早、大量、快速补液。</p>
-<p>建立静脉通道：必要时切开，2－3路；</p>
-<p>液体：首选平衡盐——增加功能性细胞外液，合用胶体；</p>
-<p>量：需多少补多少</p>
-<ul class="dt-ul"><li>纠正酸碱平衡失调：适度纠酸，宁酸勿碱，药物选用碳酸氢钠</li>
-<li>心、血管活性药物的使用：</li>
-</ul><p>收缩剂：多巴胺、去甲肾上腺素等；</p>
-<p>扩张剂：酚妥拉明；酚苄明等；</p>
-<p>强心剂：心源性、其它休克的后期使用</p>
-<ul class="dt-ul"><li>治疗DIC改善微循环：肝素抗凝、可用抗纤溶药物、抗血小板凝集药</li>
-<li>肾上腺糖皮质激素的使用</li>
-<li>其他治疗</li>
-</ul><h3 id="h13">椎管内麻醉根据位置不同分为哪四种</h3>
-<p>蛛网膜下腔阻滞、硬膜外阻滞、腰-硬联合麻醉、骶管阻滞</p>
-<h3 id="h14">膀胱非浸润癌治疗</h3>
-<p>行经尿道膀胱肿瘤切除术，术后膀胱灌注化疗药物防止复发。</p>
-<h3 id="h15">等渗性脱水诊断要点治疗原则注意事项</h3>
-<h3 id="h16">诊断:</h3>
-<ul class="dt-ul"><li>病史：消化液急性丧失、感染；</li>
-<li>临床表现：不口渴、尿少、乏力、脉细、休克；</li>
-<li>实验室化验：血液浓缩（红细胞计数、血红蛋白和血细胞比容高）、尿比重高、血清Na+、Cl-无明显减低</li>
-</ul><h3 id="h17">治疗:</h3>
-<ul class="dt-ul"><li>治本: 治疗原发病；</li>
-<li>治标: 恢复血容量：输注含钠的液体以防低钠（平衡盐）；大量输注生理盐水会导致高Cl-；注意补钾（尿量&gt;40ml/h）</li>
-</ul><h3 id="h18">高渗性缺水，定义，临表，诊断，治疗</h3>
-<p>定义：原发性缺水。水和钠同时缺失，但缺水多于缺钠，故血清钠高于正常范围，细胞外液呈高渗状态。</p>
-<h3 id="h19">临床表现：</h3>
-<ul class="dt-ul"><li>轻: 失水占体重2%-4%，口渴；</li>
-<li>中: 失水占体重4%-6%，极度口渴、乏力、少尿、尿比重升高、唇舌干燥、眼窝凹陷；</li>
-<li>重: 失水占体重 &gt; 6%，躁狂、幻觉、谵妄、昏迷。</li>
-</ul><h3 id="h20">诊断：</h3>
-<ul class="dt-ul"><li>病史：摄入不足、丧失过多；</li>
-<li>临床表现：口渴、尿少、烦躁、幻觉；</li>
-<li>实验室检查：血液浓缩：红细胞，血红蛋白，血细胞比容均升高；血钠浓度高&gt;150mmol/L；尿比重高。</li>
-</ul><h3 id="h21">治疗：</h3>
-<ul class="dt-ul"><li>治本：积极治疗原发病；</li>
-<li>治标：口服或者静脉补充葡萄糖或者低渗钠溶液；补钾：尿量&gt;40ml/h</li>
-</ul><h3 id="h22">colles骨折临床表现、治疗原则</h3>
-<p>临床表现：伤后局部疼痛、肿胀、腕关节活动障碍。可出现典型畸形姿势，即侧面看呈“银叉”畸形，正面看呈“刺刀样”畸形。X线拍片可见骨折远端向桡、背侧移位，近端向掌侧移位，可同时伴有下尺桡关节脱位及尺骨茎突骨折。</p>
-<p>治疗：以手法复位外固定治疗为主,部分需要手术治疗。</p>
-<ul class="dt-ul"><li>手法复位外固定：牵引---骨折端分离---手指压于骨折端---猛力牵抖---迅速掌屈和尺偏---小夹板或石膏固定。</li>
-<li>切开复位内固定：手术指征:①严重粉碎骨折移位明显,桡骨下端关节面破坏;②手法复位失败,或复位成功,外固定不能维持复位。</li>
-<li>康复治疗：术后应早期进行手指屈伸活动，4~6周后可去除外固定,逐渐腕关节活动。</li>
-</ul><h3 id="h23">骨折的急救措施及目的</h3>
-<p>措施：①注重全身-抢救生命②止血包扎③制动-妥善固定④后送-迅速转运</p>
-<p>目的：避免额外损伤：血管、神经、脊髓和内脏；减少断端活动：减轻病人疼痛；便于后方运送：简便、有效</p>
-<h3 id="h24">骨折晚期并发症</h3>
-<p>坠积性肺炎、褥疮、下肢深静脉血栓形成、损伤性骨化、创伤性关节炎、关节僵硬、缺血性骨坏死、缺血性肌挛缩等</p>
-<h3 id="h25">股骨颈骨折的三种分型</h3>
-<p>按部位分型：头下型、颈中型、基底型；</p>
-<p>按骨折线方向分型（Pauwels 分型）：外展型：P角&lt;30，稳定，易愈、少坏死；内收型：P角&gt;50，不稳，难愈、易坏死；</p>
-<p>按移位分型（Garden 分型）：Ⅰ型－不全骨折（不存在）；Ⅱ型－骨折无移位；Ⅲ型－部分移位；Ⅳ型－完全移位。III和IV属于不稳定骨折。</p>
-<h3 id="h26">烧伤的分类及临床表现</h3>
-<p>Ⅰ度烧伤：表面红斑状、干燥、烧灼感；3~7d脱屑痊愈；短期内有色素沉着；</p>
-<p>浅Ⅱ度烧伤：红肿明显，水疱形成；创面红润、疼痛剧烈；如无感染，1-2w内愈合；一般不留瘢痕；多数有色素沉着；</p>
-<p>深Ⅱ度烧伤：可有水疱；创面红白相间，痛觉迟钝；如无感染，可融合修复；需时3~4w，常有瘢痕增生；</p>
-<p>Ⅲ度烧伤：创面无水疱；焦黄、皮革样变：焦痂；树枝状血管网；痛觉消失；需要植皮。</p>
-<h3 id="h27">烧伤严重程度分类</h3>
-<h3 id="h28">腹腔内实质性器官损伤和空腔脏器损伤的临床表现的区别</h3>
-<h3 id="h29">腹部损伤中行剖腹探查的手术指征</h3>
-<p>穿透性腹部创伤；明确的腹膜刺激征；腹腔游离气体；移动性浊音阳性；腹腔穿刺或者灌洗阳性；胃肠道出血；持续低血压而难以用腹部以外原因解释；观察中病情恶化或者需要大量输血&gt;2000ml</p>
-<h3 id="h30">急性梗阻性化脓性胆管炎治疗原则及方法</h3>
-<p>原则：解除梗阻，取净结石，通畅引流，预防复发，合理应用抗生素</p>
-<p>方法：①紧急胆管减压引流：开腹胆囊切除术+胆管探查+T管引流；PTCD，ENBD</p>
-<ul class="dt-ul"><li>后期行确定手术如：胆管空肠Roux-en-Y吻合术</li>
-</ul><h3 id="h31">急性弥漫性腹膜炎的临床表现</h3>
-<ul class="dt-ul"><li>腹痛：突发或进行性加重，这是腹膜炎最主要的症状；部位、性质、程度视原发病而异；剧烈，不能忍受，且呈持续性，深呼吸、咳嗽，转动身体时都可加剧疼痛；</li>
-<li>消化道症状（恶心、呕吐）：早期开始时因腹膜受刺激引起反射性的恶心呕吐，呕吐物为胃内容物；后期出现麻痹性肠梗阻时，呕吐物转为黄绿色之含胆汁液，甚至为棕褐色粪样肠内容物。呕吐频繁可呈现严重脱水和电解质紊乱</li>
-<li>全身症状：突然发病的腹膜炎体温可伴逐渐升高，同时白细胞也会相应升高；脉搏通常随体温的升高而加快，如果脉搏增快而体温反而下降，多为病情恶化的征象；</li>
-<li>感染中毒：</li>
-<li>初期：高热、脉搏快、呼吸浅快、大汗、口渴等全身中毒表现；</li>
-<li>后期：表情淡漠，口唇紫绀、肢体冰冷、皮肤干燥， 呼吸急促、脉搏细弱， 体温剧升或下降， 血压下降休克，酸中毒；</li>
-<li>腹部体征：</li>
-<li>视诊：腹膨隆。腹式呼吸减弱或消失。腹胀加重常是判断病情发展的一个重要标志；</li>
-<li>触诊：腹膜刺激征---压痛、反跳痛、肌紧张；</li>
-<li>叩诊：鼓音增强，肝浊音界缩小（消失），若有渗液可叩出移动性浊音；</li>
-<li>听诊：肠鸣音减弱或消失；</li>
-<li>直肠指诊：直肠前窝饱满及触痛，则表示有盆腔感染或盆腔脓肿存在。</li>
-</ul><h3 id="h32">晚期肺癌可有什么征象</h3>
-<p>咳嗽最常见：刺激性咳嗽、血痰；胸痛、发热、气促</p>
-<p>局部晚期肺癌压迫或侵犯邻近器官：压迫膈神经—同侧膈肌麻痹；压迫喉返神经—声嘶；压迫上腔V—上腔V阻塞综合征；侵犯胸膜—血性胸腔积液；压迫食管—吞咽困难；肺上沟瘤(Pancoast 瘤)—颈部交感神经综合征</p>
-<p>远处转移的临床症状：脑转移—头痛、恶心；骨转—骨痛、血钙升高；肝转移—肝大、肝酶升高；皮下转移—皮下触及结节</p>
-<p>副肿瘤综合症：骨关节病综合征、Cushing综合征、男性乳腺增大、多发性肌肉神经痛等</p>
-<h3 id="h33">胃大部切除术适应症，禁忌症</h3>
-<p>适应症：胃十二指肠溃疡保守治疗无效或者并发穿孔、出血、幽门梗阻、癌变者</p>
-<h3 id="h34">禁忌症：</h3>
-<ul class="dt-ul"><li>胃部肿瘤晚期伴有其他脏器广泛性转移，或者是有淋巴结转移者。</li>
-<li>体质极差者，无法耐受手术。</li>
-<li>对麻药过敏，无法行硬膜外麻醉或者是全麻者。</li>
-<li>有麻醉禁忌症，比如慢性阻塞性肺气肿急性加重期，支气管哮喘急性发作等。</li>
-<li>心肺功能障碍，比如重型心律失常、心梗、房颤等。</li>
-</ul><h3 id="h35">胃癌，诊断依据鉴别诊断检查手段治疗原则</h3>
-<p>诊断：病史：溃疡病史、家族史、癌前病变、消瘦、贫血；体征：腹部包块、振水音；辅助检查：胃镜、X线钡餐、CT、MRI、肿瘤标记物；</p>
-<p>治疗：以外科手术为主要方式的综合治疗；早期胃癌：部分可选择内镜下切除；进展期胃癌：胃切除+淋巴结清扫术（根治术）、姑息切除术；化疗：不可切除、术后复发、胃癌术后</p>
-<h3 id="h36">肩关节脱位诊断伴发损伤治疗方法</h3>
-<p>诊断：外伤病史；疼痛、肿胀、功能障碍；健侧手托住患肢；弹性固定；关节盂空虚；方肩畸形；Dugas征+；直尺试验+；影像学检查</p>
-<p>治疗：手法复位（足蹬法）：前脱位首选，无合并骨折；开放复位：后脱位；合并骨折、韧带损伤；手法复位失败的；陈旧性脱位；习惯性脱位。三角巾或悬臂带固定3-4周。</p>
-<h3 id="h37">腰椎间盘突出</h3>
-<ul class="dt-ul"><li>症状：腰痛；坐骨神经痛；马尾综合征</li>
-<li>体征：腰椎侧凸；腰部活动受限；压痛及骶棘肌痉挛；直腿拾高试验及加强试验；神经系统表现：感觉异常、肌力下降、反射异常</li>
-<li>影像学及其他检查：X线平片；造影检査；CT；MRI</li>
-<li>治疗：</li>
-<li>非手术治疗：</li>
-</ul><p>适应证:①初次发病,病程较短的病人;②休息以后症状可以自行缓解者;③由于全身疾病或有局部皮肤疾病,不能实行手术者;④不同意手术者。</p>
-<p>治疗方法:①卧床休息,一般严格卧床三周,带腰围逐步下地活动;②非甾体抗炎药物;③牵引疗法,骨盆牵引最常用;④理疗。</p>
-<ul class="dt-ul"><li>手术治疗：</li>
-</ul><p>适应证:①腰腿痛症状严重,反复发作,经半年以上非手术治疗无效,且病情逐渐加重,影响工作和生活者;②中央型突出有马尾神经综合征,括约肌功能障碍者,应按急诊进行手术;③有明显的神经受累表现者。</p>
-<p>手术方法:①传统开放手术:包括全椎板切除髓核摘除术、半椎板切除髓核摘除术以及椎板开窗髓核摘除术。②显微外科腰椎间盘摘除术:利用显微镜辅助手术,行椎间盘摘除。③微创椎间盘摘除手术等</p></article>
-</div>
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap">
+    <div class="crumb"><a href="../../materials.html">资料汇总</a> / <span>外科往届题目(1)</span></div>
+
+    <div class="doc-head">
+      <h1>外科往届题目(1)</h1>
+      <a class="gbtn gbtn-sm" href="../../materials.html">← 返回资料汇总</a>
+      <a class="gbtn gbtn-sm gbtn-primary" id="dgDl" data-key="surgery/外科往届题目(1).docx" href="#" target="_blank" rel="noopener">下载原文</a>
+    </div>
+    <div class="doc-sub">145 个段落 · 0 张表格 · 38 个小节</div>
+
+    <div class="doc-tip">本文由 Word 原文提取并重新排版，<b>加粗内容已标红</b>；表格与公式可能有出入，需要精确版式请下载原文。</div>
+
+    <div class="klayout">
+      <aside class="toc">
+        <div class="toc-h">本页目录</div>
+        <a href="#s1">橘皮症 </a><a href="#s2">battle征（乳突瘀斑）</a><a href="#s3">心肺复苏</a><a href="#s4">低渗性脱水 </a><a href="#s5">脓毒症</a><a href="#s6">骨筋膜室综合征</a><a href="#s7">酸碱平衡</a><a href="#s8">Cushing 反应</a><a href="#s9">前哨淋巴结</a><a href="#s10">体外冲击波碎石</a><a href="#s11">颅内压正常值，增高的临床表现</a><a href="#s12">休克的一般监测项目</a><a href="#s13">休克的治疗原则和措施</a><a href="#s14">椎管内麻醉根据位置不同分为哪四种</a><a href="#s15">膀胱非浸润癌治疗</a><a href="#s16">等渗性脱水诊断要点治疗原则注意事项</a><a href="#s17">诊断: </a><a href="#s18">治疗: </a><a href="#s19">高渗性缺水，定义，临表，诊断，治疗</a><a href="#s20">临床表现：</a><a href="#s21">诊断：</a><a href="#s22">治疗：</a><a href="#s23">colles骨折临床表现、治疗原则</a><a href="#s24">骨折的急救措施及目的</a><a href="#s25">骨折晚期并发症</a><a href="#s26">股骨颈骨折的三种分型</a><a href="#s27">烧伤的分类及临床表现</a><a href="#s28">烧伤严重程度分类</a><a href="#s29">腹腔内实质性器官损伤和空腔脏器损伤的临床表现的区别</a><a href="#s30">腹部损伤中行剖腹探查的手术指征</a><a href="#s31">急性梗阻性化脓性胆管炎治疗原则及方法</a><a href="#s32">急性弥漫性腹膜炎的临床表现</a><a href="#s33">晚期肺癌可有什么征象</a><a href="#s34">胃大部切除术适应症，禁忌症</a><a href="#s35">禁忌症：</a><a href="#s36">胃癌，诊断依据鉴别诊断检查手段治疗原则</a><a href="#s37">肩关节脱位诊断伴发损伤治疗方法</a><a href="#s38">腰椎间盘突出</a>
+        <div class="toc-h" style="margin-top:20px">文档信息</div>
+        <div class="small dim" style="padding:0 11px;line-height:1.9">段落 145<br>表格 0<br>小节 38</div>
+      </aside>
+      <article class="article">
+        <div id="body"></div>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="../../js/core.js"></script>
+<script src="../../data/r2-config.js"></script>
+<script>window.__DOC_BLOCKS = [{"type": "h", "level": 3, "id": "s1", "text": "橘皮症 "}, {"type": "p", "text": "由于癌细胞浸润浅表组织淋巴管，使得淋巴管阻塞，淋巴液回流障碍，进而造成真皮水肿，由于皮肤毛囊与皮下组织粘连较紧密，在真皮水肿时毛囊处即会形成许多点状小孔，形成了凹凸不平的橘皮样改变"}, {"type": "h", "level": 3, "id": "s2", "text": "battle征（乳突瘀斑）"}, {"type": "p", "text": "是颅底骨折的其中一种征象，多见于颅中窝或者颅后窝骨折。临床表现是乳突处的皮肤，逐渐出现淤青，多发生在颅脑损伤后，为慢性皮下出血的表现，是颅底骨折以后发生出血，出血集聚在后枕部筋膜下所导致的。一侧出现battle征，还提示同侧颞骨骨折可能，同时还会出现同侧耳道内流血或流出脑脊液，有时还有面神经或者听神经损害。"}, {"type": "h", "level": 3, "id": "s3", "text": "心肺复苏"}, {"type": "p", "text": "CPR，是针对骤停的心脏和呼吸采取的救命技术。是为了恢复患者自主呼吸和自主循环"}, {"type": "h", "level": 3, "id": "s4", "text": "低渗性脱水 "}, {"type": "p", "text": "又称继发性脱水或伴有细胞外液减少的低钠血症，其特征是失钠多于失水，血清钠浓度＜135mmol/L，血浆渗透压＜280mOsm／L。失钠多于失水引起细胞外液渗透压降低，是导致低渗性脱水时病理生理变化的主要环节。"}, {"type": "h", "level": 3, "id": "s5", "text": "脓毒症"}, {"type": "p", "text": "由感染引起的全身炎症反应综合征，是机体对感染性因素的一种极端反应。该病常见于严重感染、严重创伤、烧伤、休克及外科手术后，是一种临床危重病症，具有高患病率、高病死率和高治疗费用的特点。"}, {"type": "h", "level": 3, "id": "s6", "text": "骨筋膜室综合征"}, {"type": "p", "text": "指由骨、骨间膜、肌间隔和深筋膜所构成的骨筋膜室内的肌肉、神经因急性缺血、缺氧而产生的一系列症状和体征。"}, {"type": "h", "level": 3, "id": "s7", "text": "酸碱平衡"}, {"type": "p", "text": "酸碱平衡是指在正常生理状态下，血液的酸碱度（pH值）通常维持在一个范围内，即动脉血pH值稳定在7.35～7.45（平均7.40）之间的稳定状态。"}, {"type": "h", "level": 3, "id": "s8", "text": "Cushing 反应"}, {"type": "p", "text": "随着颅内压的持续增高，患者出现脉搏慢、呼吸慢、血压高的三联征。"}, {"type": "h", "level": 3, "id": "s9", "text": "前哨淋巴结"}, {"type": "p", "text": "原发肿瘤引流区淋巴结中的特殊淋巴结，原发肿瘤发生淋巴结转移必经的第一批淋巴结"}, {"type": "h", "level": 3, "id": "s10", "text": "体外冲击波碎石"}, {"type": "p", "text": "通过体外碎石机产生冲击波，由机器聚焦后对准结石，经过多次释放能量而击碎体内的结石，使之随尿液排除体外。"}, {"type": "h", "level": 3, "id": "s11", "text": "颅内压正常值，增高的临床表现"}, {"type": "p", "text": "成人70~200mmH==2==O，儿童50~100mmH==2==O。"}, {"type": "p", "text": "==临床表现==：①头痛：最常见，持续性头痛，阵发性加剧，脑膜血管和神经受刺激所致。②呕吐：多呈喷射状，可伴恶心，迷走神经受激惹所致。③视神经盘水肿：视神经受压、眼底静脉回流受阻所致。"}, {"type": "h", "level": 3, "id": "s12", "text": "休克的一般监测项目"}, {"type": "list", "items": ["RBC、Hb、HCt：估计失血和血稀释程度", "肝、肾功、电解质、心肌酶谱", "体液分析：尿液，胃液等"]}, {"type": "h", "level": 3, "id": "s13", "text": "休克的治疗原则和措施"}, {"type": "p", "text": "==原则==：尽早去除病因、尽快改善全身组织灌流、纠正细胞缺氧和代谢紊乱、保护内脏器官，积极防治并发症"}, {"type": "p", "text": "==措施==："}, {"type": "list", "items": ["病因治疗："]}, {"type": "p", "text": "失血性休克：止血（优先于补充血容量）"}, {"type": "p", "text": "感染性休克：去除感染病灶，早期大量联合使用抗生素"}, {"type": "list", "items": ["紧急治疗："]}, {"type": "p", "text": "体位：抗休克体位；保暖/降温；"}, {"type": "p", "text": "吸氧：保持呼吸道通畅，必要时插管或气管切开"}, {"type": "list", "items": ["补充血容量（扩容）："]}, {"type": "p", "text": "心功能良好者及早、大量、快速补液。"}, {"type": "p", "text": "建立静脉通道：必要时切开，2－3路；"}, {"type": "p", "text": "液体：首选平衡盐——增加功能性细胞外液，合用胶体；"}, {"type": "p", "text": "量：需多少补多少"}, {"type": "list", "items": ["纠正酸碱平衡失调：适度纠酸，宁酸勿碱，药物选用碳酸氢钠", "心、血管活性药物的使用："]}, {"type": "p", "text": "收缩剂：多巴胺、去甲肾上腺素等；"}, {"type": "p", "text": "扩张剂：酚妥拉明；酚苄明等；"}, {"type": "p", "text": "强心剂：心源性、其它休克的后期使用"}, {"type": "list", "items": ["治疗DIC改善微循环：肝素抗凝、可用抗纤溶药物、抗血小板凝集药", "肾上腺糖皮质激素的使用", "其他治疗"]}, {"type": "h", "level": 3, "id": "s14", "text": "椎管内麻醉根据位置不同分为哪四种"}, {"type": "p", "text": "蛛网膜下腔阻滞、硬膜外阻滞、腰-硬联合麻醉、骶管阻滞"}, {"type": "h", "level": 3, "id": "s15", "text": "膀胱非浸润癌治疗"}, {"type": "p", "text": "行经尿道膀胱肿瘤切除术，术后膀胱灌注化疗药物防止复发。"}, {"type": "h", "level": 3, "id": "s16", "text": "等渗性脱水诊断要点治疗原则注意事项"}, {"type": "h", "level": 3, "id": "s17", "text": "诊断: "}, {"type": "list", "items": ["病史：消化液急性丧失、感染；", "临床表现：不口渴、尿少、乏力、脉细、休克；", "实验室化验：血液浓缩（红细胞计数、血红蛋白和血细胞比容高）、尿比重高、血清Na+、Cl-无明显减低"]}, {"type": "h", "level": 3, "id": "s18", "text": "治疗: "}, {"type": "list", "items": ["治本: 治疗原发病；", "治标: 恢复血容量：输注含钠的液体以防低钠（平衡盐）；大量输注生理盐水会导致高Cl-；注意补钾（尿量>40ml/h）"]}, {"type": "h", "level": 3, "id": "s19", "text": "高渗性缺水，定义，临表，诊断，治疗"}, {"type": "p", "text": "==定义：==原发性缺水。水和钠同时缺失，但缺水多于缺钠，故血清钠高于正常范围，细胞外液呈高渗状态。"}, {"type": "h", "level": 3, "id": "s20", "text": "临床表现："}, {"type": "list", "items": ["轻: 失水占体重2%-4%，口渴；", "中: 失水占体重4%-6%，极度口渴、乏力、少尿、尿比重升高、唇舌干燥、眼窝凹陷；", "重: 失水占体重 > 6%，躁狂、幻觉、谵妄、昏迷。"]}, {"type": "h", "level": 3, "id": "s21", "text": "诊断："}, {"type": "list", "items": ["病史：摄入不足、丧失过多；", "临床表现：口渴、尿少、烦躁、幻觉；", "实验室检查：血液浓缩：红细胞，血红蛋白，血细胞比容均升高；血钠浓度高>150mmol/L；尿比重高。"]}, {"type": "h", "level": 3, "id": "s22", "text": "治疗："}, {"type": "list", "items": ["治本：积极治疗原发病；", "治标：口服或者静脉补充葡萄糖或者低渗钠溶液；补钾：尿量>40ml/h"]}, {"type": "h", "level": 3, "id": "s23", "text": "colles骨折临床表现、治疗原则"}, {"type": "p", "text": "==临床表现：==伤后局部疼痛、肿胀、腕关节活动障碍。可出现典型畸形姿势，即侧面看呈“银叉”畸形，正面看呈“刺刀样”畸形。X线拍片可见骨折远端向桡、背侧移位，近端向掌侧移位，可同时伴有下尺桡关节脱位及尺骨茎突骨折。"}, {"type": "p", "text": "==治疗：==以手法复位外固定治疗为主,部分需要手术治疗。"}, {"type": "list", "items": ["手法复位外固定：牵引---骨折端分离---手指压于骨折端---猛力牵抖---迅速掌屈和尺偏---小夹板或石膏固定。", "切开复位内固定：手术指征:①严重粉碎骨折移位明显,桡骨下端关节面破坏;②手法复位失败,或复位成功,外固定不能维持复位。", "康复治疗：术后应早期进行手指屈伸活动，4~6周后可去除外固定,逐渐腕关节活动。"]}, {"type": "h", "level": 3, "id": "s24", "text": "骨折的急救措施及目的"}, {"type": "p", "text": "==措施==：①注重全身-抢救生命②止血包扎③制动-妥善固定④后送-迅速转运"}, {"type": "p", "text": "==目的==：避免额外损伤：血管、神经、脊髓和内脏；减少断端活动：减轻病人疼痛；便于后方运送：简便、有效"}, {"type": "h", "level": 3, "id": "s25", "text": "骨折晚期并发症"}, {"type": "p", "text": "坠积性肺炎、褥疮、下肢深静脉血栓形成、损伤性骨化、创伤性关节炎、关节僵硬、缺血性骨坏死、缺血性肌挛缩等"}, {"type": "h", "level": 3, "id": "s26", "text": "股骨颈骨折的三种分型"}, {"type": "p", "text": "==按部位分型：==头下型、颈中型、基底型；"}, {"type": "p", "text": "==按骨折线方向分型（Pauwels 分型）：==外展型：P角<30，稳定，易愈、少坏死；内收型：P角>50，不稳，难愈、易坏死；"}, {"type": "p", "text": "==按移位分型（Garden 分型）：==Ⅰ型－不全骨折（不存在）；Ⅱ型－骨折无移位；Ⅲ型－部分移位；Ⅳ型－完全移位。III和IV属于不稳定骨折。"}, {"type": "h", "level": 3, "id": "s27", "text": "烧伤的分类及临床表现"}, {"type": "p", "text": "==Ⅰ度烧伤：==表面红斑状、干燥、烧灼感；3~7d脱屑痊愈；短期内有色素沉着；"}, {"type": "p", "text": "==浅Ⅱ度烧伤：==红肿明显，水疱形成；创面红润、疼痛剧烈；如无感染，1-2w内愈合；一般不留瘢痕；多数有色素沉着；"}, {"type": "p", "text": "==深Ⅱ度烧伤：==可有水疱；创面红白相间，痛觉迟钝；如无感染，可融合修复；需时3~4w，常有瘢痕增生；"}, {"type": "p", "text": "==Ⅲ度烧伤：==创面无水疱；焦黄、皮革样变：焦痂；树枝状血管网；痛觉消失；需要植皮。"}, {"type": "h", "level": 3, "id": "s28", "text": "烧伤严重程度分类"}, {"type": "h", "level": 3, "id": "s29", "text": "腹腔内实质性器官损伤和空腔脏器损伤的临床表现的区别"}, {"type": "h", "level": 3, "id": "s30", "text": "腹部损伤中行剖腹探查的手术指征"}, {"type": "p", "text": "穿透性腹部创伤；明确的腹膜刺激征；腹腔游离气体；移动性浊音阳性；腹腔穿刺或者灌洗阳性；胃肠道出血；持续低血压而难以用腹部以外原因解释；观察中病情恶化或者需要大量输血>2000ml"}, {"type": "h", "level": 3, "id": "s31", "text": "急性梗阻性化脓性胆管炎治疗原则及方法"}, {"type": "p", "text": "==原则：==解除梗阻，取净结石，通畅引流，预防复发，合理应用抗生素"}, {"type": "p", "text": "==方法：==①紧急胆管减压引流：开腹胆囊切除术+胆管探查+T管引流；PTCD，ENBD"}, {"type": "list", "items": ["后期行确定手术如：胆管空肠Roux-en-Y吻合术"]}, {"type": "h", "level": 3, "id": "s32", "text": "急性弥漫性腹膜炎的临床表现"}, {"type": "p", "text": "==（====1====）腹痛：==突发或进行性加重，这是腹膜炎最主要的症状；部位、性质、程度视原发病而异；剧烈，不能忍受，且呈持续性，深呼吸、咳嗽，转动身体时都可加剧疼痛；"}, {"type": "p", "text": "==（====2====）消化道症状（恶心、呕吐）：==早期开始时因腹膜受刺激引起反射性的恶心呕吐，呕吐物为胃内容物；后期出现麻痹性肠梗阻时，呕吐物转为黄绿色之含胆汁液，甚至为棕褐色粪样肠内容物。呕吐频繁可呈现严重脱水和电解质紊乱"}, {"type": "p", "text": "==（====3====）全身症状：==突然发病的腹膜炎体温可伴逐渐升高，同时白细胞也会相应升高；脉搏通常随体温的升高而加快，如果脉搏增快而体温反而下降，多为病情恶化的征象；"}, {"type": "p", "text": "==（====4====）感染中毒：=="}, {"type": "list", "items": ["初期：高热、脉搏快、呼吸浅快、大汗、口渴等全身中毒表现；", "后期：表情淡漠，口唇紫绀、肢体冰冷、皮肤干燥， 呼吸急促、脉搏细弱， 体温剧升或下降， 血压下降休克，酸中毒；"]}, {"type": "p", "text": "==（====5====）腹部体征：=="}, {"type": "list", "items": ["视诊：腹膨隆。腹式呼吸减弱或消失。腹胀加重常是判断病情发展的一个重要标志；", "触诊：腹膜刺激征---压痛、反跳痛、肌紧张；", "叩诊：鼓音增强，肝浊音界缩小（消失），若有渗液可叩出移动性浊音；", "听诊：肠鸣音减弱或消失；", "直肠指诊：直肠前窝饱满及触痛，则表示有盆腔感染或盆腔脓肿存在。"]}, {"type": "h", "level": 3, "id": "s33", "text": "晚期肺癌可有什么征象"}, {"type": "p", "text": "==咳嗽最常见：==刺激性咳嗽、血痰；胸痛、发热、气促"}, {"type": "p", "text": "==局部晚期肺癌压迫或侵犯邻近器官：==压迫膈神经—同侧膈肌麻痹；压迫喉返神经—声嘶；压迫上腔V—上腔V阻塞综合征；侵犯胸膜—血性胸腔积液；压迫食管—吞咽困难；肺上沟瘤(Pancoast 瘤)—颈部交感神经综合征"}, {"type": "p", "text": "==远处转移的临床症状：==脑转移—头痛、恶心；骨转—骨痛、血钙升高；肝转移—肝大、肝酶升高；皮下转移—皮下触及结节"}, {"type": "p", "text": "==副肿瘤综合症：==骨关节病综合征、Cushing综合征、男性乳腺增大、多发性肌肉神经痛等"}, {"type": "h", "level": 3, "id": "s34", "text": "胃大部切除术适应症，禁忌症"}, {"type": "p", "text": "==适应症：==胃十二指肠溃疡保守治疗无效或者并发穿孔、出血、幽门梗阻、癌变者"}, {"type": "h", "level": 3, "id": "s35", "text": "禁忌症："}, {"type": "list", "items": ["胃部肿瘤晚期伴有其他脏器广泛性转移，或者是有淋巴结转移者。", "体质极差者，无法耐受手术。", "对麻药过敏，无法行硬膜外麻醉或者是全麻者。", "有麻醉禁忌症，比如慢性阻塞性肺气肿急性加重期，支气管哮喘急性发作等。", "心肺功能障碍，比如重型心律失常、心梗、房颤等。"]}, {"type": "h", "level": 3, "id": "s36", "text": "胃癌，诊断依据鉴别诊断检查手段治疗原则"}, {"type": "p", "text": "==诊断：==病史：溃疡病史、家族史、癌前病变、消瘦、贫血；体征：腹部包块、振水音；辅助检查：胃镜、X线钡餐、CT、MRI、肿瘤标记物；"}, {"type": "p", "text": "==治疗：==以外科手术为主要方式的综合治疗；早期胃癌：部分可选择内镜下切除；进展期胃癌：胃切除+淋巴结清扫术（根治术）、姑息切除术；化疗：不可切除、术后复发、胃癌术后"}, {"type": "h", "level": 3, "id": "s37", "text": "肩关节脱位诊断伴发损伤治疗方法"}, {"type": "p", "text": "==诊断：==外伤病史；疼痛、肿胀、功能障碍；健侧手托住患肢；弹性固定；关节盂空虚；方肩畸形；Dugas征+；直尺试验+；影像学检查"}, {"type": "p", "text": "==治疗：==手法复位（足蹬法）：前脱位首选，无合并骨折；开放复位：后脱位；合并骨折、韧带损伤；手法复位失败的；陈旧性脱位；习惯性脱位。三角巾或悬臂带固定3-4周。"}, {"type": "h", "level": 3, "id": "s38", "text": "腰椎间盘突出"}, {"type": "p", "text": "==（====1====）====症状：==腰痛；坐骨神经痛；马尾综合征"}, {"type": "p", "text": "==（====2====）====体征：==腰椎侧凸；腰部活动受限；压痛及骶棘肌痉挛；直腿拾高试验及加强试验；神经系统表现：感觉异常、肌力下降、反射异常"}, {"type": "p", "text": "==（====3====）====影像学及其他检查：==X线平片；造影检査；CT；MRI"}, {"type": "p", "text": "==（====4====）====治疗：=="}, {"type": "p", "text": "==①====非手术治疗：=="}, {"type": "p", "text": "适应证:①初次发病,病程较短的病人;②休息以后症状可以自行缓解者;③由于全身疾病或有局部皮肤疾病,不能实行手术者;④不同意手术者。"}, {"type": "p", "text": "治疗方法:①卧床休息,一般严格卧床三周,带腰围逐步下地活动;②非甾体抗炎药物;③牵引疗法,骨盆牵引最常用;④理疗。"}, {"type": "p", "text": "==②====手术治疗：=="}, {"type": "p", "text": "适应证:①腰腿痛症状严重,反复发作,经半年以上非手术治疗无效,且病情逐渐加重,影响工作和生活者;②中央型突出有马尾神经综合征,括约肌功能障碍者,应按急诊进行手术;③有明显的神经受累表现者。"}, {"type": "p", "text": "手术方法:①传统开放手术:包括全椎板切除髓核摘除术、半椎板切除髓核摘除术以及椎板开窗髓核摘除术。②显微外科腰椎间盘摘除术:利用显微镜辅助手术,行椎间盘摘除。③微创椎间盘摘除手术等"}];</script>
 <script>
 (function () {
+  if (WB.mountChrome) WB.mountChrome('materials');
+
+  var body = document.getElementById('body');
+  body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
+  if (WB.fx && WB.fx.init) WB.fx.init();
+
   var base = (window.R2_BASE || '').replace(/\/+$/, '');
   var prefix = window.R2_PREFIX || '';
   var dl = document.getElementById('dgDl');
@@ -222,6 +73,17 @@
   } else if (dl) {
     dl.style.display = 'none';
   }
+
+  var links = [].slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  if (!links.length) return;
+  var heads = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function paint() {
+    var top = window.scrollY + 120, idx = 0;
+    heads.forEach(function (h, i) { if (h && h.offsetTop <= top) idx = i; });
+    links.forEach(function (a, i) { a.classList.toggle('on', i === idx); });
+  }
+  window.addEventListener('scroll', paint, { passive: true });
+  paint();
 })();
 </script>
 </body>

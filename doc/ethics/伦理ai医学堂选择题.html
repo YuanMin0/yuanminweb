@@ -2,596 +2,69 @@
 <html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>伦理ai医学堂选择题 · 资料阅读 · MediLearn</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../../css/style.css">
-<script src="../../data/r2-config.js"></script>
+<script src="../../js/auth.js"></script>
+<script>if(window.WB&&WB.auth)WB.auth.guard();</script>
 <style>
-  body { background: var(--bg); }
-  .dg-top {
-    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 10px;
-    padding: 10px 16px; background: color-mix(in srgb, var(--surface) 88%, transparent);
-    border-bottom: 1px solid var(--border); backdrop-filter: blur(12px);
-  }
-  .dg-top h1 { font-size: 15px; margin: 0; flex: 1; min-width: 0;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .dg-top .meta { font-size: 12px; color: var(--text-3); white-space: nowrap; }
-  .dg-wrap { max-width: 880px; margin: 0 auto; padding: 26px 20px 90px; }
-  .dg-tip { font-size: 13px; color: var(--text-3); background: var(--surface-2);
+  .doc-head { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+  .doc-head h1 { font-size: 26px; margin: 0; letter-spacing: -.02em; flex: 1; min-width: 240px; }
+  .doc-sub { color: var(--text-3); font-size: 13px; margin: 8px 0 18px; }
+  .doc-tip { font-size: 13px; color: var(--text-3); background: var(--surface-2);
     border: 1px solid var(--border); border-left: 3px solid var(--brand);
     border-radius: 10px; padding: 10px 14px; margin-bottom: 20px; line-height: 1.7; }
-  .dg-toc { background: var(--surface); border: 1px solid var(--border);
-    border-radius: 14px; padding: 16px 18px; margin-bottom: 26px; }
-  .dg-toc-t { font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--text-3); margin-bottom: 8px; }
-  .dt-toc-a { display: block; padding: 5px 0; font-size: 14px; color: var(--text-2);
-    text-decoration: none; border-bottom: 1px dashed transparent; }
-  .dt-toc-a:hover { color: var(--brand); border-bottom-color: var(--brand); }
-  .dt-toc-a.lv2 { font-weight: 650; color: var(--text); }
-  .dt-toc-a.lv3 { padding-left: 14px; }
-  .dg-body { background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; padding: 30px 34px; font-size: 15.5px; line-height: 1.95;
-    color: var(--text); }
-  .dg-body h2 { font-size: 21px; margin: 34px 0 14px; padding-bottom: 8px;
-    border-bottom: 2px solid var(--border); scroll-margin-top: 70px; }
-  .dg-body h2:first-child { margin-top: 0; }
-  .dg-body h3 { font-size: 17px; margin: 26px 0 10px; color: var(--brand);
-    scroll-margin-top: 70px; }
-  .dg-body p { margin: 0 0 12px; }
-  .dg-body strong { color: var(--text); font-weight: 700; }
-  .dg-ul { margin: 6px 0 14px; padding-left: 22px; }
-  .dg-ul li { margin-bottom: 5px; }
-  .dt-wrap { overflow-x: auto; margin: 14px 0 18px; }
-  .dt { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .dt th, .dt td { border: 1px solid var(--border); padding: 8px 11px; text-align: left;
-    vertical-align: top; }
-  .dt th { background: var(--surface-2); font-weight: 650; white-space: nowrap; }
-  .dt tr:nth-child(even) td { background: color-mix(in srgb, var(--surface-2) 45%, transparent); }
-  @media (max-width: 720px) {
-    .dg-wrap { padding: 18px 12px 70px; }
-    .dg-body { padding: 20px 16px; font-size: 15px; }
-    .dg-top h1 { font-size: 14px; }
-    .dg-top .meta { display: none; }
+  @media (max-width: 900px) {
+    .klayout { grid-template-columns: 1fr; }
+    .toc { position: static; margin-bottom: 8px; }
   }
-  @media print { .dg-top, .dg-toc, .dg-tip { display: none; } .dg-body { border: 0; padding: 0; } }
+  @media print { .toc, .doc-tip, .hdr, .ftr, .doc-head .gbtn { display: none; } .klayout { display: block; } }
 </style>
 </head>
 <body>
-<div class="dg-top">
-  <a class="gbtn gbtn-sm" href="../../materials.html">← 资料汇总</a>
-  <h1>伦理ai医学堂选择题</h1>
-  <span class="meta">523 段 · 0 表 · 2 小节</span>
-  <a class="gbtn gbtn-sm" id="dgDl" data-key="ethics/伦理ai医学堂选择题.docx" href="#" target="_blank" rel="noopener">下载原文</a>
-</div>
-<div class="dg-wrap">
-  <div class="dg-tip">这份内容由 Word 原文提取后重新排版，便于在手机、平板上阅读；<b>表格与公式可能略有出入</b>，需要精确版式请下载原文。</div>
-  
-  <article class="dg-body"><h2 id="h0">选择：（没标注的默认单选）</h2>
-<ul class="dt-ul"><li>道德是（ ）的产物的观点，是理解道德的根本起点。</li>
-</ul><p>A.社会生活实践</p>
-<p>B.神的意志</p>
-<p>C.个体意志</p>
-<p>D.自然选择</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>医学伦理学研究的基本问题是（ ）关系问题</li>
-</ul><p>A.权利与义务</p>
-<p>B.道德与利益</p>
-<p>C.理智与情感</p>
-<p>D.动机与效果</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>医学伦理学研究的核心问题是（ ）关系问题</li>
-</ul><p>A.医患</p>
-<p>B.医护</p>
-<p>C.生死</p>
-<p>D.善恶</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>医学伦理学是关于（ ）的学问。</li>
-</ul><p>A.医学道德</p>
-<p>B.医学技术</p>
-<p>C.生命健康</p>
-<p>D.医患沟通</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>道德评价的一般标准是（ ）</li>
-</ul><p>A.善与恶</p>
-<p>B.爱与恨</p>
-<p>C.情与仇</p>
-<p>D.功与过</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>生命论是以人们对于生命的基本认识和看法为医学道德评价原则的伦理观，主要包括（）</li>
-</ul><p>多选题 (1 分) 1分</p>
-<p>A.生命神圣论</p>
-<p>B.生命质量论</p>
-<p>C.生命价值论</p>
-<p>D.生命自然论</p>
-<p>正确答案: A B C</p>
-<ul class="dt-ul"><li>医学人道论的核心内容包括（ ）</li>
-</ul><p>多选题 (1 分) 1分</p>
-<p>A.尊重病人生命</p>
-<p>B.尊重病人人格</p>
-<p>C.尊重病人权利</p>
-<p>D.尊重病人自杀</p>
-<p>正确答案: A B C</p>
-<ul class="dt-ul"><li>道德有别于政治法律等意识形态的特殊本质，发挥作用方式途径主要有（ ）</li>
-</ul><p>多选题 (1 分) 1分</p>
-<p>A.内心信念</p>
-<p>B.社会舆论</p>
-<p>C.传统习俗</p>
-<p>D.行政干预</p>
-<p>正确答案: A B C</p>
-<ul class="dt-ul"><li>“天覆地载，万物悉备，莫贵于人”医德思想出自( )</li>
-</ul><p>A.《千金方》</p>
-<p>B.《宝命全形》</p>
-<p>C.《大医精诚》</p>
-<p>D.《五戒十要》</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>注重从社会医疗实践的需要出发“随俗为变”行医救民的医家是（ ）</li>
-</ul><p>A.扁鹊</p>
-<p>B.孙思邈</p>
-<p>C.淳于意</p>
-<p>D.李时珍</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li></li>
-</ul><p>提出“医家不得恃己所长，专心经略财物，但作救苦之心”的是（ ）</p>
-<p>A.张仲景</p>
-<p>B.孙思邈</p>
-<p>C.扁鹊</p>
-<p>D.杨泉</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>《希波克拉底誓言》提出的行医目的是（ ）</li>
-</ul><p>A.为病家谋利益</p>
-<p>B.平等对待患者</p>
-<p>C.保守医密</p>
-<p>D.不为妇人施堕胎手术</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>“凡为医之道，必先正己，然后正物。正己者，谓能明理己尽术也。正物者，谓能用药已对病也”出自（ ）</li>
-</ul><p>A.《医工论》</p>
-<p>B.《医家五戒十要》</p>
-<p>C.《省心录.论医》</p>
-<p>D.《万病回春》</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>明确提出并倡导医学巫术分离的中外医家有（ ）</li>
-</ul><p>多选题 (1 分) 1分</p>
-<p>A.扁鹊</p>
-<p>B.华佗</p>
-<p>C.希波克拉底</p>
-<p>D.迈蒙尼提斯</p>
-<p>正确答案: A C</p>
-<ul class="dt-ul"><li>希波克拉底誓言提出的医德思想有（ ）</li>
-</ul><p>多选题 (1 分)</p>
-<p>A.保守医密</p>
-<p>B.反对堕胎</p>
-<p>C.不施毒药</p>
-<p>D.为病人谋利益</p>
-<p>正确答案: A B C D</p>
-<ul class="dt-ul"><li>孙思邈《千金方》中专门论述医德的篇章是（ ）</li>
-</ul><p>多选题 (1 分) 1分</p>
-<p>A.大医精诚</p>
-<p>B.大医习业</p>
-<p>C.师传</p>
-<p>D.灵枢</p>
-<p>正确答案: A B</p>
-<ul class="dt-ul"><li>病人对经治医生不满意时，可以重新选择医生属于（ ）</li>
-</ul><p>A.病人的权利</p>
-<p>B.病人的义务</p>
-<p>C.医生的权利</p>
-<p>D.医生的义务</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>反映医务人员对病人和社会应尽的道德责任的伦理范畴是（ ）</li>
-</ul><p>A.医德义务</p>
-<p>B.医德良心</p>
-<p>C.医德权利</p>
-<p>D.医德荣誉</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>医德活动自律性的最集中和最高表现形式是（ ）</li>
-</ul><p>A.医德审慎</p>
-<p>B.医德良心</p>
-<p>C.医德义务</p>
-<p>D.医德理智</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>当妊娠危及母亲生命时可允许人工流产或引产符合（ ）</li>
-</ul><p>A.不伤害原则</p>
-<p>B.尊重原则</p>
-<p>C.公正原则</p>
-<p>D.行善原则</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>当患者的自主会对他人、社会利益构成严重危害时，要受到必要的限制，说明自主权具有（ ）</li>
-</ul><p>A.绝对性</p>
-<p>B.普遍性</p>
-<p>C.随意性</p>
-<p>D.相对性</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>属于患者的权利有（ ） 多选题 (1 分) 1分</li>
-</ul><p>A.基本医疗权</p>
-<p>B.知情同意权</p>
-<p>C.特殊干涉权</p>
-<p>D.要求赔偿权</p>
-<p>正确答案: A B D</p>
-<ul class="dt-ul"><li>医生的权利包括（ ） 多选题 (1 分) 1分</li>
-</ul><p>A.疾病诊治权</p>
-<p>B.特殊干涉权</p>
-<p>C.判定死亡权</p>
-<p>D.工作学习权</p>
-<p>正确答案: A B C D</p>
-<ul class="dt-ul"><li>对医德审慎理解正确的是（ ）多选题 (1 分) 1分</li>
-</ul><p>A.用药如用兵</p>
-<p>B.用药如用刑</p>
-<p>C.避开有风险的病人</p>
-<p>D.胆欲大而心欲小</p>
-<p>正确答案: A B D</p>
-<ul class="dt-ul"><li>（ ）模式常见于“久病成医”的各种慢性病患者与医务人员之间。</li>
-</ul><p>A.主动-被动型</p>
-<p>B.指导合作型</p>
-<p>C.被动合作型</p>
-<p>D.共同参与型</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>下列医患关系中，不属于非技术关系的是（ ）</li>
-</ul><p>A.医务人员对患者良好的态度</p>
-<p>B.医务人员对患者高度的责任心</p>
-<p>C.医务人员对患者同情和尊重</p>
-<p>D.医务人员为患者实施精心治疗</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>广义的医际关系指的是（ ）</li>
-</ul><p>A医师之间的关系</p>
-<p>B.医疗人员与后勤人员之间的关系</p>
-<p>C.医师､护士､医技人员自身之间</p>
-<p>D.医师、护士、医技人员自身之间以及相互之间的关系</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>在下列各项中，医生能行使干涉权的是（ ）</li>
-</ul><p>A.住院病人拒绝医学生实习</p>
-<p>B.住院病人拒绝参与人体实验</p>
-<p>C.住院精神病人发生的打人毁物行为</p>
-<p>D.门诊病人拒绝抽血检查</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>对于具有一定医学知识的长期慢性疾病成年患者，所适用的医患关系模式是（ ）</li>
-</ul><p>A.纯技术模式</p>
-<p>B.主动-被动模式</p>
-<p>C.指导-合作模式</p>
-<p>D.共同参与模式</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>医患关系的性质（ ） 多选题 (1 分) 1分</li>
-</ul><p>A.医疗契约关系</p>
-<p>B.信任托付关系</p>
-<p>C.服务与被服务关系</p>
-<p>D.价值交换关系</p>
-<p>正确答案: A B C</p>
-<ul class="dt-ul"><li>医际关系的特点（ ）多选题 (1 分) 1分</li>
-</ul><p>A.协同性</p>
-<p>B.平等性</p>
-<p>C.同一性</p>
-<p>D.竞争性</p>
-<p>正确答案: A B C D</p>
-<ul class="dt-ul"><li>医患关系主动-被动型技术模式适用于（ ）多选题 (1 分)</li>
-</ul><p>A.慢性病患者</p>
-<p>B.婴幼儿患者</p>
-<p>C.处于昏迷状态的患者</p>
-<p>D.严重智力低下的患者</p>
-<p>正确答案: B C D</p>
-<ul class="dt-ul"><li>下列选项中，（ ）不符合临床诊疗中询问病史的伦理要求</li>
-</ul><p>A.举止端庄，态度热情</p>
-<p>B.远近兼顾，节用费用</p>
-<p>C.全神贯注，语言得当</p>
-<p>D.耐心倾听，正确引导</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>下列选项中，（ ）不符合临床诊疗中体格检查的伦理要求</li>
-</ul><p>A.全面系统，认真细致</p>
-<p>B.关心体贴，减少痛苦</p>
-<p>C.尊重患者，心正无私</p>
-<p>D.目的纯正，合理配伍</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>选择诊疗方案时以最小的代价获得最大效果的决策是指</li>
-</ul><p>A.最优先原则</p>
-<p>B.最优化原则</p>
-<p>C.身心统一原则</p>
-<p>D.协同一致原则</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>疗效最佳通常指诊疗效果在（ ）科学发展水平来说是最佳的，或是在一定条件限制下是最佳的</li>
-</ul><p>A.当时</p>
-<p>B.过去</p>
-<p>C.现在</p>
-<p>D.未来</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>严格掌握指征，手术动机要纯正是（ ）</li>
-</ul><p>A.手术前的道德要求</p>
-<p>B.手术中的道德要求</p>
-<p>C.手术后的道德要求</p>
-<p>D.以上都不是</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>下列选项中，（ ）符合临床诊疗中辅助检查的伦理要求。多选题 (1 分)</li>
-</ul><p>A.远近兼顾，合理用药</p>
-<p>B.目的纯正，选择合理</p>
-<p>C.知情同意，尽职尽责</p>
-<p>D.联系临床，综合分析</p>
-<p>正确答案: B C D</p>
-<ul class="dt-ul"><li>临床诊疗最优化原则的内容包括（ ） 多选题 (1 分) 1分</li>
-</ul><p>A.痛苦最小</p>
-<p>B.耗费最少</p>
-<p>C.安全度高</p>
-<p>D.疗效最好</p>
-<p>正确答案: A B C D</p>
-<ul class="dt-ul"><li>临床实践中医际之间的关系一般可分为（ ）多选题 (1 分) 1分</li>
-</ul><p>A.优势互补型</p>
-<p>B.指导被指导型</p>
-<p>C.合作竞争型</p>
-<p>D.信任托付型</p>
-<p>正确答案: A B C</p>
-<ul class="dt-ul"><li>公共卫生价值的实现主要是（ ）</li>
-</ul><p>A.不健康的社会人群</p>
-<p>B.健康的社会人群</p>
-<p>C.不健康的个人</p>
-<p>D.健康的个人</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>预防医学以（ ）为主要研究对象。</li>
-</ul><p>A.人群</p>
-<p>B.疾病</p>
-<p>C.个体</p>
-<p>D.环境</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>公共卫生以预防疾病、（）和提高生活质量为目的。</li>
-</ul><p>A.保护生态</p>
-<p>B.美化环境</p>
-<p>C.健康教育</p>
-<p>D.促进健康</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>疾控工作（）。</li>
-</ul><p>A.必须纳入整个社会系统，并与国民经济和社会发展相适应</p>
-<p>B.不需要与国民经济和社会发展相适应</p>
-<p>C.不需要纳入整个社会系统</p>
-<p>D.不需要不断地提高全社会人员的健康意识</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>下列选项中（）属于应对突发公共卫生事件的道德要求。 多选题 (1 分) 1分</li>
-</ul><p>A.恪守职责和加强协作，发扬敬畏生命的人道主义精神</p>
-<p>B.树立崇高的职业责任感和科学态度</p>
-<p>C.勇于克服困难，具有献身精神</p>
-<p>D.刻苦钻研，无私奉献精神</p>
-<p>正确答案: A B C</p>
-<ul class="dt-ul"><li>应对突发公共卫生事件的道德要求包括（）。 多选题 (1 分) 1分</li>
-</ul><p>A.恪守职责和加强协作，发扬敬畏生命的人道主义精神</p>
-<p>B.树立崇高的职业责任感和科学态度</p>
-<p>C.勇于克服困难，具有献身精神</p>
-<p>D.刻苦钻研，无私奉献精神</p>
-<p>正确答案: A B C</p>
-<ul class="dt-ul"><li>下列选项（）属于公共卫生的特点。 多选题 (1 分) 1分</li>
-</ul><p>A.群体性</p>
-<p>B.综合性</p>
-<p>C.整体性</p>
-<p>D.个体性</p>
-<p>正确答案: A B C</p>
-<ul class="dt-ul"><li>在临床医学研究中必须尊重受试者的知情同意权，下面做法中错误的是（）。</li>
-</ul><p>A.必需获得受试者的知情同意</p>
-<p>B.无行为能力者需获得代理同意</p>
-<p>C.获得同意前需要用受试者能够理解的语言向受试者提供基本的信息</p>
-<p>D.可以利诱受试者，让他同意</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>人体试验中应把（）放在首位。</li>
-</ul><p>A.社会利益</p>
-<p>B.医学利益</p>
-<p>C.受试者利益</p>
-<p>D.实验者利益</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>生物医学研究必须将研究设计方案交（）审查，获得批准后才可开始。</li>
-</ul><p>A.伦理委员会</p>
-<p>B.医院领导</p>
-<p>C.公安机关</p>
-<p>D.法院</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>在临床医学研究中要求对资料保密，以下哪一点是不属于该范畴的（）。</li>
-</ul><p>A.对研究资料严加保密</p>
-<p>B.对研究成果严加保密</p>
-<p>C.医师与病人之间的保密</p>
-<p>D.研究者与受试者之间的保密</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>（）是《人道实验技术的原则》中提出的3R原则。 多选题 (1 分) 1分</li>
-</ul><p>A.Refinement</p>
-<p>B.Respect</p>
-<p>C.Reduction</p>
-<p>D.Replacement</p>
-<p>正确答案: A C D</p>
-<ul class="dt-ul"><li>下列选项（）不是医学科研道德准则的核心准则。多选题 (1 分)</li>
-</ul><p>A.坚持发展医学、造福人类的纯正动机和崇高目的</p>
-<p>B.坚持实事求是的精神</p>
-<p>C.坚持勇于竞争的精神</p>
-<p>D.发扬善于合作的精神</p>
-<p>正确答案: B C D</p>
-<ul class="dt-ul"><li>在人体试验中维护受试者利益要求（）。 多选题 (1 分) 1分</li>
-</ul><p>A.先进行动物实验</p>
-<p>B.对可能出现的意外有足够的估计和处理办法</p>
-<p>C.出现问题立即终止</p>
-<p>D.要有专家参与或指导</p>
-<p>正确答案: A B C D</p>
-<ul class="dt-ul"><li>灾害医学救治首要坚持的原则是（）。</li>
-</ul><p>A.公益性无偿救治</p>
-<p>B.分类救治</p>
-<p>C.无私无畏</p>
-<p>D.平等协作</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>战场和灾害医学救治活动中人际关系的核心是（）。</li>
-</ul><p>A.救助者与被救助者的关系</p>
-<p>B.集体与个人的关系</p>
-<p>C.救助者之间的关系</p>
-<p>D.被救助者之间的关系</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>医疗救灾首先就是（）。</li>
-</ul><p>A.挽回物资损失</p>
-<p>B.挽回经济损失</p>
-<p>C.救伤</p>
-<p>D.救命</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>灾害救治中，医德要求往往采取“命令”、“指示”、“纪律”等刚性的形式，体现出（）。</li>
-</ul><p>A.医德尺度宽严相济的原则</p>
-<p>B.争取最大健康效益的原则</p>
-<p>C.积极适应特殊环境原则</p>
-<p>D.强化协调与配合的原则</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>革命英雄主义是（）。 多选题 (1 分) 1分</li>
-</ul><p>A.集体的英雄主义</p>
-<p>B.无私无畏的英雄主义</p>
-<p>C.理智的英雄主义</p>
-<p>D.个人英雄主义</p>
-<p>正确答案: A B C</p>
-<ul class="dt-ul"><li>战争和灾害救治中，医务人员的（）得到强化。 多选题 (1 分) 1分</li>
-</ul><p>A.自主权</p>
-<p>B.特殊干涉权</p>
-<p>C.知情权</p>
-<p>D.同意权</p>
-<p>正确答案: A B</p>
-<ul class="dt-ul"><li>灾害救治中，（）是有效降低死亡率和伤残率的方法。 多选题 (1 分) 1分</li>
-</ul><p>A.优先救治</p>
-<p>B.积极救治</p>
-<p>C.检伤分类</p>
-<p>D.阶梯治疗</p>
-<p>正确答案: C D</p>
-<ul class="dt-ul"><li>战地医护人员的革命英雄主义必须服从（）。</li>
-</ul><p>A.战争局势</p>
-<p>B.战争态势</p>
-<p>C.战场效益</p>
-<p>D.战场环境</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>选择器官移植受者的首位标准是（ ）。</li>
-</ul><p>A.受者在家庭中的地位</p>
-<p>B.受者过去的成就</p>
-<p>C.受者未来可能的贡献</p>
-<p>D.移植的禁忌症与适应症</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>（ ）是通过自愿和知情同意来获取器官的途径，也是目前器官收集的主要手段。</li>
-</ul><p>A.推定同意</p>
-<p>B.医生全权</p>
-<p>C.自愿捐献</p>
-<p>D.家属意愿</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>在我国实施人类辅助生殖技术，下列各项中违背卫生部制定的伦理原则的是（ ）。</li>
-</ul><p>A.使用捐赠的精子</p>
-<p>B.使用捐赠的卵子</p>
-<p>C.实施亲属代孕</p>
-<p>D.实施卵胞浆内单精注射</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>活体供者的最基本的伦理学原则是不能（ ）。</li>
-</ul><p>A.伤及供者的身体</p>
-<p>B.危及供者的生命</p>
-<p>C.使供者精神受损害</p>
-<p>D.使供者的家属痛苦</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>我国卫生部规定，一名供精者的精子最多只能提供给（ ）。</li>
-</ul><p>A.8名妇女受孕</p>
-<p>B.6名妇女受孕</p>
-<p>C.15名妇女受孕</p>
-<p>D.5名妇女受孕</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>卫生部对实施辅助生殖技术的技术人员行为准则做了多项严格规定，其中包括( )</li>
-</ul><p>多选题 (1 分) 1分</p>
-<p>A.禁止无医学指征的性别选择</p>
-<p>B.禁止实施代孕技术</p>
-<p>C.禁止给不符合国家人口和计划生育法规、条例规定的夫妇以及单身妇女实施人类辅助生殖技术</p>
-<p>D.禁止克隆人</p>
-<p>正确答案: A B C D</p>
-<ul class="dt-ul"><li>人类辅助生殖技术必须满足条件（ ）后方可实施。多选题 (1 分) 1分</li>
-</ul><p>A.一方自愿同意</p>
-<p>B.夫妇双方自愿同意</p>
-<p>C.口头做出承诺</p>
-<p>D.签署书面知情同意书</p>
-<p>正确答案: B D</p>
-<ul class="dt-ul"><li>医务人员在器官移植中的道德要求有（ ）。 多选题 (1 分) 1分</li>
-</ul><p>A.关心患者，坚持人道主义为先</p>
-<p>B.审慎选择供体，保护供者利益与健康</p>
-<p>C.持公正原则，避免差别对待患者</p>
-<p>D.恪守职业道德，防止器官移植犯罪</p>
-<p>正确答案: A B C D</p>
-<ul class="dt-ul"><li>哪一项不属于执行脑死亡标准的伦理意义（ ）。</li>
-</ul><p>A.有利于克服对死亡的恐惧</p>
-<p>B.能够及时地抢救假死状态的患者，维护了人的生命</p>
-<p>C.处置脑功能不可逆丧失而有心跳的患者提供了科学依据，有利于节约卫生资源</p>
-<p>D.有利于器官移植的开展</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>临终关怀强调对临终病人以（ ）为中心。</li>
-</ul><p>A.延长生命</p>
-<p>B.彻底治愈</p>
-<p>C.放疗化疗</p>
-<p>D.照料</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>世界上第一个安乐死合法化的国家是（ ）。</li>
-</ul><p>A.澳大利亚</p>
-<p>B.挪威</p>
-<p>C.比利时</p>
-<p>D.荷兰</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>我国第一家临终关怀机构设立在（ ）。</li>
-</ul><p>A.天津医学院</p>
-<p>B.广州医学院</p>
-<p>C.成都医学院</p>
-<p>D.南宁医学院</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>临终关怀的道德要求中，下列适度治疗的原则（ ）是正确的。</li>
-</ul><p>A.解除痛苦、无痛苦地死去</p>
-<p>B.完全放弃治疗</p>
-<p>C.以延长生命过程的治疗为主</p>
-<p>D.以治疗疾病为主</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>世界范围内非现存的判定死亡的标准是（ ）。多选题 (1 分)</li>
-</ul><p>A.脑死亡标准</p>
-<p>B.濒死标准</p>
-<p>C.心肺死亡标准</p>
-<p>D.生物死亡标准</p>
-<p>正确答案: B D</p>
-<ul class="dt-ul"><li>对于安乐死的适用对象，医学界较为一致的观点是（ ）。 多选题 (1 分) 1分</li>
-</ul><p>A.濒临死亡、现代医学无法救治的不治之症</p>
-<p>B.不可逆昏迷的患者</p>
-<p>C.有严重缺陷的新生儿</p>
-<p>D.慢性病患者</p>
-<p>正确答案: A B C</p>
-<ul class="dt-ul"><li>实施临终关怀的道德要求有（ ）。 多选题 (1 分) 1分</li>
-</ul><p>A.以照料为中心</p>
-<p>B.维护人的尊严</p>
-<p>C.提高生活质量</p>
-<p>D.共同面对死亡</p>
-<p>E.协助病人安静地、有尊严地死去</p>
-<p>正确答案: A B C D E</p>
-<h2 id="h1">简答：</h2>
-<ul class="dt-ul"><li>医德的鲜明特点是什么 ？简答题 (1 分) 分</li>
-</ul><p>答：（1）医德具有鲜明的专业性（2）医德具有突出的传承性（3）医德具有显著的普适性</p>
-<ul class="dt-ul"><li>医学伦理学研究主要道德关系有哪些？简答题 (1 分) 分</li>
-</ul><p>答：（1）医务人员与患者（包括家属）的关系（2）医务人员之间的相互关系（3）医务人员与社会的关系（4）医务人员与医学科学发展的关系</p>
-<ul class="dt-ul"><li>简述近代医学伦理学的主要内容特征 简答题 (1 分) 分</li>
-</ul><p>答：（1）明确提出为人道主义行医，摆脱神学影响。（2）医德由个体道德要求发展到对集体行医规范发展到对集体行医道德要求（3）义务论成为医德行为的核心</p>
-<ul class="dt-ul"><li>简述当代生命伦理学的历史背景简答题 (1 分) 分</li>
-</ul><p>答：（1）新生命科学技术的发展应用（2）权利运动和病人的权利（3）卫生资源的公正分配（4）死亡标准和方式的变革（5）医学模式的转变</p>
-<ul class="dt-ul"><li>简述医德良心在医务人员的行为过程中的作用</li>
-</ul><p>答：（1）在行为之前具有选择作用（2）行为过程中具有监督作用（3）行为之后具有评价作用</p>
-<ul class="dt-ul"><li>简述社会主义医德基本原则的内容</li>
-</ul><p>答：（1）救死扶伤，（2）防病治病，（3）实行社会主义的医学人道主义，（4）全心全意为人民健康服务。</p>
-<ul class="dt-ul"><li>医患关系的模式及其特点？</li>
-</ul><p>答：萨斯-荷伦德(Szasz-Hollender)医患关系模式（1956）①主动-被动：医生几乎占据整个医疗活动的完全主动性，护着相对来说处于完全被动的地位；②指导-合作：医患之间存在相互作用，医生和患者都具有主动性；③共同参与型：医患具有近似相等的权利和地位，医生帮助患者自疗。</p>
-<ul class="dt-ul"><li>医患关系的伦理要求？</li>
-</ul><p>答：（1）密切沟通；（2） 自觉维护对方利益；（3） 坚决履行各自义务；（4）正确处理权利与义务；（5）遵守共同的医学道德规范。</p>
-<ul class="dt-ul"><li>一般问诊的基本原则？</li>
-<li>举止端庄，态度热情；（2）全神贯注，语言得当；（3）耐心倾听，正确引导</li>
-<li>手术的伦理要求？</li>
-<li>手术前①严格掌握指征，手术动机纯正②患者或患者家属知情同意③认真做好术前准备；（2）手术中①关心患者，体贴入微②态度严肃，作风严谨③精诚团结，密切协作；（3）手术后①严密观察，勤于护理②减轻痛苦，加速康复</li>
-<li>公共卫生的伦理原则是什么？ 此题未答</li>
-<li>全社会参与原则（2）社会公益原则（3）社会公正原则（4）互助协同原则（5）信息公开原则</li>
-<li>简述应对突发公共卫生事件的道德要求。 此题未答</li>
-<li>恪守职责和加强协作，发扬敬畏生命的人道主义精神；（2）树立崇高的职业责任感和科学态度；（3）勇于克服困难，具有献身精神。</li>
-<li>健康教育与健康促进的伦理要求是什么？ 此题未答</li>
-<li>履行法律义务，充分利用一切机会和场合积极主动地开展健康教育；（2）积极参与有利于健康促进的公共政策的制定、支持性环境的创建和卫生保健体系的建立；（3）深入农村、社区，将健康教育与健康促进工作渗透在初级卫生保健工作中；（4）不断完善自我，以科学态度和群众喜闻乐见的形式开展健康教育和健康促进工作。</li>
-<li>知情同意过程包含哪三个要素？ 此题未答</li>
-<li>信息的告知。研究人员给病人/受试者提供了什么样的信息和多少信息。（2）行为能力和理解。受试者具有知情同意能力是理解信息自愿采取行动的先决条件。（3）自由选择。所谓自由选择是指一个人做出决定时不受其他人不正当的影响或强迫。</li>
-<li>人体试验的伦理原则是什么？ 此题未答</li>
-<li>医学目的原则；（2）知情同意原则；（3）维护受试者权益原则；（4）公正原则；（5）伦理审查原则。</li>
-<li>如何在人体试验中维护受试者利益？ 此题未答</li>
-<li>先进行动物实验；②对可能出现的意外有足够的估计和处理办法；③出现问题立即终止；④要有专家参与或指导。</li>
-<li>灾害医学救治中应遵循的特殊医德原则是什么？ 此题未答</li>
-<li>公益性和无偿救治的原则；（2）争取最大健康效益的原则；（3）积极适应特殊环境原则；（4）强化协调与配合的原则；（5）医德尺度宽严相济的原则。</li>
-<li>如何理解战场医疗救治中的革命英雄主义？ 此题未答</li>
-</ul><p>指在战争中不怕艰难困苦，不怕流血牺牲，英勇战斗，忘我工作的品德。革命英雄主义是集体的英雄主义。它要求参与战地救护的人员自觉服从战场效益，按照上级的命令和部署，以最大限度地降低我方有生力量的损失为主要目标。革命英雄主义是无私无畏的英雄主义，是理智的英雄主义。</p>
-<ul class="dt-ul"><li>人工授精的道德底线是什么？</li>
-</ul><p>答：在我国开展人工授精要恪守以下道德底线：（1）严格掌握适应症；（2）严格掌握精子来源和质量；（3）严格控制每份精子的使用人数；（4）严格执行保密与互盲原则，即人工授精供体、受体、医生及后代之间的互盲与保密等等。</p>
-<ul class="dt-ul"><li>医务人员在器官移植中的道德要求有哪些？</li>
-</ul><p>答：（1）关心患者，坚持人道主义为先；（2）审慎选择供体，保护供者利益与健康；（3）坚持公正原则，避免差别对待患者；（4）恪守职业道德，防止器官移植犯罪。</p>
-<ul class="dt-ul"><li>实施临终关怀的伦理要求有哪些？</li>
-</ul><p>答：（1）认识和理解临终患者；（2）保护临终患者的权益；（3）尊重满足临终患者的生活需求；（4）同情和关心临终患者的家属。</p>
-<p>100.执行脑死亡标准的伦理意义是什么？</p>
-<p>答：（1）能够及时地抢救假死状态的患者，维护了生命；（2）为处置脑功能不可逆丧失而有心跳的患者提供了科学依据，有利于节约卫生资源；（3）有利于器官移植的开展。</p></article>
-</div>
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap">
+    <div class="crumb"><a href="../../materials.html">资料汇总</a> / <span>伦理ai医学堂选择题</span></div>
+
+    <div class="doc-head">
+      <h1>伦理ai医学堂选择题</h1>
+      <a class="gbtn gbtn-sm" href="../../materials.html">← 返回资料汇总</a>
+      <a class="gbtn gbtn-sm gbtn-primary" id="dgDl" data-key="ethics/伦理ai医学堂选择题.docx" href="#" target="_blank" rel="noopener">下载原文</a>
+    </div>
+    <div class="doc-sub">523 个段落 · 0 张表格 · 2 个小节</div>
+
+    <div class="doc-tip">本文由 Word 原文提取并重新排版，<b>加粗内容已标红</b>；表格与公式可能有出入，需要精确版式请下载原文。</div>
+
+    <div class="klayout">
+      <aside class="toc">
+        <div class="toc-h">本页目录</div>
+        <a href="#s1">选择：（没标注的默认单选）</a><a href="#s2">简答：</a>
+        <div class="toc-h" style="margin-top:20px">文档信息</div>
+        <div class="small dim" style="padding:0 11px;line-height:1.9">段落 523<br>表格 0<br>小节 2</div>
+      </aside>
+      <article class="article">
+        <div id="body"></div>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="../../js/core.js"></script>
+<script src="../../data/r2-config.js"></script>
+<script>window.__DOC_BLOCKS = [{"type": "h", "level": 3, "id": "s1", "text": "选择：（没标注的默认单选）"}, {"type": "list", "items": ["道德是（ ）的产物的观点，是理解道德的根本起点。"]}, {"type": "p", "text": "A.社会生活实践"}, {"type": "p", "text": "B.神的意志"}, {"type": "p", "text": "C.个体意志"}, {"type": "p", "text": "D.自然选择"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["医学伦理学研究的基本问题是（ ）关系问题"]}, {"type": "p", "text": "A.权利与义务"}, {"type": "p", "text": "B.道德与利益"}, {"type": "p", "text": "C.理智与情感"}, {"type": "p", "text": "D.动机与效果"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["医学伦理学研究的核心问题是（ ）关系问题"]}, {"type": "p", "text": "A.医患"}, {"type": "p", "text": "B.医护"}, {"type": "p", "text": "C.生死"}, {"type": "p", "text": "D.善恶"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["医学伦理学是关于（ ）的学问。"]}, {"type": "p", "text": "A.医学道德"}, {"type": "p", "text": "B.医学技术"}, {"type": "p", "text": "C.生命健康"}, {"type": "p", "text": "D.医患沟通"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["道德评价的一般标准是（ ）"]}, {"type": "p", "text": "A.善与恶"}, {"type": "p", "text": "B.爱与恨"}, {"type": "p", "text": "C.情与仇"}, {"type": "p", "text": "D.功与过"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["生命论是以人们对于生命的基本认识和看法为医学道德评价原则的伦理观，主要包括（）"]}, {"type": "p", "text": "多选题 (1 分) 1分"}, {"type": "p", "text": "A.生命神圣论"}, {"type": "p", "text": "B.生命质量论"}, {"type": "p", "text": "C.生命价值论"}, {"type": "p", "text": "D.生命自然论"}, {"type": "p", "text": "正确答案: A B C"}, {"type": "list", "items": ["医学人道论的核心内容包括（ ）"]}, {"type": "p", "text": "多选题 (1 分) 1分"}, {"type": "p", "text": "A.尊重病人生命"}, {"type": "p", "text": "B.尊重病人人格"}, {"type": "p", "text": "C.尊重病人权利"}, {"type": "p", "text": "D.尊重病人自杀"}, {"type": "p", "text": "正确答案: A B C"}, {"type": "list", "items": ["道德有别于政治法律等意识形态的特殊本质，发挥作用方式途径主要有（ ）"]}, {"type": "p", "text": "多选题 (1 分) 1分"}, {"type": "p", "text": "A.内心信念"}, {"type": "p", "text": "B.社会舆论"}, {"type": "p", "text": "C.传统习俗"}, {"type": "p", "text": "D.行政干预"}, {"type": "p", "text": "正确答案: A B C"}, {"type": "list", "items": ["“天覆地载，万物悉备，莫贵于人”医德思想出自( )"]}, {"type": "p", "text": "A.《千金方》"}, {"type": "p", "text": "B.《宝命全形》"}, {"type": "p", "text": "C.《大医精诚》"}, {"type": "p", "text": "D.《五戒十要》"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["注重从社会医疗实践的需要出发“随俗为变”行医救民的医家是（ ）"]}, {"type": "p", "text": "A.扁鹊"}, {"type": "p", "text": "B.孙思邈"}, {"type": "p", "text": "C.淳于意"}, {"type": "p", "text": "D.李时珍"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": [""]}, {"type": "p", "text": "提出“医家不得恃己所长，专心经略财物，但作救苦之心”的是（ ）"}, {"type": "p", "text": "A.张仲景"}, {"type": "p", "text": "B.孙思邈"}, {"type": "p", "text": "C.扁鹊"}, {"type": "p", "text": "D.杨泉"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["《希波克拉底誓言》提出的行医目的是（ ）"]}, {"type": "p", "text": "A.为病家谋利益"}, {"type": "p", "text": "B.平等对待患者"}, {"type": "p", "text": "C.保守医密"}, {"type": "p", "text": "D.不为妇人施堕胎手术"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["“凡为医之道，必先正己，然后正物。正己者，谓能明理己尽术也。正物者，谓能用药已对病也”出自（ ）"]}, {"type": "p", "text": "A.《医工论》"}, {"type": "p", "text": "B.《医家五戒十要》"}, {"type": "p", "text": "C.《省心录.论医》"}, {"type": "p", "text": "D.《万病回春》"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["明确提出并倡导医学巫术分离的中外医家有（ ）"]}, {"type": "p", "text": "多选题 (1 分) 1分"}, {"type": "p", "text": "A.扁鹊"}, {"type": "p", "text": "B.华佗"}, {"type": "p", "text": "C.希波克拉底"}, {"type": "p", "text": "D.迈蒙尼提斯"}, {"type": "p", "text": "正确答案: A C"}, {"type": "list", "items": ["希波克拉底誓言提出的医德思想有（ ）"]}, {"type": "p", "text": "多选题 (1 分)"}, {"type": "p", "text": "A.保守医密"}, {"type": "p", "text": "B.反对堕胎"}, {"type": "p", "text": "C.不施毒药"}, {"type": "p", "text": "D.为病人谋利益"}, {"type": "p", "text": "正确答案: A B C D"}, {"type": "list", "items": ["孙思邈《千金方》中专门论述医德的篇章是（ ）"]}, {"type": "p", "text": "多选题 (1 分) 1分"}, {"type": "p", "text": "A.大医精诚"}, {"type": "p", "text": "B.大医习业"}, {"type": "p", "text": "C.师传"}, {"type": "p", "text": "D.灵枢"}, {"type": "p", "text": "正确答案: A B"}, {"type": "list", "items": ["病人对经治医生不满意时，可以重新选择医生属于（ ）"]}, {"type": "p", "text": "A.病人的权利"}, {"type": "p", "text": "B.病人的义务"}, {"type": "p", "text": "C.医生的权利"}, {"type": "p", "text": "D.医生的义务"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["反映医务人员对病人和社会应尽的道德责任的伦理范畴是（ ）"]}, {"type": "p", "text": "A.医德义务"}, {"type": "p", "text": "B.医德良心"}, {"type": "p", "text": "C.医德权利"}, {"type": "p", "text": "D.医德荣誉"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["医德活动自律性的最集中和最高表现形式是（ ）"]}, {"type": "p", "text": "A.医德审慎"}, {"type": "p", "text": "B.医德良心"}, {"type": "p", "text": "C.医德义务"}, {"type": "p", "text": "D.医德理智"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["当妊娠危及母亲生命时可允许人工流产或引产符合（ ）"]}, {"type": "p", "text": "A.不伤害原则"}, {"type": "p", "text": "B.尊重原则"}, {"type": "p", "text": "C.公正原则"}, {"type": "p", "text": "D.行善原则"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["当患者的自主会对他人、社会利益构成严重危害时，要受到必要的限制，说明自主权具有（ ）"]}, {"type": "p", "text": "A.绝对性"}, {"type": "p", "text": "B.普遍性"}, {"type": "p", "text": "C.随意性"}, {"type": "p", "text": "D.相对性"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["属于患者的权利有（ ） 多选题 (1 分) 1分"]}, {"type": "p", "text": "A.基本医疗权"}, {"type": "p", "text": "B.知情同意权"}, {"type": "p", "text": "C.特殊干涉权"}, {"type": "p", "text": "D.要求赔偿权"}, {"type": "p", "text": "正确答案: A B D"}, {"type": "list", "items": ["医生的权利包括（ ） 多选题 (1 分) 1分"]}, {"type": "p", "text": "A.疾病诊治权"}, {"type": "p", "text": "B.特殊干涉权"}, {"type": "p", "text": "C.判定死亡权"}, {"type": "p", "text": "D.工作学习权"}, {"type": "p", "text": "正确答案: A B C D"}, {"type": "list", "items": ["对医德审慎理解正确的是（ ）多选题 (1 分) 1分"]}, {"type": "p", "text": "A.用药如用兵"}, {"type": "p", "text": "B.用药如用刑"}, {"type": "p", "text": "C.避开有风险的病人"}, {"type": "p", "text": "D.胆欲大而心欲小"}, {"type": "p", "text": "正确答案: A B D"}, {"type": "list", "items": ["（ ）模式常见于“久病成医”的各种慢性病患者与医务人员之间。"]}, {"type": "p", "text": "A.主动-被动型"}, {"type": "p", "text": "B.指导合作型"}, {"type": "p", "text": "C.被动合作型"}, {"type": "p", "text": "D.共同参与型"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["下列医患关系中，不属于非技术关系的是（ ）"]}, {"type": "p", "text": "A.医务人员对患者良好的态度"}, {"type": "p", "text": "B.医务人员对患者高度的责任心"}, {"type": "p", "text": "C.医务人员对患者同情和尊重"}, {"type": "p", "text": "D.医务人员为患者实施精心治疗"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["广义的医际关系指的是（ ）"]}, {"type": "p", "text": "A医师之间的关系"}, {"type": "p", "text": "B.医疗人员与后勤人员之间的关系"}, {"type": "p", "text": "C.医师､护士､医技人员自身之间"}, {"type": "p", "text": "D.医师、护士、医技人员自身之间以及相互之间的关系"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["在下列各项中，医生能行使干涉权的是（ ）"]}, {"type": "p", "text": "A.住院病人拒绝医学生实习"}, {"type": "p", "text": "B.住院病人拒绝参与人体实验"}, {"type": "p", "text": "C.住院精神病人发生的打人毁物行为"}, {"type": "p", "text": "D.门诊病人拒绝抽血检查"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["对于具有一定医学知识的长期慢性疾病成年患者，所适用的医患关系模式是（ ）"]}, {"type": "p", "text": "A.纯技术模式"}, {"type": "p", "text": "B.主动-被动模式"}, {"type": "p", "text": "C.指导-合作模式"}, {"type": "p", "text": "D.共同参与模式"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["医患关系的性质（ ） 多选题 (1 分) 1分"]}, {"type": "p", "text": "A.医疗契约关系"}, {"type": "p", "text": "B.信任托付关系"}, {"type": "p", "text": "C.服务与被服务关系"}, {"type": "p", "text": "D.价值交换关系"}, {"type": "p", "text": "正确答案: A B C"}, {"type": "list", "items": ["医际关系的特点（ ）多选题 (1 分) 1分"]}, {"type": "p", "text": "A.协同性"}, {"type": "p", "text": "B.平等性"}, {"type": "p", "text": "C.同一性"}, {"type": "p", "text": "D.竞争性"}, {"type": "p", "text": "正确答案: A B C D"}, {"type": "list", "items": ["医患关系主动-被动型技术模式适用于（ ）多选题 (1 分)"]}, {"type": "p", "text": "A.慢性病患者"}, {"type": "p", "text": "B.婴幼儿患者"}, {"type": "p", "text": "C.处于昏迷状态的患者"}, {"type": "p", "text": "D.严重智力低下的患者"}, {"type": "p", "text": "正确答案: B C D"}, {"type": "list", "items": ["下列选项中，（ ）不符合临床诊疗中询问病史的伦理要求"]}, {"type": "p", "text": "A.举止端庄，态度热情"}, {"type": "p", "text": "B.远近兼顾，节用费用"}, {"type": "p", "text": "C.全神贯注，语言得当"}, {"type": "p", "text": "D.耐心倾听，正确引导"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["下列选项中，（ ）不符合临床诊疗中体格检查的伦理要求"]}, {"type": "p", "text": "A.全面系统，认真细致"}, {"type": "p", "text": "B.关心体贴，减少痛苦"}, {"type": "p", "text": "C.尊重患者，心正无私"}, {"type": "p", "text": "D.目的纯正，合理配伍"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["选择诊疗方案时以最小的代价获得最大效果的决策是指"]}, {"type": "p", "text": "A.最优先原则"}, {"type": "p", "text": "B.最优化原则"}, {"type": "p", "text": "C.身心统一原则"}, {"type": "p", "text": "D.协同一致原则"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["疗效最佳通常指诊疗效果在（ ）科学发展水平来说是最佳的，或是在一定条件限制下是最佳的"]}, {"type": "p", "text": "A.当时"}, {"type": "p", "text": "B.过去"}, {"type": "p", "text": "C.现在"}, {"type": "p", "text": "D.未来"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["严格掌握指征，手术动机要纯正是（ ）"]}, {"type": "p", "text": "A.手术前的道德要求"}, {"type": "p", "text": "B.手术中的道德要求"}, {"type": "p", "text": "C.手术后的道德要求"}, {"type": "p", "text": "D.以上都不是"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["下列选项中，（ ）符合临床诊疗中辅助检查的伦理要求。多选题 (1 分)"]}, {"type": "p", "text": "A.远近兼顾，合理用药"}, {"type": "p", "text": "B.目的纯正，选择合理"}, {"type": "p", "text": "C.知情同意，尽职尽责"}, {"type": "p", "text": "D.联系临床，综合分析"}, {"type": "p", "text": "正确答案: B C D"}, {"type": "list", "items": ["临床诊疗最优化原则的内容包括（ ） 多选题 (1 分) 1分"]}, {"type": "p", "text": "A.痛苦最小"}, {"type": "p", "text": "B.耗费最少"}, {"type": "p", "text": "C.安全度高"}, {"type": "p", "text": "D.疗效最好"}, {"type": "p", "text": "正确答案: A B C D"}, {"type": "list", "items": ["临床实践中医际之间的关系一般可分为（ ）多选题 (1 分) 1分"]}, {"type": "p", "text": "A.优势互补型"}, {"type": "p", "text": "B.指导被指导型"}, {"type": "p", "text": "C.合作竞争型"}, {"type": "p", "text": "D.信任托付型"}, {"type": "p", "text": "正确答案: A B C"}, {"type": "list", "items": ["公共卫生价值的实现主要是（ ）"]}, {"type": "p", "text": "A.不健康的社会人群"}, {"type": "p", "text": "B.健康的社会人群"}, {"type": "p", "text": "C.不健康的个人"}, {"type": "p", "text": "D.健康的个人"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["预防医学以（ ）为主要研究对象。"]}, {"type": "p", "text": "A.人群"}, {"type": "p", "text": "B.疾病"}, {"type": "p", "text": "C.个体"}, {"type": "p", "text": "D.环境"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["公共卫生以预防疾病、（）和提高生活质量为目的。"]}, {"type": "p", "text": "A.保护生态"}, {"type": "p", "text": "B.美化环境"}, {"type": "p", "text": "C.健康教育"}, {"type": "p", "text": "D.促进健康"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["疾控工作（）。"]}, {"type": "p", "text": "A.必须纳入整个社会系统，并与国民经济和社会发展相适应"}, {"type": "p", "text": "B.不需要与国民经济和社会发展相适应"}, {"type": "p", "text": "C.不需要纳入整个社会系统"}, {"type": "p", "text": "D.不需要不断地提高全社会人员的健康意识"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["下列选项中（）属于应对突发公共卫生事件的道德要求。 多选题 (1 分) 1分"]}, {"type": "p", "text": "A.恪守职责和加强协作，发扬敬畏生命的人道主义精神"}, {"type": "p", "text": "B.树立崇高的职业责任感和科学态度"}, {"type": "p", "text": "C.勇于克服困难，具有献身精神"}, {"type": "p", "text": "D.刻苦钻研，无私奉献精神"}, {"type": "p", "text": "正确答案: A B C"}, {"type": "list", "items": ["应对突发公共卫生事件的道德要求包括（）。 多选题 (1 分) 1分"]}, {"type": "p", "text": "A.恪守职责和加强协作，发扬敬畏生命的人道主义精神"}, {"type": "p", "text": "B.树立崇高的职业责任感和科学态度"}, {"type": "p", "text": "C.勇于克服困难，具有献身精神"}, {"type": "p", "text": "D.刻苦钻研，无私奉献精神"}, {"type": "p", "text": "正确答案: A B C"}, {"type": "list", "items": ["下列选项（）属于公共卫生的特点。 多选题 (1 分) 1分"]}, {"type": "p", "text": "A.群体性"}, {"type": "p", "text": "B.综合性"}, {"type": "p", "text": "C.整体性"}, {"type": "p", "text": "D.个体性"}, {"type": "p", "text": "正确答案: A B C"}, {"type": "list", "items": ["在临床医学研究中必须尊重受试者的知情同意权，下面做法中错误的是（）。"]}, {"type": "p", "text": "A.必需获得受试者的知情同意"}, {"type": "p", "text": "B.无行为能力者需获得代理同意"}, {"type": "p", "text": "C.获得同意前需要用受试者能够理解的语言向受试者提供基本的信息"}, {"type": "p", "text": "D.可以利诱受试者，让他同意"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["人体试验中应把（）放在首位。"]}, {"type": "p", "text": "A.社会利益"}, {"type": "p", "text": "B.医学利益"}, {"type": "p", "text": "C.受试者利益"}, {"type": "p", "text": "D.实验者利益"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["生物医学研究必须将研究设计方案交（）审查，获得批准后才可开始。"]}, {"type": "p", "text": "A.伦理委员会"}, {"type": "p", "text": "B.医院领导"}, {"type": "p", "text": "C.公安机关"}, {"type": "p", "text": "D.法院"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["在临床医学研究中要求对资料保密，以下哪一点是不属于该范畴的（）。"]}, {"type": "p", "text": "A.对研究资料严加保密"}, {"type": "p", "text": "B.对研究成果严加保密"}, {"type": "p", "text": "C.医师与病人之间的保密"}, {"type": "p", "text": "D.研究者与受试者之间的保密"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["（）是《人道实验技术的原则》中提出的3R原则。 多选题 (1 分) 1分"]}, {"type": "p", "text": "A.Refinement"}, {"type": "p", "text": "B.Respect"}, {"type": "p", "text": "C.Reduction"}, {"type": "p", "text": "D.Replacement"}, {"type": "p", "text": "正确答案: A C D"}, {"type": "list", "items": ["下列选项（）不是医学科研道德准则的核心准则。多选题 (1 分)"]}, {"type": "p", "text": "A.坚持发展医学、造福人类的纯正动机和崇高目的"}, {"type": "p", "text": "B.坚持实事求是的精神"}, {"type": "p", "text": "C.坚持勇于竞争的精神"}, {"type": "p", "text": "D.发扬善于合作的精神"}, {"type": "p", "text": "正确答案: B C D"}, {"type": "list", "items": ["在人体试验中维护受试者利益要求（）。 多选题 (1 分) 1分"]}, {"type": "p", "text": "A.先进行动物实验"}, {"type": "p", "text": "B.对可能出现的意外有足够的估计和处理办法"}, {"type": "p", "text": "C.出现问题立即终止"}, {"type": "p", "text": "D.要有专家参与或指导"}, {"type": "p", "text": "正确答案: A B C D"}, {"type": "list", "items": ["灾害医学救治首要坚持的原则是（）。"]}, {"type": "p", "text": "A.公益性无偿救治"}, {"type": "p", "text": "B.分类救治"}, {"type": "p", "text": "C.无私无畏"}, {"type": "p", "text": "D.平等协作"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["战场和灾害医学救治活动中人际关系的核心是（）。"]}, {"type": "p", "text": "A.救助者与被救助者的关系"}, {"type": "p", "text": "B.集体与个人的关系"}, {"type": "p", "text": "C.救助者之间的关系"}, {"type": "p", "text": "D.被救助者之间的关系"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["医疗救灾首先就是（）。"]}, {"type": "p", "text": "A.挽回物资损失"}, {"type": "p", "text": "B.挽回经济损失"}, {"type": "p", "text": "C.救伤"}, {"type": "p", "text": "D.救命"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["灾害救治中，医德要求往往采取“命令”、“指示”、“纪律”等刚性的形式，体现出（）。"]}, {"type": "p", "text": "A.医德尺度宽严相济的原则"}, {"type": "p", "text": "B.争取最大健康效益的原则"}, {"type": "p", "text": "C.积极适应特殊环境原则"}, {"type": "p", "text": "D.强化协调与配合的原则"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["革命英雄主义是（）。 多选题 (1 分) 1分"]}, {"type": "p", "text": "A.集体的英雄主义"}, {"type": "p", "text": "B.无私无畏的英雄主义"}, {"type": "p", "text": "C.理智的英雄主义"}, {"type": "p", "text": "D.个人英雄主义"}, {"type": "p", "text": "正确答案: A B C"}, {"type": "list", "items": ["战争和灾害救治中，医务人员的（）得到强化。 多选题 (1 分) 1分"]}, {"type": "p", "text": "A.自主权"}, {"type": "p", "text": "B.特殊干涉权"}, {"type": "p", "text": "C.知情权"}, {"type": "p", "text": "D.同意权"}, {"type": "p", "text": "正确答案: A B"}, {"type": "list", "items": ["灾害救治中，（）是有效降低死亡率和伤残率的方法。 多选题 (1 分) 1分"]}, {"type": "p", "text": "A.优先救治"}, {"type": "p", "text": "B.积极救治"}, {"type": "p", "text": "C.检伤分类"}, {"type": "p", "text": "D.阶梯治疗"}, {"type": "p", "text": "正确答案: C D"}, {"type": "list", "items": ["战地医护人员的革命英雄主义必须服从（）。"]}, {"type": "p", "text": "A.战争局势"}, {"type": "p", "text": "B.战争态势"}, {"type": "p", "text": "C.战场效益"}, {"type": "p", "text": "D.战场环境"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["选择器官移植受者的首位标准是（ ）。"]}, {"type": "p", "text": "A.受者在家庭中的地位"}, {"type": "p", "text": "B.受者过去的成就"}, {"type": "p", "text": "C.受者未来可能的贡献"}, {"type": "p", "text": "D.移植的禁忌症与适应症"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["（ ）是通过自愿和知情同意来获取器官的途径，也是目前器官收集的主要手段。"]}, {"type": "p", "text": "A.推定同意"}, {"type": "p", "text": "B.医生全权"}, {"type": "p", "text": "C.自愿捐献"}, {"type": "p", "text": "D.家属意愿"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["在我国实施人类辅助生殖技术，下列各项中违背卫生部制定的伦理原则的是（ ）。"]}, {"type": "p", "text": "A.使用捐赠的精子"}, {"type": "p", "text": "B.使用捐赠的卵子"}, {"type": "p", "text": "C.实施亲属代孕"}, {"type": "p", "text": "D.实施卵胞浆内单精注射"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["活体供者的最基本的伦理学原则是不能（ ）。"]}, {"type": "p", "text": "A.伤及供者的身体"}, {"type": "p", "text": "B.危及供者的生命"}, {"type": "p", "text": "C.使供者精神受损害"}, {"type": "p", "text": "D.使供者的家属痛苦"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["我国卫生部规定，一名供精者的精子最多只能提供给（ ）。"]}, {"type": "p", "text": "A.8名妇女受孕"}, {"type": "p", "text": "B.6名妇女受孕"}, {"type": "p", "text": "C.15名妇女受孕"}, {"type": "p", "text": "D.5名妇女受孕"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["卫生部对实施辅助生殖技术的技术人员行为准则做了多项严格规定，其中包括( )"]}, {"type": "p", "text": "多选题 (1 分) 1分"}, {"type": "p", "text": "A.禁止无医学指征的性别选择"}, {"type": "p", "text": "B.禁止实施代孕技术"}, {"type": "p", "text": "C.禁止给不符合国家人口和计划生育法规、条例规定的夫妇以及单身妇女实施人类辅助生殖技术"}, {"type": "p", "text": "D.禁止克隆人"}, {"type": "p", "text": "正确答案: A B C D"}, {"type": "list", "items": ["人类辅助生殖技术必须满足条件（ ）后方可实施。多选题 (1 分) 1分"]}, {"type": "p", "text": "A.一方自愿同意"}, {"type": "p", "text": "B.夫妇双方自愿同意"}, {"type": "p", "text": "C.口头做出承诺"}, {"type": "p", "text": "D.签署书面知情同意书"}, {"type": "p", "text": "正确答案: B D"}, {"type": "list", "items": ["医务人员在器官移植中的道德要求有（ ）。 多选题 (1 分) 1分"]}, {"type": "p", "text": "A.关心患者，坚持人道主义为先"}, {"type": "p", "text": "B.审慎选择供体，保护供者利益与健康"}, {"type": "p", "text": "C.持公正原则，避免差别对待患者"}, {"type": "p", "text": "D.恪守职业道德，防止器官移植犯罪"}, {"type": "p", "text": "正确答案: A B C D"}, {"type": "list", "items": ["哪一项不属于执行脑死亡标准的伦理意义（ ）。"]}, {"type": "p", "text": "A.有利于克服对死亡的恐惧"}, {"type": "p", "text": "B.能够及时地抢救假死状态的患者，维护了人的生命"}, {"type": "p", "text": "C.处置脑功能不可逆丧失而有心跳的患者提供了科学依据，有利于节约卫生资源"}, {"type": "p", "text": "D.有利于器官移植的开展"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["临终关怀强调对临终病人以（ ）为中心。"]}, {"type": "p", "text": "A.延长生命"}, {"type": "p", "text": "B.彻底治愈"}, {"type": "p", "text": "C.放疗化疗"}, {"type": "p", "text": "D.照料"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["世界上第一个安乐死合法化的国家是（ ）。"]}, {"type": "p", "text": "A.澳大利亚"}, {"type": "p", "text": "B.挪威"}, {"type": "p", "text": "C.比利时"}, {"type": "p", "text": "D.荷兰"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["我国第一家临终关怀机构设立在（ ）。"]}, {"type": "p", "text": "A.天津医学院"}, {"type": "p", "text": "B.广州医学院"}, {"type": "p", "text": "C.成都医学院"}, {"type": "p", "text": "D.南宁医学院"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["临终关怀的道德要求中，下列适度治疗的原则（ ）是正确的。"]}, {"type": "p", "text": "A.解除痛苦、无痛苦地死去"}, {"type": "p", "text": "B.完全放弃治疗"}, {"type": "p", "text": "C.以延长生命过程的治疗为主"}, {"type": "p", "text": "D.以治疗疾病为主"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["世界范围内非现存的判定死亡的标准是（ ）。多选题 (1 分)"]}, {"type": "p", "text": "A.脑死亡标准"}, {"type": "p", "text": "B.濒死标准"}, {"type": "p", "text": "C.心肺死亡标准"}, {"type": "p", "text": "D.生物死亡标准"}, {"type": "p", "text": "正确答案: B D"}, {"type": "list", "items": ["对于安乐死的适用对象，医学界较为一致的观点是（ ）。 多选题 (1 分) 1分"]}, {"type": "p", "text": "A.濒临死亡、现代医学无法救治的不治之症"}, {"type": "p", "text": "B.不可逆昏迷的患者"}, {"type": "p", "text": "C.有严重缺陷的新生儿"}, {"type": "p", "text": "D.慢性病患者"}, {"type": "p", "text": "正确答案: A B C"}, {"type": "list", "items": ["实施临终关怀的道德要求有（ ）。 多选题 (1 分) 1分"]}, {"type": "p", "text": "A.以照料为中心"}, {"type": "p", "text": "B.维护人的尊严"}, {"type": "p", "text": "C.提高生活质量"}, {"type": "p", "text": "D.共同面对死亡"}, {"type": "p", "text": "E.协助病人安静地、有尊严地死去"}, {"type": "p", "text": "正确答案: A B C D E"}, {"type": "h", "level": 3, "id": "s2", "text": "简答："}, {"type": "list", "items": ["医德的鲜明特点是什么 ？简答题 (1 分) 分"]}, {"type": "p", "text": "答：（1）医德具有鲜明的专业性（2）医德具有突出的传承性（3）医德具有显著的普适性"}, {"type": "list", "items": ["医学伦理学研究主要道德关系有哪些？简答题 (1 分) 分"]}, {"type": "p", "text": "答：（1）医务人员与患者（包括家属）的关系（2）医务人员之间的相互关系（3）医务人员与社会的关系（4）医务人员与医学科学发展的关系"}, {"type": "list", "items": ["简述近代医学伦理学的主要内容特征 简答题 (1 分) 分"]}, {"type": "p", "text": "答：（1）明确提出为人道主义行医，摆脱神学影响。（2）医德由个体道德要求发展到对集体行医规范发展到对集体行医道德要求（3）义务论成为医德行为的核心"}, {"type": "list", "items": ["简述当代生命伦理学的历史背景简答题 (1 分) 分"]}, {"type": "p", "text": "答：（1）新生命科学技术的发展应用（2）权利运动和病人的权利（3）卫生资源的公正分配（4）死亡标准和方式的变革（5）医学模式的转变"}, {"type": "list", "items": ["简述医德良心在医务人员的行为过程中的作用"]}, {"type": "p", "text": "答：（1）在行为之前具有选择作用（2）行为过程中具有监督作用（3）行为之后具有评价作用"}, {"type": "list", "items": ["简述社会主义医德基本原则的内容"]}, {"type": "p", "text": "答：（1）救死扶伤，（2）防病治病，（3）实行社会主义的医学人道主义，（4）全心全意为人民健康服务。"}, {"type": "list", "items": ["医患关系的模式及其特点？"]}, {"type": "p", "text": "答：萨斯-荷伦德(Szasz-Hollender)医患关系模式（1956）①主动-被动：医生几乎占据整个医疗活动的完全主动性，护着相对来说处于完全被动的地位；②指导-合作：医患之间存在相互作用，医生和患者都具有主动性；③共同参与型：医患具有近似相等的权利和地位，医生帮助患者自疗。"}, {"type": "list", "items": ["医患关系的伦理要求？"]}, {"type": "p", "text": "答：（1）密切沟通；（2） 自觉维护对方利益；（3） 坚决履行各自义务；（4）正确处理权利与义务；（5）遵守共同的医学道德规范。"}, {"type": "list", "items": ["一般问诊的基本原则？", "举止端庄，态度热情；（2）全神贯注，语言得当；（3）耐心倾听，正确引导", "手术的伦理要求？", "手术前①严格掌握指征，手术动机纯正②患者或患者家属知情同意③认真做好术前准备；（2）手术中①关心患者，体贴入微②态度严肃，作风严谨③精诚团结，密切协作；（3）手术后①严密观察，勤于护理②减轻痛苦，加速康复", "公共卫生的伦理原则是什么？ 此题未答", "全社会参与原则（2）社会公益原则（3）社会公正原则（4）互助协同原则（5）信息公开原则", "简述应对突发公共卫生事件的道德要求。 此题未答", "恪守职责和加强协作，发扬敬畏生命的人道主义精神；（2）树立崇高的职业责任感和科学态度；（3）勇于克服困难，具有献身精神。", "健康教育与健康促进的伦理要求是什么？ 此题未答", "履行法律义务，充分利用一切机会和场合积极主动地开展健康教育；（2）积极参与有利于健康促进的公共政策的制定、支持性环境的创建和卫生保健体系的建立；（3）深入农村、社区，将健康教育与健康促进工作渗透在初级卫生保健工作中；（4）不断完善自我，以科学态度和群众喜闻乐见的形式开展健康教育和健康促进工作。", "知情同意过程包含哪三个要素？ 此题未答", "信息的告知。研究人员给病人/受试者提供了什么样的信息和多少信息。（2）行为能力和理解。受试者具有知情同意能力是理解信息自愿采取行动的先决条件。（3）自由选择。所谓自由选择是指一个人做出决定时不受其他人不正当的影响或强迫。", "人体试验的伦理原则是什么？ 此题未答", "医学目的原则；（2）知情同意原则；（3）维护受试者权益原则；（4）公正原则；（5）伦理审查原则。", "如何在人体试验中维护受试者利益？ 此题未答", "先进行动物实验；②对可能出现的意外有足够的估计和处理办法；③出现问题立即终止；④要有专家参与或指导。", "灾害医学救治中应遵循的特殊医德原则是什么？ 此题未答", "公益性和无偿救治的原则；（2）争取最大健康效益的原则；（3）积极适应特殊环境原则；（4）强化协调与配合的原则；（5）医德尺度宽严相济的原则。", "如何理解战场医疗救治中的革命英雄主义？ 此题未答"]}, {"type": "p", "text": "指在战争中不怕艰难困苦，不怕流血牺牲，英勇战斗，忘我工作的品德。革命英雄主义是集体的英雄主义。它要求参与战地救护的人员自觉服从战场效益，按照上级的命令和部署，以最大限度地降低我方有生力量的损失为主要目标。革命英雄主义是无私无畏的英雄主义，是理智的英雄主义。"}, {"type": "list", "items": ["人工授精的道德底线是什么？"]}, {"type": "p", "text": "答：在我国开展人工授精要恪守以下道德底线：（1）严格掌握适应症；（2）严格掌握精子来源和质量；（3）严格控制每份精子的使用人数；（4）严格执行保密与互盲原则，即人工授精供体、受体、医生及后代之间的互盲与保密等等。"}, {"type": "list", "items": ["医务人员在器官移植中的道德要求有哪些？"]}, {"type": "p", "text": "答：（1）关心患者，坚持人道主义为先；（2）审慎选择供体，保护供者利益与健康；（3）坚持公正原则，避免差别对待患者；（4）恪守职业道德，防止器官移植犯罪。"}, {"type": "list", "items": ["实施临终关怀的伦理要求有哪些？"]}, {"type": "p", "text": "答：（1）认识和理解临终患者；（2）保护临终患者的权益；（3）尊重满足临终患者的生活需求；（4）同情和关心临终患者的家属。"}, {"type": "p", "text": "100.执行脑死亡标准的伦理意义是什么？"}, {"type": "p", "text": "答：（1）能够及时地抢救假死状态的患者，维护了生命；（2）为处置脑功能不可逆丧失而有心跳的患者提供了科学依据，有利于节约卫生资源；（3）有利于器官移植的开展。"}];</script>
 <script>
 (function () {
+  if (WB.mountChrome) WB.mountChrome('materials');
+
+  var body = document.getElementById('body');
+  body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
+  if (WB.fx && WB.fx.init) WB.fx.init();
+
   var base = (window.R2_BASE || '').replace(/\/+$/, '');
   var prefix = window.R2_PREFIX || '';
   var dl = document.getElementById('dgDl');
@@ -600,6 +73,17 @@
   } else if (dl) {
     dl.style.display = 'none';
   }
+
+  var links = [].slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  if (!links.length) return;
+  var heads = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function paint() {
+    var top = window.scrollY + 120, idx = 0;
+    heads.forEach(function (h, i) { if (h && h.offsetTop <= top) idx = i; });
+    links.forEach(function (a, i) { a.classList.toggle('on', i === idx); });
+  }
+  window.addEventListener('scroll', paint, { passive: true });
+  paint();
 })();
 </script>
 </body>

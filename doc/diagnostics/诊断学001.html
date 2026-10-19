@@ -2,756 +2,69 @@
 <html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>诊断学001 · 资料阅读 · MediLearn</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../../css/style.css">
-<script src="../../data/r2-config.js"></script>
+<script src="../../js/auth.js"></script>
+<script>if(window.WB&&WB.auth)WB.auth.guard();</script>
 <style>
-  body { background: var(--bg); }
-  .dg-top {
-    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 10px;
-    padding: 10px 16px; background: color-mix(in srgb, var(--surface) 88%, transparent);
-    border-bottom: 1px solid var(--border); backdrop-filter: blur(12px);
-  }
-  .dg-top h1 { font-size: 15px; margin: 0; flex: 1; min-width: 0;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .dg-top .meta { font-size: 12px; color: var(--text-3); white-space: nowrap; }
-  .dg-wrap { max-width: 880px; margin: 0 auto; padding: 26px 20px 90px; }
-  .dg-tip { font-size: 13px; color: var(--text-3); background: var(--surface-2);
+  .doc-head { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+  .doc-head h1 { font-size: 26px; margin: 0; letter-spacing: -.02em; flex: 1; min-width: 240px; }
+  .doc-sub { color: var(--text-3); font-size: 13px; margin: 8px 0 18px; }
+  .doc-tip { font-size: 13px; color: var(--text-3); background: var(--surface-2);
     border: 1px solid var(--border); border-left: 3px solid var(--brand);
     border-radius: 10px; padding: 10px 14px; margin-bottom: 20px; line-height: 1.7; }
-  .dg-toc { background: var(--surface); border: 1px solid var(--border);
-    border-radius: 14px; padding: 16px 18px; margin-bottom: 26px; }
-  .dg-toc-t { font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--text-3); margin-bottom: 8px; }
-  .dt-toc-a { display: block; padding: 5px 0; font-size: 14px; color: var(--text-2);
-    text-decoration: none; border-bottom: 1px dashed transparent; }
-  .dt-toc-a:hover { color: var(--brand); border-bottom-color: var(--brand); }
-  .dt-toc-a.lv2 { font-weight: 650; color: var(--text); }
-  .dt-toc-a.lv3 { padding-left: 14px; }
-  .dg-body { background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; padding: 30px 34px; font-size: 15.5px; line-height: 1.95;
-    color: var(--text); }
-  .dg-body h2 { font-size: 21px; margin: 34px 0 14px; padding-bottom: 8px;
-    border-bottom: 2px solid var(--border); scroll-margin-top: 70px; }
-  .dg-body h2:first-child { margin-top: 0; }
-  .dg-body h3 { font-size: 17px; margin: 26px 0 10px; color: var(--brand);
-    scroll-margin-top: 70px; }
-  .dg-body p { margin: 0 0 12px; }
-  .dg-body strong { color: var(--text); font-weight: 700; }
-  .dg-ul { margin: 6px 0 14px; padding-left: 22px; }
-  .dg-ul li { margin-bottom: 5px; }
-  .dt-wrap { overflow-x: auto; margin: 14px 0 18px; }
-  .dt { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .dt th, .dt td { border: 1px solid var(--border); padding: 8px 11px; text-align: left;
-    vertical-align: top; }
-  .dt th { background: var(--surface-2); font-weight: 650; white-space: nowrap; }
-  .dt tr:nth-child(even) td { background: color-mix(in srgb, var(--surface-2) 45%, transparent); }
-  @media (max-width: 720px) {
-    .dg-wrap { padding: 18px 12px 70px; }
-    .dg-body { padding: 20px 16px; font-size: 15px; }
-    .dg-top h1 { font-size: 14px; }
-    .dg-top .meta { display: none; }
+  @media (max-width: 900px) {
+    .klayout { grid-template-columns: 1fr; }
+    .toc { position: static; margin-bottom: 8px; }
   }
-  @media print { .dg-top, .dg-toc, .dg-tip { display: none; } .dg-body { border: 0; padding: 0; } }
+  @media print { .toc, .doc-tip, .hdr, .ftr, .doc-head .gbtn { display: none; } .klayout { display: block; } }
 </style>
 </head>
 <body>
-<div class="dg-top">
-  <a class="gbtn gbtn-sm" href="../../materials.html">← 资料汇总</a>
-  <h1>诊断学001</h1>
-  <span class="meta">683 段 · 0 表 · 0 小节</span>
-  <a class="gbtn gbtn-sm" id="dgDl" data-key="diagnostics/诊断学001.docx" href="#" target="_blank" rel="noopener">下载原文</a>
-</div>
-<div class="dg-wrap">
-  <div class="dg-tip">这份内容由 Word 原文提取后重新排版，便于在手机、平板上阅读；<b>表格与公式可能略有出入</b>，需要精确版式请下载原文。</div>
-  
-  <article class="dg-body"><ul class="dt-ul"><li>下面是间接叩诊法，叩诊的次数哪一项是对的</li>
-</ul><p>A、只需连续叩击1～2下</p>
-<p>B、只需连续叩击2～3下</p>
-<p>C、只需连续叩击3～4下</p>
-<p>D、只需连续叩击4～5下</p>
-<p>E、只需连续叩击5～6下</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>凝血因子中半衰期最短的是</li>
-</ul><p>A、Ⅶ因子</p>
-<p>B、Ⅷ因子</p>
-<p>C、Ⅸ因子</p>
-<p>D、Ⅹ因子</p>
-<p>E、Ⅺ因子</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>心电图诊断左房增大的标准是</li>
-</ul><p>A、P波宽度≥120ms</p>
-<p>B、P波宽度＞120ms</p>
-<p>C、QRS波宽度＞120ms</p>
-<p>D、QRS波宽度≥120ms</p>
-<p>E、以上均不对</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>角膜反射的传入神经是</li>
-</ul><p>A、面神经</p>
-<p>B、三叉神经</p>
-<p>C、动眼神经</p>
-<p>D、交感神经</p>
-<p>E、展神经</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>对Louis角叙述不正确的是</li>
-</ul><p>A、两侧分别与左右第3肋软骨连接</p>
-<p>B、是计数肋骨顺序的主要标志</p>
-<p>C、是计数肋间隙顺序的主要标志</p>
-<p>D、标志支气管分叉</p>
-<p>E、相当于第5胸椎水平</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>视神经损伤后视野表现</li>
-</ul><p>A、损伤侧眼睛视野丧失</p>
-<p>B、双眼颞侧视野缺损</p>
-<p>C、双眼损伤侧偏盲</p>
-<p>D、双眼损伤对侧偏盲</p>
-<p>E、双眼上1/4象限视野缺损</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>哪种关节炎常伴有尿酸升高</li>
-</ul><p>A、类风湿关节炎</p>
-<p>B、强直性脊柱炎</p>
-<p>C、风湿性关节炎</p>
-<p>D、痛风性关节炎</p>
-<p>E、反应性关节炎</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>下列各项是意识状态检查，但应除外哪一项</li>
-</ul><p>A、嘱病人辨别白天、黑夜</p>
-<p>B、嘱病人辨别疼痛的位置</p>
-<p>C、嘱病人计算数字</p>
-<p>D、嘱病人发声、辨别性质</p>
-<p>E、嘱病人图形组联</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>急性肺脓肿最具特征的症状是</li>
-</ul><p>A、高热畏寒</p>
-<p>B、咳嗽伴咯血</p>
-<p>C、咳大量脓臭痰</p>
-<p>D、咳嗽伴胸痛</p>
-<p>E、呼吸困难</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>诊断急性腹膜炎中主要环节是进一步明确</li>
-</ul><p>A、感染中毒程度</p>
-<p>B、缺水严重程度</p>
-<p>C、代谢性酸中毒程度</p>
-<p>D、贫血程度</p>
-<p>E、病因</p>
-<p>正确答案: E</p>
-<ul class="dt-ul"><li>患者疑似大叶性肺炎，下列哪项是该病最常见的病原体</li>
-</ul><p>A、病毒</p>
-<p>B、支原体</p>
-<p>C、肺炎链球菌</p>
-<p>D、肺炎克雷伯杆菌</p>
-<p>E、金黄色葡萄球菌</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>下列疾病常引起胸廓局部隆起，但需除外哪一项</li>
-</ul><p>A、肺气肿</p>
-<p>B、心包积液</p>
-<p>C、主动脉瘤</p>
-<p>D、胸壁肿瘤</p>
-<p>E、肋软骨炎</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>关于心房纤颤说法错误的是</li>
-</ul><p>A、心律绝对不齐</p>
-<p>B、可闻及大炮音</p>
-<p>C、脉搏短绌</p>
-<p>D、二尖瓣狭窄患者可见</p>
-<p>E、第一心音强弱不等</p>
-<p>正确答案: B</p>
-<p>解析：大炮音可有心音强弱不等，心律缓慢整齐，见于三度房室传导阻滞。</p>
-<ul class="dt-ul"><li>成年女性红细胞参考值为</li>
-</ul><p>A、（3.0～5.0）×1012/L</p>
-<p>B、（3.5～5.0）×1012/L</p>
-<p>C、（3.5～5.5）×1012/L</p>
-<p>D、（4.5～5.5）×1012/L</p>
-<p>E、（4.5～6.0）×1012/L</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>S1减弱可见于下列情况，但除外哪一项</li>
-</ul><p>A、二尖瓣关闭不全</p>
-<p>B、心肌收缩力减弱</p>
-<p>C、P-R间期延长时</p>
-<p>D、心动过速使舒张期缩短</p>
-<p>E、心肌病变</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>下列哪项不符合呼吸性酸中毒合并代谢性酸中毒的血气分析结果</li>
-</ul><p>A、PaCO2升高</p>
-<p>B、HCO3-减少</p>
-<p>C、AB=SB≤正常值</p>
-<p>D、BE负值减小</p>
-<p>E、pH明显降低</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>遗传性血管神经性水肿患者是缺陷哪种成分所致</li>
-</ul><p>A、C1q</p>
-<p>B、C1r</p>
-<p>C、C1s</p>
-<p>D、C1INH</p>
-<p>E、C3</p>
-<p>正确答案: D</p>
-<p>解析：该疾病是由于C1移植物的缺乏引起的，已经可以进行基因诊断。</p>
-<ul class="dt-ul"><li>肠鸣音消失常见于</li>
-</ul><p>A、大量腹水</p>
-<p>B、机械性肠梗阻</p>
-<p>C、巨大卵巢囊肿</p>
-<p>D、急性胆囊炎</p>
-<p>E、肠麻痹</p>
-<p>正确答案: E</p>
-<ul class="dt-ul"><li>最常见血清铁增高的疾病是</li>
-</ul><p>A、缺铁性贫血</p>
-<p>B、真性红细胞增多症</p>
-<p>C、巨幼细胞性贫血</p>
-<p>D、肾病综合征</p>
-<p>E、慢性肝炎、肝硬化</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>衰老红细胞代谢过程中，最普遍进行的生物转化第二相反应是代谢物与</li>
-</ul><p>A、乙酰基结合</p>
-<p>B、葡萄糖醛酸结合</p>
-<p>C、硫酸结合</p>
-<p>D、谷胱甘肽结合</p>
-<p>E、甲基结合</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>浆膜腔漏出液中下列哪种成分与血清中含量相似</li>
-</ul><p>A、氯化物</p>
-<p>B、葡萄糖</p>
-<p>C、尿素</p>
-<p>D、钙</p>
-<p>E、蛋白质</p>
-<p>正确答案: B</p>
-<p>解析：漏出液中葡萄糖含量与血糖相似，渗出液中葡萄糖常因细菌或细胞酶分解而减少。</p>
-<ul class="dt-ul"><li>营养物质消耗增加引起的消瘦有下列原因，不包括</li>
-</ul><p>A、甲状腺功能亢进</p>
-<p>B、慢性消耗性疾病</p>
-<p>C、大面积烧伤</p>
-<p>D、高热</p>
-<p>E、体制性消瘦</p>
-<p>正确答案: E</p>
-<ul class="dt-ul"><li>右侧面部痛觉减退见于</li>
-</ul><p>A、右侧面神经损伤</p>
-<p>B、右侧三叉神经损伤</p>
-<p>C、右侧交感神经损伤</p>
-<p>D、右侧舌咽神经损伤</p>
-<p>E、右侧副神经损伤</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>腰痛伴有尿频、尿急，见于</li>
-</ul><p>A、尿路感染</p>
-<p>B、附件炎</p>
-<p>C、盆腔炎</p>
-<p>D、卵巢疾病</p>
-<p>E、子宫炎症</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>识别皮肤上所画的三角形是检查</li>
-</ul><p>A、两点辨别觉</p>
-<p>B、触觉</p>
-<p>C、实体觉</p>
-<p>D、体表图形觉</p>
-<p>E、位置觉</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>连续性杂音最常见于</li>
-</ul><p>A、房间隔缺损</p>
-<p>B、室间隔缺损</p>
-<p>C、动脉导管未闭</p>
-<p>D、卵圆孔未闭</p>
-<p>E、冠状动静脉瘘</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>暂时性尿失禁见于下列哪种疾病，除了</li>
-</ul><p>A、尿路感染</p>
-<p>B、急性精神错乱性疾病</p>
-<p>C、药物反应</p>
-<p>D、心理性忧郁症</p>
-<p>E、脑卒中</p>
-<p>正确答案: E</p>
-<ul class="dt-ul"><li>根据中国标准，肥胖的判定是</li>
-</ul><p>A、BMI≥24kg/m2</p>
-<p>B、BMI≥25kg/m2</p>
-<p>C、BMI≥27kg/m2</p>
-<p>D、BMI≥28kg/m2</p>
-<p>E、BMI≥30kg/m2</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>血尿的概念是指离心沉淀后的尿沉渣，光镜下每高倍视野有红细胞至少</li>
-</ul><p>A、1个以上</p>
-<p>B、2个以上</p>
-<p>C、3个以上</p>
-<p>D、4个以上</p>
-<p>E、5个以上</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>胸前部计算肋间隙的重要标志是</li>
-</ul><p>A、胸骨角与第二肋软骨相连接</p>
-<p>B、第三肋软骨与胸骨体连接</p>
-<p>C、胸锁关节处</p>
-<p>D、胸骨角</p>
-<p>E、锁骨</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>新生儿红细胞参考值为</li>
-</ul><p>A、（5.0～7.0）×1012/L</p>
-<p>B、（6.0～8.0）×1012/L</p>
-<p>C、（7.0～8.0）×1012/L</p>
-<p>D、（6.0～7.0）×1012/L</p>
-<p>E、（6.5～7.5）×1012/L</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>下列哪项说法正确低分子肝素首选</li>
-</ul><p>A、APTT时间监测</p>
-<p>B、华法林首选APTT监测</p>
-<p>C、服用阿司匹林患者，血小板聚集实验，使用AA作为诱导剂</p>
-<p>D、服用氯吡格雷患者，血小板聚集实验，使用ATP作为诱导剂</p>
-<p>E、肝素首选PT时间监测</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>胸部叩诊由何处开始</li>
-</ul><p>A、锁骨上窝</p>
-<p>B、锁骨下窝</p>
-<p>C、第1肋间</p>
-<p>D、第2肋间</p>
-<p>E、胸锁关节</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>下列血象中常表现为成熟粒细胞核分叶过多的贫血是哪项</li>
-</ul><p>A、缺铁性贫血</p>
-<p>B、溶血性贫血</p>
-<p>C、急性失血性贫血</p>
-<p>D、再生障碍性贫血</p>
-<p>E、巨幼细胞性贫血</p>
-<p>正确答案: E</p>
-<ul class="dt-ul"><li>杵状指的病因不包括</li>
-</ul><p>A、肢端缺氧</p>
-<p>B、中毒性损害</p>
-<p>C、代谢障碍</p>
-<p>D、肢端软组织增生</p>
-<p>E、铁缺乏</p>
-<p>正确答案: E</p>
-<ul class="dt-ul"><li>检查腹部最常用的检查方法是</li>
-</ul><p>A、视诊</p>
-<p>B、触诊</p>
-<p>C、叩诊</p>
-<p>D、听诊</p>
-<p>E、嗅诊</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>肝颈静脉回流征阳性常见于下列哪种疾病</li>
-</ul><p>A、风湿性心脏病</p>
-<p>B、大量心包积液</p>
-<p>C、高血压病</p>
-<p>D、慢性肺源性心脏病</p>
-<p>E、右心功能不全</p>
-<p>正确答案: E</p>
-<ul class="dt-ul"><li>下列是关于鼻窦的正确描述，但应除外哪一项</li>
-</ul><p>A、鼻窦为鼻腔周围不含气的骨质空腔</p>
-<p>B、鼻窦共有四对</p>
-<p>C、各鼻窦皆有窦口与鼻腔相通</p>
-<p>D、鼻窦引流不畅时易于发生炎症</p>
-<p>E、鼻窦炎时可出现鼻塞，流涕，头痛和鼻窦压痛等</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>关于会诊记录说法正确的是</li>
-</ul><p>A、常规会诊意见记录应该由会诊医师在会诊申请发出后72小时完成</p>
-<p>B、急会诊时会诊医师应该在会诊申请发出后10分钟内到场，并在会诊结束后即刻完成会诊记录</p>
-<p>C、急会诊时会诊医师应该在会诊申请发出后5分钟内到场，并在会诊结束后即刻完成会诊记录</p>
-<p>D、常规会诊意见记录应该由会诊医师在会诊申请发出后24小时完成</p>
-<p>E、会诊记录无需体现在病程记录中</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>黏液水肿最常发生在</li>
-</ul><p>A、Addison病</p>
-<p>B、糖尿病</p>
-<p>C、甲状腺功能亢进症</p>
-<p>D、甲状腺功能减退症</p>
-<p>E、巨人症</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>符合急性淋巴细胞白血病原始细胞的是</li>
-</ul><p>A、PAS阳性</p>
-<p>B、非特异性酯酶阳性</p>
-<p>C、中性粒细胞碱性磷酸酶减低</p>
-<p>D、胞浆中可有Auer小体</p>
-<p>E、过氧化酶染色阳性</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>下列哪项不是椎间盘突出的临床特点</li>
-</ul><p>A、青壮年多见</p>
-<p>B、有搬重物及扭伤史</p>
-<p>C、L4、5、S1多发</p>
-<p>D、腰痛无放射</p>
-<p>E、起病可急骤或隐匿</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>关于头颅的叙述，下列哪项是错误的</li>
-</ul><p>A、头围测量是以软尺自眉间绕到颅后通过枕骨粗隆，测其周径</p>
-<p>B、小儿囟门若过早闭合可影响智力发育</p>
-<p>C、矢状缝和其他颅缝大多在生后12个月内骨化</p>
-<p>D、颅缝骨化过早会影响脑的发育</p>
-<p>E、新生儿的头围约34cm</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>下列哪种疾病周围血片上不出现幼稚红细胞</li>
-</ul><p>A、急性粒细胞白血病</p>
-<p>B、急性失血后贫血</p>
-<p>C、再生障碍性贫血</p>
-<p>D、溶血性贫血</p>
-<p>E、骨髓纤维化</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>呕血的颜色</li>
-</ul><p>A、出血量大时咖啡色</p>
-<p>B、出血速度快时咖啡色</p>
-<p>C、出血量大出血速度快时鲜红</p>
-<p>D、出血量小时鲜红</p>
-<p>E、出血速度慢时鲜红</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>由金黄色葡萄球菌引起的渗出液特点是</li>
-</ul><p>A、积液浓稠而色深</p>
-<p>B、积液多稀薄呈淡黄色</p>
-<p>C、积液多稀薄而色深</p>
-<p>D、积液浓稠</p>
-<p>E、积液浓稠而带黄色</p>
-<p>正确答案: E</p>
-<ul class="dt-ul"><li>下列情况可导致肺下界上升，但应除外哪一项</li>
-</ul><p>A、肺不张</p>
-<p>B、鼓肠</p>
-<p>C、肝脾大</p>
-<p>D、气腹</p>
-<p>E、腹腔内脏下垂</p>
-<p>正确答案: E</p>
-<ul class="dt-ul"><li>对传染性单核细胞增多症有诊断意义的指标是</li>
-</ul><p>A、血液异型淋巴细胞增多</p>
-<p>B、血液白细胞增高</p>
-<p>C、血液T淋巴细胞增高</p>
-<p>D、骨髓粒细胞显著核左移</p>
-<p>E、血清嗜异性凝集试验阳性</p>
-<p>正确答案: E</p>
-<ul class="dt-ul"><li>下列哪个疾病不容易引起腹泻</li>
-</ul><p>A、甲状腺功能减退</p>
-<p>B、肠易激综合征</p>
-<p>C、小肠吸收不良</p>
-<p>D、炎症性肠病</p>
-<p>E、尿毒症性胃肠炎</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>肥胖与下列哪种因素无关</li>
-</ul><p>A、遗传因素</p>
-<p>B、内分泌因素</p>
-<p>C、精神因素</p>
-<p>D、药物因素</p>
-<p>E、生活方式</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>阑尾炎的疼痛特点是</li>
-</ul><p>A、上腹痛</p>
-<p>B、下腹痛</p>
-<p>C、左下腹痛</p>
-<p>D、右下腹痛</p>
-<p>E、转移性右下腹痛</p>
-<p>正确答案: E</p>
-<ul class="dt-ul"><li>患者，男，40岁，因呼吸困难和水肿入院。查体：颈静脉怒张，肝右缘肋下4cm，表面光滑，轻压痛，双下肢凹陷性水肿。检查心脏时可能发现</li>
-</ul><p>A、心尖搏动向左下移位</p>
-<p>B、心脏形态呈靴形</p>
-<p>C、心尖部舒张期杂音</p>
-<p>D、主动脉瓣区粗糙的收缩期杂音</p>
-<p>E、主动脉瓣第二听诊区叹气样舒张期杂音</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>患者，男，35岁，反复发作消化性溃疡，近期反复出现呕吐、腹胀，下列哪项不符合</li>
-</ul><p>A、呕吐物有酸臭味</p>
-<p>B、呕吐量大、有宿食</p>
-<p>C、消瘦、脱水、碱中毒</p>
-<p>D、有胃型和胃蠕动波</p>
-<p>E、呕吐物有粪臭味</p>
-<p>正确答案: E</p>
-<ul class="dt-ul"><li>患者，女，20岁，神志昏迷2小时、小便失禁急诊入院，查体：大汗，双侧瞳孔缩小，呼气有大蒜味，考虑最可能病因为</li>
-</ul><p>A、脑出血</p>
-<p>B、有机磷中毒</p>
-<p>C、脑梗</p>
-<p>D、脑膜炎</p>
-<p>E、脑外伤</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>患者，女，27岁，少尿，全身水肿1月，查体：血压正常，腹部膨隆，移动性浊音阳性，双下肢凹陷性水肿。24小时尿量380ml，尿蛋白4+，肝功能白蛋白20g/L，她最可能的诊断是</li>
-</ul><p>A、急性肾盂肾炎</p>
-<p>B、慢性肾炎</p>
-<p>C、尿路结石</p>
-<p>D、急性肾炎</p>
-<p>E、肾病综合征</p>
-<p>正确答案: E</p>
-<ul class="dt-ul"><li>患者，男，40岁，10年来反复节律性上腹痛，近半月呕吐酸臭隔夜食，腹胀，进食加重。下列体征对本病诊断均有意义，但除外</li>
-</ul><p>A、胃蠕动波</p>
-<p>B、振水音</p>
-<p>C、上腹中部局限性膨隆</p>
-<p>D、胃型</p>
-<p>E、反跳痛</p>
-<p>正确答案: E</p>
-<ul class="dt-ul"><li>患者，青年男性，2周前下肢紫癜，双侧基本对称，关节周围明显，入院查血常规：Hb 130g/L，WBC 6×109/L，PLT 101×109/L，尿蛋白2+，诊断考虑</li>
-</ul><p>A、急性皮疹</p>
-<p>B、过敏性紫癜</p>
-<p>C、血小板减少性紫癜</p>
-<p>D、血小板无力症</p>
-<p>E、血友病</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>患者张某，男，55岁，腹部持续性剧烈绞痛5小时，伴呕吐，无排气，腹部查体可闻及金属音，肠鸣音8次/分，该患者最可能的诊断为</li>
-</ul><p>A、急性胰腺炎</p>
-<p>B、急性机械性肠梗阻</p>
-<p>C、急性胃炎</p>
-<p>D、幽门梗阻</p>
-<p>E、急性胆囊炎</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>患儿，男，5岁，因面部肌肉及肢体快速、不规则、无目的、不对称的不自在运动，无意识的做鬼脸，转颈，耸肩、摆手及伸臂动作送入医院。这种表现符合以下哪一项神经系统体征</li>
-</ul><p>A、禁止性震颤</p>
-<p>B、运动性震颤</p>
-<p>C、意向性震颤</p>
-<p>D、舞蹈样运动</p>
-<p>E、手足徐动</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>患者，男，28岁，寒战、高热、咳嗽，临床诊断为大叶性肺炎充血期，下列可能出现的体征是</li>
-</ul><p>A、语音震颤增强</p>
-<p>B、两肺呼吸音强</p>
-<p>C、叩诊过清音</p>
-<p>D、明显支气管呼吸音</p>
-<p>E、两肺散在干性啰音</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>60岁，男，行纤维支气管镜检查后出现右侧大量气胸，前胸部可触及皮下气肿，关于该患者描述正确的是</li>
-</ul><p>A、前胸部可触及握雪感</p>
-<p>B、心尖搏动右移</p>
-<p>C、气管右移</p>
-<p>D、触及胸膜摩擦感</p>
-<p>E、肝肺界下移</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>患者，男，40岁，8年来反复节律性上腹部疼痛，近半月呕吐隔日食，呕吐后腹胀减轻，此时最应该注意的腹部体征是</li>
-</ul><p>A、有否反跳痛</p>
-<p>B、肠鸣音亢进否</p>
-<p>C、有否胃蠕动波</p>
-<p>D、季肋点有否压痛</p>
-<p>E、Murphy征是否阳性</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>患儿，4岁，发热5天，皮疹1天来诊。口腔黏膜检查时，在相当于第二磨牙的颊黏膜处出现帽针头大小的白色斑点，最先考虑是下列哪种疾病</li>
-</ul><p>A、维生素C缺乏</p>
-<p>B、麻疹</p>
-<p>C、猩红热</p>
-<p>D、风疹</p>
-<p>E、伤寒</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>患者，女，进食油腻食物后，出现右上腹绞痛，阵发性加重，向右肩背部放散，在查体中，最有诊断意义的阳性体征为</li>
-</ul><p>A、右上腹压痛</p>
-<p>B、腹式呼吸受限</p>
-<p>C、Courvoisier's征（+）</p>
-<p>D、Murphy's（+）</p>
-<p>E、肝区叩击痛（+）</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>患者，男，60岁。上腹隐痛，食少，嗳气2年余，轻度贫血。胃液分析BAO 2mmol/h，MAO 3mmol/h，胃液pH 7.4，GI：胃及十二指肠未发现溃疡或肿瘤征象，其最可能的诊断是</li>
-</ul><p>A、慢性浅表性胃炎</p>
-<p>B、慢性萎缩性胃炎</p>
-<p>C、慢性糜烂性胃炎</p>
-<p>D、胃癌</p>
-<p>E、十二指肠球后溃疡</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>患者，男，43岁，近2个月来下腹疼痛，腹泻、大便为脓血便，排便后腹痛减轻。最可能的诊断是</li>
-</ul><p>A、内痔</p>
-<p>B、溃疡性结肠炎</p>
-<p>C、小肠结核</p>
-<p>D、肠套叠</p>
-<p>E、过敏性紫癜</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>患者，女，38岁，体重指数38，全身多处可触及皮下结节，有触痛，同时出现停经，伴性功能减退，最可能的诊断是</li>
-</ul><p>A、Dercum综合征</p>
-<p>B、Frohlich综合征</p>
-<p>C、Laurence-Moon-Biedl综合征</p>
-<p>D、Stein-Leventhal综合征</p>
-<p>E、Pickwickian综合征</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>患者，男，38岁。因间断心悸1天就诊。查体：心率72次/分，偶可闻及期前收缩。心电图示：提前出现的P波，心态与窦性P波略有不同，P-R间期0.13s，QRS波群形态正常，代偿间歇不完全。最恰当的处理是</li>
-</ul><p>A、静脉注射阿托品</p>
-<p>B、口服美托洛尔</p>
-<p>C、口服普罗帕酮</p>
-<p>D、寻找和去除病因</p>
-<p>E、口服胺碘酮</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>患者，20岁，APTT延长，以下最不可能的考虑是</li>
-</ul><p>A、血友病A</p>
-<p>B、血小板减少</p>
-<p>C、维生素K缺乏</p>
-<p>D、低纤维蛋白血症</p>
-<p>E、血友病B</p>
-<p>正确答案: B</p>
-<ul class="dt-ul"><li>患者，女，30岁，出现左侧口角低，左侧耳后疱疹。入院后诊断为左侧亨特综合征。神经系统查体不可能出现以下那一项临床体征</li>
-</ul><p>A、左侧鼻唇沟浅</p>
-<p>B、左侧闭眼不紧</p>
-<p>C、左侧口角低</p>
-<p>D、左侧舌前2/3味觉丧失</p>
-<p>E、左侧舌后1/3味觉丧失</p>
-<p>正确答案: E</p>
-<ul class="dt-ul"><li>患儿，男，6岁，间断发热、双侧鼻出血2周，查体肝脾轻度肿大，血常规示：RBC 2.9×1012/L，Hb 98g/L。最可能的诊断为</li>
-</ul><p>A、鼻咽癌</p>
-<p>B、鼻腔感染</p>
-<p>C、流行性出血热</p>
-<p>D、白血病</p>
-<p>E、肝脏疾病</p>
-<p>正确答案: D</p>
-<p>（72-74共用题干）患者，女，40岁，近2周受凉后出现心悸、多汗、腹泻、体重下降，既往糖尿病病史5年，近期血糖水平不详</p>
-<ul class="dt-ul"><li>根据患者的病史该患者在查体中除了全面系统的体格检查以外，还应该重点检查下列哪项</li>
-</ul><p>A、扁桃体</p>
-<p>B、肺部</p>
-<p>C、甲状腺</p>
-<p>D、腹部</p>
-<p>E、神经系统</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>下列哪项检查对明确诊断最有意义</li>
-</ul><p>A、A-Tg</p>
-<p>B、A-TPO</p>
-<p>C、甲状腺功能</p>
-<p>D、随机静脉血糖</p>
-<p>E、血淀粉酶</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>该患者查体发现甲状腺Ⅱ度肿大，最可能的诊断是</li>
-</ul><p>A、甲状腺功能亢进症</p>
-<p>B、糖尿病酮症酸中毒</p>
-<p>C、急性胃肠炎</p>
-<p>D、肠易激惹综合征</p>
-<p>E、糖尿病周围神经病</p>
-<p>正确答案: A</p>
-<p>（75-77共用题干）患者，男，27岁，咽部不适3周，尿量减少1周。3周前咽部不适，轻咳，近1周双眼睑水肿，晨起时明显，同时尿量减少，200～500ml/日，尿色较红。尿常规：WBC 0～1个/HP，RBC 20～30个/HP，偶见颗粒管型。生化检查：ALB 38.2g/L，BUN 8.8mmol/L，Scr 140μmol/L</p>
-<ul class="dt-ul"><li>尿沉渣镜检中出现大量非均一性红细胞，提示红细胞来自</li>
-</ul><p>A、肾脏</p>
-<p>B、输尿管</p>
-<p>C、膀胱</p>
-<p>D、前列腺</p>
-<p>E、尿道</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>进一步检测血清ASO：800IU/L。该患者最可能的诊断为</li>
-</ul><p>A、急性肾小球肾炎</p>
-<p>B、急性肾盂肾炎</p>
-<p>C、肾病综合征</p>
-<p>D、多发性骨髓瘤</p>
-<p>E、IgA肾病</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>为明确临床诊断，下述进一步检查，不必要的是</li>
-</ul><p>A、ANA谱</p>
-<p>B、必要时行肾活检</p>
-<p>C、肾脏超声</p>
-<p>D、血尿定位</p>
-<p>E、尿浓缩实验</p>
-<p>正确答案: E</p>
-<p>（78-79共用题干）患者，男，65岁。反复发生晕厥1周，既往体健，无不良嗜好，发作前自述有胸闷症状，无心慌、胸痛，每次意识丧失持续约1分钟，无肢体瘫痪，无大小便失禁，动态心电监测示窦性心动过速，偶发房性期前收缩，脑CT未见异常</p>
-<ul class="dt-ul"><li>为明确诊断最需要的辅助检查是</li>
-</ul><p>A、肺CTA</p>
-<p>B、脑MRA</p>
-<p>C、冠状动脉造影</p>
-<p>D、脑电图</p>
-<p>E、心脏彩超</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>该患者最不可能的诊断是</li>
-</ul><p>A、快速性室性心律失常</p>
-<p>B、急性脑梗死</p>
-<p>C、短暂性脑缺血发作</p>
-<p>D、阿-斯综合征</p>
-<p>E、急性肺栓塞</p>
-<p>正确答案: B</p>
-<p>（80-81共用题干）黄某，男，18岁，下腰背痛3年，静息时加重，活动后减轻，偶有足跟痛。其父有类似病史，已驼背</p>
-<ul class="dt-ul"><li>该患者最有诊断意义的检查是</li>
-</ul><p>A、骨盆平片</p>
-<p>B、腰椎X线</p>
-<p>C、跟骨骨密度</p>
-<p>D、ESR</p>
-<p>E、RF</p>
-<p>正确答案: A</p>
-<ul class="dt-ul"><li>假如查HLA-B27阳性，骨盆平片提示双侧骶髂关节模糊，间隙变窄。该患者最可能的诊断是</li>
-</ul><p>A、结核性脊柱炎</p>
-<p>B、腰椎间盘突出症</p>
-<p>C、强直性脊柱炎</p>
-<p>D、腰肌劳损</p>
-<p>E、类风湿关节炎</p>
-<p>正确答案: C</p>
-<p>（82-83共用题干）患者，女，58岁，反复咳嗽、咳痰、气促20年，加重伴低热1周。既往高血压病史10年，血压控制满意。查体：T 38.5℃，P 110次/分，R 24次/分，BP 160/90mmHg。口唇发绀，颈静脉怒张，双肺可闻及哮鸣音和湿啰音，心率110次/分，率齐，P2、A2，剑突下可闻及3/6级收缩期杂音。肺膨隆，肝肋下3cm，压痛（+），肝颈静脉回流征阳性，双下肢水肿。杵状指</p>
-<ul class="dt-ul"><li>该患者最可能的诊断是</li>
-</ul><p>A、冠心病</p>
-<p>B、心肌病</p>
-<p>C、肺血栓栓塞</p>
-<p>D、肺心病</p>
-<p>E、风湿性心脏瓣膜病</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>对明确诊断，如下哪项检查最有价值</li>
-</ul><p>A、胸部X线片</p>
-<p>B、超声心动图</p>
-<p>C、血气分析</p>
-<p>D、心电图</p>
-<p>E、血D-二聚体</p>
-<p>正确答案: B</p>
-<p>（84-86共用题干）某患者近期发现肝大（肋下4cm），质硬，有大小不等的结节，伴低热、纳差、轻度黄疸，ALT 400U/L，AFP 800μg/L</p>
-<ul class="dt-ul"><li>该患者腹部体征不包括</li>
-</ul><p>A、移动性浊音阳性</p>
-<p>B、上腹压痛</p>
-<p>C、墨菲氏征阳性</p>
-<p>D、脾大</p>
-<p>E、双下肢水肿</p>
-<p>正确答案: C</p>
-<ul class="dt-ul"><li>患者HBsAg（+），最可能的诊断是</li>
-</ul><p>A、急性黄疸性肝炎</p>
-<p>B、慢性活动性肝炎</p>
-<p>C、大结节性肝硬化</p>
-<p>D、原发性肝癌</p>
-<p>E、胆汁性肝硬化</p>
-<p>正确答案: D</p>
-<ul class="dt-ul"><li>患者近期有呕血，则最有可能出现</li>
-</ul><p>A、食管静脉曲张</p>
-<p>B、贲门撕裂</p>
-<p>C、急性糜烂性胃炎</p>
-<p>D、消化性溃疡</p>
-<p>E、放射性核素铜结合试验</p>
-<p>正确答案: A</p>
-<p>（87-89）共用备选答案</p>
-<p>A、完整的入院记录及出院记录</p>
-<p>B、首次病程记录</p>
-<p>C、24小时内入出院记录</p>
-<p>D、24小时内入院死亡记录</p>
-<p>E、阶段小结</p>
-<ul class="dt-ul"><li>患者入院后不足24小时出院的</li>
-</ul><p>正确答案: C</p>
-<ul class="dt-ul"><li>患者入院后不足24小时死亡的</li>
-</ul><p>正确答案: D</p>
-<ul class="dt-ul"><li>患者住院时间较长，病情有重大转折或住院超过1个月的</li>
-</ul><p>正确答案: E</p>
-<p>（90-91）共用备选答案</p>
-<p>A、Apo-A</p>
-<p>B、Apo-B</p>
-<p>C、Apo-C</p>
-<p>D、Apo-D</p>
-<p>E、Apo-E</p>
-<ul class="dt-ul"><li>高密度脂蛋白的主要成分是</li>
-</ul><p>正确答案: A</p>
-<ul class="dt-ul"><li>低密度脂蛋白的主要成分是</li>
-</ul><p>正确答案: B</p>
-<p>（92-93）共用备选答案</p>
-<p>A、右上直肌、左下斜肌</p>
-<p>B、右下直肌、左上斜肌</p>
-<p>C、左下直肌、右上斜肌</p>
-<p>D、左上直肌、右下斜肌</p>
-<p>E、左下直肌、右下斜肌</p>
-<ul class="dt-ul"><li>眼球左上运动障碍提示以上哪对配偶肌功能异常</li>
-</ul><p>正确答案: D</p>
-<ul class="dt-ul"><li>眼球右下运动障碍提示以上哪对配偶肌功能异常</li>
-</ul><p>正确答案: B</p>
-<p>（94-96）共用备选答案</p>
-<p>A、睑内翻</p>
-<p>B、Graefe征</p>
-<p>C、眼球下陷</p>
-<p>D、Gottron征</p>
-<p>E、眼压增高</p>
-<ul class="dt-ul"><li>甲状腺功能亢进患者可能出现</li>
-</ul><p>正确答案: B</p>
-<ul class="dt-ul"><li>沙眼患者可能出现</li>
-</ul><p>正确答案: A</p>
-<ul class="dt-ul"><li>青光眼患者常出现</li>
-</ul><p>正确答案: E</p>
-<ul class="dt-ul"><li>血尿常见于以下哪些疾病</li>
-</ul><p>A、肾结核</p>
-<p>B、泌尿系统肿瘤</p>
-<p>C、肾盂肾炎</p>
-<p>D、泌尿系统外伤</p>
-<p>E、溶血性贫血</p>
-<p>正确答案: ABCD</p>
-<ul class="dt-ul"><li>血小板聚集试验升高可见于</li>
-</ul><p>A、心肌梗死</p>
-<p>B、心绞痛</p>
-<p>C、糖尿病</p>
-<p>D、口服避孕药</p>
-<p>E、晚期妊娠</p>
-<p>正确答案: ABCDE</p>
-<ul class="dt-ul"><li>患者PT延长提示下列哪些凝血因子缺乏</li>
-</ul><p>A、Ⅱ</p>
-<p>B、Ⅴ</p>
-<p>C、Ⅶ</p>
-<p>D、Fg</p>
-<p>E、Ⅻ</p>
-<p>正确答案: ABCD</p>
-<p>100.哪些检验结果不符合DIC的诊断</p>
-<p>A、BT延长</p>
-<p>B、ELT延长</p>
-<p>C、PT延长</p>
-<p>D、FDP减少</p>
-<p>E、D二聚体阳性</p>
-<p>正确答案: BD</p></article>
-</div>
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap">
+    <div class="crumb"><a href="../../materials.html">资料汇总</a> / <span>诊断学001</span></div>
+
+    <div class="doc-head">
+      <h1>诊断学001</h1>
+      <a class="gbtn gbtn-sm" href="../../materials.html">← 返回资料汇总</a>
+      <a class="gbtn gbtn-sm gbtn-primary" id="dgDl" data-key="diagnostics/诊断学001.docx" href="#" target="_blank" rel="noopener">下载原文</a>
+    </div>
+    <div class="doc-sub">683 个段落 · 0 张表格 · 0 个小节</div>
+
+    <div class="doc-tip">本文由 Word 原文提取并重新排版，<b>加粗内容已标红</b>；表格与公式可能有出入，需要精确版式请下载原文。</div>
+
+    <div class="klayout">
+      <aside class="toc">
+        <div class="toc-h">本页目录</div>
+        <div class="small dim" style="padding:0 11px">本文没有明显小节</div>
+        <div class="toc-h" style="margin-top:20px">文档信息</div>
+        <div class="small dim" style="padding:0 11px;line-height:1.9">段落 683<br>表格 0<br>小节 0</div>
+      </aside>
+      <article class="article">
+        <div id="body"></div>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="../../js/core.js"></script>
+<script src="../../data/r2-config.js"></script>
+<script>window.__DOC_BLOCKS = [{"type": "list", "items": ["下面是间接叩诊法，叩诊的次数哪一项是对的"]}, {"type": "p", "text": "A、只需连续叩击1～2下"}, {"type": "p", "text": "B、只需连续叩击2～3下"}, {"type": "p", "text": "C、只需连续叩击3～4下"}, {"type": "p", "text": "D、只需连续叩击4～5下"}, {"type": "p", "text": "E、只需连续叩击5～6下"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["凝血因子中半衰期最短的是"]}, {"type": "p", "text": "A、Ⅶ因子"}, {"type": "p", "text": "B、Ⅷ因子"}, {"type": "p", "text": "C、Ⅸ因子"}, {"type": "p", "text": "D、Ⅹ因子"}, {"type": "p", "text": "E、Ⅺ因子"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["心电图诊断左房增大的标准是"]}, {"type": "p", "text": "A、P波宽度≥120ms"}, {"type": "p", "text": "B、P波宽度＞120ms"}, {"type": "p", "text": "C、QRS波宽度＞120ms"}, {"type": "p", "text": "D、QRS波宽度≥120ms"}, {"type": "p", "text": "E、以上均不对"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["角膜反射的传入神经是"]}, {"type": "p", "text": "A、面神经"}, {"type": "p", "text": "B、三叉神经"}, {"type": "p", "text": "C、动眼神经"}, {"type": "p", "text": "D、交感神经"}, {"type": "p", "text": "E、展神经"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["对Louis角叙述不正确的是"]}, {"type": "p", "text": "A、两侧分别与左右第3肋软骨连接"}, {"type": "p", "text": "B、是计数肋骨顺序的主要标志"}, {"type": "p", "text": "C、是计数肋间隙顺序的主要标志"}, {"type": "p", "text": "D、标志支气管分叉"}, {"type": "p", "text": "E、相当于第5胸椎水平"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["视神经损伤后视野表现"]}, {"type": "p", "text": "A、损伤侧眼睛视野丧失"}, {"type": "p", "text": "B、双眼颞侧视野缺损"}, {"type": "p", "text": "C、双眼损伤侧偏盲"}, {"type": "p", "text": "D、双眼损伤对侧偏盲"}, {"type": "p", "text": "E、双眼上1/4象限视野缺损"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["哪种关节炎常伴有尿酸升高"]}, {"type": "p", "text": "A、类风湿关节炎"}, {"type": "p", "text": "B、强直性脊柱炎"}, {"type": "p", "text": "C、风湿性关节炎"}, {"type": "p", "text": "D、痛风性关节炎"}, {"type": "p", "text": "E、反应性关节炎"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["下列各项是意识状态检查，但应除外哪一项"]}, {"type": "p", "text": "A、嘱病人辨别白天、黑夜"}, {"type": "p", "text": "B、嘱病人辨别疼痛的位置"}, {"type": "p", "text": "C、嘱病人计算数字"}, {"type": "p", "text": "D、嘱病人发声、辨别性质"}, {"type": "p", "text": "E、嘱病人图形组联"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["急性肺脓肿最具特征的症状是"]}, {"type": "p", "text": "A、高热畏寒"}, {"type": "p", "text": "B、咳嗽伴咯血"}, {"type": "p", "text": "C、咳大量脓臭痰"}, {"type": "p", "text": "D、咳嗽伴胸痛"}, {"type": "p", "text": "E、呼吸困难"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["诊断急性腹膜炎中主要环节是进一步明确"]}, {"type": "p", "text": "A、感染中毒程度"}, {"type": "p", "text": "B、缺水严重程度"}, {"type": "p", "text": "C、代谢性酸中毒程度"}, {"type": "p", "text": "D、贫血程度"}, {"type": "p", "text": "E、病因"}, {"type": "p", "text": "正确答案: E"}, {"type": "list", "items": ["患者疑似大叶性肺炎，下列哪项是该病最常见的病原体"]}, {"type": "p", "text": "A、病毒"}, {"type": "p", "text": "B、支原体"}, {"type": "p", "text": "C、肺炎链球菌"}, {"type": "p", "text": "D、肺炎克雷伯杆菌"}, {"type": "p", "text": "E、金黄色葡萄球菌"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["下列疾病常引起胸廓局部隆起，但需除外哪一项"]}, {"type": "p", "text": "A、肺气肿"}, {"type": "p", "text": "B、心包积液"}, {"type": "p", "text": "C、主动脉瘤"}, {"type": "p", "text": "D、胸壁肿瘤"}, {"type": "p", "text": "E、肋软骨炎"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["关于心房纤颤说法错误的是"]}, {"type": "p", "text": "A、心律绝对不齐"}, {"type": "p", "text": "B、可闻及大炮音"}, {"type": "p", "text": "C、脉搏短绌"}, {"type": "p", "text": "D、二尖瓣狭窄患者可见"}, {"type": "p", "text": "E、第一心音强弱不等"}, {"type": "p", "text": "正确答案: B"}, {"type": "p", "text": "解析：大炮音可有心音强弱不等，心律缓慢整齐，见于三度房室传导阻滞。"}, {"type": "list", "items": ["成年女性红细胞参考值为"]}, {"type": "p", "text": "A、（3.0～5.0）×1012/L"}, {"type": "p", "text": "B、（3.5～5.0）×1012/L"}, {"type": "p", "text": "C、（3.5～5.5）×1012/L"}, {"type": "p", "text": "D、（4.5～5.5）×1012/L"}, {"type": "p", "text": "E、（4.5～6.0）×1012/L"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["S1减弱可见于下列情况，但除外哪一项"]}, {"type": "p", "text": "A、二尖瓣关闭不全"}, {"type": "p", "text": "B、心肌收缩力减弱"}, {"type": "p", "text": "C、P-R间期延长时"}, {"type": "p", "text": "D、心动过速使舒张期缩短"}, {"type": "p", "text": "E、心肌病变"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["下列哪项不符合呼吸性酸中毒合并代谢性酸中毒的血气分析结果"]}, {"type": "p", "text": "A、PaCO2升高"}, {"type": "p", "text": "B、HCO3-减少"}, {"type": "p", "text": "C、AB=SB≤正常值"}, {"type": "p", "text": "D、BE负值减小"}, {"type": "p", "text": "E、pH明显降低"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["遗传性血管神经性水肿患者是缺陷哪种成分所致"]}, {"type": "p", "text": "A、C1q"}, {"type": "p", "text": "B、C1r"}, {"type": "p", "text": "C、C1s"}, {"type": "p", "text": "D、C1INH"}, {"type": "p", "text": "E、C3"}, {"type": "p", "text": "正确答案: D"}, {"type": "p", "text": "解析：该疾病是由于C1移植物的缺乏引起的，已经可以进行基因诊断。"}, {"type": "list", "items": ["肠鸣音消失常见于"]}, {"type": "p", "text": "A、大量腹水"}, {"type": "p", "text": "B、机械性肠梗阻"}, {"type": "p", "text": "C、巨大卵巢囊肿"}, {"type": "p", "text": "D、急性胆囊炎"}, {"type": "p", "text": "E、肠麻痹"}, {"type": "p", "text": "正确答案: E"}, {"type": "list", "items": ["最常见血清铁增高的疾病是"]}, {"type": "p", "text": "A、缺铁性贫血"}, {"type": "p", "text": "B、真性红细胞增多症"}, {"type": "p", "text": "C、巨幼细胞性贫血"}, {"type": "p", "text": "D、肾病综合征"}, {"type": "p", "text": "E、慢性肝炎、肝硬化"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["衰老红细胞代谢过程中，最普遍进行的生物转化第二相反应是代谢物与"]}, {"type": "p", "text": "A、乙酰基结合"}, {"type": "p", "text": "B、葡萄糖醛酸结合"}, {"type": "p", "text": "C、硫酸结合"}, {"type": "p", "text": "D、谷胱甘肽结合"}, {"type": "p", "text": "E、甲基结合"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["浆膜腔漏出液中下列哪种成分与血清中含量相似"]}, {"type": "p", "text": "A、氯化物"}, {"type": "p", "text": "B、葡萄糖"}, {"type": "p", "text": "C、尿素"}, {"type": "p", "text": "D、钙"}, {"type": "p", "text": "E、蛋白质"}, {"type": "p", "text": "正确答案: B"}, {"type": "p", "text": "解析：漏出液中葡萄糖含量与血糖相似，渗出液中葡萄糖常因细菌或细胞酶分解而减少。"}, {"type": "list", "items": ["营养物质消耗增加引起的消瘦有下列原因，不包括"]}, {"type": "p", "text": "A、甲状腺功能亢进"}, {"type": "p", "text": "B、慢性消耗性疾病"}, {"type": "p", "text": "C、大面积烧伤"}, {"type": "p", "text": "D、高热"}, {"type": "p", "text": "E、体制性消瘦"}, {"type": "p", "text": "正确答案: E"}, {"type": "list", "items": ["右侧面部痛觉减退见于"]}, {"type": "p", "text": "A、右侧面神经损伤"}, {"type": "p", "text": "B、右侧三叉神经损伤"}, {"type": "p", "text": "C、右侧交感神经损伤"}, {"type": "p", "text": "D、右侧舌咽神经损伤"}, {"type": "p", "text": "E、右侧副神经损伤"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["腰痛伴有尿频、尿急，见于"]}, {"type": "p", "text": "A、尿路感染"}, {"type": "p", "text": "B、附件炎"}, {"type": "p", "text": "C、盆腔炎"}, {"type": "p", "text": "D、卵巢疾病"}, {"type": "p", "text": "E、子宫炎症"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["识别皮肤上所画的三角形是检查"]}, {"type": "p", "text": "A、两点辨别觉"}, {"type": "p", "text": "B、触觉"}, {"type": "p", "text": "C、实体觉"}, {"type": "p", "text": "D、体表图形觉"}, {"type": "p", "text": "E、位置觉"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["连续性杂音最常见于"]}, {"type": "p", "text": "A、房间隔缺损"}, {"type": "p", "text": "B、室间隔缺损"}, {"type": "p", "text": "C、动脉导管未闭"}, {"type": "p", "text": "D、卵圆孔未闭"}, {"type": "p", "text": "E、冠状动静脉瘘"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["暂时性尿失禁见于下列哪种疾病，除了"]}, {"type": "p", "text": "A、尿路感染"}, {"type": "p", "text": "B、急性精神错乱性疾病"}, {"type": "p", "text": "C、药物反应"}, {"type": "p", "text": "D、心理性忧郁症"}, {"type": "p", "text": "E、脑卒中"}, {"type": "p", "text": "正确答案: E"}, {"type": "list", "items": ["根据中国标准，肥胖的判定是"]}, {"type": "p", "text": "A、BMI≥24kg/m2"}, {"type": "p", "text": "B、BMI≥25kg/m2"}, {"type": "p", "text": "C、BMI≥27kg/m2"}, {"type": "p", "text": "D、BMI≥28kg/m2"}, {"type": "p", "text": "E、BMI≥30kg/m2"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["血尿的概念是指离心沉淀后的尿沉渣，光镜下每高倍视野有红细胞至少"]}, {"type": "p", "text": "A、1个以上"}, {"type": "p", "text": "B、2个以上"}, {"type": "p", "text": "C、3个以上"}, {"type": "p", "text": "D、4个以上"}, {"type": "p", "text": "E、5个以上"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["胸前部计算肋间隙的重要标志是"]}, {"type": "p", "text": "A、胸骨角与第二肋软骨相连接"}, {"type": "p", "text": "B、第三肋软骨与胸骨体连接"}, {"type": "p", "text": "C、胸锁关节处"}, {"type": "p", "text": "D、胸骨角"}, {"type": "p", "text": "E、锁骨"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["新生儿红细胞参考值为"]}, {"type": "p", "text": "A、（5.0～7.0）×1012/L"}, {"type": "p", "text": "B、（6.0～8.0）×1012/L"}, {"type": "p", "text": "C、（7.0～8.0）×1012/L"}, {"type": "p", "text": "D、（6.0～7.0）×1012/L"}, {"type": "p", "text": "E、（6.5～7.5）×1012/L"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["下列哪项说法正确低分子肝素首选"]}, {"type": "p", "text": "A、APTT时间监测"}, {"type": "p", "text": "B、华法林首选APTT监测"}, {"type": "p", "text": "C、服用阿司匹林患者，血小板聚集实验，使用AA作为诱导剂"}, {"type": "p", "text": "D、服用氯吡格雷患者，血小板聚集实验，使用ATP作为诱导剂"}, {"type": "p", "text": "E、肝素首选PT时间监测"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["胸部叩诊由何处开始"]}, {"type": "p", "text": "A、锁骨上窝"}, {"type": "p", "text": "B、锁骨下窝"}, {"type": "p", "text": "C、第1肋间"}, {"type": "p", "text": "D、第2肋间"}, {"type": "p", "text": "E、胸锁关节"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["下列血象中常表现为成熟粒细胞核分叶过多的贫血是哪项"]}, {"type": "p", "text": "A、缺铁性贫血"}, {"type": "p", "text": "B、溶血性贫血"}, {"type": "p", "text": "C、急性失血性贫血"}, {"type": "p", "text": "D、再生障碍性贫血"}, {"type": "p", "text": "E、巨幼细胞性贫血"}, {"type": "p", "text": "正确答案: E"}, {"type": "list", "items": ["杵状指的病因不包括"]}, {"type": "p", "text": "A、肢端缺氧"}, {"type": "p", "text": "B、中毒性损害"}, {"type": "p", "text": "C、代谢障碍"}, {"type": "p", "text": "D、肢端软组织增生"}, {"type": "p", "text": "E、铁缺乏"}, {"type": "p", "text": "正确答案: E"}, {"type": "list", "items": ["检查腹部最常用的检查方法是"]}, {"type": "p", "text": "A、视诊"}, {"type": "p", "text": "B、触诊"}, {"type": "p", "text": "C、叩诊"}, {"type": "p", "text": "D、听诊"}, {"type": "p", "text": "E、嗅诊"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["肝颈静脉回流征阳性常见于下列哪种疾病"]}, {"type": "p", "text": "A、风湿性心脏病"}, {"type": "p", "text": "B、大量心包积液"}, {"type": "p", "text": "C、高血压病"}, {"type": "p", "text": "D、慢性肺源性心脏病"}, {"type": "p", "text": "E、右心功能不全"}, {"type": "p", "text": "正确答案: E"}, {"type": "list", "items": ["下列是关于鼻窦的正确描述，但应除外哪一项"]}, {"type": "p", "text": "A、鼻窦为鼻腔周围不含气的骨质空腔"}, {"type": "p", "text": "B、鼻窦共有四对"}, {"type": "p", "text": "C、各鼻窦皆有窦口与鼻腔相通"}, {"type": "p", "text": "D、鼻窦引流不畅时易于发生炎症"}, {"type": "p", "text": "E、鼻窦炎时可出现鼻塞，流涕，头痛和鼻窦压痛等"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["关于会诊记录说法正确的是"]}, {"type": "p", "text": "A、常规会诊意见记录应该由会诊医师在会诊申请发出后72小时完成"}, {"type": "p", "text": "B、急会诊时会诊医师应该在会诊申请发出后10分钟内到场，并在会诊结束后即刻完成会诊记录"}, {"type": "p", "text": "C、急会诊时会诊医师应该在会诊申请发出后5分钟内到场，并在会诊结束后即刻完成会诊记录"}, {"type": "p", "text": "D、常规会诊意见记录应该由会诊医师在会诊申请发出后24小时完成"}, {"type": "p", "text": "E、会诊记录无需体现在病程记录中"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["黏液水肿最常发生在"]}, {"type": "p", "text": "A、Addison病"}, {"type": "p", "text": "B、糖尿病"}, {"type": "p", "text": "C、甲状腺功能亢进症"}, {"type": "p", "text": "D、甲状腺功能减退症"}, {"type": "p", "text": "E、巨人症"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["符合急性淋巴细胞白血病原始细胞的是"]}, {"type": "p", "text": "A、PAS阳性"}, {"type": "p", "text": "B、非特异性酯酶阳性"}, {"type": "p", "text": "C、中性粒细胞碱性磷酸酶减低"}, {"type": "p", "text": "D、胞浆中可有Auer小体"}, {"type": "p", "text": "E、过氧化酶染色阳性"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["下列哪项不是椎间盘突出的临床特点"]}, {"type": "p", "text": "A、青壮年多见"}, {"type": "p", "text": "B、有搬重物及扭伤史"}, {"type": "p", "text": "C、L4、5、S1多发"}, {"type": "p", "text": "D、腰痛无放射"}, {"type": "p", "text": "E、起病可急骤或隐匿"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["关于头颅的叙述，下列哪项是错误的"]}, {"type": "p", "text": "A、头围测量是以软尺自眉间绕到颅后通过枕骨粗隆，测其周径"}, {"type": "p", "text": "B、小儿囟门若过早闭合可影响智力发育"}, {"type": "p", "text": "C、矢状缝和其他颅缝大多在生后12个月内骨化"}, {"type": "p", "text": "D、颅缝骨化过早会影响脑的发育"}, {"type": "p", "text": "E、新生儿的头围约34cm"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["下列哪种疾病周围血片上不出现幼稚红细胞"]}, {"type": "p", "text": "A、急性粒细胞白血病"}, {"type": "p", "text": "B、急性失血后贫血"}, {"type": "p", "text": "C、再生障碍性贫血"}, {"type": "p", "text": "D、溶血性贫血"}, {"type": "p", "text": "E、骨髓纤维化"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["呕血的颜色"]}, {"type": "p", "text": "A、出血量大时咖啡色"}, {"type": "p", "text": "B、出血速度快时咖啡色"}, {"type": "p", "text": "C、出血量大出血速度快时鲜红"}, {"type": "p", "text": "D、出血量小时鲜红"}, {"type": "p", "text": "E、出血速度慢时鲜红"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["由金黄色葡萄球菌引起的渗出液特点是"]}, {"type": "p", "text": "A、积液浓稠而色深"}, {"type": "p", "text": "B、积液多稀薄呈淡黄色"}, {"type": "p", "text": "C、积液多稀薄而色深"}, {"type": "p", "text": "D、积液浓稠"}, {"type": "p", "text": "E、积液浓稠而带黄色"}, {"type": "p", "text": "正确答案: E"}, {"type": "list", "items": ["下列情况可导致肺下界上升，但应除外哪一项"]}, {"type": "p", "text": "A、肺不张"}, {"type": "p", "text": "B、鼓肠"}, {"type": "p", "text": "C、肝脾大"}, {"type": "p", "text": "D、气腹"}, {"type": "p", "text": "E、腹腔内脏下垂"}, {"type": "p", "text": "正确答案: E"}, {"type": "list", "items": ["对传染性单核细胞增多症有诊断意义的指标是"]}, {"type": "p", "text": "A、血液异型淋巴细胞增多"}, {"type": "p", "text": "B、血液白细胞增高"}, {"type": "p", "text": "C、血液T淋巴细胞增高"}, {"type": "p", "text": "D、骨髓粒细胞显著核左移"}, {"type": "p", "text": "E、血清嗜异性凝集试验阳性"}, {"type": "p", "text": "正确答案: E"}, {"type": "list", "items": ["下列哪个疾病不容易引起腹泻"]}, {"type": "p", "text": "A、甲状腺功能减退"}, {"type": "p", "text": "B、肠易激综合征"}, {"type": "p", "text": "C、小肠吸收不良"}, {"type": "p", "text": "D、炎症性肠病"}, {"type": "p", "text": "E、尿毒症性胃肠炎"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["肥胖与下列哪种因素无关"]}, {"type": "p", "text": "A、遗传因素"}, {"type": "p", "text": "B、内分泌因素"}, {"type": "p", "text": "C、精神因素"}, {"type": "p", "text": "D、药物因素"}, {"type": "p", "text": "E、生活方式"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["阑尾炎的疼痛特点是"]}, {"type": "p", "text": "A、上腹痛"}, {"type": "p", "text": "B、下腹痛"}, {"type": "p", "text": "C、左下腹痛"}, {"type": "p", "text": "D、右下腹痛"}, {"type": "p", "text": "E、转移性右下腹痛"}, {"type": "p", "text": "正确答案: E"}, {"type": "list", "items": ["患者，男，40岁，因呼吸困难和水肿入院。查体：颈静脉怒张，肝右缘肋下4cm，表面光滑，轻压痛，双下肢凹陷性水肿。检查心脏时可能发现"]}, {"type": "p", "text": "A、心尖搏动向左下移位"}, {"type": "p", "text": "B、心脏形态呈靴形"}, {"type": "p", "text": "C、心尖部舒张期杂音"}, {"type": "p", "text": "D、主动脉瓣区粗糙的收缩期杂音"}, {"type": "p", "text": "E、主动脉瓣第二听诊区叹气样舒张期杂音"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["患者，男，35岁，反复发作消化性溃疡，近期反复出现呕吐、腹胀，下列哪项不符合"]}, {"type": "p", "text": "A、呕吐物有酸臭味"}, {"type": "p", "text": "B、呕吐量大、有宿食"}, {"type": "p", "text": "C、消瘦、脱水、碱中毒"}, {"type": "p", "text": "D、有胃型和胃蠕动波"}, {"type": "p", "text": "E、呕吐物有粪臭味"}, {"type": "p", "text": "正确答案: E"}, {"type": "list", "items": ["患者，女，20岁，神志昏迷2小时、小便失禁急诊入院，查体：大汗，双侧瞳孔缩小，呼气有大蒜味，考虑最可能病因为"]}, {"type": "p", "text": "A、脑出血"}, {"type": "p", "text": "B、有机磷中毒"}, {"type": "p", "text": "C、脑梗"}, {"type": "p", "text": "D、脑膜炎"}, {"type": "p", "text": "E、脑外伤"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["患者，女，27岁，少尿，全身水肿1月，查体：血压正常，腹部膨隆，移动性浊音阳性，双下肢凹陷性水肿。24小时尿量380ml，尿蛋白4+，肝功能白蛋白20g/L，她最可能的诊断是"]}, {"type": "p", "text": "A、急性肾盂肾炎"}, {"type": "p", "text": "B、慢性肾炎"}, {"type": "p", "text": "C、尿路结石"}, {"type": "p", "text": "D、急性肾炎"}, {"type": "p", "text": "E、肾病综合征"}, {"type": "p", "text": "正确答案: E"}, {"type": "list", "items": ["患者，男，40岁，10年来反复节律性上腹痛，近半月呕吐酸臭隔夜食，腹胀，进食加重。下列体征对本病诊断均有意义，但除外"]}, {"type": "p", "text": "A、胃蠕动波"}, {"type": "p", "text": "B、振水音"}, {"type": "p", "text": "C、上腹中部局限性膨隆"}, {"type": "p", "text": "D、胃型"}, {"type": "p", "text": "E、反跳痛"}, {"type": "p", "text": "正确答案: E"}, {"type": "list", "items": ["患者，青年男性，2周前下肢紫癜，双侧基本对称，关节周围明显，入院查血常规：Hb 130g/L，WBC 6×109/L，PLT 101×109/L，尿蛋白2+，诊断考虑"]}, {"type": "p", "text": "A、急性皮疹"}, {"type": "p", "text": "B、过敏性紫癜"}, {"type": "p", "text": "C、血小板减少性紫癜"}, {"type": "p", "text": "D、血小板无力症"}, {"type": "p", "text": "E、血友病"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["患者张某，男，55岁，腹部持续性剧烈绞痛5小时，伴呕吐，无排气，腹部查体可闻及金属音，肠鸣音8次/分，该患者最可能的诊断为"]}, {"type": "p", "text": "A、急性胰腺炎"}, {"type": "p", "text": "B、急性机械性肠梗阻"}, {"type": "p", "text": "C、急性胃炎"}, {"type": "p", "text": "D、幽门梗阻"}, {"type": "p", "text": "E、急性胆囊炎"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["患儿，男，5岁，因面部肌肉及肢体快速、不规则、无目的、不对称的不自在运动，无意识的做鬼脸，转颈，耸肩、摆手及伸臂动作送入医院。这种表现符合以下哪一项神经系统体征"]}, {"type": "p", "text": "A、禁止性震颤"}, {"type": "p", "text": "B、运动性震颤"}, {"type": "p", "text": "C、意向性震颤"}, {"type": "p", "text": "D、舞蹈样运动"}, {"type": "p", "text": "E、手足徐动"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["患者，男，28岁，寒战、高热、咳嗽，临床诊断为大叶性肺炎充血期，下列可能出现的体征是"]}, {"type": "p", "text": "A、语音震颤增强"}, {"type": "p", "text": "B、两肺呼吸音强"}, {"type": "p", "text": "C、叩诊过清音"}, {"type": "p", "text": "D、明显支气管呼吸音"}, {"type": "p", "text": "E、两肺散在干性啰音"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["60岁，男，行纤维支气管镜检查后出现右侧大量气胸，前胸部可触及皮下气肿，关于该患者描述正确的是"]}, {"type": "p", "text": "A、前胸部可触及握雪感"}, {"type": "p", "text": "B、心尖搏动右移"}, {"type": "p", "text": "C、气管右移"}, {"type": "p", "text": "D、触及胸膜摩擦感"}, {"type": "p", "text": "E、肝肺界下移"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["患者，男，40岁，8年来反复节律性上腹部疼痛，近半月呕吐隔日食，呕吐后腹胀减轻，此时最应该注意的腹部体征是"]}, {"type": "p", "text": "A、有否反跳痛"}, {"type": "p", "text": "B、肠鸣音亢进否"}, {"type": "p", "text": "C、有否胃蠕动波"}, {"type": "p", "text": "D、季肋点有否压痛"}, {"type": "p", "text": "E、Murphy征是否阳性"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["患儿，4岁，发热5天，皮疹1天来诊。口腔黏膜检查时，在相当于第二磨牙的颊黏膜处出现帽针头大小的白色斑点，最先考虑是下列哪种疾病"]}, {"type": "p", "text": "A、维生素C缺乏"}, {"type": "p", "text": "B、麻疹"}, {"type": "p", "text": "C、猩红热"}, {"type": "p", "text": "D、风疹"}, {"type": "p", "text": "E、伤寒"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["患者，女，进食油腻食物后，出现右上腹绞痛，阵发性加重，向右肩背部放散，在查体中，最有诊断意义的阳性体征为"]}, {"type": "p", "text": "A、右上腹压痛"}, {"type": "p", "text": "B、腹式呼吸受限"}, {"type": "p", "text": "C、Courvoisier's征（+）"}, {"type": "p", "text": "D、Murphy's（+）"}, {"type": "p", "text": "E、肝区叩击痛（+）"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["患者，男，60岁。上腹隐痛，食少，嗳气2年余，轻度贫血。胃液分析BAO 2mmol/h，MAO 3mmol/h，胃液pH 7.4，GI：胃及十二指肠未发现溃疡或肿瘤征象，其最可能的诊断是"]}, {"type": "p", "text": "A、慢性浅表性胃炎"}, {"type": "p", "text": "B、慢性萎缩性胃炎"}, {"type": "p", "text": "C、慢性糜烂性胃炎"}, {"type": "p", "text": "D、胃癌"}, {"type": "p", "text": "E、十二指肠球后溃疡"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["患者，男，43岁，近2个月来下腹疼痛，腹泻、大便为脓血便，排便后腹痛减轻。最可能的诊断是"]}, {"type": "p", "text": "A、内痔"}, {"type": "p", "text": "B、溃疡性结肠炎"}, {"type": "p", "text": "C、小肠结核"}, {"type": "p", "text": "D、肠套叠"}, {"type": "p", "text": "E、过敏性紫癜"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["患者，女，38岁，体重指数38，全身多处可触及皮下结节，有触痛，同时出现停经，伴性功能减退，最可能的诊断是"]}, {"type": "p", "text": "A、Dercum综合征"}, {"type": "p", "text": "B、Frohlich综合征"}, {"type": "p", "text": "C、Laurence-Moon-Biedl综合征"}, {"type": "p", "text": "D、Stein-Leventhal综合征"}, {"type": "p", "text": "E、Pickwickian综合征"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["患者，男，38岁。因间断心悸1天就诊。查体：心率72次/分，偶可闻及期前收缩。心电图示：提前出现的P波，心态与窦性P波略有不同，P-R间期0.13s，QRS波群形态正常，代偿间歇不完全。最恰当的处理是"]}, {"type": "p", "text": "A、静脉注射阿托品"}, {"type": "p", "text": "B、口服美托洛尔"}, {"type": "p", "text": "C、口服普罗帕酮"}, {"type": "p", "text": "D、寻找和去除病因"}, {"type": "p", "text": "E、口服胺碘酮"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["患者，20岁，APTT延长，以下最不可能的考虑是"]}, {"type": "p", "text": "A、血友病A"}, {"type": "p", "text": "B、血小板减少"}, {"type": "p", "text": "C、维生素K缺乏"}, {"type": "p", "text": "D、低纤维蛋白血症"}, {"type": "p", "text": "E、血友病B"}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["患者，女，30岁，出现左侧口角低，左侧耳后疱疹。入院后诊断为左侧亨特综合征。神经系统查体不可能出现以下那一项临床体征"]}, {"type": "p", "text": "A、左侧鼻唇沟浅"}, {"type": "p", "text": "B、左侧闭眼不紧"}, {"type": "p", "text": "C、左侧口角低"}, {"type": "p", "text": "D、左侧舌前2/3味觉丧失"}, {"type": "p", "text": "E、左侧舌后1/3味觉丧失"}, {"type": "p", "text": "正确答案: E"}, {"type": "list", "items": ["患儿，男，6岁，间断发热、双侧鼻出血2周，查体肝脾轻度肿大，血常规示：RBC 2.9×1012/L，Hb 98g/L。最可能的诊断为"]}, {"type": "p", "text": "A、鼻咽癌"}, {"type": "p", "text": "B、鼻腔感染"}, {"type": "p", "text": "C、流行性出血热"}, {"type": "p", "text": "D、白血病"}, {"type": "p", "text": "E、肝脏疾病"}, {"type": "p", "text": "正确答案: D"}, {"type": "p", "text": "（72-74共用题干）患者，女，40岁，近2周受凉后出现心悸、多汗、腹泻、体重下降，既往糖尿病病史5年，近期血糖水平不详"}, {"type": "list", "items": ["根据患者的病史该患者在查体中除了全面系统的体格检查以外，还应该重点检查下列哪项"]}, {"type": "p", "text": "A、扁桃体"}, {"type": "p", "text": "B、肺部"}, {"type": "p", "text": "C、甲状腺"}, {"type": "p", "text": "D、腹部"}, {"type": "p", "text": "E、神经系统"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["下列哪项检查对明确诊断最有意义"]}, {"type": "p", "text": "A、A-Tg"}, {"type": "p", "text": "B、A-TPO"}, {"type": "p", "text": "C、甲状腺功能"}, {"type": "p", "text": "D、随机静脉血糖"}, {"type": "p", "text": "E、血淀粉酶"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["该患者查体发现甲状腺Ⅱ度肿大，最可能的诊断是"]}, {"type": "p", "text": "A、甲状腺功能亢进症"}, {"type": "p", "text": "B、糖尿病酮症酸中毒"}, {"type": "p", "text": "C、急性胃肠炎"}, {"type": "p", "text": "D、肠易激惹综合征"}, {"type": "p", "text": "E、糖尿病周围神经病"}, {"type": "p", "text": "正确答案: A"}, {"type": "p", "text": "（75-77共用题干）患者，男，27岁，咽部不适3周，尿量减少1周。3周前咽部不适，轻咳，近1周双眼睑水肿，晨起时明显，同时尿量减少，200～500ml/日，尿色较红。尿常规：WBC 0～1个/HP，RBC 20～30个/HP，偶见颗粒管型。生化检查：ALB 38.2g/L，BUN 8.8mmol/L，Scr 140μmol/L"}, {"type": "list", "items": ["尿沉渣镜检中出现大量非均一性红细胞，提示红细胞来自"]}, {"type": "p", "text": "A、肾脏"}, {"type": "p", "text": "B、输尿管"}, {"type": "p", "text": "C、膀胱"}, {"type": "p", "text": "D、前列腺"}, {"type": "p", "text": "E、尿道"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["进一步检测血清ASO：800IU/L。该患者最可能的诊断为"]}, {"type": "p", "text": "A、急性肾小球肾炎"}, {"type": "p", "text": "B、急性肾盂肾炎"}, {"type": "p", "text": "C、肾病综合征"}, {"type": "p", "text": "D、多发性骨髓瘤"}, {"type": "p", "text": "E、IgA肾病"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["为明确临床诊断，下述进一步检查，不必要的是"]}, {"type": "p", "text": "A、ANA谱"}, {"type": "p", "text": "B、必要时行肾活检"}, {"type": "p", "text": "C、肾脏超声"}, {"type": "p", "text": "D、血尿定位"}, {"type": "p", "text": "E、尿浓缩实验"}, {"type": "p", "text": "正确答案: E"}, {"type": "p", "text": "（78-79共用题干）患者，男，65岁。反复发生晕厥1周，既往体健，无不良嗜好，发作前自述有胸闷症状，无心慌、胸痛，每次意识丧失持续约1分钟，无肢体瘫痪，无大小便失禁，动态心电监测示窦性心动过速，偶发房性期前收缩，脑CT未见异常"}, {"type": "list", "items": ["为明确诊断最需要的辅助检查是"]}, {"type": "p", "text": "A、肺CTA"}, {"type": "p", "text": "B、脑MRA"}, {"type": "p", "text": "C、冠状动脉造影"}, {"type": "p", "text": "D、脑电图"}, {"type": "p", "text": "E、心脏彩超"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["该患者最不可能的诊断是"]}, {"type": "p", "text": "A、快速性室性心律失常"}, {"type": "p", "text": "B、急性脑梗死"}, {"type": "p", "text": "C、短暂性脑缺血发作"}, {"type": "p", "text": "D、阿-斯综合征"}, {"type": "p", "text": "E、急性肺栓塞"}, {"type": "p", "text": "正确答案: B"}, {"type": "p", "text": "（80-81共用题干）黄某，男，18岁，下腰背痛3年，静息时加重，活动后减轻，偶有足跟痛。其父有类似病史，已驼背"}, {"type": "list", "items": ["该患者最有诊断意义的检查是"]}, {"type": "p", "text": "A、骨盆平片"}, {"type": "p", "text": "B、腰椎X线"}, {"type": "p", "text": "C、跟骨骨密度"}, {"type": "p", "text": "D、ESR"}, {"type": "p", "text": "E、RF"}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["假如查HLA-B27阳性，骨盆平片提示双侧骶髂关节模糊，间隙变窄。该患者最可能的诊断是"]}, {"type": "p", "text": "A、结核性脊柱炎"}, {"type": "p", "text": "B、腰椎间盘突出症"}, {"type": "p", "text": "C、强直性脊柱炎"}, {"type": "p", "text": "D、腰肌劳损"}, {"type": "p", "text": "E、类风湿关节炎"}, {"type": "p", "text": "正确答案: C"}, {"type": "p", "text": "（82-83共用题干）患者，女，58岁，反复咳嗽、咳痰、气促20年，加重伴低热1周。既往高血压病史10年，血压控制满意。查体：T 38.5℃，P 110次/分，R 24次/分，BP 160/90mmHg。口唇发绀，颈静脉怒张，双肺可闻及哮鸣音和湿啰音，心率110次/分，率齐，P2、A2，剑突下可闻及3/6级收缩期杂音。肺膨隆，肝肋下3cm，压痛（+），肝颈静脉回流征阳性，双下肢水肿。杵状指"}, {"type": "list", "items": ["该患者最可能的诊断是"]}, {"type": "p", "text": "A、冠心病"}, {"type": "p", "text": "B、心肌病"}, {"type": "p", "text": "C、肺血栓栓塞"}, {"type": "p", "text": "D、肺心病"}, {"type": "p", "text": "E、风湿性心脏瓣膜病"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["对明确诊断，如下哪项检查最有价值"]}, {"type": "p", "text": "A、胸部X线片"}, {"type": "p", "text": "B、超声心动图"}, {"type": "p", "text": "C、血气分析"}, {"type": "p", "text": "D、心电图"}, {"type": "p", "text": "E、血D-二聚体"}, {"type": "p", "text": "正确答案: B"}, {"type": "p", "text": "（84-86共用题干）某患者近期发现肝大（肋下4cm），质硬，有大小不等的结节，伴低热、纳差、轻度黄疸，ALT 400U/L，AFP 800μg/L"}, {"type": "list", "items": ["该患者腹部体征不包括"]}, {"type": "p", "text": "A、移动性浊音阳性"}, {"type": "p", "text": "B、上腹压痛"}, {"type": "p", "text": "C、墨菲氏征阳性"}, {"type": "p", "text": "D、脾大"}, {"type": "p", "text": "E、双下肢水肿"}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["患者HBsAg（+），最可能的诊断是"]}, {"type": "p", "text": "A、急性黄疸性肝炎"}, {"type": "p", "text": "B、慢性活动性肝炎"}, {"type": "p", "text": "C、大结节性肝硬化"}, {"type": "p", "text": "D、原发性肝癌"}, {"type": "p", "text": "E、胆汁性肝硬化"}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["患者近期有呕血，则最有可能出现"]}, {"type": "p", "text": "A、食管静脉曲张"}, {"type": "p", "text": "B、贲门撕裂"}, {"type": "p", "text": "C、急性糜烂性胃炎"}, {"type": "p", "text": "D、消化性溃疡"}, {"type": "p", "text": "E、放射性核素铜结合试验"}, {"type": "p", "text": "正确答案: A"}, {"type": "p", "text": "（87-89）共用备选答案"}, {"type": "p", "text": "A、完整的入院记录及出院记录"}, {"type": "p", "text": "B、首次病程记录"}, {"type": "p", "text": "C、24小时内入出院记录"}, {"type": "p", "text": "D、24小时内入院死亡记录"}, {"type": "p", "text": "E、阶段小结"}, {"type": "list", "items": ["患者入院后不足24小时出院的"]}, {"type": "p", "text": "正确答案: C"}, {"type": "list", "items": ["患者入院后不足24小时死亡的"]}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["患者住院时间较长，病情有重大转折或住院超过1个月的"]}, {"type": "p", "text": "正确答案: E"}, {"type": "p", "text": "（90-91）共用备选答案"}, {"type": "p", "text": "A、Apo-A"}, {"type": "p", "text": "B、Apo-B"}, {"type": "p", "text": "C、Apo-C"}, {"type": "p", "text": "D、Apo-D"}, {"type": "p", "text": "E、Apo-E"}, {"type": "list", "items": ["高密度脂蛋白的主要成分是"]}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["低密度脂蛋白的主要成分是"]}, {"type": "p", "text": "正确答案: B"}, {"type": "p", "text": "（92-93）共用备选答案"}, {"type": "p", "text": "A、右上直肌、左下斜肌"}, {"type": "p", "text": "B、右下直肌、左上斜肌"}, {"type": "p", "text": "C、左下直肌、右上斜肌"}, {"type": "p", "text": "D、左上直肌、右下斜肌"}, {"type": "p", "text": "E、左下直肌、右下斜肌"}, {"type": "list", "items": ["眼球左上运动障碍提示以上哪对配偶肌功能异常"]}, {"type": "p", "text": "正确答案: D"}, {"type": "list", "items": ["眼球右下运动障碍提示以上哪对配偶肌功能异常"]}, {"type": "p", "text": "正确答案: B"}, {"type": "p", "text": "（94-96）共用备选答案"}, {"type": "p", "text": "A、睑内翻"}, {"type": "p", "text": "B、Graefe征"}, {"type": "p", "text": "C、眼球下陷"}, {"type": "p", "text": "D、Gottron征"}, {"type": "p", "text": "E、眼压增高"}, {"type": "list", "items": ["甲状腺功能亢进患者可能出现"]}, {"type": "p", "text": "正确答案: B"}, {"type": "list", "items": ["沙眼患者可能出现"]}, {"type": "p", "text": "正确答案: A"}, {"type": "list", "items": ["青光眼患者常出现"]}, {"type": "p", "text": "正确答案: E"}, {"type": "list", "items": ["血尿常见于以下哪些疾病"]}, {"type": "p", "text": "A、肾结核"}, {"type": "p", "text": "B、泌尿系统肿瘤"}, {"type": "p", "text": "C、肾盂肾炎"}, {"type": "p", "text": "D、泌尿系统外伤"}, {"type": "p", "text": "E、溶血性贫血"}, {"type": "p", "text": "正确答案: ABCD"}, {"type": "list", "items": ["血小板聚集试验升高可见于"]}, {"type": "p", "text": "A、心肌梗死"}, {"type": "p", "text": "B、心绞痛"}, {"type": "p", "text": "C、糖尿病"}, {"type": "p", "text": "D、口服避孕药"}, {"type": "p", "text": "E、晚期妊娠"}, {"type": "p", "text": "正确答案: ABCDE"}, {"type": "list", "items": ["患者PT延长提示下列哪些凝血因子缺乏"]}, {"type": "p", "text": "A、Ⅱ"}, {"type": "p", "text": "B、Ⅴ"}, {"type": "p", "text": "C、Ⅶ"}, {"type": "p", "text": "D、Fg"}, {"type": "p", "text": "E、Ⅻ"}, {"type": "p", "text": "正确答案: ABCD"}, {"type": "p", "text": "100.哪些检验结果不符合DIC的诊断"}, {"type": "p", "text": "A、BT延长"}, {"type": "p", "text": "B、ELT延长"}, {"type": "p", "text": "C、PT延长"}, {"type": "p", "text": "D、FDP减少"}, {"type": "p", "text": "E、D二聚体阳性"}, {"type": "p", "text": "正确答案: BD"}];</script>
 <script>
 (function () {
+  if (WB.mountChrome) WB.mountChrome('materials');
+
+  var body = document.getElementById('body');
+  body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
+  if (WB.fx && WB.fx.init) WB.fx.init();
+
   var base = (window.R2_BASE || '').replace(/\/+$/, '');
   var prefix = window.R2_PREFIX || '';
   var dl = document.getElementById('dgDl');
@@ -760,6 +73,17 @@
   } else if (dl) {
     dl.style.display = 'none';
   }
+
+  var links = [].slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  if (!links.length) return;
+  var heads = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function paint() {
+    var top = window.scrollY + 120, idx = 0;
+    heads.forEach(function (h, i) { if (h && h.offsetTop <= top) idx = i; });
+    links.forEach(function (a, i) { a.classList.toggle('on', i === idx); });
+  }
+  window.addEventListener('scroll', paint, { passive: true });
+  paint();
 })();
 </script>
 </body>

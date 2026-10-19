@@ -1,4 +1,3 @@
-/* 大文件阅读页映射：由 _tools/build_readers.py 生成，请勿手改 */
 window.READERS = {
  "statistics/统计学题目整理.pdf": "reader/statistics/statistics-questions.html",
  "pharmacology/lx药理笔记（选择题）.pdf": "reader/pharmacology/pharm-lx-notes.html",

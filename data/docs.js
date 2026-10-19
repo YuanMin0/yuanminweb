@@ -1,4 +1,3 @@
-/* Word 阅读页映射：由 _tools/build_docx_reader.py 生成，请勿手改 */
 window.DOCS = {
  "xssx/复习要点（2025秋）.docx": "doc/xssx/复习要点-2025秋.html",
  "xssx/2024秋 习思想复习要点1-5.docx": "doc/xssx/2024秋-习思想复习要点1-5.html",

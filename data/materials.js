@@ -1,5 +1,4 @@
-/* 资料汇总索引：由 _tools/gen_materials.py 扫描 F:\学习资料 生成，请勿手改 */
-/* R2 公共地址与前缀统一在 data/r2-config.js 配置，此处不再写死，避免覆盖 */
+/* 云端地址与前缀统一在 data/cdn-config.js 配置 */
 window.MATERIAL_ROOT = "F:/学习资料/";
 window.MATERIALS = [
  {

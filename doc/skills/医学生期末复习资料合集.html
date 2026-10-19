@@ -60,7 +60,7 @@
 <footer class="ftr" data-ftr></footer>
 
 <script src="../../js/core.js"></script>
-<script src="../../data/r2-config.js"></script>
+<script src="../../data/cdn-config.js"></script>
 <script>window.__DOC_BLOCKS = [{"type": "p", "text": "保存打开百度网盘扫码领取保存打开百度网盘扫码领取医学生期末复习资料合集医学生教材合集医学生期末复习资料合集医学生教材合集"}, {"type": "h", "level": 3, "id": "s1", "text": "保存打开百度网盘扫码领取"}, {"type": "h", "level": 3, "id": "s2", "text": "保存打开百度网盘扫码领取"}, {"type": "h", "level": 3, "id": "s3", "text": "医学生期末复习资料合集"}, {"type": "h", "level": 3, "id": "s4", "text": "医学生教材合集"}, {"type": "h", "level": 3, "id": "s5", "text": "医学生期末复习资料合集"}, {"type": "h", "level": 3, "id": "s6", "text": "医学生教材合集"}];</script>
 <script>
 (function () {
@@ -70,8 +70,8 @@
   if (body) body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
   if (WB.fx && WB.fx.init) WB.fx.init();
 
-  var base = (window.R2_BASE || '').replace(/\/+$/, '');
-  var prefix = window.R2_PREFIX || '';
+  var base = (window.CDN_BASE || '').replace(/\/+$/, '');
+  var prefix = window.CDN_PREFIX || '';
   var dl = document.getElementById('dgDl');
   if (base && /^https?:/.test(base) && dl && dl.getAttribute('data-key')) {
     dl.href = base + '/' + prefix + dl.getAttribute('data-key').split('/').map(encodeURIComponent).join('/');

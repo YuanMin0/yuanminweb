@@ -47,7 +47,7 @@
 <footer class="ftr" data-ftr></footer>
 
 <script src="../../js/core.js"></script>
-<script src="../../data/r2-config.js"></script>
+<script src="../../data/cdn-config.js"></script>
 <script>window.__DOC_BLOCKS = [];</script>
 <script>
 (function () {
@@ -57,8 +57,8 @@
   if (body) body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
   if (WB.fx && WB.fx.init) WB.fx.init();
 
-  var base = (window.R2_BASE || '').replace(/\/+$/, '');
-  var prefix = window.R2_PREFIX || '';
+  var base = (window.CDN_BASE || '').replace(/\/+$/, '');
+  var prefix = window.CDN_PREFIX || '';
   var dl = document.getElementById('dgDl');
   if (base && /^https?:/.test(base) && dl && dl.getAttribute('data-key')) {
     dl.href = base + '/' + prefix + dl.getAttribute('data-key').split('/').map(encodeURIComponent).join('/');

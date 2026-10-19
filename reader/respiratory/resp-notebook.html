@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>呼吸笔记本(by_ lx) · 资料阅读 · MediLearn</title>
 <link rel="stylesheet" href="../../css/style.css">
-<script src="../../data/r2-config.js"></script>
+<script src="../../data/cdn-config.js"></script>
 <script src="../../data/materials.js"></script>
 <style>
   body { background: var(--bg); }
@@ -79,10 +79,10 @@
 </div>
 <script>
 (function () {
-  // 线上：页面图走 Cloudflare R2 公共域名；本机 file:// 或 R2 未配置时保留相对路径
-  var base = (window.R2_BASE || '').replace(/\/+$/, '');
-  var prefix = window.R2_PREFIX || '';
-  var r2on = base && base.indexOf('R2-DOMAIN-HERE') < 0 && /^https?:/.test(base);
+  // 线上：页面图走 云端 公共域名；本机 file:// 或 未配置时保留相对路径
+  var base = (window.CDN_BASE || '').replace(/\/+$/, '');
+  var prefix = window.CDN_PREFIX || '';
+  var r2on = base && base.indexOf('CDN-DOMAIN-HERE') < 0 && /^https?:/.test(base);
   var dl = document.getElementById('rdDl');
   if (r2on && dl && dl.getAttribute('data-key')) {
     dl.href = base + '/' + prefix + dl.getAttribute('data-key').split('/').map(encodeURIComponent).join('/');
@@ -99,7 +99,7 @@
         if (box && !box.querySelector('.rd-miss')) {
           var n = document.createElement('div');
           n.className = 'rd-miss';
-          n.textContent = '该页图片尚未上传到 R2，请点右上角「下载原文件」查看。';
+          n.textContent = '该页图片尚未上传，请点右上角「下载原文件」查看。';
           box.insertBefore(n, box.firstChild);
         }
       });

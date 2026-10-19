@@ -111,16 +111,16 @@
       <div class="note-t">ℹ 使用说明</div>
       这里只收录<b>整理好的、可直接背诵的资料</b>——往年真题、题库练习、重点归纳、讲义笔记、病例分析；
       <mark class="hl">PPT 课件、压缩包与截图已全部剔除</mark>。<br>
-      资料原件托管在 <b>Cloudflare R2</b>，站点代码在 GitHub，因此没有单文件体积限制。
+      资料原件托管在云端，按需加载，因此没有单文件体积限制。
       PDF 点「预览」会在页面内直接渲染，<mark class="hl">手机、平板也能看，可缩放、可全屏</mark>；
       Word 文档点「阅读」进入<mark class="hl">重新排版的文字版</mark>，带目录、可直接复制；
       所有文件都能一键<b>下载</b>。
     </div>
 
     <div class="note note-warn rv rv-d1 hide" id="r2Warn" style="margin-bottom:18px">
-      <div class="note-t">⚠ R2 尚未就绪</div>
-      当前 R2 公共访问地址没有配置，或文件路径对不上，资料只能显示本机路径。
-      请检查 <code>data/r2-config.js</code> 里的 <code>R2_BASE</code> 与 <code>R2_PREFIX</code>。
+      <div class="note-t">⚠ 云端存储尚未就绪</div>
+      当前云端访问地址没有配置，或文件路径对不上，资料只能显示本机路径。
+      请检查 <code>data/cdn-config.js</code> 里的 <code>CDN_BASE</code> 与 <code>CDN_PREFIX</code>。
       <span id="r2Detail"></span>
     </div>
 
@@ -170,7 +170,7 @@
 <script src="data/exam-diagnostics.js"></script>
 <script src="data/surgery.js"></script>
 <script src="data/exam-surgery.js"></script>
-<script src="data/r2-config.js"></script>
+<script src="data/cdn-config.js"></script>
 <script src="data/materials.js"></script>
 <script src="data/readers.js"></script>
 <script src="data/docs.js"></script>
@@ -201,20 +201,20 @@
     IMG:  { ico: '🖼', cls: 'chip-violet' }
   };
 
-  /* ================= Cloudflare R2 ================= */
-  var R2 = {
-    base: String(window.R2_BASE || '').replace(/\/+$/, ''),
-    prefix: String(window.R2_PREFIX || ''),
+  /* ================= 云端存储 ================= */
+  var CDN = {
+    base: String(window.CDN_BASE || '').replace(/\/+$/, ''),
+    prefix: String(window.CDN_PREFIX || ''),
     ready: false
   };
-  R2.ready = /^https?:\/\//.test(R2.base) && R2.base.indexOf('R2-DOMAIN-HERE') < 0;
+  CDN.ready = /^https?:\/\//.test(CDN.base) && CDN.base.indexOf('CDN-DOMAIN-HERE') < 0;
 
   function encPath(p) {
     return String(p).split('/').map(encodeURIComponent).join('/');
   }
-  function r2Url(key) {
-    if (!R2.ready || !key) return '';
-    return R2.base + '/' + R2.prefix + encPath(key);
+  function cdnUrl(key) {
+    if (!CDN.ready || !key) return '';
+    return CDN.base + '/' + CDN.prefix + encPath(key);
   }
 
   /* ================= 路径工具 ================= */
@@ -428,7 +428,7 @@
         if (pv !== st) return;
         var name = (err && err.name) || '';
         if (name === 'MissingPDFException' || name === 'UnexpectedResponseException') {
-          pvError('文件读取失败，可能还没上传到 R2');
+          pvError('文件读取失败，可能还没上传');
         } else if (name === 'InvalidPDFException') {
           pvError('这个文件不是有效的 PDF');
         } else {
@@ -508,14 +508,14 @@
   function fileRow(f, accent, gid) {
     var m = TYPE_META[f.t] || { ico: '📄', cls: 'chip-line' };
     var isPdf = f.t === 'PDF';
-    var missing = (window.R2_MISSING || []).indexOf(f.key) > -1;
-    var reader = (!missing && !window.R2_READERS_BROKEN) ? READERS[gid + '/' + f.n] : '';
+    var missing = (window.CDN_MISSING || []).indexOf(f.key) > -1;
+    var reader = (!missing && !window.CDN_READERS_BROKEN) ? READERS[gid + '/' + f.n] : '';
     var docPage = missing ? '' : ((window.DOCS || {})[gid + '/' + f.n] || '');
     var quizN = (window.DOC_QUIZ || {})[gid + '/' + f.n] || 0;
-    var r2 = (!missing && R2.ready) ? r2Url(f.key) : '';
+    var cloud = (!missing && CDN.ready) ? cdnUrl(f.key) : '';
     var isLocalSite = location.protocol === 'file:';
     var hasLocalCopy = !!f.rel;
-    var localOnly = !r2 && !reader && !(isLocalSite && hasLocalCopy);
+    var localOnly = !cloud && !reader && !(isLocalSite && hasLocalCopy);
 
     var sizeTxt = fmtSize(f.s);
     var catCls = f.c === '往年真题' ? 'chip-hot'
@@ -526,12 +526,12 @@
     var acts = '';
     if (docPage) {
       acts += '<a class="gbtn gbtn-sm gbtn-primary" href="' + WB.esc(docPage) + '">阅读</a>';
-      if (r2) acts += '<button class="gbtn gbtn-sm" data-dl="' + WB.esc(r2) + '" data-name="' + WB.esc(f.n) + '">下载</button>';
-    } else if (r2) {
+      if (cloud) acts += '<button class="gbtn gbtn-sm" data-dl="' + WB.esc(cloud) + '" data-name="' + WB.esc(f.n) + '">下载</button>';
+    } else if (cloud) {
       if (isPdf) {
-        acts += '<button class="gbtn gbtn-sm gbtn-primary" data-prev="' + WB.esc(r2) + '" data-name="' + WB.esc(f.n) + '">预览</button>';
+        acts += '<button class="gbtn gbtn-sm gbtn-primary" data-prev="' + WB.esc(cloud) + '" data-name="' + WB.esc(f.n) + '">预览</button>';
       }
-      acts += '<button class="gbtn gbtn-sm" data-dl="' + WB.esc(r2) + '" data-name="' + WB.esc(f.n) + '">下载</button>';
+      acts += '<button class="gbtn gbtn-sm" data-dl="' + WB.esc(cloud) + '" data-name="' + WB.esc(f.n) + '">下载</button>';
     } else if (reader) {
       acts += '<a class="gbtn gbtn-sm gbtn-primary" href="' + WB.esc(reader) + '" target="_blank" rel="noopener">阅读</a>';
     } else if (isLocalSite && hasLocalCopy) {
@@ -542,7 +542,7 @@
     if (localOnly) {
       acts += '<button class="gbtn gbtn-sm" data-copy="' + WB.esc('F:\\学习资料\\' + f.p.replace(/\//g, '\\')) + '" title="复制文件完整路径">复制路径</button>';
     }
-    var dv = dirUrl(f, r2 || (isLocalSite && hasLocalCopy));
+    var dv = dirUrl(f, cloud || (isLocalSite && hasLocalCopy));
     if (dv) {
       acts += '<a class="gbtn gbtn-sm" href="' + WB.esc(dv) + '" target="_blank" rel="noopener" title="在资源管理器中打开所在位置">所在文件夹</a>';
     }
@@ -555,12 +555,12 @@
           '<span class="chip ' + m.cls + '">' + f.t + '</span>' +
           '<span class="chip ' + catCls + '">' + WB.esc(f.c) + '</span>' +
           (sizeTxt ? '<span class="chip chip-line">' + sizeTxt + '</span>' : '') +
-          (r2 ? '<span class="chip chip-ok" title="文件托管在 Cloudflare R2">R2</span>' : '') +
+          (cloud ? '<span class="chip chip-ok" title="文件托管在云端">云端</span>' : '') +
           (docPage ? '<span class="chip chip-brand" title="已提取文字，可在站内直接阅读">可阅读</span>' : '') +
           (quizN ? '<span class="chip chip-teal" title="打开文档后切到「练习」页签即可刷题">✍ ' + quizN + ' 题</span>' : '') +
-          (!r2 && reader ? '<span class="chip chip-teal" title="超大文件已转成站内阅读页">站内阅读</span>' : '') +
-          (missing ? '<span class="chip chip-mid" title="该文件还没有上传到 R2">待上传</span>' : '') +
-          (!missing && localOnly ? '<span class="chip chip-mid" title="该文件未托管到 R2，只能在本机浏览本站时打开">仅本机</span>' : '') +
+          (!cloud && reader ? '<span class="chip chip-teal" title="超大文件已转成站内阅读页">站内阅读</span>' : '') +
+          (missing ? '<span class="chip chip-mid" title="该文件还没有上传">待上传</span>' : '') +
+          (!missing && localOnly ? '<span class="chip chip-mid" title="该文件未托管到云端，只能在本机浏览本站时打开">仅本机</span>' : '') +
         '</div>' +
       '</div>' +
       '<div class="mrow-act">' + acts + '</div>' +
@@ -576,9 +576,9 @@
       if (!files.length) return;
       shown += files.length;
       ready += files.filter(function (f) {
-        if ((window.R2_MISSING || []).indexOf(f.key) > -1) return false;
+        if ((window.CDN_MISSING || []).indexOf(f.key) > -1) return false;
         if ((window.DOCS || {})[g.id + '/' + f.n]) return true;
-        return (R2.ready && !!f.key) || (!window.R2_READERS_BROKEN && !!READERS[g.id + '/' + f.n]);
+        return (CDN.ready && !!f.key) || (!window.CDN_READERS_BROKEN && !!READERS[g.id + '/' + f.n]);
       }).length;
 
       var s = WB.getSubject(g.id);
@@ -622,7 +622,7 @@
   }
 
   renderSubjSeg();
-  if (!R2.ready) document.getElementById('r2Warn').classList.remove('hide');
+  if (!CDN.ready) document.getElementById('r2Warn').classList.remove('hide');
   render();
 
   document.getElementById('subjSeg').addEventListener('click', function (e) {

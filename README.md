@@ -155,95 +155,41 @@ HASH: '313e7f9bd2dc3b6a1f921165506c3c2dc195613fc89e06b74cfd32a3829f4ca1',
 
 另有 **资料汇总** 页（`materials.html`）：扫描本机 `F:\学习资料` 生成 14 个科目组、122 条资料索引，
 只收录**整理好、可直接背诵**的资料（往年真题 8 / 题库练习 33 / 重点归纳 36 / 讲义笔记 39 / 病例分析 6），
-**PPT 课件、压缩包与截图目录已全部剔除**。网站代码放 GitHub，资料 PDF/DOC/DOCX 和扫描页图放 Cloudflare R2；
+**PPT 课件、压缩包与截图目录已全部剔除**。网站代码与资料分开托管，资料 PDF/DOC/DOCX 和扫描页图放在云端存储；
 资料索引按 `R2_BASE + R2_PREFIX + 对象键` 访问，支持页内预览（缩放 / 全屏）与一键下载。
 
 ---
 
-## GitHub + Cloudflare 部署（当前实际配置）
+## 线上部署（当前配置）
 
-站点由 Cloudflare 连接 GitHub 仓库 `YuanMin0/yuanminweb` 自动部署，域名为
-**https://www.yuanminstudy.uk/**；资料原件放在 Cloudflare R2 桶 **study**，
-通过自定义域名 **https://pdf.yuanminstudy.uk/** 公开读取。
+站点域名 **https://www.yuanminstudy.uk/**，资料文件通过独立域名
+**https://pdf.yuanminstudy.uk/** 读取。
 
 ### 三层分工
 
 | 层 | 放什么 | 说明 |
 |---|---|---|
-| GitHub | HTML / CSS / JS / 知识点数据 / 阅读页 HTML | 约 1.5 MB，单文件都远小于限制 |
-| R2（桶 `study`） | 122 份 PDF/DOC/DOCX + 179 张扫描页 JPEG | 约 1.1 GB，前缀 `materials/` |
-| Cloudflare | 构建、CDN、HTTPS、自定义域名 | 推送到 GitHub 后自动重新部署 |
+| 代码仓库 | HTML / CSS / JS / 知识点数据 / 阅读页 HTML | 约 1.5 MB |
+| 云端存储 | 122 份 PDF/DOC/DOCX + 179 张扫描页 JPEG | 约 1.1 GB，前缀 `materials/` |
+| 托管平台 | 构建、CDN、HTTPS、域名 | 推送代码后自动重新部署 |
 
-`.gitignore` 已排除 `materials/`、`reader/*/*/*.jpg`、`r2-upload-manifest.json`、`.env`，
+`.gitignore` 已排除 `materials/`、`reader/*/*/*.jpg`、`upload-manifest.json`、`.env`，
 **不要 `git add -f` 这些内容**。
 
-### 唯一的配置文件：`data/r2-config.js`
+### 唯一的配置文件：`data/cdn-config.js`
 
 ```js
-window.R2_BASE = 'https://pdf.yuanminstudy.uk/';  // 桶的公共域名，末尾带 /
-window.R2_PREFIX = 'materials/';                    // 对象键前缀；文件在桶根则留空 ''
+window.CDN_BASE = 'https://pdf.yuanminstudy.uk/';  // 资料访问域名，末尾带 /
+window.CDN_PREFIX = 'materials/';                  // 路径前缀；文件在根目录则留空 ''
 ```
 
-页面加载时会用 `HEAD` 依次探测 `materials/`、空、`study/materials/` 三种前缀，
-哪个返回 200 就自动采用，所以前缀填错也能自愈；全部失败时页面顶部会列出尝试过的完整 URL。
+### 云端存储需要确认的三项
 
-### R2 控制台需要确认的三项
-
-1. **Custom Domain**（必须）：桶 `study` → Settings → Custom Domains → Add → `pdf.yuanminstudy.uk`。
-   域名在同一 Cloudflare 账号下会自动建 CNAME，通常几分钟生效。
-   临时测试也可用 Settings → Public Development URL 的 `r2.dev` 地址，但有速率限制、不适合长期使用。
-2. **CORS Policy**（建议）：Settings → CORS Policy → Add，粘贴 `_tools/r2-cors.json` 的内容。
-   不配 CORS 时 PDF 仍可预览，但「下载」会退回新窗口打开，前缀自动探测也会失效。
-3. **对象键**：桶内路径需为 `materials/<科目id>/<原文件名>`，例如
-   `materials/pharmacology/药理整理.docx`；扫描页图在
-   `materials/reader/<科目id>/<slug>/pNNN.jpg`（即把 `reader` 文件夹放进 `materials/` 里）。
-
-### 重新生成与上传
-
-```powershell
-# 1) 生成索引 / 阅读页 / 上传清单（读本机 F:\学习资料）
-C:/Users/38815/.workbuddy-ai/binaries/python/versions/3.13.12/python.exe _tools/gen_materials.py
-C:/Users/38815/.workbuddy-ai/binaries/python/envs/default/Scripts/python.exe _tools/build_readers.py
-
-# 2) 预检（不上传）
-C:/Users/38815/.workbuddy-ai/binaries/python/envs/default/Scripts/python.exe _tools/upload_r2.py
-```
-
-真正上传前在本机终端设置（凭据只留在当前会话，绝不写入仓库）：
-
-```powershell
-$env:MEDILEARN_R2_ACCOUNT_ID = "430fdb4b93c9bc9b7afdd6026efd3d2"
-$env:MEDILEARN_R2_BUCKET     = "study"
-$env:MEDILEARN_R2_ENDPOINT   = "https://430fdb4b93c9bc9b7afdd6026efd3d2.r2.cloudflarestorage.com"
-$env:MEDILEARN_R2_KEY_PREFIX = "materials"
-$env:AWS_ACCESS_KEY_ID       = "<R2_ACCESS_KEY_ID>"
-$env:AWS_SECRET_ACCESS_KEY   = "<R2_SECRET_ACCESS_KEY>"
-
-C:/Users/38815/.workbuddy-ai/binaries/python/envs/default/Scripts/python.exe _tools/upload_r2.py --upload --verify
-```
-
-`MEDILEARN_R2_KEY_PREFIX` 必须与 `data/r2-config.js` 的 `R2_PREFIX` 保持一致，
-否则网站拼出来的地址和桶里的键对不上。
-
-### 预览与下载
-
-`materials.html` 里 PDF 点「预览」打开浮层：
-
-| 操作 | 按钮 | 快捷键 |
-|---|---|---|
-| 放大 / 缩小 | `+` / `−` | `+` / `-` |
-| 适应宽度（回到 100%） | 适应 | `0` |
-| 全屏 | 全屏 | `F` |
-| 关闭 | `✕` | `Esc`（或点浮层空白处） |
-| 下载 | 下载 | — |
-
-预览用 **PDF.js 在页面内渲染成 canvas**，不依赖系统 PDF 组件，所以手机 / 平板浏览器不会再变成「下载」。
-只渲染视口附近的页面、远处自动释放，长文档也不会撑爆内存。
-Word 文档点「阅读」进入**重新排版的文字版**（左侧目录 + 文章栏，加粗内容标红）；
-题库类文档（诊断学 400 多道、外科护理学复习题等 9 份，共 **1529 题**）额外提供
-**练习模式**：卡片式刷题，题目 21px 加粗、选项 15.5px，答对绿框 + 粒子特效、答错红框 + 抖动，
-支持进度条、正确率、结算环形图、重做与「只做错题」，键盘 `A`–`E` 选择、`Enter` 下一题。
-「下载」优先用 `fetch` 取 blob 强制保存为原文件名；跨域被拒时自动退回新窗口打开。
+1. **自定义域名**：把资料域名绑定到存储空间，并开启公开读取。
+2. **CORS 策略**：允许本站域名跨域读取（`_tools/cors-policy.json` 可直接粘贴）。
+   不配时 PDF 仍能预览，但「下载」会退回新窗口打开。
+3. **文件路径**：需为 `materials/<科目id>/<原文件名>`；扫描页图在
+   `materials/reader/<科目id>/<slug>/pNNN.jpg`。
 
 ---
 
@@ -288,9 +234,9 @@ npx serve .
 
 ---
 
-## 部署到 GitHub + Cloudflare Pages
+## 部署到线上
 
-### 1. 推送到 GitHub
+### 1. 推送代码
 
 ```bash
 cd medilearn
@@ -298,27 +244,20 @@ git init
 git add .
 git commit -m "feat: MediLearn 医学学习站"
 git branch -M main
-git remote add origin https://github.com/<你的用户名>/<仓库名>.git
+git remote add origin <你的仓库地址>
 git push -u origin main
 ```
 
-### 2. Cloudflare Pages 连接仓库
+### 2. 连接仓库
 
-1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/) → **Workers & Pages**
-2. 点击 **Create** → 选择 **Pages** 标签 → **Connect to Git**
-3. 授权并选择刚推送的仓库
-4. 构建设置：
-   - **Framework preset**：`None`
-   - **Build command**：*留空*
-   - **Build output directory**：`/`（若仓库根目录就是站点，填 `/`；若站点在子目录，填 `medilearn`）
-5. 点击 **Save and Deploy**，等待数十秒即可获得 `https://<项目名>.pages.dev` 地址
+1. 登录托管平台控制台
+2. 新建项目并连接代码仓库
+3. 构建设置：Framework preset 选 `None`，Build command 留空，输出目录填 `/`
+4. 保存并部署，数十秒后即可获得访问地址
 
 ### 3. 后续更新
 
-推送到 `main` 分支即自动重新部署。
-
-> **GitHub Pages 备选**：仓库 Settings → Pages → Source 选择 `main` 分支 `/ (root)`，保存后访问
-> `https://<用户名>.github.io/<仓库名>/`。仓库中已包含 `.nojekyll`，避免 Jekyll 处理下划线开头的文件。
+推送代码即自动重新部署。
 
 ---
 

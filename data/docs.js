@@ -33,6 +33,11 @@ window.DOCS = {
  "diagnostics/诊断学001.docx": "doc/diagnostics/诊断学001.html",
  "diagnostics/体格检查实践考核+提问by lx.docx": "doc/diagnostics/体格检查实践考核-提问by-lx.html",
  "surgery/外科往届题目(1).docx": "doc/surgery/外科往届题目-1.html",
+ "surgery/外科学总论考试题库(A1、A2、A3、A4题型)(1).doc": "doc/surgery/外科学总论考试题库-A1-A2-A3-A4题型-1.html",
  "surgery/2025级治疗重点lx整理版.docx": "doc/surgery/2025级治疗重点lx整理版.html",
- "skills/医学生期末复习资料合集.docx": "doc/skills/医学生期末复习资料合集.html"
+ "surgery/(完整版)外科学整理笔记(1).doc": "doc/surgery/完整版-外科学整理笔记-1.html",
+ "surgery/外科(1).doc": "doc/surgery/外科-1.html",
+ "surgery/外科学(1).doc": "doc/surgery/外科学-1.html",
+ "skills/医学生期末复习资料合集.docx": "doc/skills/医学生期末复习资料合集.html",
+ "surgery-nursing/外科护理学复习题(各章节)含答案.doc": "doc/surgery-nursing/外科护理学复习题-各章节-含答案.html"
 };

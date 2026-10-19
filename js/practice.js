@@ -112,9 +112,13 @@
 
     var ok = pick === q.a;
     el.fb.className = 'q-fb on ' + (ok ? 'ok' : 'no');
-    el.fb.innerHTML = ok
+    var head = ok
       ? '<b>✓ 回答正确</b>　正确答案：' + LETTER[q.a]
       : '<b>✗ 回答错误</b>　你选了 ' + LETTER[pick] + '，正确答案：<b>' + LETTER[q.a] + '</b>';
+    var exp = q.e
+      ? '<div class="q-exp"><span class="q-exp-t">解析</span>' + esc(q.e) + '</div>'
+      : '';
+    el.fb.innerHTML = head + exp;
 
     if (!silent) {
       if (ok) {

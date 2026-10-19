@@ -142,13 +142,23 @@
 .q-fb {
   margin-top: 18px; padding: 0 16px; max-height: 0; overflow: hidden;
   border-radius: 12px; font-size: 14px; line-height: 1.7;
-  transition: max-height .32s ease, padding .32s ease, opacity .25s ease;
-  opacity: 0;
+  transition: max-height .34s ease, padding .34s ease;
 }
-.q-fb.on { max-height: 160px; padding: 13px 16px; opacity: 1; }
+.q-fb.on { max-height: 460px; padding: 13px 16px; }
 .q-fb.ok { background: color-mix(in srgb, var(--teal-soft) 65%, var(--surface)); color: var(--text); border-left: 3px solid var(--teal); }
 .q-fb.no { background: color-mix(in srgb, var(--rose-soft) 65%, var(--surface)); color: var(--text); border-left: 3px solid var(--rose); }
 .q-fb b { font-weight: 800; }
+.q-exp {
+  margin-top: 11px; padding-top: 11px; font-size: 13.8px; line-height: 1.78;
+  color: var(--text-2); border-top: 1px dashed color-mix(in srgb, currentColor 18%, transparent);
+  animation: expIn .3s cubic-bezier(.2,.8,.3,1) both;
+}
+.q-exp-t {
+  display: inline-block; margin-right: 8px; padding: 1px 8px; border-radius: 999px;
+  background: var(--surface); font-size: 11.5px; font-weight: 800;
+  letter-spacing: .04em; color: var(--brand-ink); vertical-align: 1px;
+}
+@keyframes expIn { from { transform: translateY(-4px) } to { transform: none } }
 
 /* ---------- 底部按钮 ---------- */
 .qp-actions {

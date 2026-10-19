@@ -311,6 +311,7 @@
             ]) +
             col('资料', [
               ['资料汇总', 'materials.html'],
+              ['更新日志', '#changelog'],
               ['关于本站', 'about.html']
             ]) +
             '<div class="ftr-col"><h4>联系</h4>' +

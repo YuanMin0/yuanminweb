@@ -44,9 +44,9 @@
     <div class="klayout">
       <aside class="toc">
         <div class="toc-h">本页目录</div>
-        <a href="#s1">第五章 公共卫生伦理</a><a href="#s2">一、公共卫生伦理的含义和理论基础</a><a href="#s3">（一）公共卫生伦理的含义</a><a href="#s4">公共卫生伦理 vs 医学伦理</a><a href="#s5">（二）公共卫生伦理的理论基础</a><a href="#s6">1. 功利主义（utilitarianism）</a><a href="#s7">2. 自由主义（liberalism）</a><a href="#s8">三大理论对比</a><a href="#s9">（三）健康伦理、健康权利、健康责任</a><a href="#s10">• 健康权利：</a><a href="#s11">• 健康责任（三层结构）：</a><a href="#s12">二、公共卫生伦理原则</a><a href="#s13">1. 全社会参与原则</a><a href="#s14">2. 社会公益原则</a><a href="#s15">3. 社会公正原则</a><a href="#s16">• 回报公正：对贡献者予以回报（抗疫一线人员应有表彰和补偿）</a><a href="#s17">4. 互助协同原则</a><a href="#s18">5. 信息公开原则</a><a href="#s19">互动快问快答（对应原则）：</a><a href="#s20">三、公共卫生某些领域的伦理要求</a><a href="#s21">（一）疾病防制的伦理要求</a><a href="#s22">1. 传染病防制：</a><a href="#s23">2. 慢性非传染病防制：</a><a href="#s24">（二）职业性损害防制的伦理要求</a><a href="#s25">（三）健康教育和健康促进的伦理要求</a><a href="#s26">（四）应对突发公共卫生事件的道德要求</a><a href="#s27">五大伦理要求：</a><a href="#s28">四、小结与案例</a><a href="#s29">五、练习题</a><a href="#s30">正确答案：C</a>
+        __TOC__
         <div class="toc-h" style="margin-top:20px">文档信息</div>
-        <div class="small dim" style="padding:0 11px;line-height:1.9">段落 146<br>表格 0<br>小节 30</div>
+        <div class="small dim" style="padding:0 11px;line-height:1.9">__INFO__</div>
       </aside>
       <article class="article">
         <div id="body"></div>
@@ -67,7 +67,7 @@
   if (WB.mountChrome) WB.mountChrome('materials');
 
   var body = document.getElementById('body');
-  body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
+  if (body) body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
   if (WB.fx && WB.fx.init) WB.fx.init();
 
   var base = (window.R2_BASE || '').replace(/\/+$/, '');
@@ -85,8 +85,10 @@
     b.addEventListener('click', function () {
       var p = b.getAttribute('data-pane');
       tabs.forEach(function (x) { x.classList.toggle('on', x === b); });
-      document.getElementById('paneRead').classList.toggle('hide', p !== 'read');
-      document.getElementById('paneQuiz').classList.toggle('hide', p !== 'quiz');
+      var r = document.getElementById('paneRead');
+      var q = document.getElementById('paneQuiz');
+      if (r) r.classList.toggle('hide', p !== 'read');
+      if (q) q.classList.toggle('hide', p !== 'quiz');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });

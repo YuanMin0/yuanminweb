@@ -44,9 +44,9 @@
     <div class="klayout">
       <aside class="toc">
         <div class="toc-h">本页目录</div>
-        <a href="#s1">绪论</a><a href="#s2">医学伦理学的产生和发展</a><a href="#s3">医学伦理学的原则与规范</a><a href="#s4">医学伦理学基本范畴</a><a href="#s5">医疗人际关系伦理</a><a href="#s6">临床诊疗伦理</a><a href="#s7">护理伦理</a><a href="#s8">公共卫生伦理</a><a href="#s9">参战与救灾的医德要求</a><a href="#s10">医学科研伦理</a><a href="#s11">生命伦理学热点问题之一——基因克隆问题</a><a href="#s12">生命伦理学热点问题二——死的问题</a><a href="#s13">医德评价和医德修养</a>
+        __TOC__
         <div class="toc-h" style="margin-top:20px">文档信息</div>
-        <div class="small dim" style="padding:0 11px;line-height:1.9">段落 1239<br>表格 0<br>小节 13</div>
+        <div class="small dim" style="padding:0 11px;line-height:1.9">__INFO__</div>
       </aside>
       <article class="article">
         <div id="body"></div>
@@ -67,7 +67,7 @@
   if (WB.mountChrome) WB.mountChrome('materials');
 
   var body = document.getElementById('body');
-  body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
+  if (body) body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
   if (WB.fx && WB.fx.init) WB.fx.init();
 
   var base = (window.R2_BASE || '').replace(/\/+$/, '');
@@ -85,8 +85,10 @@
     b.addEventListener('click', function () {
       var p = b.getAttribute('data-pane');
       tabs.forEach(function (x) { x.classList.toggle('on', x === b); });
-      document.getElementById('paneRead').classList.toggle('hide', p !== 'read');
-      document.getElementById('paneQuiz').classList.toggle('hide', p !== 'quiz');
+      var r = document.getElementById('paneRead');
+      var q = document.getElementById('paneQuiz');
+      if (r) r.classList.toggle('hide', p !== 'read');
+      if (q) q.classList.toggle('hide', p !== 'quiz');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });

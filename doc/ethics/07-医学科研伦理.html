@@ -44,9 +44,9 @@
     <div class="klayout">
       <aside class="toc">
         <div class="toc-h">本页目录</div>
-        <a href="#s1">第七章 医学科研伦理</a><a href="#s2">一、医学科研概述</a><a href="#s3">（一）定义</a><a href="#s4">（二）医学科研的特点</a><a href="#s5">二、科研诚信与学术不端</a><a href="#s6">三、医学科研人员的道德规范</a><a href="#s7">（二）动机纯正，勇于创新：</a><a href="#s8">四、动物实验伦理</a><a href="#s9">（一）动物实验概述</a><a href="#s10">（二）动物福利与伦理</a><a href="#s11">（三）动物实验伦理原则——4R</a><a href="#s12">五、涉及人的生命科学和医学研究伦理</a><a href="#s13">（一）人体试验概述</a><a href="#s14">（二）涉及人的研究正当性的伦理辩护</a><a href="#s15">（三）人体试验丑闻（历史教训）</a><a href="#s16">人体试验之"四问"：</a><a href="#s17">（四）人体试验中的伦理问题</a><a href="#s18">（五）涉及人的生命科学和医学研究伦理原则</a><a href="#s19">【维护研究参与者利益原则】</a><a href="#s20">【医学目的原则】</a><a href="#s21">【知情同意原则】</a><a href="#s22">【公正原则】</a><a href="#s23">【伦理审查的原则】</a><a href="#s24">六、伦理委员会与伦理审查</a><a href="#s25">（一）医学伦理委员会</a><a href="#s26">（二）医学伦理委员会的职能</a><a href="#s27">（三）伦理审查内容</a><a href="#s28">七、课堂总结</a>
+        __TOC__
         <div class="toc-h" style="margin-top:20px">文档信息</div>
-        <div class="small dim" style="padding:0 11px;line-height:1.9">段落 123<br>表格 0<br>小节 28</div>
+        <div class="small dim" style="padding:0 11px;line-height:1.9">__INFO__</div>
       </aside>
       <article class="article">
         <div id="body"></div>
@@ -67,7 +67,7 @@
   if (WB.mountChrome) WB.mountChrome('materials');
 
   var body = document.getElementById('body');
-  body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
+  if (body) body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
   if (WB.fx && WB.fx.init) WB.fx.init();
 
   var base = (window.R2_BASE || '').replace(/\/+$/, '');
@@ -85,8 +85,10 @@
     b.addEventListener('click', function () {
       var p = b.getAttribute('data-pane');
       tabs.forEach(function (x) { x.classList.toggle('on', x === b); });
-      document.getElementById('paneRead').classList.toggle('hide', p !== 'read');
-      document.getElementById('paneQuiz').classList.toggle('hide', p !== 'quiz');
+      var r = document.getElementById('paneRead');
+      var q = document.getElementById('paneQuiz');
+      if (r) r.classList.toggle('hide', p !== 'read');
+      if (q) q.classList.toggle('hide', p !== 'quiz');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });

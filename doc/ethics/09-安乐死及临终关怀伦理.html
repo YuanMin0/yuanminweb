@@ -44,9 +44,9 @@
     <div class="klayout">
       <aside class="toc">
         <div class="toc-h">本页目录</div>
-        <a href="#s1">第九章 安乐死及临终关怀伦理</a><a href="#s2">第一节 人体死亡标准</a><a href="#s3">一、死亡标准</a><a href="#s4">• 脑死亡四条判定标准：</a><a href="#s5">• 脑死亡与植物人的区别：</a><a href="#s6">二、执行脑死亡标准的道德意义</a><a href="#s7">第二节 安乐死的伦理问题</a><a href="#s8">一、安乐死的含义及分类</a><a href="#s9">1. 安乐死的含义</a><a href="#s10">2. 安乐死的分类</a><a href="#s11">二、安乐死的伦理争论</a><a href="#s12">案例分析：</a><a href="#s13">1. 安乐死伦理争论的观点</a><a href="#s14">• 支持安乐死的依据：</a><a href="#s15">• 反对安乐死的依据：</a><a href="#s16">2. 正确对待安乐死</a><a href="#s17">3. 安乐死必须符合伦理条件</a><a href="#s18">4. 国际上安乐死的立法状况</a><a href="#s19">5. 我国安乐死的立法状况</a><a href="#s20">6. 国外相关案例</a><a href="#s21">第三节 临终关怀的伦理问题</a><a href="#s22">一、临终关怀的内涵及道德要求</a><a href="#s23">1. 临终关怀的定义及伦理要素</a><a href="#s24">• 伦理要素：</a><a href="#s25">2. 临终关怀的道德要求</a><a href="#s26">二、临终关怀的伦理意义</a><a href="#s27">三、发展状况及传统伦理观念影响</a><a href="#s28">1. 现代临终关怀的起源</a><a href="#s29">2. 国内临终发展状况（四个里程碑）</a><a href="#s30">3. 传统伦理观念的影响（案例讨论）</a><a href="#s31">小结</a><a href="#s32">互动</a>
+        __TOC__
         <div class="toc-h" style="margin-top:20px">文档信息</div>
-        <div class="small dim" style="padding:0 11px;line-height:1.9">段落 146<br>表格 0<br>小节 32</div>
+        <div class="small dim" style="padding:0 11px;line-height:1.9">__INFO__</div>
       </aside>
       <article class="article">
         <div id="body"></div>
@@ -67,7 +67,7 @@
   if (WB.mountChrome) WB.mountChrome('materials');
 
   var body = document.getElementById('body');
-  body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
+  if (body) body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
   if (WB.fx && WB.fx.init) WB.fx.init();
 
   var base = (window.R2_BASE || '').replace(/\/+$/, '');
@@ -85,8 +85,10 @@
     b.addEventListener('click', function () {
       var p = b.getAttribute('data-pane');
       tabs.forEach(function (x) { x.classList.toggle('on', x === b); });
-      document.getElementById('paneRead').classList.toggle('hide', p !== 'read');
-      document.getElementById('paneQuiz').classList.toggle('hide', p !== 'quiz');
+      var r = document.getElementById('paneRead');
+      var q = document.getElementById('paneQuiz');
+      if (r) r.classList.toggle('hide', p !== 'read');
+      if (q) q.classList.toggle('hide', p !== 'quiz');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });

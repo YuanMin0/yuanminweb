@@ -44,9 +44,9 @@
     <div class="klayout">
       <aside class="toc">
         <div class="toc-h">本页目录</div>
-        <a href="#s1">第十章第七节巩固提高一体化国家战略体系和能力</a>
+        __TOC__
         <div class="toc-h" style="margin-top:20px">文档信息</div>
-        <div class="small dim" style="padding:0 11px;line-height:1.9">段落 60<br>表格 0<br>小节 1</div>
+        <div class="small dim" style="padding:0 11px;line-height:1.9">__INFO__</div>
       </aside>
       <article class="article">
         <div id="body"></div>
@@ -67,7 +67,7 @@
   if (WB.mountChrome) WB.mountChrome('materials');
 
   var body = document.getElementById('body');
-  body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
+  if (body) body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
   if (WB.fx && WB.fx.init) WB.fx.init();
 
   var base = (window.R2_BASE || '').replace(/\/+$/, '');
@@ -85,8 +85,10 @@
     b.addEventListener('click', function () {
       var p = b.getAttribute('data-pane');
       tabs.forEach(function (x) { x.classList.toggle('on', x === b); });
-      document.getElementById('paneRead').classList.toggle('hide', p !== 'read');
-      document.getElementById('paneQuiz').classList.toggle('hide', p !== 'quiz');
+      var r = document.getElementById('paneRead');
+      var q = document.getElementById('paneQuiz');
+      if (r) r.classList.toggle('hide', p !== 'read');
+      if (q) q.classList.toggle('hide', p !== 'quiz');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });

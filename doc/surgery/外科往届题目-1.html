@@ -44,9 +44,9 @@
     <div class="klayout">
       <aside class="toc">
         <div class="toc-h">本页目录</div>
-        <a href="#s1">橘皮症 </a><a href="#s2">battle征（乳突瘀斑）</a><a href="#s3">心肺复苏</a><a href="#s4">低渗性脱水 </a><a href="#s5">脓毒症</a><a href="#s6">骨筋膜室综合征</a><a href="#s7">酸碱平衡</a><a href="#s8">Cushing 反应</a><a href="#s9">前哨淋巴结</a><a href="#s10">体外冲击波碎石</a><a href="#s11">颅内压正常值，增高的临床表现</a><a href="#s12">休克的一般监测项目</a><a href="#s13">休克的治疗原则和措施</a><a href="#s14">椎管内麻醉根据位置不同分为哪四种</a><a href="#s15">膀胱非浸润癌治疗</a><a href="#s16">等渗性脱水诊断要点治疗原则注意事项</a><a href="#s17">诊断: </a><a href="#s18">治疗: </a><a href="#s19">高渗性缺水，定义，临表，诊断，治疗</a><a href="#s20">临床表现：</a><a href="#s21">诊断：</a><a href="#s22">治疗：</a><a href="#s23">colles骨折临床表现、治疗原则</a><a href="#s24">骨折的急救措施及目的</a><a href="#s25">骨折晚期并发症</a><a href="#s26">股骨颈骨折的三种分型</a><a href="#s27">烧伤的分类及临床表现</a><a href="#s28">烧伤严重程度分类</a><a href="#s29">腹腔内实质性器官损伤和空腔脏器损伤的临床表现的区别</a><a href="#s30">腹部损伤中行剖腹探查的手术指征</a><a href="#s31">急性梗阻性化脓性胆管炎治疗原则及方法</a><a href="#s32">急性弥漫性腹膜炎的临床表现</a><a href="#s33">晚期肺癌可有什么征象</a><a href="#s34">胃大部切除术适应症，禁忌症</a><a href="#s35">禁忌症：</a><a href="#s36">胃癌，诊断依据鉴别诊断检查手段治疗原则</a><a href="#s37">肩关节脱位诊断伴发损伤治疗方法</a><a href="#s38">腰椎间盘突出</a>
+        __TOC__
         <div class="toc-h" style="margin-top:20px">文档信息</div>
-        <div class="small dim" style="padding:0 11px;line-height:1.9">段落 145<br>表格 0<br>小节 38</div>
+        <div class="small dim" style="padding:0 11px;line-height:1.9">__INFO__</div>
       </aside>
       <article class="article">
         <div id="body"></div>
@@ -67,7 +67,7 @@
   if (WB.mountChrome) WB.mountChrome('materials');
 
   var body = document.getElementById('body');
-  body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
+  if (body) body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
   if (WB.fx && WB.fx.init) WB.fx.init();
 
   var base = (window.R2_BASE || '').replace(/\/+$/, '');
@@ -85,8 +85,10 @@
     b.addEventListener('click', function () {
       var p = b.getAttribute('data-pane');
       tabs.forEach(function (x) { x.classList.toggle('on', x === b); });
-      document.getElementById('paneRead').classList.toggle('hide', p !== 'read');
-      document.getElementById('paneQuiz').classList.toggle('hide', p !== 'quiz');
+      var r = document.getElementById('paneRead');
+      var q = document.getElementById('paneQuiz');
+      if (r) r.classList.toggle('hide', p !== 'read');
+      if (q) q.classList.toggle('hide', p !== 'quiz');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });

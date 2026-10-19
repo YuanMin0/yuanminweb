@@ -44,9 +44,9 @@
     <div class="klayout">
       <aside class="toc">
         <div class="toc-h">本页目录</div>
-        <a href="#s1">第六章 战争与灾害医学伦理（战地与灾害医疗救治伦理）</a><a href="#s2">一、极端环境</a><a href="#s3">1. 环境的危险性</a><a href="#s4">二、参战和救灾时医疗人际关系的特殊性</a><a href="#s5">（一）医患关系</a><a href="#s6">（二）医际关系</a><a href="#s7">（三）患际关系</a><a href="#s8">2. 合作性</a><a href="#s9">三、战场医疗救治的医德要求</a><a href="#s10">1. 发扬革命英雄主义</a><a href="#s11">2. 发扬革命的人道主义</a><a href="#s12">3. 树立高度的事业心和责任感</a><a href="#s13">4. 自觉控制情感和保持理智</a><a href="#s14">5. 认真执行相关法规</a><a href="#s15">国际公约对战地医务人员最基本的规定：</a><a href="#s16">四、西方战争对医学伦理的挑战</a><a href="#s17">五、灾害医学救治的特殊医德原则</a><a href="#s18">六、拓展推荐</a><a href="#s19">七、课堂练习题</a><a href="#s20">1. 先救谁？（单选题1分）</a><a href="#s21">正确答案：B</a>
+        __TOC__
         <div class="toc-h" style="margin-top:20px">文档信息</div>
-        <div class="small dim" style="padding:0 11px;line-height:1.9">段落 70<br>表格 0<br>小节 21</div>
+        <div class="small dim" style="padding:0 11px;line-height:1.9">__INFO__</div>
       </aside>
       <article class="article">
         <div id="body"></div>
@@ -67,7 +67,7 @@
   if (WB.mountChrome) WB.mountChrome('materials');
 
   var body = document.getElementById('body');
-  body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
+  if (body) body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
   if (WB.fx && WB.fx.init) WB.fx.init();
 
   var base = (window.R2_BASE || '').replace(/\/+$/, '');
@@ -85,8 +85,10 @@
     b.addEventListener('click', function () {
       var p = b.getAttribute('data-pane');
       tabs.forEach(function (x) { x.classList.toggle('on', x === b); });
-      document.getElementById('paneRead').classList.toggle('hide', p !== 'read');
-      document.getElementById('paneQuiz').classList.toggle('hide', p !== 'quiz');
+      var r = document.getElementById('paneRead');
+      var q = document.getElementById('paneQuiz');
+      if (r) r.classList.toggle('hide', p !== 'read');
+      if (q) q.classList.toggle('hide', p !== 'quiz');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });

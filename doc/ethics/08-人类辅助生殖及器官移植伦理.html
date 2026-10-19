@@ -44,9 +44,9 @@
     <div class="klayout">
       <aside class="toc">
         <div class="toc-h">本页目录</div>
-        <a href="#s1">第八章 人类辅助生殖及器官移植伦理</a><a href="#s2">一、人类辅助生殖技术伦理</a><a href="#s3">（一）概念和分类</a><a href="#s4">（二）伦理价值</a><a href="#s5">（三）伦理争议</a><a href="#s6">1. 如何确定配子、合子和胚胎的道德地位</a><a href="#s7">2. 家庭人伦关系的确定（亲子关系如何确定？）</a><a href="#s8">3. 自然法则可否违背</a><a href="#s9">4. 错用或滥用的可能（辅助生殖技术的安全性问题）</a><a href="#s10">5. 代孕的伦理争议</a><a href="#s11">（四）人类辅助生殖技术的伦理原则（七大原则）</a><a href="#s12">二、人体器官移植伦理</a><a href="#s13">（一）人体器官移植概述</a><a href="#s14">（二）器官移植中的主要伦理问题</a><a href="#s15">1. 器官（供体）来源问题</a><a href="#s16">尸体器官采集：</a><a href="#s17">活体器官采集：</a><a href="#s18">胎儿器官：</a><a href="#s19">异种器官：</a><a href="#s20">2. 器官分配（选择受体）问题</a><a href="#s21">（三）器官移植伦理原则</a><a href="#s22">三、我与"大体老师"</a><a href="#s23">四、课堂测试</a><a href="#s24">1. 下列说法符合我国人类辅助生殖技术伦理原则的是（　）</a><a href="#s25">3. 一个供精者的精子最多只能提供给（　）</a><a href="#s26">4. 人类辅助生殖技术带来的伦理问题应除外（　）</a>
+        __TOC__
         <div class="toc-h" style="margin-top:20px">文档信息</div>
-        <div class="small dim" style="padding:0 11px;line-height:1.9">段落 114<br>表格 0<br>小节 26</div>
+        <div class="small dim" style="padding:0 11px;line-height:1.9">__INFO__</div>
       </aside>
       <article class="article">
         <div id="body"></div>
@@ -67,7 +67,7 @@
   if (WB.mountChrome) WB.mountChrome('materials');
 
   var body = document.getElementById('body');
-  body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
+  if (body) body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
   if (WB.fx && WB.fx.init) WB.fx.init();
 
   var base = (window.R2_BASE || '').replace(/\/+$/, '');
@@ -85,8 +85,10 @@
     b.addEventListener('click', function () {
       var p = b.getAttribute('data-pane');
       tabs.forEach(function (x) { x.classList.toggle('on', x === b); });
-      document.getElementById('paneRead').classList.toggle('hide', p !== 'read');
-      document.getElementById('paneQuiz').classList.toggle('hide', p !== 'quiz');
+      var r = document.getElementById('paneRead');
+      var q = document.getElementById('paneQuiz');
+      if (r) r.classList.toggle('hide', p !== 'read');
+      if (q) q.classList.toggle('hide', p !== 'quiz');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });

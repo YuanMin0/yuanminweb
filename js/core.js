@@ -503,8 +503,10 @@
     return (q.answer || []).join(' / ');
   }
 
-  WB.download = function (filename, text) {
-    var blob = new Blob(['\ufeff' + text], { type: 'text/markdown;charset=utf-8' });
+  WB.download = function (filename, text, mime) {
+    var type = mime || 'text/markdown;charset=utf-8';
+    var head = /html/i.test(type) ? '' : '\ufeff';
+    var blob = new Blob([head + text], { type: type });
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
     a.href = url; a.download = filename;

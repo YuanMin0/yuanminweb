@@ -57,6 +57,7 @@
 <script src="data/health-stats.js"></script>
 <script src="data/materials.js"></script>
 <script src="js/fx.js"></script>
+<script src="js/export.js"></script>
 <script>
 (function () {
   WB.mountChrome('subjects');
@@ -114,7 +115,8 @@
   /* ---------- 章节手风琴 ---------- */
   var acc = '<section class="mt-4">' +
     '<div class="sec-head rv rv-d2"><div><h2>章节与知识点</h2><div class="sub">点击章节展开；勾选左侧圆点即可标记「已学」</div></div>' +
-    '<button class="gbtn gbtn-sm" id="expandAll">展开全部</button></div>' +
+    '<button class="gbtn gbtn-sm" id="expandAll">展开全部</button>' +
+    '<button class="gbtn gbtn-sm" id="exportAll" title="把整门科目导出成一个 HTML 文件"><span class="gbtn-ico">⤓</span> 导出全册</button></div>' +
     '<div class="acc" id="acc">' +
     s.chapters.map(function (ch, ci) {
       var rows = (ch.knowledge || []).map(function (k) {
@@ -181,6 +183,7 @@
   });
 
   var allOpen = true;
+  document.getElementById('exportAll').addEventListener('click', function () { WB.exportSubject(s); });
   document.getElementById('expandAll').addEventListener('click', function () {
     allOpen = !allOpen;
     root.querySelectorAll('.chapter').forEach(function (c) { c.classList.toggle('open', allOpen); });

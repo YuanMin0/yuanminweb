@@ -1405,10 +1405,11 @@ html[data-theme="dark"] .vz-kv { background: var(--surface-2); }
    ========================================================================== */
 
 /* ---------- 中文正文排版 ---------- */
+.article { font-size: 16.2px; }
 .article p,
 .article li {
-  letter-spacing: .012em;
-  line-height: 1.95;
+  letter-spacing: .014em;
+  line-height: 2.0;
 }
 .article p { margin-bottom: 1.05em; }
 .article h3 { letter-spacing: -.005em; }

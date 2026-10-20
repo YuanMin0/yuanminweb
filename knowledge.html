@@ -56,6 +56,7 @@
 <script src="data/organ3.js"></script>
 <script src="data/health-stats.js"></script>
 <script src="js/fx.js"></script>
+<script src="js/export.js"></script>
 <script src="js/viz.js"></script>
 <script>
 (function () {
@@ -128,6 +129,7 @@
       '</div>' +
       '<button class="gbtn gbtn-sm" id="learnBtn"></button>' +
       '<button class="gbtn gbtn-sm" id="dlBtn"><span class="gbtn-ico">⇩</span> 下载</button>' +
+      '<button class="gbtn gbtn-sm" id="htmlBtn" title="导出为单个 HTML 文件，双击即可离线阅读"><span class="gbtn-ico">⤓</span> 导出 HTML</button>' +
       '<a class="gbtn gbtn-sm gbtn-primary" href="' + WB.link('quiz.html', { s: s.id, k: k.id }) + '"><span class="gbtn-ico">◉</span> 做题 ' + k.quiz.length + '</a>' +
     '</div>';
 
@@ -182,9 +184,16 @@
     WB.toast(WB.store.isLearned(s.id, k.id) ? '已标记为「已学」' : '已取消「已学」');
   });
 
+  /* ---------- 一键导出 HTML ---------- */
+  document.getElementById('htmlBtn').addEventListener('click', function () {
+    WB.exportKnowledge(s, { title: k.chapterTitle }, k);
+  });
+
   /* ---------- 下载 ---------- */
   document.getElementById('dlBtn').addEventListener('click', function () {
     WB.downloadModal('下载《' + k.title + '》', [
+      { icon: '🌐', label: '导出 HTML（离线可看）', desc: '单个文件，含正文与全部题目解析，双击即可打开，无需联网',
+        run: function () { WB.exportKnowledge(s, { title: k.chapterTitle }, k); } },
       { icon: '📄', label: '知识点讲义（含习题与答案）', desc: 'Markdown 格式，含全部内容块、自测题与参考答案',
         run: function () { WB.download('MediLearn-' + WB.slug(k.title) + '.md', WB.knowledgeToMd(k, { withQuiz: true })); WB.toast('已开始下载'); } },
       { icon: '📃', label: '知识点讲义（仅正文）', desc: '不含习题，便于快速阅读',

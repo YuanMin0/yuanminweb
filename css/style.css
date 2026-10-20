@@ -237,7 +237,9 @@ mark.hl {
 .hero {
   position: relative; overflow: hidden;
   border-radius: var(--r-xl); padding: 44px 40px;
-  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+  background:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--text) 6%, transparent) 1px, transparent 0) 0 0 / 22px 22px,
+    linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
   border: 1px solid var(--border); box-shadow: var(--shadow-sm);
 }
 .hero::before {

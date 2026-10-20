@@ -184,6 +184,39 @@
   hs.forEach(function (h) { io.observe(h); });
   setTimeout(function () { hs.forEach(function (h) { h.classList.add('in'); }); }, 2500);
 })();
+
+/* ---------- 记住阅读位置 ---------- */
+(function () {
+  if (!document.getElementById('body')) return;
+  var KEY = 'medilearn.docpos:' + location.pathname;
+  var timer = 0;
+  window.addEventListener('scroll', function () {
+    if (timer) return;
+    timer = setTimeout(function () {
+      timer = 0;
+      try { localStorage.setItem(KEY, String(Math.round(window.scrollY))); } catch (e) {}
+    }, 600);
+  }, { passive: true });
+
+  var y = 0;
+  try { y = parseInt(localStorage.getItem(KEY) || '0', 10) || 0; } catch (e) {}
+  if (y < 600) return;
+  setTimeout(function () {
+    window.scrollTo(0, y);
+    var t = document.createElement('div');
+    t.textContent = '已回到上次阅读位置';
+    t.style.cssText = 'position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:9600;' +
+      'background:var(--text);color:var(--surface);font:500 13px/1 var(--font-sans,sans-serif);' +
+      'padding:9px 16px;border-radius:999px;box-shadow:0 10px 30px rgba(15,23,42,.22);' +
+      'opacity:0;transition:opacity .3s;pointer-events:none';
+    document.body.appendChild(t);
+    requestAnimationFrame(function () { t.style.opacity = '1'; });
+    setTimeout(function () {
+      t.style.opacity = '0';
+      setTimeout(function () { t.remove(); }, 400);
+    }, 1900);
+  }, 80);
+})();
 </script>
 
 </body>

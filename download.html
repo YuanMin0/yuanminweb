@@ -11,6 +11,21 @@
 <meta name="theme-color" content="#2563eb">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="stylesheet" href="css/changelog.css">
+<style>
+  .qr-card { display: flex; gap: 26px; align-items: center; }
+  .qr-img { flex: none; width: 200px; height: 200px; border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border-2); background: #fff; padding: 8px; }
+  .qr-img img { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+  .qr-txt { min-width: 0; line-height: 1.95; }
+  .qr-txt h3 { margin: 0 0 8px; font-size: 18px; }
+  .qr-txt p { margin: 0 0 10px; color: var(--text-2); }
+  .qr-txt ul { margin: 0 0 10px; padding-left: 20px; color: var(--text-2); }
+  .qr-txt li { margin-bottom: 4px; }
+  @media (max-width: 640px) {
+    .qr-card { flex-direction: column; align-items: flex-start; }
+    .qr-img { width: 160px; height: 160px; }
+  }
+</style>
 <script src="js/auth.js"></script>
 <script>if(window.WB&&WB.auth)WB.auth.guard();</script>
 </head>
@@ -33,6 +48,26 @@
           <span class="gbtn-ico">⤓</span> <span id="dlLabel">下载安装包</span>
         </a>
         <span class="small dim" id="dlMeta">正在检查…</span>
+      </div>
+    </section>
+
+    <section class="mt-4" id="mobile">
+      <div class="sec-head rv"><div><h2>手机版</h2><div class="sub">扫码打开，添加到主屏幕</div></div></div>
+      <div class="card card-pad rv qr-card">
+        <div class="qr-img"><img src="icons/qr-site.png" alt="扫码打开 MediLearn"></div>
+        <div class="qr-txt">
+          <h3>手机不用下载安装包</h3>
+          <p>用手机浏览器打开本站后「添加到主屏幕」，桌面就会出现一个独立图标：
+             全屏运行、没有地址栏，访问过的内容离线也能看。</p>
+          <ul>
+            <li><b>Android</b>：Chrome 菜单 →「安装应用」或「添加到主屏幕」</li>
+            <li><b>iOS</b>：Safari 底部「分享」→「添加到主屏幕」</li>
+          </ul>
+          <p class="small dim" style="margin:0">
+            暂不提供 .apk / .ipa：安卓需要打包工具链与签名，iOS 需要 Mac 与开发者账号。
+            需要的话可以另做。
+          </p>
+        </div>
       </div>
     </section>
 

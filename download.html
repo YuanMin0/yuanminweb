@@ -85,6 +85,7 @@
 <script src="js/core.js"></script>
 <script src="js/fx.js"></script>
 <script src="js/pwa.js"></script>
+<script src="data/desktop.js"></script>
 <script src="data/changelog.js"></script>
 <script src="js/changelog.js"></script>
 <script>
@@ -92,31 +93,28 @@
   WB.mountChrome('download');
   if (WB.fx && WB.fx.init) WB.fx.init();
 
-  /* 安装包地址：打包上传后改这里 */
-  var DL = 'https://pdf.yuanminstudy.uk/materials/desktop/MediLearn-Setup.exe';
+  /* 安装包信息由 data/desktop.js 声明，避免跨域读 content-length */
   var btn = document.getElementById('dlBtn');
   var label = document.getElementById('dlLabel');
   var meta = document.getElementById('dlMeta');
+  var D = window.DESKTOP;
 
-  btn.href = DL;
-  btn.setAttribute('download', '');
-  btn.addEventListener('click', function () {
-    try { localStorage.setItem('medilearn.pwa.done', '1'); } catch (e) {}
-  });
-
-  var CL = 'content' + '-length';   /* 拼出来，避免被静态审计当成样式类 */
-  fetch(DL, { method: 'HEAD' }).then(function (r) {
-    if (!r.ok) throw new Error('404');
-    var mb = (+r.headers.get(CL) || 0) / 1048576;
-    meta.textContent = 'v1.0.5 · Windows 64 位 · ' + (mb ? mb.toFixed(0) + ' MB' : '');
-  }).catch(function () {
+  if (D && D.url) {
+    btn.href = D.url;
+    btn.setAttribute('download', '');
+    var mb = D.size ? Math.round(D.size / 1048576) : 0;
+    meta.textContent = 'v' + D.version + ' · ' + D.platform + (mb ? ' · ' + mb + ' MB' : '');
+    btn.addEventListener('click', function () {
+      try { localStorage.setItem('medilearn.pwa.done', '1'); } catch (e) {}
+    });
+  } else {
     label.textContent = '安装包准备中';
     meta.textContent = '正在打包，稍后再来';
     btn.classList.remove('gbtn-primary');
     btn.removeAttribute('href');
     btn.style.opacity = '.6';
     btn.style.pointerEvents = 'none';
-  });
+  }
 
   var why = [
     { ico: '⚡', t: '启动更快', d: '内容在本地，点开就有，不用等网络' },

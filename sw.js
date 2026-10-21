@@ -8,14 +8,14 @@
    缓存版本号跟随发布版本，升级后旧缓存自动清理。
    ========================================================================== */
 
-const VERSION = 'v1.0.5';
+const VERSION = 'v1.0.5.2';
 const CACHE = 'medilearn-' + VERSION;
-const OFFLINE = '/offline.html';
+const OFFLINE = '/offline';   // 线上无扩展名地址
 
 /* 首次安装就预缓存的核心文件 */
 const PRECACHE = [
   '/',
-  '/index.html',
+  '/offline',
   '/offline.html',
   '/manifest.webmanifest',
   '/css/style.css',
@@ -74,9 +74,10 @@ self.addEventListener('fetch', (e) => {
       } catch (err) {
         const hit = await cache.match(req, { ignoreSearch: true });
         if (hit) return hit;
-        const home = await cache.match('/index.html');
+        const home = (await cache.match('/')) || (await cache.match('/index.html'));
         if (home) return home;
-        return (await cache.match(OFFLINE)) || new Response('离线中', { status: 503 });
+        const off = (await cache.match(OFFLINE)) || (await cache.match('/offline.html'));
+        return off || new Response('离线中', { status: 503 });
       }
     })());
     return;

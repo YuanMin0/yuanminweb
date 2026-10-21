@@ -1,8 +1,8 @@
 {
 "v":"1.0.5",
-"build":"2026-10-21T14:02:06+0800",
-"count":101,
-"bytes":5803147,
+"build":"2026-10-21T14:04:23+0800",
+"count":102,
+"bytes":5803273,
 "files":{
 "404.html":{
 "size":5183,
@@ -13,8 +13,8 @@
 "sha1":"c91efdac9c8a42db827f7ba62d54b2b2a803fc16"
 },
 "download.html":{
-"size":6912,
-"sha1":"8e7f57ecb3b435e531de9f4f97016e341bc0d17e"
+"size":6775,
+"sha1":"1640aeee0bf98d27953ff48a934779c011134d3d"
 },
 "index.html":{
 "size":11337,
@@ -119,6 +119,10 @@
 "data/changelog.js":{
 "size":5549,
 "sha1":"946c4c84e4cd120a66d499027ab514d02243d7bc"
+},
+"data/desktop.js":{
+"size":263,
+"sha1":"02fc9caff5779007d334f27d229d2ce91d947aea"
 },
 "data/diagnostics.js":{
 "size":42491,

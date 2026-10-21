@@ -48,20 +48,6 @@
   .article .blk-table table { border-radius: 12px; overflow: hidden; }
   .article .blk-table thead th { position: sticky; top: 0; z-index: 1; }
 
-  /* 阅读进度与回到顶部 */
-  #dgProg { position: fixed; left: 0; top: 0; height: 2.5px; width: 0; z-index: 9000;
-    background: linear-gradient(90deg, var(--brand), var(--violet));
-    box-shadow: 0 0 12px color-mix(in srgb, var(--brand) 55%, transparent);
-    pointer-events: none; transition: width .1s linear; }
-  #dgTop { position: fixed; right: 20px; bottom: 24px; z-index: 8999;
-    width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
-    display: grid; place-items: center; font-size: 16px; font-weight: 700;
-    color: var(--text-2); background: var(--surface); border: 1px solid var(--border-2);
-    box-shadow: var(--shadow-md); opacity: 0; transform: translateY(10px) scale(.94);
-    pointer-events: none; transition: opacity .24s var(--ease), transform .24s var(--ease); }
-  #dgTop.on { opacity: 1; transform: none; pointer-events: auto; }
-  #dgTop:hover { color: var(--brand); transform: translateY(-2px); }
-
   @media (max-width: 900px) {
     .klayout { grid-template-columns: 1fr; }
     .toc { position: static; margin-bottom: 8px; }
@@ -107,6 +93,7 @@
 <footer class="ftr" data-ftr></footer>
 
 <script src="../../js/core.js"></script>
+<script src="../../js/fx.js"></script>
 <script src="../../data/cdn-config.js"></script>
 <script>window.__DOC_BLOCKS = [{"type": "p", "text": "一、"}, {"type": "p", "text": "大家好，今天我将为大家分享一例急性髓系白血病的病例分析。我们将从病例回顾出发，深入探讨其诊断、鉴别诊断以及现代诊疗策略。希望通过这次分享，能帮助大家更好地理解和掌握这类疾病的临床思维。"}, {"type": "p", "text": "二、本次汇报将分为四个部分。首先，我们将回顾患者的基本情况和关键的临床发现。其次，我们将依据MICM分型系统，详细解读患者的诊断依据。接着，我们会讨论需要与哪些疾病进行鉴别诊断。最后，我们将重点介绍针对该患者的系统性治疗方案。"}, {"type": "p", "text": "三、"}, {"type": "p", "text": "我们来看一下患者的基本情况。患者是一位56岁的女性，主因“发热伴咳嗽1周”入院。她的病史比较简单，没有特殊的既往病史。这些看似普通的症状，背后却隐藏着严重的血液系统疾病。"}, {"type": "p", "text": "四、"}, {"type": "p", "text": "入院后的检查结果揭示了病情的严重性。体格检查发现了贫血、出血点和胸骨压痛等典型白血病体征。血常规呈现出“一高两低”的白血病血象，血涂片和骨髓穿刺更是直接发现了大量的原始和幼稚细胞。流式细胞学和分子生物学检查进一步明确了细胞来源和预后相关的基因突变。"}, {"type": "p", "text": "五、综合以上信息，我们可以初步诊断为急性髓系白血病，也就是AML。诊断依据非常充分：患者有典型的感染、贫血和出血症状；血常规提示白细胞异常升高伴两系减少；血涂片和骨髓形态学检查都发现了大量的原始细胞，比例高达67%，远超WHO规定的20%的诊断标准。"}, {"type": "p", "text": "六、为了更精确地诊断，我们需要进行MICM分型。首先是形态学（M），骨髓涂片显示原始粒细胞占67%，符合AML的特征。其次是免疫学（I），流式细胞学结果显示细胞表达CD13、CD33等髓系抗原，这有力地证实了白血病细胞来源于髓系，而不是淋系。"}, {"type": "p", "text": "七"}, {"type": "p", "text": "接下来是细胞遗传学（C）和分子生物学（M）。遗憾的是，本例没有提供染色体核型结果，这对于预后判断是一个缺憾。但分子生物学检测发现了WT1基因阳性。大量研究表明，WT1高表达是AML预后不良的独立危险因素，这意味着患者的复发风险更高，生存期可能更短。因此，我们应将其归为中高危组。"}, {"type": "p", "text": "八"}, {"type": "p", "text": "综上所述，我们可以给出最终的诊断：急性髓系白血病，非急性早幼粒细胞白血病亚型，伴有WT1阳性。这个诊断不仅明确了疾病类型，还通过分子生物学标记提示了其不良的预后倾向，为后续的治疗决策提供了重要依据。"}, {"type": "p", "text": "九"}, {"type": "p", "text": "在诊断过程中，我们需要与一些疾病进行鉴别。首先是骨髓增生异常综合征，也就是MDS。两者都可能有血细胞减少和幼稚细胞。但核心区别在于原始细胞的比例，AML要求≥20%，而MDS则<20%。本例患者高达67%，因此可以轻松排除MDS。"}, {"type": "p", "text": "十"}, {"type": "p", "text": "其次是再生障碍性贫血，AA。两者都可能出现严重的全血细胞减少。但骨髓穿刺结果截然不同：AA的骨髓是空虚的，造血细胞被脂肪取代，表现为增生低下；而AML的骨髓则是“爆满”的，充满了白血病细胞，表现为增生极度活跃。本例显然符合后者。"}, {"type": "p", "text": "十一"}, {"type": "p", "text": "还需要与急性淋巴细胞白血病（ALL）和类白血病反应鉴别。与ALL的鉴别主要依靠流式细胞学，看细胞表达的是髓系还是淋系抗原，本例明确是髓系。而类白血病反应通常有明确的诱因，如严重感染，且不会出现如此严重的贫血和血小板减少，骨髓中也不会有这么多原始细胞。"}, {"type": "p", "text": "十二"}, {"type": "p", "text": "明确诊断后，治疗刻不容缓。第一步是紧急支持治疗。患者当时存在严重的感染和出血风险，因此必须立即进行抗感染治疗和输注血小板。同时，纠正贫血和后续使用升白针等支持治疗也是必不可少的，这为后续的化疗保驾护航。"}, {"type": "p", "text": "十三"}, {"type": "p", "text": "支持治疗稳定后，就进入了核心的诱导缓解化疗阶段。对于这位56岁的患者，标准的“7+3”方案是首选。考虑到她WT1阳性的不良预后因素，也可以考虑使用FLAG-IDA等更强的诱导方案，以期获得更深层次的缓解。"}, {"type": "p", "text": "十四"}, {"type": "p", "text": "诱导化疗成功后，我们需要进行巩固强化治疗，以清除微小残留病。对于这位预后不良的患者，异基因造血干细胞移植是首选方案，它能显著降低复发率，改善长期生存。因此，一旦患者达到完全缓解，就应尽快寻找合适的供者进行移植。"}, {"type": "p", "text": "十五"}, {"type": "p", "text": "最后，针对患者WT1阳性这一特点，我们需要采取一些特定策略。首先，要定期监测WT1的水平，作为评估疗效和复发的风向标。其次，对于无法移植或移植后的患者，可以考虑使用去甲基化药物进行维持治疗。此外，一些新兴的免疫疗法，如WT1疫苗和CAR-T，也为这类患者带来了新的希望。"}, {"type": "p", "text": "十六"}, {"type": "p", "text": "我的汇报到此结束，感谢大家的聆听。如果大家对病例分析或诊疗策略有任何疑问，欢迎提问交流。"}];</script>
 <script>
@@ -152,30 +139,11 @@
   paint();
 })();
 
-/* ---------- 阅读进度、回到顶部、章节入场 ---------- */
+/* ---------- 章节入场 ---------- */
 (function () {
-  var bar = document.createElement('div'); bar.id = 'dgProg';
-  var top = document.createElement('button'); top.id = 'dgTop';
-  top.type = 'button'; top.setAttribute('aria-label', '回到顶部'); top.textContent = '↑';
-  document.body.appendChild(bar); document.body.appendChild(top);
-
-  var raf = 0;
-  function paint() {
-    raf = 0;
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    var y = window.scrollY || 0;
-    bar.style.width = (max > 0 ? Math.min(1, y / max) * 100 : 0).toFixed(2) + '%';
-    top.classList.toggle('on', y > 520);
-  }
-  window.addEventListener('scroll', function () {
-    if (!raf) raf = requestAnimationFrame(paint);
-  }, { passive: true });
-  window.addEventListener('resize', paint, { passive: true });
-  top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-  paint();
-
   var hs = [].slice.call(document.querySelectorAll('.article h3'));
-  if (!('IntersectionObserver' in window) || !hs.length) {
+  if (!hs.length) return;
+  if (!('IntersectionObserver' in window)) {
     hs.forEach(function (h) { h.classList.add('in'); });
     return;
   }

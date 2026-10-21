@@ -48,20 +48,6 @@
   .article .blk-table table { border-radius: 12px; overflow: hidden; }
   .article .blk-table thead th { position: sticky; top: 0; z-index: 1; }
 
-  /* 阅读进度与回到顶部 */
-  #dgProg { position: fixed; left: 0; top: 0; height: 2.5px; width: 0; z-index: 9000;
-    background: linear-gradient(90deg, var(--brand), var(--violet));
-    box-shadow: 0 0 12px color-mix(in srgb, var(--brand) 55%, transparent);
-    pointer-events: none; transition: width .1s linear; }
-  #dgTop { position: fixed; right: 20px; bottom: 24px; z-index: 8999;
-    width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
-    display: grid; place-items: center; font-size: 16px; font-weight: 700;
-    color: var(--text-2); background: var(--surface); border: 1px solid var(--border-2);
-    box-shadow: var(--shadow-md); opacity: 0; transform: translateY(10px) scale(.94);
-    pointer-events: none; transition: opacity .24s var(--ease), transform .24s var(--ease); }
-  #dgTop.on { opacity: 1; transform: none; pointer-events: auto; }
-  #dgTop:hover { color: var(--brand); transform: translateY(-2px); }
-
   @media (max-width: 900px) {
     .klayout { grid-template-columns: 1fr; }
     .toc { position: static; margin-bottom: 8px; }
@@ -107,6 +93,7 @@
 <footer class="ftr" data-ftr></footer>
 
 <script src="../../js/core.js"></script>
+<script src="../../js/fx.js"></script>
 <script src="../../data/cdn-config.js"></script>
 <script>window.__DOC_BLOCKS = [{"type": "h", "level": 3, "id": "s1", "text": "第一章 医学伦理学基本概念"}, {"type": "p", "text": "学习目标：掌握道德与伦理的概念及区别、三种伦理学形态、医学伦理学的研究对象；理解道德六维度口诀。"}, {"type": "h", "level": 3, "id": "s2", "text": "一、道德与伦理的概念"}, {"type": "h", "level": 3, "id": "s3", "text": "（一）道德的定义"}, {"type": "p", "text": "道德是人们在社会生活实践中形成的，由经济基础决定的，以善恶为评价标准，以内心信念、社会舆论和传统习惯为评价方式，调整个人与个人、个人与社会、个人与自然之间关系，追求自身人格完善的活动现象、关系现象和意识现象的总和，是人类独有的一种生活方式。"}, {"type": "h", "level": 3, "id": "s4", "text": "六字口诀：起·定·评·约·调·成"}, {"type": "p", "text": "要点"}, {"type": "p", "text": "内容"}, {"type": "p", "text": "起"}, {"type": "p", "text": "起源于社会实践"}, {"type": "p", "text": "定"}, {"type": "p", "text": "由经济基础决定"}, {"type": "p", "text": "评"}, {"type": "p", "text": "以善恶为评价标准"}, {"type": "p", "text": "约"}, {"type": "p", "text": "靠三种方式约束（内心信念、社会舆论、传统习惯）"}, {"type": "p", "text": "调"}, {"type": "p", "text": "调整三层关系（人—人、人—社会、人—自然）"}, {"type": "p", "text": "成"}, {"type": "p", "text": "追求人格成长与关系和谐"}, {"type": "h", "level": 3, "id": "s5", "text": "（二）道德判断与非道德判断"}, {"type": "p", "text": "练习：判断下列命题属于道德判断还是非道德判断。"}, {"type": "list", "items": ["我讨厌不守信用的人。——情感判断（非道德判断）"]}, {"type": "h", "level": 3, "id": "s6", "text": "2. 苏格拉底不应该越狱。——道德判断 √"}, {"type": "h", "level": 3, "id": "s7", "text": "3. 浪费可耻。——道德判断 √"}, {"type": "list", "items": ["这辆车真棒！——事实/价值判断（非道德判断）"]}, {"type": "h", "level": 3, "id": "s8", "text": "5. 己所不欲，勿施于人。——道德判断 √"}, {"type": "h", "level": 3, "id": "s9", "text": "6. 直接民主制不是一种好的制度形式。——道德判断 √"}, {"type": "h", "level": 3, "id": "s10", "text": "7. 那个人不守信用。——道德判断 √"}, {"type": "list", "items": ["杰克这两年活得糟透了。——事实判断（非道德判断）", "你应该穿西装上班。——非道德判断 ×"]}, {"type": "h", "level": 3, "id": "s11", "text": "10. 张三是个好人。——道德判断 √"}, {"type": "p", "text": "辨析：道德 ≠ 法律、道德 ≠ 习性、道德 ≠ 规定。"}, {"type": "h", "level": 3, "id": "s12", "text": "（三）伦理与道德的区别（填空练习）"}, {"type": "h", "level": 3, "id": "s13", "text": "1. 医患____关系 → 伦理（侧重关系准则）"}, {"type": "h", "level": 3, "id": "s14", "text": "2. 医生的____修养 → 道德（侧重个人品质）"}, {"type": "h", "level": 3, "id": "s15", "text": "3. 这个行为很不____ → 道德（侧重个人评判）"}, {"type": "h", "level": 3, "id": "s16", "text": "4. 这违反了医学____规范 → 伦理（侧重制度规范）"}, {"type": "h", "level": 3, "id": "s17", "text": "二、三种伦理学形态"}, {"type": "p", "text": "类比角色"}, {"type": "p", "text": "伦理学类型"}, {"type": "p", "text": "核心任务"}, {"type": "p", "text": "问的问题"}, {"type": "p", "text": "美食评论家（定标准）"}, {"type": "p", "text": "规范伦理学"}, {"type": "p", "text": "制定道德规范"}, {"type": "p", "text": "\"什么是善？什么是恶？什么是应该做的？\""}, {"type": "p", "text": "语言学家（研究概念）"}, {"type": "p", "text": "元伦理学"}, {"type": "p", "text": "分析道德概念和逻辑"}, {"type": "p", "text": "\"'善'这个词是什么意思？\"\"道德推理怎么才算有效？\""}, {"type": "p", "text": "社会调查员（描述事实）"}, {"type": "p", "text": "描述伦理学"}, {"type": "p", "text": "描述道德现象"}, {"type": "p", "text": "\"大家对这件事怎么看？\"\"不同文化有什么不同？\""}, {"type": "h", "level": 3, "id": "s18", "text": "三、医学伦理学的研究对象"}, {"type": "p", "text": "研究医疗领域中的道德关系和道德现象："}, {"type": "list", "items": ["医生和患者（及家属）——这是核心中的核心；", "医生和医生——包括医护、医技、医管之间的关系；", "医生和社会——医生对社会进步的责任；", "医生和医学发展——新技术带来的新伦理问题（如AI医疗）。"]}, {"type": "h", "level": 3, "id": "s19", "text": "四、课堂小结"}, {"type": "h", "level": 3, "id": "s20", "text": "• 四个概念：道德、医学道德、伦理学、医学伦理学"}, {"type": "h", "level": 3, "id": "s21", "text": "• 三组特性："}, {"type": "list", "items": ["道德特点：阶级性和全民性统一 / 变动性和稳定性统一 / 自律性和他律性统一 / 现实性和理想性统一 / 协调性和进取性统一", "医学道德特点：专业性、传承性、普适性"]}, {"type": "h", "level": 3, "id": "s22", "text": "• 两个问题："}, {"type": "list", "items": ["核心问题——医患关系", "基本问题——道德和利益关系"]}, {"type": "h", "level": 3, "id": "s23", "text": "• 一组作用：立优解范"}, {"type": "h", "level": 3, "id": "s24", "text": "五、思考题"}, {"type": "list", "items": ["道德的本质、构成及作用方式？", "伦理和道德的区别？", "医学伦理学的基本问题、核心问题、理论基础是什么？", "学习医学伦理学的意义与方法？"]}, {"type": "h", "level": 3, "id": "s25", "text": "六、在线答题"}, {"type": "p", "text": "题目：医院的\"医务人员患者满意度调查\"，属于道德六维度中的哪两个？（多选题2分）"}, {"type": "list", "items": ["A. 评价标准（善恶）", "B. 评价方式（舆论/传统/内心信念）", "C. 调节关系（医患关系）", "D. 人格完善"]}, {"type": "h", "level": 3, "id": "s26", "text": "正确答案：B、C"}];</script>
 <script>
@@ -152,30 +139,11 @@
   paint();
 })();
 
-/* ---------- 阅读进度、回到顶部、章节入场 ---------- */
+/* ---------- 章节入场 ---------- */
 (function () {
-  var bar = document.createElement('div'); bar.id = 'dgProg';
-  var top = document.createElement('button'); top.id = 'dgTop';
-  top.type = 'button'; top.setAttribute('aria-label', '回到顶部'); top.textContent = '↑';
-  document.body.appendChild(bar); document.body.appendChild(top);
-
-  var raf = 0;
-  function paint() {
-    raf = 0;
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    var y = window.scrollY || 0;
-    bar.style.width = (max > 0 ? Math.min(1, y / max) * 100 : 0).toFixed(2) + '%';
-    top.classList.toggle('on', y > 520);
-  }
-  window.addEventListener('scroll', function () {
-    if (!raf) raf = requestAnimationFrame(paint);
-  }, { passive: true });
-  window.addEventListener('resize', paint, { passive: true });
-  top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-  paint();
-
   var hs = [].slice.call(document.querySelectorAll('.article h3'));
-  if (!('IntersectionObserver' in window) || !hs.length) {
+  if (!hs.length) return;
+  if (!('IntersectionObserver' in window)) {
     hs.forEach(function (h) { h.classList.add('in'); });
     return;
   }

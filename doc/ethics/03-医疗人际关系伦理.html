@@ -48,20 +48,6 @@
   .article .blk-table table { border-radius: 12px; overflow: hidden; }
   .article .blk-table thead th { position: sticky; top: 0; z-index: 1; }
 
-  /* 阅读进度与回到顶部 */
-  #dgProg { position: fixed; left: 0; top: 0; height: 2.5px; width: 0; z-index: 9000;
-    background: linear-gradient(90deg, var(--brand), var(--violet));
-    box-shadow: 0 0 12px color-mix(in srgb, var(--brand) 55%, transparent);
-    pointer-events: none; transition: width .1s linear; }
-  #dgTop { position: fixed; right: 20px; bottom: 24px; z-index: 8999;
-    width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
-    display: grid; place-items: center; font-size: 16px; font-weight: 700;
-    color: var(--text-2); background: var(--surface); border: 1px solid var(--border-2);
-    box-shadow: var(--shadow-md); opacity: 0; transform: translateY(10px) scale(.94);
-    pointer-events: none; transition: opacity .24s var(--ease), transform .24s var(--ease); }
-  #dgTop.on { opacity: 1; transform: none; pointer-events: auto; }
-  #dgTop:hover { color: var(--brand); transform: translateY(-2px); }
-
   @media (max-width: 900px) {
     .klayout { grid-template-columns: 1fr; }
     .toc { position: static; margin-bottom: 8px; }
@@ -107,6 +93,7 @@
 <footer class="ftr" data-ftr></footer>
 
 <script src="../../js/core.js"></script>
+<script src="../../js/fx.js"></script>
 <script src="../../data/cdn-config.js"></script>
 <script>window.__DOC_BLOCKS = [{"type": "h", "level": 3, "id": "s1", "text": "第三章 医疗人际关系伦理"}, {"type": "p", "text": "学习目标：掌握医患关系的特点、性质、内容与模式；理解和谐医患关系的伦理要求；掌握医际关系的特点、模式与伦理要求。"}, {"type": "h", "level": 3, "id": "s2", "text": "一、医患关系伦理"}, {"type": "h", "level": 3, "id": "s3", "text": "（一）医患关系概述"}, {"type": "h", "level": 3, "id": "s4", "text": "1. 含义"}, {"type": "list", "items": ["狭义：医生与患者为治疗疾病而建立的人际关系。", "广义：医疗活动主体基于健康需要而形成、受医学职业伦理和相关法律规范调整的社会关系。"]}, {"type": "h", "level": 3, "id": "s5", "text": "2. 特点"}, {"type": "p", "text": "特点"}, {"type": "p", "text": "说明"}, {"type": "list", "items": ["目的明确且高度一致"]}, {"type": "p", "text": "医患交往形式有异，目的相同——为了患者恢复健康或提高健康水平"}, {"type": "list", "items": ["利益相关且互惠互利"]}, {"type": "p", "text": "医患双方的利益关系是社会整体利益的反映；张震康：医患双方是成败共同体、胜负共同体、荣辱共同体、利益共同体、命运共同体"}, {"type": "list", "items": ["知识不对称但尊严权利平等"]}, {"type": "p", "text": "知识技能不对称，心态不合理；人格尊严、权利受侵犯受到医学道德谴责或法律制裁"}, {"type": "list", "items": ["矛盾客观存在但需协同努力"]}, {"type": "p", "text": "影响因素：生理差异、诊疗经验、双方认知、医学实践性、医疗管理、经费投入等；循环关系：地位平等、目的一致、结果共赢、过程差异"}, {"type": "h", "level": 3, "id": "s6", "text": "3. 性质"}, {"type": "list", "items": ["法律——契约关系：医疗契约（医疗合同），患者与医疗机构（平等主体）设立、变更、终止民事权利与义务关系的协议。", "伦理——信托关系：信托人不具备专业知识；基础是信任和依赖；客体是生命健康；特征是权力不对等、伴随风险、专家责任。医患关系是以诚信为基础的具有契约性质的信托关系。（\"健康所系，性命相托\"——《医学生誓言》，国家教委高教司[1991]106号）", "社会文化——服务与被服务的关系：医疗服务涵盖治疗、康复、预防、保健、心理、养老、美容等领域（《促进健康消费专项行动方案》：构建商旅文体健等消费业态融合发展格局，更好满足人民健康消费需求）。"]}, {"type": "h", "level": 3, "id": "s7", "text": "（二）医患关系的历史与现状"}, {"type": "list", "items": ["古代医学中的医患关系：特征——融洽、简朴、依赖。", "《大医精诚》：\"若有疾厄来求救者，不得问其贵贱贫富，长幼妍媸，怨亲善友，华夷愚智，普同一等，皆如至亲之想……\"", "《希波克拉底誓词》：医生行医的唯一目的是为病家谋幸福，不能分男女、贵贱；严格约束自己行为，不做害人的事。", "近现代医学中的医患关系：基本特征——分解（人体=器官-组织-细胞）；呈现特点——物化（符号、数据）、片段化（医、护、技、药）、非人格化。"]}, {"type": "h", "level": 3, "id": "s8", "text": "3. 当前我国的医患关系"}, {"type": "list", "items": ["和谐是主流（医方、患方、社会三方）；", "医患纠纷数据：中国2件/名、美国15件/名、日本0.4件/名（《中国医师执业状况白皮书》2018版：医患关系趋于紧张是事实，但医疗纠纷在缓慢下降）；", "医患关系的本质属性调查：一般诊疗关系52.6%、利益对立关系7.7%、消费者与商家关系16.3%；", "医患关系类型调查：指导-合作型44.8%、主动-被动型35.3%、共同参与型19.9%。"]}, {"type": "h", "level": 3, "id": "s9", "text": "（三）医患关系的内容和模式"}, {"type": "h", "level": 3, "id": "s10", "text": "1. 基本内容"}, {"type": "list", "items": ["技术内容：医疗技术活动中医患之间形成的行为关系（针对诊断、治疗、护理及预防保健的具体方法和问题），是联系医患关系的桥梁、维持非技术关系的前提。", "非技术内容：由于社会、心理、经济、文化等方面影响形成的道德关系、利益关系、价值关系、法律关系和文化关系，是较活跃的因素，影响技术内容。"]}, {"type": "h", "level": 3, "id": "s11", "text": "2. 基本模式（萨斯-荷伦德模式）"}, {"type": "p", "text": "类型"}, {"type": "p", "text": "医生地位"}, {"type": "p", "text": "患者地位"}, {"type": "p", "text": "类似关系"}, {"type": "p", "text": "适用范围"}, {"type": "p", "text": "主动-被动型"}, {"type": "p", "text": "有权为病人做什么（权威主导）"}, {"type": "p", "text": "无权选择做什么"}, {"type": "p", "text": "父母与婴儿"}, {"type": "p", "text": "重急症、意识丧失（麻醉等）下的抢救"}, {"type": "p", "text": "指导-合作型"}, {"type": "p", "text": "告诉病人要做什么"}, {"type": "p", "text": "被要求与医生合作"}, {"type": "p", "text": "父母与青少年"}, {"type": "p", "text": "急性病有意识者（现代医患关系基础模式）"}, {"type": "p", "text": "共同参与型"}, {"type": "p", "text": "帮助病人做什么"}, {"type": "p", "text": "主动与医生结成伙伴"}, {"type": "p", "text": "成人之间"}, {"type": "p", "text": "慢性病、略懂医者、心理/精神治疗"}, {"type": "h", "level": 3, "id": "s12", "text": "（四）和谐医患关系的伦理要求"}, {"type": "list", "items": ["强化医患沟通与交流：语言沟通与非语言交流；相互了解、理解；积极宽容、谅解；克服心理障碍、文化差异。", "自觉维护对方的权利：尊重维护患方权利；让患方感受到尊重和维护；引导患方尊重、珍视。", "自觉履行各自的义务：端正认识——主动促成医患关系的协调与合作；纠正误区——权威心理或家长作风、医疗买卖、健康交易；积极引导。", "平衡权利义务关系：法律与伦理；履行义务与享受权利；自律先行与示范引导。"]}, {"type": "p", "text": "知识小结：方法层·沟通（Communication）；价值层·平衡调整（Adjustment）；内容层·权利（Right）；内容层·义务（Duty）。"}, {"type": "h", "level": 3, "id": "s13", "text": "二、医际关系伦理"}, {"type": "h", "level": 3, "id": "s14", "text": "（一）医际关系概述"}, {"type": "list", "items": ["含义：医学实践主体在职业活动中形成的业缘关系。医患关系处于核心地位，医际关系处于从属地位。主体包括：医生、护士、药师、技师、行政管理人员、后勤服务人员等。"]}, {"type": "h", "level": 3, "id": "s15", "text": "• 特点："}, {"type": "list", "items": ["协同性：大健康观、系统医学观（例：第35批援桑给巴尔中国医疗队\"百队千村行\"奔巴岛义诊）；", "平等性：相互平等的同志关系；", "同一性：以共同职业目的和道德目标为前提；", "竞争性：既协作又竞争（\"当代医生内卷\"）。"]}, {"type": "p", "text": "辨析：\"尊重同行\"与\"监督同行\"是否矛盾？"}, {"type": "list", "items": ["内在统一于\"对患者最高负责\"这一共同、更高层级的伦理原则；", "真正的尊重，是尊重对方的专业能力和共同维护患者安全的终极责任，即为患者利益而进行善意、建设性监督的义务；", "合理的监督应以专业、私密、帮助改进的方式进行，保护患者和帮助同行成长，而非羞辱或惩罚；", "二者是维护医疗质量和患者安全的一体两面。"]}, {"type": "h", "level": 3, "id": "s16", "text": "（二）医际关系的模式"}, {"type": "list", "items": ["优势互补型：年龄、专业、性别、性格、专长等互补；", "指导-被指导型：上级医务工作者在知识结构、临床经验、医疗技术和医德修养方面高于一般医务人员，有利于工作开展和下级迅速成长；", "合作竞争型：医疗水平、科研成果、工作质量、服务态度等的比较与协同。合作第一、竞争第二。"]}, {"type": "h", "level": 3, "id": "s17", "text": "（三）医际关系的作用"}, {"type": "list", "items": ["医学发展的客观需要（宏观）；", "发挥机构的整体效应（宏观）；", "医务人员的成长成才（微观）；", "建立和谐的医患关系（微观）。"]}, {"type": "h", "level": 3, "id": "s18", "text": "（四）和谐医际关系的道德要求"}, {"type": "p", "text": "同心、同德、互信、互助、共优（递进：同心→同德→互信→互助→共优）"}, {"type": "list", "items": ["同心：维护病人利益和社会公益，是和谐共事的思想根基与道德准则（案例：空军军医大学西京医院团队\"猪异种植入人体缓解糖尿病异种移植模型\"研究入选2025年度\"中国科学十大进展\"）；", "同德：平等主体、同行，尊重同事的人格、专业、愿望和劳动成果，将心比心；", "互信：彼此信任、互相协作、监督提醒（正向）；相互猜疑、议论他人长短（负向）（例：火神山医院医护人员）；", "互助：彼此独立、互相支持、热心帮助（例：四川大学华西医院刘进教授住院医师规范化培训发展基金捐赠仪式）；", "共优：医学博大精深，互相学习、共同提高、发挥优势。"]}, {"type": "h", "level": 3, "id": "s19", "text": "三、知识点总结"}, {"type": "p", "text": "维度"}, {"type": "p", "text": "医患关系"}, {"type": "p", "text": "医际关系"}, {"type": "p", "text": "特点"}, {"type": "list", "items": ["目的一致 ②结果共赢 ③地位平等 ④过程差异", "协同性 ②平等性 ③同一性 ④竞争性"]}, {"type": "p", "text": "性质"}, {"type": "list", "items": ["契约关系 ②信托关系 ③服务与被服务关系"]}, {"type": "p", "text": "——"}, {"type": "p", "text": "内容"}, {"type": "p", "text": "技术关系 / 非技术关系"}, {"type": "p", "text": "——"}, {"type": "p", "text": "模式"}, {"type": "list", "items": ["主动-被动型 ②指导-合作型 ③共同参与型", "优势互补型 ②指导-被指导型 ③合作竞争型"]}, {"type": "p", "text": "伦理要求"}, {"type": "list", "items": ["密切沟通交流 ②维护对方权利 ③履行自己义务 ④平衡权利义务", "同心 ②同德 ③互信 ④互助 ⑤共优"]}];</script>
 <script>
@@ -152,30 +139,11 @@
   paint();
 })();
 
-/* ---------- 阅读进度、回到顶部、章节入场 ---------- */
+/* ---------- 章节入场 ---------- */
 (function () {
-  var bar = document.createElement('div'); bar.id = 'dgProg';
-  var top = document.createElement('button'); top.id = 'dgTop';
-  top.type = 'button'; top.setAttribute('aria-label', '回到顶部'); top.textContent = '↑';
-  document.body.appendChild(bar); document.body.appendChild(top);
-
-  var raf = 0;
-  function paint() {
-    raf = 0;
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    var y = window.scrollY || 0;
-    bar.style.width = (max > 0 ? Math.min(1, y / max) * 100 : 0).toFixed(2) + '%';
-    top.classList.toggle('on', y > 520);
-  }
-  window.addEventListener('scroll', function () {
-    if (!raf) raf = requestAnimationFrame(paint);
-  }, { passive: true });
-  window.addEventListener('resize', paint, { passive: true });
-  top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-  paint();
-
   var hs = [].slice.call(document.querySelectorAll('.article h3'));
-  if (!('IntersectionObserver' in window) || !hs.length) {
+  if (!hs.length) return;
+  if (!('IntersectionObserver' in window)) {
     hs.forEach(function (h) { h.classList.add('in'); });
     return;
   }

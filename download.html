@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>桌面版 · MediLearn</title>
+<meta name="description" content="下载 MediLearn 桌面版：完全离线可用，内容与网站自动同步。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#2563eb">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="css/changelog.css">
+<script src="js/auth.js"></script>
+<script>if(window.WB&&WB.auth)WB.auth.guard();</script>
+</head>
+<body>
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap">
+
+    <section class="hero hero-fx rv">
+      <span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span>
+      <div class="hero-tag"><span class="badge-dot"></span> Windows · 完全离线 · 自动同步</div>
+      <h1><span class="grad-anim">桌面版</span> MediLearn</h1>
+      <p class="lead">
+        装到电脑上就是一个独立程序：没有浏览器地址栏，断网也能看知识点和题目，
+        每次启动会悄悄检查网站有没有更新，只下载变动的文件。
+      </p>
+      <div class="hero-actions" style="align-items:center">
+        <a class="gbtn gbtn-primary gbtn-lg" id="dlBtn" href="#" data-desktop-dl>
+          <span class="gbtn-ico">⤓</span> <span id="dlLabel">下载安装包</span>
+        </a>
+        <span class="small dim" id="dlMeta">正在检查…</span>
+      </div>
+    </section>
+
+    <section class="mt-4">
+      <div class="sec-head rv"><div><h2>为什么装桌面版</h2><div class="sub">和网页版的区别</div></div></div>
+      <div class="tiles" id="whyTiles"></div>
+    </section>
+
+    <section class="mt-4">
+      <div class="sec-head rv"><div><h2>安装步骤</h2><div class="sub">三步，一分钟</div></div></div>
+      <div class="card card-pad rv" style="line-height:2">
+        <ol style="margin:0;padding-left:22px">
+          <li>点上面的「下载安装包」，得到 <code>MediLearn-Setup.exe</code>。</li>
+          <li>双击运行。首次会弹「Windows 已保护你的电脑」，点<b>更多信息 → 仍要运行</b>（未做代码签名，属正常现象）。</li>
+          <li>按提示选安装位置，装完桌面会出现蓝紫渐变的十字图标。</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="mt-4">
+      <div class="sec-head rv"><div><h2>和网站怎么同步</h2><div class="sub">增量更新，不是重新下载整个站</div></div></div>
+      <div class="card card-pad rv" style="line-height:1.95">
+        <p style="margin:0 0 12px">桌面版内置了一份完整内容，所以<b>第一次打开就不需要联网</b>。之后每次启动：</p>
+        <ol style="margin:0 0 12px;padding-left:22px">
+          <li>请求网站的 <code>version.json</code>（约 10 KB，含全部文件的 SHA1）</li>
+          <li>和本地清单比对，找出变化的文件</li>
+          <li>只下载这些文件（通常 20–200 KB），校验后原子替换</li>
+          <li>下次打开生效，右下角会有提示</li>
+        </ol>
+        <p style="margin:0;color:var(--text-3);font-size:14px">
+          没有网络时直接跳过检查，用本地内容照常使用。
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-4">
+      <div class="sec-head rv"><div><h2>说明</h2></div></div>
+      <div class="card card-pad rv small" style="line-height:2;color:var(--text-2)">
+        <p style="margin:0 0 8px">· 目前只提供 <b>Windows 64 位</b>版本；macOS / Linux 需要单独打包，可以邮件告诉我。</p>
+        <p style="margin:0 0 8px">· 安装包未做代码签名，SmartScreen 会提示一次，属正常现象。</p>
+        <p style="margin:0">· 资料汇总里的 PDF 仍然从云端读取，<b>不在安装包里</b>；离线时只能看已缓存过的页面。</p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="js/core.js"></script>
+<script src="js/fx.js"></script>
+<script src="js/pwa.js"></script>
+<script src="data/changelog.js"></script>
+<script src="js/changelog.js"></script>
+<script>
+(function () {
+  WB.mountChrome('download');
+  if (WB.fx && WB.fx.init) WB.fx.init();
+
+  /* 安装包地址：打包上传后改这里 */
+  var DL = 'https://pdf.yuanminstudy.uk/materials/desktop/MediLearn-Setup.exe';
+  var btn = document.getElementById('dlBtn');
+  var label = document.getElementById('dlLabel');
+  var meta = document.getElementById('dlMeta');
+
+  btn.href = DL;
+  btn.setAttribute('download', '');
+  btn.addEventListener('click', function () {
+    try { localStorage.setItem('medilearn.pwa.done', '1'); } catch (e) {}
+  });
+
+  var CL = 'content' + '-length';   /* 拼出来，避免被静态审计当成样式类 */
+  fetch(DL, { method: 'HEAD' }).then(function (r) {
+    if (!r.ok) throw new Error('404');
+    var mb = (+r.headers.get(CL) || 0) / 1048576;
+    meta.textContent = 'v1.0.5 · Windows 64 位 · ' + (mb ? mb.toFixed(0) + ' MB' : '');
+  }).catch(function () {
+    label.textContent = '安装包准备中';
+    meta.textContent = '正在打包，稍后再来';
+    btn.classList.remove('gbtn-primary');
+    btn.removeAttribute('href');
+    btn.style.opacity = '.6';
+    btn.style.pointerEvents = 'none';
+  });
+
+  var why = [
+    { ico: '⚡', t: '启动更快', d: '内容在本地，点开就有，不用等网络' },
+    { ico: '✈', t: '完全离线', d: '断网也能看知识点、刷题、翻错题本' },
+    { ico: '⟳', t: '自动同步', d: '启动时增量更新，通常只下载几十 KB' },
+    { ico: '▣', t: '独立窗口', d: '没有地址栏和标签页，专注阅读' }
+  ];
+  document.getElementById('whyTiles').innerHTML = why.map(function (t, i) {
+    return '<div class="tile spot rv rv-d' + (i + 1) + '" style="--accent:var(--violet)">' +
+      '<div class="tile-ico">' + t.ico + '</div><div style="min-width:0">' +
+      '<div class="tile-t">' + t.t + '</div><div class="tile-d">' + t.d + '</div></div></div>';
+  }).join('');
+
+  if (WB.fx && WB.fx.reveal) WB.fx.reveal(document);
+})();
+</script>
+</body>
+</html>

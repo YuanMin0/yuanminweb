@@ -9,6 +9,7 @@
   'use strict';
 
   var DISMISS_KEY = 'medilearn.pwa.dismiss';
+  var DONE_KEY = 'medilearn.pwa.done';   // 装过 / 下过桌面版，永不再提示
   var WEEK = 7 * 24 * 3600 * 1000;
 
   var deferred = null;                       // beforeinstallprompt 事件
@@ -30,12 +31,25 @@
   }
 
   /* ---------------- 底部提示条 ---------------- */
+  function isDone() {
+    if (standalone) return true;
+    try { return localStorage.getItem(DONE_KEY) === '1'; } catch (e) { return false; }
+  }
+
+  function markDone() {
+    try { localStorage.setItem(DONE_KEY, '1'); } catch (e) {}
+    hideBar();
+    document.querySelectorAll('[data-pwa-install]').forEach(function (el) {
+      el.style.display = 'none';
+    });
+  }
+
   function dismissedRecently() {
     try { return Date.now() - (+localStorage.getItem(DISMISS_KEY) || 0) < WEEK; } catch (e) { return false; }
   }
 
   function showBar(kind) {
-    if (standalone || bar || dismissedRecently()) return;
+    if (isDone() || bar || dismissedRecently()) return;
     bar = document.createElement('div');
     bar.className = 'pwa-bar';
     bar.innerHTML =
@@ -99,12 +113,14 @@
 
   window.addEventListener('appinstalled', function () {
     deferred = null;
-    hideBar();
-    if (window.WB && WB.toast) WB.toast('已安装到桌面');
+    markDone();
+    if (window.WB && WB.toast) WB.toast('已安装到桌面，以后不再提示');
   });
 
   /* 页脚 / 任意位置的安装入口 */
   document.addEventListener('click', function (e) {
+    /* 点了「下载桌面版」：记下来，以后不再弹 PWA 安装条 */
+    if (e.target.closest('[data-desktop-dl]')) { markDone(); return; }
     var t = e.target.closest('[data-pwa-install]');
     if (!t) return;
     e.preventDefault();
@@ -122,7 +138,9 @@
   window.WB = window.WB || {};
   window.WB.pwa = {
     install: install,
+    markDone: markDone,
     isStandalone: function () { return standalone; },
+    isDone: isDone,
     canInstall: function () { return !!deferred; }
   };
 

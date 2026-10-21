@@ -248,6 +248,9 @@
         '<div class="hdr-tools">' +
         '<button class="icon-btn" data-theme-btn title="切换主题" aria-label="切换主题">◑</button>' +
         '<button class="icon-btn" data-logout-btn title="退出登录">⏻</button>' +
+        '<a class="hdr-dl" href="download.html" data-desktop-dl title="下载 Windows 桌面版（离线可用）">' +
+          '<span class="hdr-dl-i">⤓</span><span class="hdr-dl-t">桌面版</span>' +
+        '</a>' +
         '<button class="icon-btn menu-btn" data-menu-btn title="菜单" aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav">☰</button>' +
         '</div></div>';
       var mb = hdr.querySelector('[data-menu-btn]'), nav = hdr.querySelector('[data-nav]');

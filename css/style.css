@@ -1511,3 +1511,32 @@ html[data-theme="dark"] .vz-kv { background: var(--surface-2); }
 @media (display-mode: standalone) {
   [data-pwa-install] { display: none !important; }
 }
+
+/* ==========================================================================
+   顶栏「桌面版」下载按钮
+   ========================================================================== */
+.hdr-dl {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 34px; padding: 0 14px; border-radius: 999px;
+  font-size: 13px; font-weight: 700; letter-spacing: .02em;
+  color: #fff; text-decoration: none; white-space: nowrap;
+  background: linear-gradient(135deg, var(--brand) 0%, var(--violet) 100%);
+  box-shadow: 0 6px 16px -6px color-mix(in srgb, var(--brand) 70%, transparent);
+  position: relative; overflow: hidden;
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease), filter .18s;
+}
+.hdr-dl::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,.38) 50%, transparent 80%);
+  transform: translateX(-120%);
+  transition: transform .55s var(--ease);
+}
+.hdr-dl:hover { transform: translateY(-1px); box-shadow: 0 10px 22px -8px color-mix(in srgb, var(--violet) 75%, transparent); }
+.hdr-dl:hover::after { transform: translateX(120%); }
+.hdr-dl:active { transform: translateY(0) scale(.98); }
+.hdr-dl-i { font-size: 14px; line-height: 1; }
+
+@media (max-width: 720px) {
+  .hdr-dl { padding: 0 10px; }
+  .hdr-dl-t { display: none; }
+}

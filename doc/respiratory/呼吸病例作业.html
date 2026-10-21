@@ -48,20 +48,6 @@
   .article .blk-table table { border-radius: 12px; overflow: hidden; }
   .article .blk-table thead th { position: sticky; top: 0; z-index: 1; }
 
-  /* 阅读进度与回到顶部 */
-  #dgProg { position: fixed; left: 0; top: 0; height: 2.5px; width: 0; z-index: 9000;
-    background: linear-gradient(90deg, var(--brand), var(--violet));
-    box-shadow: 0 0 12px color-mix(in srgb, var(--brand) 55%, transparent);
-    pointer-events: none; transition: width .1s linear; }
-  #dgTop { position: fixed; right: 20px; bottom: 24px; z-index: 8999;
-    width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
-    display: grid; place-items: center; font-size: 16px; font-weight: 700;
-    color: var(--text-2); background: var(--surface); border: 1px solid var(--border-2);
-    box-shadow: var(--shadow-md); opacity: 0; transform: translateY(10px) scale(.94);
-    pointer-events: none; transition: opacity .24s var(--ease), transform .24s var(--ease); }
-  #dgTop.on { opacity: 1; transform: none; pointer-events: auto; }
-  #dgTop:hover { color: var(--brand); transform: translateY(-2px); }
-
   @media (max-width: 900px) {
     .klayout { grid-template-columns: 1fr; }
     .toc { position: static; margin-bottom: 8px; }
@@ -107,6 +93,7 @@
 <footer class="ftr" data-ftr></footer>
 
 <script src="../../js/core.js"></script>
+<script src="../../js/fx.js"></script>
 <script src="../../data/cdn-config.js"></script>
 <script>window.__DOC_BLOCKS = [{"type": "p", "text": "SOAP 框架病例总结"}, {"type": "p", "text": "病例1"}, {"type": "p", "text": "主观（S）"}, {"type": "p", "text": "基本信息：吴织丽，女，62岁。"}, {"type": "p", "text": "主诉：确诊支气管扩张6年余，间断气短、咳嗽、咳痰6年，症状加重1周。"}, {"type": "p", "text": "现病史：患者于2020年7月确诊“极重度混合性通气功能障碍、支气管扩张”，曾予氟替美维吸入治疗后自觉症状好转，但仍有气短。近1周气短加重，接触韭菜后气短症状显著加重。2026年1月11日胸部CT示：右肺上叶支气管扩张伴感染较前减轻，右肺中下叶及左肺下叶支气管扩张伴感染较前加重，新见左侧第6前肋骨折。本次于2026年5月27日复查复诊。起病以来精神、饮食、睡眠、大小便正常，体力、体重无明显变化。"}, {"type": "p", "text": "既往史：曾患肺结核，否认高血压、糖尿病、冠心病等慢性病史，无过敏史。2022年于本院行胆囊结石切除术。月经生育史：月经周期规律（周期30天，经期7天），已自然绝经，育有1子1女均体健。家族史：无同类呼吸道疾病家族史。"}, {"type": "p", "text": "客观（O）"}, {"type": "p", "text": "体格检查："}, {"type": "list", "items": ["生命体征：呼吸22次/分，轻度增快。", "胸廓与呼吸：双侧胸廓对称，呈桶状胸，腹式呼吸；右侧胸廓呼吸动度较左侧略受限。", "触诊：左侧语音震颤减弱。", "叩诊：右侧第5肋间由清音转为实音。", "听诊：双肺呼吸音稍低，可闻及痰鸣音，右肺下叶湿性啰音。"]}, {"type": "p", "text": "辅助检查："}, {"type": "list", "items": ["炎症指标：超敏C反应蛋白＞5.0mg/L（参考＜3mg/L），C反应蛋白5.69mg/L（参考＜5mg/L），均轻度升高。", "心肌标志物：肌酸激酶同工酶、肌钙蛋白I、肌红蛋白、NT-proBNP均正常。", "肝肾功能：总蛋白、白蛋白、球蛋白、肝酶、肌酐、尿素等均正常。", "血常规：白细胞、红细胞、血红蛋白、血小板均正常，仅血小板分布宽度13.9fL（轻度低于15.5-18.1fL）。", "胸部CT（2026-01-11）：", "双肺多发支气管扩张（右肺下叶基底段、中叶为主，柱状+囊状混合型），见“轨道征”“印戒征”。", "右肺下叶囊状扩张支气管内见液气平，周围斑片状慢性炎症浸润。", "与旧片对比：右肺上叶支气管扩张伴感染较前减轻，右肺中下叶及左肺下叶支气管扩张伴感染较前加重。", "双肺弥漫性肺气肿伴肺大泡形成。", "左侧第6前肋骨折（新见）。", "肺功能（2020年7月）：极重度混合性通气功能障碍。"]}, {"type": "p", "text": "评价（A）"}, {"type": "p", "text": "病例特点："}, {"type": "list", "items": ["老年女性，慢性病程6年余，近1周气短加重，接触韭菜后诱发或加重。", "典型临床表现：咳嗽、咳痰、气短，听诊双肺痰鸣音及右肺湿性啰音。", "既往有肺结核、胆囊结石术后史。", "影像学：支气管扩张（柱状+囊状）伴感染征象，弥漫性肺气肿，左侧第6前肋骨折（新见）。", "炎症指标轻度升高，心肌、肝肾功能正常。"]}, {"type": "p", "text": "诊断（整合后）："}, {"type": "list", "items": ["慢性阻塞性肺疾病（COPD）Ⅳ级（原报告为“极重度混合性通气功能障碍”，对应GOLD Ⅳ级；新补充写“Ⅱ级”有误，予以修正）", "支气管扩张伴急性感染", "左侧第6前肋骨折（新发或近期骨折，需进一步确认）", "陈旧性肺结核", "胆囊结石切除术后"]}, {"type": "p", "text": "鉴别诊断："}, {"type": "list", "items": ["过敏性因素：接触韭菜后气短显著加重，需警惕合并嗜酸粒细胞性支气管炎或过敏性哮喘，可行外周血嗜酸粒细胞、总IgE、过敏原筛查。", "肺结核活动：虽有陈旧性结核史，仍需排除活动可能，可行T-SPOT、痰抗酸染色。", "真菌感染：长期抗生素治疗后效果不佳时需考虑，可行G/GM试验、痰培养。"]}, {"type": "p", "text": "计划（P）"}, {"type": "p", "text": "进一步检查："}, {"type": "list", "items": ["尽快复查胸部CT，评估感染变化及骨折愈合情况。", "完善结核相关筛查（T-SPOT、痰抗酸染色、PPD）。", "行痰涂片革兰染色、细菌培养+药敏、真菌培养。", "查外周血嗜酸粒细胞计数、总IgE、过敏原筛查。"]}, {"type": "p", "text": "初步治疗计划（对原处方进行合理性分析与调整）："}, {"type": "list", "items": ["抗感染：", "原处方：左氧氟沙星片 0.5g 每日1次口服。", "提示：该患者既往在县医院使用左氧氟沙星治疗“效果不佳”，且本次炎症指标仅轻度升高，建议根据药敏结果选用抗生素。若必须经验性用药，可考虑更换为β-内酰胺类（如头孢三代或哌拉西林他唑巴坦）或呼吸喹诺酮类（如莫西沙星）。", "对症支持：", "利舒康胶囊 0.5g 每次2粒 每日3次口服（辅助改善症状）。", "继续吸入氟替美维（如既往有效）或规范使用LAMA/LABA支气管扩张剂。", "化痰治疗（如氨溴索、乙酰半胱氨酸）。", "体位引流、呼吸康复指导。", "骨折处理：", "评估骨折性质及疼痛情况，必要时胸廓固定或止痛治疗。"]}, {"type": "p", "text": "长期管理："}, {"type": "list", "items": ["待本次感染控制后，制定COPD+支气管扩张联合随访方案，包括疫苗接种（流感疫苗、肺炎疫苗）、戒烟宣教（患者未提及吸烟，可再确认）、肺康复训练。"]}, {"type": "p", "text": "病例2"}, {"type": "p", "text": "主观（S）"}, {"type": "p", "text": "基本信息：马录文，76岁，男性，陕西大荔退休人员。"}, {"type": "p", "text": "主诉：间断咳嗽、咳痰半年。"}, {"type": "p", "text": "现病史：半年前感冒后出现间断咳嗽、咳大量黏痰、气短，无发热、胸闷。外院CT示右肺上叶前段软组织密度灶，穿刺活检提示炎症，抗感染治疗10余天后症状减轻，但仍间断咳嗽咳痰、咽部异物感。2026年4月复查CT示肺部占位病变、双肺多发纤维条索灶；支气管镜病理示支气管黏膜重度慢性炎症伴坏死、肉芽组织增生，灌洗G试验>1000pg/ml。口服伏立康唑、莫西沙星后咳嗽好转。现为进一步明确“肺部阴影”收住。精神、体力、食欲、睡眠正常，体重无明显变化，大小便正常。"}, {"type": "p", "text": "既往史：10余年前右侧肋骨外伤骨折史。否认高血压、糖尿病、冠心病等慢病，否认肝炎、结核等传染病，否认药物、食物过敏。预防接种史不详。吸烟史40年（每日20支），已戒烟5年。偶少量饮酒。"}, {"type": "p", "text": "客观（O）"}, {"type": "p", "text": "体格检查：T 36.9℃，P 93次/分，R 24次/分，BP 135/84mmHg，BMI 22.85kg/m²。一般情况良好，呼吸动度一致，语颤正常，无胸膜摩擦感，胸壁肋骨无压痛。叩诊清音，肺下界位于右锁骨中线第五肋间。听诊右上肺呼吸音低，其余呼吸音清，未闻及干湿性啰音。全身浅表淋巴结未及肿大，心脏、腹部、下肢查体无异常。"}, {"type": "p", "text": "辅助检查："}, {"type": "list", "items": ["外院CT：右肺上叶尖段占位，考虑周围型肺癌伴右肺门及纵隔淋巴结增大；右肺上、中叶及双肺下叶炎症；左肺上叶前段肺大泡；陈旧肋骨骨折可能。", "支气管镜：右肺上叶尖段肿物堵塞管腔，表面坏死，活检示慢性炎症伴渗出、坏死及肉芽组织增生。", "胸部增强CT：右肺上叶尖段肿块不均匀强化，边缘分叶及毛刺，纵隔及右肺门淋巴结肿大、部分强化。", "实验室：ESR 21.0mm/hr（↑）；淋巴细胞、单核细胞、血小板分布宽度等降低；中性粒细胞、RDW-SD升高。尿潜血(+ -)，尿白细胞、红细胞、尿白蛋白及白蛋白/肌酐比值升高。超敏CRP>5.0mg/L，CRP 9.77mg/L（↑）。ALT、AST、eGFR降低，血钙2.18mmol/L（↓）。CEA轻度升高，NSE正常。"]}, {"type": "p", "text": "评价（A）"}, {"type": "p", "text": "病例特点："}, {"type": "list", "items": ["老年男性，长期大量吸烟史。", "慢性病程半年，主要表现为咳嗽、咳黏痰，抗感染治疗部分有效但病灶影像学持续存在且进展。", "外院穿刺活检提示炎症，支气管镜病理示重度慢性炎症伴坏死、肉芽组织增生，灌洗G试验显著升高。", "影像学：右上肺占位伴分叶、毛刺、强化，纵隔及肺门淋巴结肿大。", "实验室：炎症指标升高，CEA轻度升高，尿检异常，血钙偏低。"]}, {"type": "p", "text": "诊断："}, {"type": "list", "items": ["肺部占位性质待查：肺恶性肿瘤可能性大（周围型肺癌？）", "社区获得性肺炎（细菌性）", "真菌感染待排（G试验升高，但影像不典型）", "纵隔及右肺门淋巴结肿大", "陈旧性肋骨骨折"]}, {"type": "p", "text": "鉴别诊断："}, {"type": "list", "items": ["肺恶性肿瘤：老年、吸烟、分叶状占位+毛刺+强化+淋巴结肿大+CEA升高，高度怀疑，需病理确诊。", "肺结核：慢性坏死性病变，支气管镜下坏死组织，需抗酸染色及T-SPOT排除。", "真菌感染（如曲霉）：G试验升高，但无典型晕征或新月征，活检无真菌成分，可复查GM试验。", "良性肉芽肿性疾病（如结节病）：但通常淋巴结对称性肿大，本例为单侧肺门及纵隔，且肿块有恶性特征，可能性小。"]}, {"type": "p", "text": "计划（P）"}, {"type": "p", "text": "进一步检查："}, {"type": "list", "items": ["行PET-CT评估全身代谢活性及有无远处转移。", "结核相关检查（T-SPOT、PPD、痰抗酸染色）。", "复查血常规、CRP、肿瘤标志物、肝肾功能、G/GM试验。"]}, {"type": "p", "text": "初步治疗计划："}, {"type": "list", "items": ["继续抗感染（针对社区肺炎）及抗真菌（伏立康唑）经验性治疗，动态观察症状及炎症指标。", "若PET-CT高度提示恶性，建议再次经支气管镜或CT引导下穿刺活检，或外科手术切除明确病理。", "根据病理结果制定后续方案（手术、化疗、靶向或免疫治疗）。", "如确诊肺结核，转专科医院抗结核治疗。", "护理一级，营养支持，监测生命体征及咳嗽、咳痰变化。"]}];</script>
 <script>
@@ -152,30 +139,11 @@
   paint();
 })();
 
-/* ---------- 阅读进度、回到顶部、章节入场 ---------- */
+/* ---------- 章节入场 ---------- */
 (function () {
-  var bar = document.createElement('div'); bar.id = 'dgProg';
-  var top = document.createElement('button'); top.id = 'dgTop';
-  top.type = 'button'; top.setAttribute('aria-label', '回到顶部'); top.textContent = '↑';
-  document.body.appendChild(bar); document.body.appendChild(top);
-
-  var raf = 0;
-  function paint() {
-    raf = 0;
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    var y = window.scrollY || 0;
-    bar.style.width = (max > 0 ? Math.min(1, y / max) * 100 : 0).toFixed(2) + '%';
-    top.classList.toggle('on', y > 520);
-  }
-  window.addEventListener('scroll', function () {
-    if (!raf) raf = requestAnimationFrame(paint);
-  }, { passive: true });
-  window.addEventListener('resize', paint, { passive: true });
-  top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-  paint();
-
   var hs = [].slice.call(document.querySelectorAll('.article h3'));
-  if (!('IntersectionObserver' in window) || !hs.length) {
+  if (!hs.length) return;
+  if (!('IntersectionObserver' in window)) {
     hs.forEach(function (h) { h.classList.add('in'); });
     return;
   }

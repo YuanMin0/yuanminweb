@@ -48,20 +48,6 @@
   .article .blk-table table { border-radius: 12px; overflow: hidden; }
   .article .blk-table thead th { position: sticky; top: 0; z-index: 1; }
 
-  /* 阅读进度与回到顶部 */
-  #dgProg { position: fixed; left: 0; top: 0; height: 2.5px; width: 0; z-index: 9000;
-    background: linear-gradient(90deg, var(--brand), var(--violet));
-    box-shadow: 0 0 12px color-mix(in srgb, var(--brand) 55%, transparent);
-    pointer-events: none; transition: width .1s linear; }
-  #dgTop { position: fixed; right: 20px; bottom: 24px; z-index: 8999;
-    width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
-    display: grid; place-items: center; font-size: 16px; font-weight: 700;
-    color: var(--text-2); background: var(--surface); border: 1px solid var(--border-2);
-    box-shadow: var(--shadow-md); opacity: 0; transform: translateY(10px) scale(.94);
-    pointer-events: none; transition: opacity .24s var(--ease), transform .24s var(--ease); }
-  #dgTop.on { opacity: 1; transform: none; pointer-events: auto; }
-  #dgTop:hover { color: var(--brand); transform: translateY(-2px); }
-
   @media (max-width: 900px) {
     .klayout { grid-template-columns: 1fr; }
     .toc { position: static; margin-bottom: 8px; }
@@ -107,6 +93,7 @@
 <footer class="ftr" data-ftr></footer>
 
 <script src="../../js/core.js"></script>
+<script src="../../js/fx.js"></script>
 <script src="../../data/cdn-config.js"></script>
 <script>window.__DOC_BLOCKS = [{"type": "h", "level": 3, "id": "s1", "text": "第六章 战争与灾害医学伦理（战地与灾害医疗救治伦理）"}, {"type": "p", "text": "学习目标：了解战场与灾区的极端环境；理解参战救灾时医疗人际关系的特殊性；掌握战场医疗救治的医德要求与灾害医学救治的特殊医德原则。"}, {"type": "h", "level": 3, "id": "s2", "text": "一、极端环境"}, {"type": "h", "level": 3, "id": "s3", "text": "1. 环境的危险性"}, {"type": "list", "items": ["环境的艰苦性：玉树抗震救灾——路边导尿、跪地手术、军刀刮骨。", "战场环境的多变性：平面→立体、单一兵种→联合作战；快节奏、瞬间打击。", "环境的冲击性：强烈、外露、躁动、共鸣。", "积极的情感体验（如\"犯我中华者，虽远必诛\"式的家国情怀）", "消极的情感体验"]}, {"type": "h", "level": 3, "id": "s4", "text": "二、参战和救灾时医疗人际关系的特殊性"}, {"type": "h", "level": 3, "id": "s5", "text": "（一）医患关系"}, {"type": "list", "items": ["比例严重失调", "缺乏稳定性", "缺乏医疗设备中介", "医方自主性增强"]}, {"type": "h", "level": 3, "id": "s6", "text": "（二）医际关系"}, {"type": "list", "items": ["医际关系泛化", "医际关系的临时性", "目的的同一性", "运作的协同性：1988年前苏联亚美尼亚地震——3小时90%存活 VS 6小时50%存活；汶川地震VS卡特里娜飓风——1800架次飞机、救治164万人、派出医护防疫人员10万，联合国减灾战略主任称\"中国速度为世界树立了榜样\"；军旅营三级卫勤演练。"]}, {"type": "h", "level": 3, "id": "s7", "text": "（三）患际关系"}, {"type": "list", "items": ["竞争性：唐山大地震——\"只剩下红汞、四环素。卫生队的药箱全空了，连胃舒平都有人要，那些受伤的人，好像觉得只要是药就能救命。\"\"我们的衣角不时被人拽住\"。"]}, {"type": "h", "level": 3, "id": "s8", "text": "2. 合作性"}, {"type": "h", "level": 3, "id": "s9", "text": "三、战场医疗救治的医德要求"}, {"type": "p", "text": "互动思考：现在，你只有一袋血，手术室只能同时做一台手术。先救谁？为什么？"}, {"type": "h", "level": 3, "id": "s10", "text": "1. 发扬革命英雄主义"}, {"type": "list", "items": ["集体的英雄主义：服从战场效益，按照上级的命令和部署，以最大限度降低我方有生力量损失为主要目标。在医疗资源不足时优先救治能重返战场的轻伤员；实行简单初救后分类实行阶梯治疗。服从战场效益并不是无视生命，而是战场特定环境下的选择。", "无私无畏的英雄主义：1939年涞源，白求恩69小时手术115台，手术室离前线仅3公里。", "理智的英雄主义：吕士才——\"只要党需要，决不吝惜自己的生命\"。"]}, {"type": "h", "level": 3, "id": "s11", "text": "2. 发扬革命的人道主义"}, {"type": "list", "items": ["对我方内部：及时妥善的抢救、护理和帮助伤病人员；", "对敌方：优待俘虏、妥善对待降敌等（《司马法》）；", "首先体现在无条件支持我方的正义战争（1947年春\"三下江南\"的其塔木战役）。"]}, {"type": "h", "level": 3, "id": "s12", "text": "3. 树立高度的事业心和责任感"}, {"type": "p", "text": "（傅连暲、\"红军菩萨\"龙思泉、叶青山）"}, {"type": "h", "level": 3, "id": "s13", "text": "4. 自觉控制情感和保持理智"}, {"type": "p", "text": "（三角巾急救包）"}, {"type": "h", "level": 3, "id": "s14", "text": "5. 认真执行相关法规"}, {"type": "list", "items": ["《日内瓦公约》及《第一附加议定书》", "《国际红十字和红新月运动章程》（人道、公正、中立、独立、志愿服务、统一和普遍）", "《中华人民共和国红十字会法》", "《日内瓦公约》：\"战俘在任何时须受人道之待遇\"\"战俘在一切情况下应享受人身及荣誉之尊重\"；战时被俘的医务人员可留用，为战俘利益从事医疗活动，原则上不应被视为战俘。"]}, {"type": "h", "level": 3, "id": "s15", "text": "国际公约对战地医务人员最基本的规定："}, {"type": "list", "items": ["战地医务人员中立，救治一切受伤者；", "保护战俘的健康；", "军事医学人体实验应符合自愿和知情同意；", "医师不参与研制和开发生化武器。"]}, {"type": "p", "text": "战场医疗救治的医德要求小结：①发扬革命的英雄主义 ②发扬革命的人道主义 ③高度的事业心和责任感 ④自觉控制情感和保持理智 ⑤认真执行相关法规。"}, {"type": "h", "level": 3, "id": "s16", "text": "四、西方战争对医学伦理的挑战"}, {"type": "list", "items": ["战争使医患关系扭曲，伤病员自主权受到损害，毫无机密、隐私可言，知情同意也常常作为军事的牺牲品。", "知情同意成为军事的牺牲品：2001年美国炭疽病毒造成的恐慌情景；1991海湾战争综合症（肌肉疼痛、长期疲乏、失眠、丧失记忆、头晕）。", "在紧急救治中，战地医师难以同等对待俘虏：1991年海湾战争600名军医，22%认为不考虑伤情优先救治美军；救治排序法：美军第一，盟军第二，平民第三，敌军第四。", "战俘的尊严受到践踏：对战俘身体和精神折磨，军医主动或被动卷入其中，突显确保己方士兵生命权与维护俘虏人权之间的冲突（2001年关塔那摩监狱、阿布格莱布监狱虐囚：睡眠剥夺、强迫裸体、保持令人不舒服的姿势、水刑等）。"]}, {"type": "h", "level": 3, "id": "s17", "text": "五、灾害医学救治的特殊医德原则"}, {"type": "list", "items": ["公益性和无偿救治的原则：社会公益活动；不能向受灾者索取报酬；尽量使受灾人员获得可能得到的益处。", "争取最大健康效益的原则：生命第一。最大限度挽救生命、最大限度减少死亡和伤残、最大限度保护和恢复社会劳动力健康及灾区的生产与生活。救治优先级：先救不及时救就有生命危险或造成严重伤残的重伤员→其次轻伤员→最后少数极重度伤员。不是\"先来先治疗\"的自然排序，也不是一味的危重病人优先。", "积极适应特殊环境的原则：具有良好的自控能力和自我调节能力（汶川地震：背着儿子遗体走25公里回家的父亲）。", "强化协调与配合的原则：汶川地震医疗救援\"中国模式\"——统一高效的指挥调度体系、跨区域跨部门的多元化力量整合、分级救治与无缝后送（一条完整的\"生命链\"）。", "表2-3 汶川抗震救灾60小时内卫勤力量及卫生物资抵达情况：2小时医疗队1支24人；12小时医疗队及防疫队28支846人；13小时药品和卫生装备、战储代血浆4亿元2万袋；48小时医疗队及防疫队58支1600人；野战医疗队卫生装备60余台、野战卫生技术车辆超20辆、卫生物资4300万元；60小时机动卫勤力量2346人（占一线全部医学救援力量的60%）。", "表2-2 各责任区医学救援力量分布：合计野战医院7个、野战医疗所14个、医疗队94个、防疫队92个、心理队8个，共215支。", "医德尺度宽严相济的原则：严——医德要求以\"命令\"\"指示\"\"纪律\"等刚性形式出现；宽——不以平常的医疗标准去要求、衡量。"]}, {"type": "h", "level": 3, "id": "s18", "text": "六、拓展推荐"}, {"type": "list", "items": ["影视：《越战伦理》《禁闭岛》《野战排》《血战钢锯岭》《芳华》", "文学：《荷马史诗》《达洛维夫人》《战争与和平》"]}, {"type": "h", "level": 3, "id": "s19", "text": "七、课堂练习题"}, {"type": "h", "level": 3, "id": "s20", "text": "1. 先救谁？（单选题1分）"}, {"type": "list", "items": ["A. 腿部中弹的战士。伤口已经包扎，生命体征稳定。治好了可以重返战场。", "B. 腹部中弹的指挥员。意识模糊，内出血，急需手术。手术成功率高，但需要大量血源。", "C. 头部重伤的战士。深度昏迷，存活率不到5%，即使救活也可能终身植物状态。"]}, {"type": "h", "level": 3, "id": "s21", "text": "正确答案：B"}];</script>
 <script>
@@ -152,30 +139,11 @@
   paint();
 })();
 
-/* ---------- 阅读进度、回到顶部、章节入场 ---------- */
+/* ---------- 章节入场 ---------- */
 (function () {
-  var bar = document.createElement('div'); bar.id = 'dgProg';
-  var top = document.createElement('button'); top.id = 'dgTop';
-  top.type = 'button'; top.setAttribute('aria-label', '回到顶部'); top.textContent = '↑';
-  document.body.appendChild(bar); document.body.appendChild(top);
-
-  var raf = 0;
-  function paint() {
-    raf = 0;
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    var y = window.scrollY || 0;
-    bar.style.width = (max > 0 ? Math.min(1, y / max) * 100 : 0).toFixed(2) + '%';
-    top.classList.toggle('on', y > 520);
-  }
-  window.addEventListener('scroll', function () {
-    if (!raf) raf = requestAnimationFrame(paint);
-  }, { passive: true });
-  window.addEventListener('resize', paint, { passive: true });
-  top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-  paint();
-
   var hs = [].slice.call(document.querySelectorAll('.article h3'));
-  if (!('IntersectionObserver' in window) || !hs.length) {
+  if (!hs.length) return;
+  if (!('IntersectionObserver' in window)) {
     hs.forEach(function (h) { h.classList.add('in'); });
     return;
   }

@@ -253,6 +253,34 @@
         '</a>' +
         '<button class="icon-btn menu-btn" data-menu-btn title="菜单" aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav">☰</button>' +
         '</div></div>';
+      /* ---------- 移动端底部标签栏 ---------- */
+      if (!document.querySelector('.tabbar')) {
+        var pageName = (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/, '') || 'index';
+        var TABS = [
+          { href: 'index.html', label: '总览', ico: '⌂', match: ['index'] },
+          { href: 'subjects.html', label: '科目', ico: '▦', match: ['subjects', 'subject', 'knowledge'] },
+          { href: 'quiz.html', label: '刷题', ico: '✎', match: ['quiz'] },
+          { href: 'wrongbook.html', label: '错题', ico: '✦', match: ['wrongbook'] },
+          { href: 'materials.html', label: '资料', ico: '▤', match: ['materials'] }
+        ];
+        var wrongN = 0;
+        try { wrongN = (WB.store.wrongList() || []).length; } catch (e) {}
+        var tb = document.createElement('nav');
+        tb.className = 'tabbar';
+        tb.setAttribute('aria-label', '主导航');
+        tb.innerHTML = TABS.map(function (t) {
+          var on = t.match.indexOf(pageName) > -1;
+          var badge = (t.href === 'wrongbook.html' && wrongN)
+            ? '<i class="tab-badge">' + (wrongN > 99 ? '99+' : wrongN) + '</i>' : '';
+          return '<a class="tab' + (on ? ' on' : '') + '" href="' + t.href + '"' +
+            (on ? ' aria-current="page"' : '') + '>' +
+            '<span class="tab-ico">' + t.ico + '</span>' +
+            '<span class="tab-label">' + t.label + '</span>' + badge + '</a>';
+        }).join('');
+        document.body.appendChild(tb);
+        document.body.classList.add('has-tabbar');
+      }
+
       var mb = hdr.querySelector('[data-menu-btn]'), nav = hdr.querySelector('[data-nav]');
       if (mb && nav) {
         var scrim = document.createElement('div');

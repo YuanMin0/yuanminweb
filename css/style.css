@@ -1608,3 +1608,84 @@ html[data-theme="dark"] .vz-kv { background: var(--surface-2); }
   0%, 62% { opacity: 1; }
   100% { opacity: 0; }
 }
+
+/* ==========================================================================
+   视觉打磨 v2（UI 设计）
+   --------------------------------------------------------------------------
+   目标：只修真实问题，不改整体风格
+   1. 次级文字对比度 3.26:1 → 5.13:1（达 WCAG AA）
+   2. 数字统一等宽，避免统计数字跳动
+   3. 章节标题加强调竖条，版面有节奏
+   4. 卡片悬停反馈统一，强调条随之加宽
+   ========================================================================== */
+:root {
+  /* 原 #7c8aa0 对浅底仅 3.26:1，12–13px 小字读起来吃力 */
+  --text-3: #5b6a80;
+
+  /* 字号阶梯（后续新增样式优先用这些） */
+  --fs-2xs: 11px;
+  --fs-xs: 12.5px;
+  --fs-sm: 13.5px;
+  --fs-md: 15.5px;
+  --fs-lg: 18px;
+  --fs-xl: 21px;
+  --fs-2xl: 27px;
+
+  /* 间距节奏 */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+}
+html[data-theme="dark"] {
+  --text-3: #8b9cbb;   /* 深色底上再提亮一档，原 5.78 → 7.1 */
+}
+
+/* ---------- 数字排版 ---------- */
+.stat-n,
+.metric b,
+[data-count],
+.toc-n {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+.stat-n {
+  font-size: 30px;
+  letter-spacing: -.035em;
+}
+
+/* ---------- 章节标题的强调竖条 ---------- */
+.sec-head h2::before {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: .78em;
+  margin-right: 10px;
+  border-radius: 99px;
+  background: linear-gradient(180deg, var(--brand), var(--violet));
+  vertical-align: -.04em;
+}
+
+/* ---------- 卡片交互统一 ---------- */
+.subj-card::after { transition: width .22s var(--ease); }
+.subj-card:hover::after { width: 5px; }
+.subj-card:focus-visible,
+.tile:focus-visible { outline-offset: 3px; }
+
+/* 可点击卡片的按下反馈 */
+.subj-card:active { transform: translateY(-1px) scale(.995); }
+.tile:active { transform: translateY(-1px) scale(.995); }
+
+/* ---------- 标题度量 ---------- */
+h1, h2, h3 { letter-spacing: -.02em; }
+.hero h1 { letter-spacing: -.03em; }
+
+/* ---------- 深色主题卡片层次 ---------- */
+html[data-theme="dark"] .stat,
+html[data-theme="dark"] .subj-card,
+html[data-theme="dark"] .tile,
+html[data-theme="dark"] .card {
+  border-color: color-mix(in srgb, var(--border-2) 82%, transparent);
+}

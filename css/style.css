@@ -1593,3 +1593,18 @@ html[data-theme="dark"] .vz-kv { background: var(--surface-2); }
   .blk-table::-webkit-scrollbar { height: 6px; }
   .blk-table::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 99px; }
 }
+
+/* 移动端滑动提示（仅首次出现，4 秒淡出） */
+.swipe-hint { display: none; }
+@media (max-width: 760px) {
+  .swipe-hint {
+    display: block; text-align: center;
+    font-size: 12px; letter-spacing: .08em; color: var(--text-3);
+    margin: 6px 0 -8px;
+    animation: swipeHintFade 4.2s var(--ease) forwards;
+  }
+}
+@keyframes swipeHintFade {
+  0%, 62% { opacity: 1; }
+  100% { opacity: 0; }
+}

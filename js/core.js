@@ -292,7 +292,7 @@
       var col = function (title, links) {
         return '<div class="ftr-col"><h4>' + title + '</h4>' +
           links.map(function (l) {
-            return '<a href="' + l[1] + '">' + l[0] + '</a>';
+            return '<a href="' + l[1] + '"' + (l[2] ? ' ' + l[2] : '') + '>' + l[0] + '</a>';
           }).join('') + '</div>';
       };
       ftr.innerHTML =
@@ -312,6 +312,7 @@
             col('资料', [
               ['资料汇总', 'materials.html'],
               ['更新日志', '#changelog'],
+              ['安装到桌面', '#install', 'data-pwa-install'],
               ['关于本站', 'about.html']
             ]) +
             '<div class="ftr-col"><h4>联系</h4>' +

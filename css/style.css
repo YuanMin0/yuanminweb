@@ -1474,3 +1474,40 @@ html[data-theme="dark"] .vz-kv { background: var(--surface-2); }
   #mlProg { transition: none; }
   #mlTop { transition: opacity .01s; }
 }
+
+/* ==========================================================================
+   PWA 安装提示条
+   ========================================================================== */
+.pwa-bar {
+  position: fixed; left: 50%; bottom: 20px; z-index: 9400;
+  transform: translate(-50%, 24px); opacity: 0; pointer-events: none;
+  display: flex; align-items: center; gap: 12px;
+  max-width: min(560px, calc(100vw - 24px));
+  padding: 12px 14px; border-radius: 16px;
+  background: var(--surface); border: 1px solid var(--border-2);
+  box-shadow: 0 18px 48px -16px rgba(15, 23, 42, .35);
+  transition: transform .32s var(--ease), opacity .32s var(--ease);
+}
+.pwa-bar.on { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
+.pwa-ico { width: 36px; height: 36px; border-radius: 9px; flex: none; }
+.pwa-txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.pwa-txt b { font-size: 13.5px; font-weight: 700; color: var(--text); }
+.pwa-txt span { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+.pwa-bar .gbtn { flex: none; padding: 7px 16px; font-size: 13px; }
+.pwa-x {
+  flex: none; width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
+  border: 0; background: var(--surface-3); color: var(--text-3); font-size: 12px;
+  transition: background .18s, color .18s;
+}
+.pwa-x:hover { background: var(--border-2); color: var(--text); }
+
+@media (max-width: 520px) {
+  .pwa-bar { left: 12px; right: 12px; bottom: 12px; transform: translateY(24px); max-width: none; }
+  .pwa-bar.on { transform: translateY(0); }
+  .pwa-txt span { display: none; }
+}
+
+/* 已安装（独立窗口）时隐藏浏览器的“安装”入口 */
+@media (display-mode: standalone) {
+  [data-pwa-install] { display: none !important; }
+}

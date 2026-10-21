@@ -263,6 +263,15 @@ git push -u origin main
 
 ---
 
+## 安装到桌面（PWA）
+
+- 站点带 `manifest.webmanifest` + `sw.js`，Chrome / Edge 地址栏会出现「安装」图标，页脚也有入口
+- 安装后独立窗口运行，无地址栏；已访问的页面会被缓存，断网可继续阅读
+- 缓存策略：导航请求网络优先（3.5s 超时回退缓存）、静态资源 stale-while-revalidate、跨域 PDF 不拦截
+- 更新 `sw.js` 里的 `VERSION` 即可让旧缓存整体失效
+
+---
+
 ## 数据文件编写规范
 
 每个科目是一个纯 JS 文件，调用 `WB.register({...})` 注册。

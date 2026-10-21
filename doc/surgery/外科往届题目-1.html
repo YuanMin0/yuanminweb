@@ -48,9 +48,47 @@
   .article .blk-table table { border-radius: 12px; overflow: hidden; }
   .article .blk-table thead th { position: sticky; top: 0; z-index: 1; }
 
+  /* 目录进度条 */
+  .toc-prog {
+    height: 3px; border-radius: 99px; overflow: hidden;
+    background: var(--surface-3); margin: 2px 0 10px;
+  }
+  .toc-prog i {
+    display: block; height: 100%; width: 0; border-radius: 99px;
+    background: linear-gradient(90deg, var(--brand), var(--violet));
+    transition: width .12s linear;
+  }
+  /* 目录项：更清晰的当前项 */
+  .toc a.on {
+    background: color-mix(in srgb, var(--brand) 10%, transparent);
+    color: var(--brand); font-weight: 700;
+  }
+  .toc a.on::before {
+    content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 3px;
+    border-radius: 99px; background: var(--brand);
+  }
+  .toc a { position: relative; }
+
+  /* 移动端：目录折叠 */
+  .toc-toggle { display: none; }
+
   @media (max-width: 900px) {
     .klayout { grid-template-columns: 1fr; }
-    .toc { position: static; margin-bottom: 8px; }
+    .toc {
+      position: static; margin-bottom: 8px;
+      max-height: 0; overflow: hidden; padding: 0;
+      transition: max-height .32s var(--ease), padding .32s var(--ease);
+    }
+    .toc.open { max-height: 62vh; overflow-y: auto; padding: 10px 8px 12px; }
+    .toc-toggle {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: 11px 14px; margin-bottom: 8px;
+      border: 1px solid var(--border); border-radius: var(--r-md);
+      background: var(--surface); color: var(--text); font-size: 14px; font-weight: 700;
+      cursor: pointer;
+    }
+    .toc-toggle-i { transition: transform .25s var(--ease); font-style: normal; }
+    .toc-toggle[aria-expanded="true"] .toc-toggle-i { transform: rotate(180deg); }
     .article p { text-indent: 2em; }
   }
   @media print { .toc, .doc-tip, .hdr, .ftr, .doc-head .gbtn { display: none; } .klayout { display: block; } }
@@ -75,8 +113,12 @@
     
     <div id="paneRead">
     <div class="klayout">
-      <aside class="toc">
+      <button class="toc-toggle" id="tocToggle" aria-expanded="false" aria-controls="docToc">
+        <span>本页目录</span><i class="toc-toggle-i">▾</i>
+      </button>
+      <aside class="toc" id="docToc">
         <div class="toc-h">本页目录</div>
+        <div class="toc-prog" aria-hidden="true"><i id="tocProg"></i></div>
         <a href="#s1">橘皮症 </a><a href="#s2">battle征（乳突瘀斑）</a><a href="#s3">心肺复苏</a><a href="#s4">低渗性脱水 </a><a href="#s5">脓毒症</a><a href="#s6">骨筋膜室综合征</a><a href="#s7">酸碱平衡</a><a href="#s8">Cushing 反应</a><a href="#s9">前哨淋巴结</a><a href="#s10">体外冲击波碎石</a><a href="#s11">颅内压正常值，增高的临床表现</a><a href="#s12">休克的一般监测项目</a><a href="#s13">休克的治疗原则和措施</a><a href="#s14">椎管内麻醉根据位置不同分为哪四种</a><a href="#s15">膀胱非浸润癌治疗</a><a href="#s16">等渗性脱水诊断要点治疗原则注意事项</a><a href="#s17">诊断: </a><a href="#s18">治疗: </a><a href="#s19">高渗性缺水，定义，临表，诊断，治疗</a><a href="#s20">临床表现：</a><a href="#s21">诊断：</a><a href="#s22">治疗：</a><a href="#s23">colles骨折临床表现、治疗原则</a><a href="#s24">骨折的急救措施及目的</a><a href="#s25">骨折晚期并发症</a><a href="#s26">股骨颈骨折的三种分型</a><a href="#s27">烧伤的分类及临床表现</a><a href="#s28">烧伤严重程度分类</a><a href="#s29">腹腔内实质性器官损伤和空腔脏器损伤的临床表现的区别</a><a href="#s30">腹部损伤中行剖腹探查的手术指征</a><a href="#s31">急性梗阻性化脓性胆管炎治疗原则及方法</a><a href="#s32">急性弥漫性腹膜炎的临床表现</a><a href="#s33">晚期肺癌可有什么征象</a><a href="#s34">胃大部切除术适应症，禁忌症</a><a href="#s35">禁忌症：</a><a href="#s36">胃癌，诊断依据鉴别诊断检查手段治疗原则</a><a href="#s37">肩关节脱位诊断伴发损伤治疗方法</a><a href="#s38">腰椎间盘突出</a>
         <div class="toc-h" style="margin-top:20px">文档信息</div>
         <div class="small dim" style="padding:0 11px;line-height:1.9">段落 145<br>表格 0<br>小节 38</div>
@@ -130,12 +172,51 @@
   var links = [].slice.call(document.querySelectorAll('.toc a[href^="#"]'));
   if (!links.length) return;
   var heads = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  var tocBox = document.getElementById('docToc');
+  var prog = document.getElementById('tocProg');
+  var lastIdx = -1;
+
   function paint() {
     var top = window.scrollY + 120, idx = 0;
     heads.forEach(function (h, i) { if (h && h.offsetTop <= top) idx = i; });
     links.forEach(function (a, i) { a.classList.toggle('on', i === idx); });
+
+    /* 当前项跟随：目录本身可滚动时，把它带到可视区中部 */
+    if (idx !== lastIdx && tocBox && tocBox.scrollHeight > tocBox.clientHeight + 4) {
+      var a = links[idx];
+      if (a) {
+        var r = a.getBoundingClientRect(), br = tocBox.getBoundingClientRect();
+        if (r.top < br.top + 8 || r.bottom > br.bottom - 8) {
+          tocBox.scrollTop += (r.top - br.top) - tocBox.clientHeight / 2 + r.height / 2;
+        }
+      }
+    }
+    lastIdx = idx;
+
+    /* 全文阅读进度 */
+    if (prog) {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      prog.style.width = (max > 0 ? Math.min(1, window.scrollY / max) * 100 : 0) + '%';
+    }
   }
+
+  /* 移动端目录折叠 */
+  var tg = document.getElementById('tocToggle');
+  if (tg && tocBox) {
+    tg.addEventListener('click', function () {
+      var open = tocBox.classList.toggle('open');
+      tg.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    tocBox.addEventListener('click', function (e) {
+      if (e.target.closest('a') && window.innerWidth <= 900) {
+        tocBox.classList.remove('open');
+        tg.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
   window.addEventListener('scroll', paint, { passive: true });
+  window.addEventListener('resize', paint, { passive: true });
   paint();
 })();
 

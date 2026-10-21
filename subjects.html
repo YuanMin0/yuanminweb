@@ -120,9 +120,10 @@
         '<div style="min-width:0;flex:1">' +
           '<div class="subj-name">' + WB.esc(s.name) + '</div>' +
           '<div class="subj-en">' + WB.esc(s.en || '') + '</div>' +
-        '</div>' + WB.ring(pct, { color: s.accent }) +
+        '</div>' + 
       '</div>' +
       '<p class="subj-desc">' + WB.esc(s.desc) + '</p>' +
+      WB.subjectProgress(s) +
       '<div class="bar fx" style="margin-bottom:14px"><i style="width:' + pct + '%"></i></div>' +
       '<div class="subj-foot">' +
         '<div class="subj-meta">' +
@@ -186,7 +187,7 @@
     sWrap.classList.remove('hide');
     sSub.textContent = '关键词「' + q + '」命中 ' + res.length + ' 个知识点';
     if (!res.length) {
-      sList.innerHTML = WB.empty('🔍', '没有找到相关内容', '换个关键词试试，例如「构词法」「t 检验」「强军目标」「两山」');
+      sList.innerHTML = WB.empty('🔍', '没有找到相关内容', '换个关键词试试，例如「构词法」「t 检验」「强军目标」「两山」', '', 'search');
     } else {
       sList.innerHTML = res.map(function (r) {
         var k = r.k;

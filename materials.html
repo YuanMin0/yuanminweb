@@ -607,7 +607,7 @@
     document.getElementById('sCount').textContent = ready;
 
     var list = document.getElementById('list');
-    list.innerHTML = html || WB.empty('📂', '没有匹配的资料', '换个关键词或切换类别试试');
+    list.innerHTML = html || WB.empty('📂', '没有匹配的资料', '换个关键词或切换类别试试', '', 'search');
 
     list.querySelectorAll('[data-prev]').forEach(function (b) {
       b.addEventListener('click', function () {

@@ -176,9 +176,10 @@
           '<div class="subj-name">' + WB.esc(s.name) + '</div>' +
           '<div class="subj-en">' + WB.esc(s.en || '') + '</div>' +
         '</div>' +
-        WB.ring(pct, { color: s.accent }) +
+        
       '</div>' +
       '<p class="subj-desc">' + WB.esc(s.desc) + '</p>' +
+      WB.subjectProgress(s) +
       '<div class="subj-foot">' +
         '<div class="subj-meta">' +
           '<span><b>' + s._count.chapters + '</b> 章</span>' +

@@ -76,7 +76,7 @@
         WB.crumb([{ text: '首页', href: 'index.html' }, { text: '错题本' }]) +
         WB.empty('🎯', '错题本还是空的', '做错的题会自动出现在这里。先去练习几道题吧！',
           '<a class="gbtn gbtn-primary" href="subjects.html">去练习</a>' +
-          '<a class="gbtn" href="' + WB.link('quiz.html', { mode: 'random' }) + '">随机抽 20 题</a>');
+          '<a class="gbtn" href="' + WB.link('quiz.html', { mode: 'random' }) + '">随机抽 20 题</a>', 'done');
       WB.fx.init(); return;
     }
 

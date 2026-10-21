@@ -125,13 +125,14 @@
       isEmptyWrong ? '错题本是空的' : '这里还没有题目',
       isEmptyWrong ? '做错的题会自动进入错题本。先去练习几道题吧！' : '请先浏览知识点，或在科目页开始练习。',
       '<a class="gbtn gbtn-primary" href="subjects.html">返回科目列表</a>' +
-      (isEmptyWrong ? '<a class="gbtn" href="' + WB.link('quiz.html', { mode: 'random' }) + '">随机抽 20 题</a>' : ''));
+      (isEmptyWrong ? '<a class="gbtn" href="' + WB.link('quiz.html', { mode: 'random' }) + '">随机抽 20 题</a>' : ''),
+      isEmptyWrong ? 'done' : 'book');
     WB.fx.init(); return;
   }
 
   function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = (Math.random() * (i + 1)) | 0; var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   function notFound() {
-    root.innerHTML = WB.empty('🧭', '找不到对应的题目', '链接参数可能不正确。', '<a class="gbtn gbtn-primary" href="subjects.html">返回科目列表</a>');
+    root.innerHTML = WB.empty('🧭', '找不到对应的题目', '链接参数可能不正确。', '<a class="gbtn gbtn-primary" href="subjects.html">返回科目列表</a>', 'search');
     WB.fx.init();
   }
 

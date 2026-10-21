@@ -48,9 +48,47 @@
   .article .blk-table table { border-radius: 12px; overflow: hidden; }
   .article .blk-table thead th { position: sticky; top: 0; z-index: 1; }
 
+  /* 目录进度条 */
+  .toc-prog {
+    height: 3px; border-radius: 99px; overflow: hidden;
+    background: var(--surface-3); margin: 2px 0 10px;
+  }
+  .toc-prog i {
+    display: block; height: 100%; width: 0; border-radius: 99px;
+    background: linear-gradient(90deg, var(--brand), var(--violet));
+    transition: width .12s linear;
+  }
+  /* 目录项：更清晰的当前项 */
+  .toc a.on {
+    background: color-mix(in srgb, var(--brand) 10%, transparent);
+    color: var(--brand); font-weight: 700;
+  }
+  .toc a.on::before {
+    content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 3px;
+    border-radius: 99px; background: var(--brand);
+  }
+  .toc a { position: relative; }
+
+  /* 移动端：目录折叠 */
+  .toc-toggle { display: none; }
+
   @media (max-width: 900px) {
     .klayout { grid-template-columns: 1fr; }
-    .toc { position: static; margin-bottom: 8px; }
+    .toc {
+      position: static; margin-bottom: 8px;
+      max-height: 0; overflow: hidden; padding: 0;
+      transition: max-height .32s var(--ease), padding .32s var(--ease);
+    }
+    .toc.open { max-height: 62vh; overflow-y: auto; padding: 10px 8px 12px; }
+    .toc-toggle {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: 11px 14px; margin-bottom: 8px;
+      border: 1px solid var(--border); border-radius: var(--r-md);
+      background: var(--surface); color: var(--text); font-size: 14px; font-weight: 700;
+      cursor: pointer;
+    }
+    .toc-toggle-i { transition: transform .25s var(--ease); font-style: normal; }
+    .toc-toggle[aria-expanded="true"] .toc-toggle-i { transform: rotate(180deg); }
     .article p { text-indent: 2em; }
   }
   @media print { .toc, .doc-tip, .hdr, .ftr, .doc-head .gbtn { display: none; } .klayout { display: block; } }
@@ -75,8 +113,12 @@
     
     <div id="paneRead">
     <div class="klayout">
-      <aside class="toc">
+      <button class="toc-toggle" id="tocToggle" aria-expanded="false" aria-controls="docToc">
+        <span>本页目录</span><i class="toc-toggle-i">▾</i>
+      </button>
+      <aside class="toc" id="docToc">
         <div class="toc-h">本页目录</div>
+        <div class="toc-prog" aria-hidden="true"><i id="tocProg"></i></div>
         <a href="#s1">甲状腺激素合成与分泌【负反馈】</a><a href="#s2">四步合成过程（左侧蓝色栏 4 个步骤）</a><a href="#s3">1. 聚碘（NIS 碘泵介导）</a><a href="#s4">2. 碘活化（TPO 催化）</a><a href="#s5">3. 碘化（TPO 催化）</a><a href="#s6">1 个碘 + 酪氨酸 = MIT（一碘酪氨酸）</a><a href="#s7">4. 缩合 / 偶联（TPO 催化）</a><a href="#s8">DIT + MIT → T3（活性更强，含量少）</a><a href="#s9">甲状腺肿【特征性表现】甲状腺肿与病情轻重和病程无必然关系</a><a href="#s10">眼睑闭合不全、角膜外露致暴露性角膜病变</a><a href="#s11">眶后视神经受压致甲状腺相关性视神经病变</a><a href="#s12">胫前黏液性水肿【特征性表现】</a><a href="#s13">一线指标，最敏感指标</a><a href="#s14">不受 TBG 影响，优于 TT3、TT4</a><a href="#s15">首  选</a><a href="#s16">需短期迅速控制甲状腺功能</a><a href="#s17">老年或病程较长</a><a href="#s18">颈部手术或外照射史</a><a href="#s19">血常规：贫血（轻中度）</a><a href="#s20">血生化：总胆固醇升高</a><a href="#s21">甲状腺摄碘率：降低</a><a href="#s22">亚急性甲状腺炎</a><a href="#s23">病毒感染，滤泡破坏，胶质外溢</a><a href="#s24">最常见甲状腺疼痛疾病</a><a href="#s25">破坏性甲状腺组织损伤</a><a href="#s26">自限性，预后良好，易复发</a><a href="#s27">一般不遗留甲减（5-10%）</a><a href="#s28">病毒感染：（流感病毒、柯萨奇病毒、腺病毒、腮腺炎病毒）</a><a href="#s29">发病前1-3周常有上呼吸道感染史</a><a href="#s30">遗传易感性（HLA）</a><a href="#s31">季节趋势：夏秋季，与肠道病毒高峰一致</a><a href="#s32">病理生理【金标准：分离现象】</a><a href="#s33">临床表现</a><a href="#s34">起病急，病毒感染史</a><a href="#s35">甲状腺I-II度肿大，质地较硬</a><a href="#s36">三痛：压痛、转移痛（左右转移性）、放射痛（同侧耳后）</a><a href="#s37">甲减期：T3、T4逐渐降低，TSH升高</a><a href="#s38">恢复期：血T3、T4、TSH、摄碘率恢复正常</a><a href="#s39">急性炎症的全身表现</a><a href="#s40">甲状腺肿大</a><a href="#s41">血沉增快</a><a href="#s42">三痛：压痛；转移痛；放射痛</a><a href="#s43">分离现象：功能亢进，摄碘率降低</a><a href="#s44">出血部位伴波动感，无全身症状，ESR不高，B超可鉴别</a><a href="#s45">一组多种病因导致的甲状腺炎症+自身免疫性甲状腺炎</a><a href="#s46">桥本甲状腺炎【后面都是以这个为例子展开】</a><a href="#s47">成人甲减的首要原因</a><a href="#s48">弥漫性淋巴细胞、浆细胞浸润</a><a href="#s49">淋巴滤泡形成（生发中心）</a><a href="#s50">残留滤泡细胞嗜酸性变，Askanazy细胞形成</a><a href="#s51">发生甲减，90%滤泡被破坏</a><a href="#s52">早期无症状，仅 TPOAb 或 TgAb 阳性，甲功正常</a><a href="#s53">甲状腺弥漫性轻中度肿大，质地韧，无触痛</a><a href="#s54">典型：甲状腺毒症—正常—甲减</a><a href="#s55">TPOAb、TgAb 滴度显著升高（特征性指标）</a><a href="#s56">甲状腺弥漫性肿大，回声不均匀</a><a href="#s57">伴多发性低回声区域 ，呈网格状</a><a href="#s58">甲状腺弥漫性肿大，质地韧，特别伴峡部锥体叶肿大</a><a href="#s59">椎体叶：甲状腺胚胎发育残余结构，对自身免疫攻击更敏感</a><a href="#s60">病因和发病机制 - 甲状腺素减少</a><a href="#s61">“大脖子病”---弥漫增大的甲状腺</a><a href="#s62">女性多见，多无全身症状</a><a href="#s63">压迫周围组织：气管移位</a><a href="#s64">可继发甲亢、可发生恶变</a><a href="#s65">药物治疗：饮食 + 甲状腺素片</a><a href="#s66">药物治疗无效</a><a href="#s67">影响美观</a><a href="#s68">压迫症状</a><a href="#s69">高功能结节</a><a href="#s70">可疑恶变</a><a href="#s71">胸骨后甲状腺肿</a><a href="#s72">手术治疗</a><a href="#s73">青少年患者</a><a href="#s74">不能耐受手术患者</a><a href="#s75">（老年人、严重器质性病变）</a><a href="#s76">成人甲癌最主要类型</a><a href="#s77">儿童甲癌唯一类型</a><a href="#s78">转移早、预后好</a><a href="#s79">分化型TC</a><a href="#s80">肿瘤生长较快，中度恶性 易侵犯血管</a><a href="#s81">分化型TC</a><a href="#s82">降钙素分泌细胞来源</a><a href="#s83">中度恶性，淋巴、血行转移</a><a href="#s84">老年人多见</a><a href="#s85">早期颈淋巴结转移</a><a href="#s86">预后极差</a><a href="#s87">临床表现</a><a href="#s88">【髓样癌】</a><a href="#s89">颈部肿块</a><a href="#s90">内分泌失调</a><a href="#s91">诊断</a><a href="#s92">临床表现：甲状腺肿块、淋巴结肿大、组织压迫侵犯</a><a href="#s93">细针穿刺细胞学检查（FNA）</a><a href="#s94">降钙素测定</a><a href="#s95">临床分期</a><a href="#s96">TNM分期：注重肿瘤浸润程度、病理组织类型及年龄</a><a href="#s97">未分化癌：所有年龄，T1-3a，均属IVA期</a><a href="#s98">治疗（除未分化癌）</a><a href="#s99">手术：各型甲癌的基本治疗方法：+ 颈部淋巴结清扫</a><a href="#s100">腺叶切除lobectomy + 峡部切除isthmus</a><a href="#s101">甲状腺全切术 Total thyroidectomy</a><a href="#s102">3.性别差异（女性：男性3：1）</a><a href="#s103">临床表现</a><a href="#s104">肾小管浓缩功能下降：口干、多饮、夜尿</a><a href="#s105">泌尿系结石：肾绞痛、血尿</a><a href="#s106">肾功能不全：水肿</a><a href="#s107">骨痛：局部压痛</a><a href="#s108">特征性表现：纤维囊性骨炎、骨膜下骨吸收</a><a href="#s109">纤维囊性骨炎</a><a href="#s110">好发部位：四肢长骨骨干</a><a href="#s111">X线表现：偏心性囊状溶骨性破坏</a><a href="#s112">临床表现：压痛、病理性骨折</a><a href="#s113">骨膜下骨吸收</a><a href="#s114">好发部位：双手指骨、颅骨</a><a href="#s115">X线表现：骨皮质外侧缘粗糙模糊、不规则缺损（头颅毛玻璃样变）</a><a href="#s116">骨质疏松、骨折</a><a href="#s117">消化性溃疡：上腹痛</a><a href="#s118">胰腺炎：上腹痛</a><a href="#s119">高钙危象</a><a href="#s120">双膦酸盐（抑制破骨细胞，抑制骨吸收）</a><a href="#s121">诊断=临表（症状+体征）+实验室+影像（核素准确率高）</a><a href="#s122">噻嗪类利尿剂：轻度高钙血症， 停药可恢复正常</a><a href="#s123">治疗</a><a href="#s124">首选：手术切除肿瘤</a><a href="#s125">适应症</a><a href="#s126">喉返神经损伤</a><a href="#s127">甲状旁腺功能减退</a><a href="#s128">术后低钙血症：补充钙剂和维生素 D</a><a href="#s129">药物治疗：双膦酸盐（常用）</a><a href="#s130">高钙危象治疗（见前）</a><a href="#s131">乳腺疾病的外科治疗</a><a href="#s132">糖尿病</a><a href="#s133">低血糖症</a><a href="#s134">高尿酸血症</a><a href="#s135">骨质疏松症【老师上课说这里出一道选择题】</a><a href="#s136">发病机制</a><a href="#s137">骨代谢失衡：成骨细胞的骨形成 vs 破骨细胞的骨吸收</a><a href="#s138">绝经后雌激素降低</a><a href="#s139">疼痛：腰背疼痛多见，可有周身疼痛</a><a href="#s140">脆性骨折：频率最高的部位是脊椎、髋部和前臂远端</a><a href="#s141">钙磷代谢：血钙、血磷、维生素D、甲状旁腺激素、雌激素</a><a href="#s142">骨密度检查中轴骨或桡骨远端1/3骨密度T值≤-2.5</a><a href="#s143">髋部或者椎体脆性骨折</a><a href="#s144">选择低血糖指数（GI）食物：粗杂粮、复合碳水化合物</a><a href="#s145">餐后运动对改善餐后血糖有帮助</a><a href="#s146">规律锻炼可预防高危人群发展为2型糖尿病</a><a href="#s147">适度减重可改善胰岛素抵抗</a><a href="#s148">食谱内容与用量 - 食物交换份</a><a href="#s149">肥胖症 （自学内容）</a><a href="#s150">甲状腺腺瘤（自学内容）</a>
         <div class="toc-h" style="margin-top:20px">文档信息</div>
         <div class="small dim" style="padding:0 11px;line-height:1.9">段落 1524<br>表格 0<br>小节 150</div>
@@ -130,12 +172,51 @@
   var links = [].slice.call(document.querySelectorAll('.toc a[href^="#"]'));
   if (!links.length) return;
   var heads = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  var tocBox = document.getElementById('docToc');
+  var prog = document.getElementById('tocProg');
+  var lastIdx = -1;
+
   function paint() {
     var top = window.scrollY + 120, idx = 0;
     heads.forEach(function (h, i) { if (h && h.offsetTop <= top) idx = i; });
     links.forEach(function (a, i) { a.classList.toggle('on', i === idx); });
+
+    /* 当前项跟随：目录本身可滚动时，把它带到可视区中部 */
+    if (idx !== lastIdx && tocBox && tocBox.scrollHeight > tocBox.clientHeight + 4) {
+      var a = links[idx];
+      if (a) {
+        var r = a.getBoundingClientRect(), br = tocBox.getBoundingClientRect();
+        if (r.top < br.top + 8 || r.bottom > br.bottom - 8) {
+          tocBox.scrollTop += (r.top - br.top) - tocBox.clientHeight / 2 + r.height / 2;
+        }
+      }
+    }
+    lastIdx = idx;
+
+    /* 全文阅读进度 */
+    if (prog) {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      prog.style.width = (max > 0 ? Math.min(1, window.scrollY / max) * 100 : 0) + '%';
+    }
   }
+
+  /* 移动端目录折叠 */
+  var tg = document.getElementById('tocToggle');
+  if (tg && tocBox) {
+    tg.addEventListener('click', function () {
+      var open = tocBox.classList.toggle('open');
+      tg.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    tocBox.addEventListener('click', function (e) {
+      if (e.target.closest('a') && window.innerWidth <= 900) {
+        tocBox.classList.remove('open');
+        tg.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
   window.addEventListener('scroll', paint, { passive: true });
+  window.addEventListener('resize', paint, { passive: true });
   paint();
 })();
 

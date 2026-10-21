@@ -70,6 +70,23 @@
     s.chapters.forEach(function (ch) { (ch.knowledge || []).forEach(function (k) { out.push(k); }); });
     return out;
   };
+  /** 科目卡进度条：比细环更直观，带「已学 x / y」与完成态 */
+  WB.subjectProgress = function (s) {
+    var total = (s._count && s._count.knowledge) || 0;
+    var done = 0;
+    try { done = WB.store.learnedCount(s.id) || 0; } catch (e) {}
+    var pct = total ? Math.round(done / total * 100) : 0;
+    var full = pct >= 100;
+    var label = full ? '已完成' : (done ? '已学 ' + done + ' / ' + total : '未开始');
+    return '<div class="subj-prog' + (full ? ' done' : '') + '">' +
+      '<div class="subj-prog-row">' +
+        '<span class="subj-prog-lab">' + label + '</span>' +
+        '<b class="subj-prog-pct">' + (full ? '✓' : pct + '%') + '</b>' +
+      '</div>' +
+      '<div class="subj-prog-bar"><i style="width:' + pct + '%"></i></div>' +
+    '</div>';
+  };
+
   WB.stats = function () {
     var t = { subjects: _subjects.length, chapters: 0, knowledge: 0, quiz: 0 };
     _subjects.forEach(function (s) {
@@ -720,9 +737,44 @@
   WB.plain = plain;
 
   /* ---------------- 空状态 ---------------- */
-  WB.empty = function (icon, title, desc, actionHtml) {
-    return '<div class="empty"><div class="ico">' + icon + '</div><div style="font-weight:700;color:var(--text);font-size:16px">' +
-      WB.esc(title) + '</div><div class="mt-1">' + WB.esc(desc || '') + '</div>' +
-      (actionHtml ? '<div class="mt-3">' + actionHtml + '</div>' : '') + '</div>';
+  /* 空状态插画：用 SVG 而不是 emoji，随主题变色 */
+  var EMPTY_ART = {
+    search:
+      '<svg viewBox="0 0 148 124" fill="none" aria-hidden="true">' +
+        '<circle cx="70" cy="60" r="42" fill="var(--brand-soft)" opacity=".7"/>' +
+        '<rect x="43" y="24" width="46" height="60" rx="9" fill="var(--surface)" stroke="var(--border-2)" stroke-width="2"/>' +
+        '<path d="M54 40h24M54 51h24M54 62h15" stroke="var(--border-2)" stroke-width="2.6" stroke-linecap="round"/>' +
+        '<circle cx="94" cy="73" r="17" fill="var(--surface)" stroke="var(--brand)" stroke-width="3"/>' +
+        '<path d="M106 85l9 9" stroke="var(--brand)" stroke-width="3.6" stroke-linecap="round"/>' +
+        '<circle cx="28" cy="32" r="3" fill="var(--brand)" opacity=".45"/>' +
+        '<circle cx="116" cy="34" r="2.4" fill="var(--violet)" opacity=".55"/>' +
+        '<circle cx="34" cy="92" r="2" fill="var(--teal)" opacity=".5"/>' +
+      '</svg>',
+    done:
+      '<svg viewBox="0 0 148 124" fill="none" aria-hidden="true">' +
+        '<circle cx="74" cy="62" r="40" fill="var(--ok-soft)" opacity=".8"/>' +
+        '<circle cx="74" cy="62" r="28" fill="var(--surface)" stroke="var(--ok)" stroke-width="3"/>' +
+        '<path d="M62 62l9 9 17-18" stroke="var(--ok)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '<path d="M26 44l4 4M120 40l4-4M118 90l-4-4M30 92l-4 4" stroke="var(--ok)" stroke-width="2.6" stroke-linecap="round" opacity=".55"/>' +
+      '</svg>',
+    book:
+      '<svg viewBox="0 0 148 124" fill="none" aria-hidden="true">' +
+        '<circle cx="72" cy="62" r="42" fill="var(--violet-soft)" opacity=".7"/>' +
+        '<path d="M40 40c10-5 22-5 32 0 10-5 22-5 32 0v44c-10-5-22-5-32 0-10-5-22-5-32 0V40z" fill="var(--surface)" stroke="var(--border-2)" stroke-width="2"/>' +
+        '<path d="M72 40v44" stroke="var(--border-2)" stroke-width="2"/>' +
+        '<path d="M50 52h12M50 62h12M86 52h12M86 62h12" stroke="var(--border-2)" stroke-width="2.2" stroke-linecap="round"/>' +
+        '<circle cx="118" cy="36" r="2.6" fill="var(--violet)" opacity=".6"/>' +
+        '<circle cx="30" cy="86" r="2.2" fill="var(--brand)" opacity=".5"/>' +
+      '</svg>'
+  };
+
+  WB.empty = function (icon, title, desc, actionHtml, kind) {
+    var art = kind && EMPTY_ART[kind]
+      ? '<div class="empty-art">' + EMPTY_ART[kind] + '</div>'
+      : '<div class="ico">' + icon + '</div>';
+    return '<div class="empty">' + art +
+      '<div class="empty-title">' + WB.esc(title) + '</div>' +
+      '<div class="empty-desc">' + WB.esc(desc || '') + '</div>' +
+      (actionHtml ? '<div class="empty-act">' + actionHtml + '</div>' : '') + '</div>';
   };
 })();

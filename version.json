@@ -1,8 +1,8 @@
 {
 "v":"1.0.6",
-"build":"2026-10-22T01:45:55+0800",
+"build":"2026-10-22T02:00:29+0800",
 "count":104,
-"bytes":5965846,
+"bytes":5965627,
 "files":{
 "404.html":{
 "size":4216,
@@ -13,8 +13,8 @@
 "sha1":"7e2a0292c5b06e8da9e4b7c52359dd0722c8eb1f"
 },
 "download.html":{
-"size":8579,
-"sha1":"1053dad57d071ed4b539ba6094ec11cbb876fda7"
+"size":8360,
+"sha1":"a0567a12ccd2dfb4e91e9b374d92677911edcd3d"
 },
 "index.html":{
 "size":10271,

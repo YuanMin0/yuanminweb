@@ -1743,3 +1743,47 @@ html[data-theme="dark"] .card {
 .subj-card:hover .subj-prog-bar i {
   box-shadow: 0 0 10px -2px color-mix(in srgb, var(--accent, var(--brand)) 70%, transparent);
 }
+
+/* ==========================================================================
+   知识点阅读排版精修
+   ========================================================================== */
+
+/* 中文段落首行缩进两字，读起来像书页 */
+.article p { text-indent: 2em; }
+
+/* 正文第一段作为导语：不缩进、略大、颜色稍浅 */
+.article #body > p:first-child,
+.article > p:first-of-type {
+  text-indent: 0;
+  font-size: 16.6px;
+  color: var(--text-2);
+  line-height: 1.9;
+}
+
+/* 章节标题下方加渐变分隔线，层级更清楚 */
+.article h3::after {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-top: 9px;
+  background: linear-gradient(90deg, var(--border-2), transparent 78%);
+}
+
+/* 表格：斑马纹 + 首列（多为术语）不换行 */
+.blk-table tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--surface-2) 72%, transparent);
+}
+.blk-table td:first-child { white-space: nowrap; }
+.blk-table td { line-height: 1.75; }
+
+/* 列表项之间留一点呼吸 */
+.article li { margin-bottom: .5em; }
+.article li:last-child { margin-bottom: 0; }
+
+/* 行内代码更克制 */
+.article code { color: var(--text-2); background: var(--surface-3); }
+
+/* 窄屏取消首行缩进，避免短行缩进后更挤 */
+@media (max-width: 520px) {
+  .article p { text-indent: 0; }
+}

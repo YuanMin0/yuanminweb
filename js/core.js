@@ -53,7 +53,10 @@
     return s;
   }
 
-  WB.subjects = function () { return _subjects.slice(); };
+  /* 没加载全文时（首页），退回 data/_meta.js 的轻量元数据 */
+  WB.meta = function () { return window.WB_META || []; };
+  WB.usingMeta = function () { return _subjects.length === 0 && !!window.WB_META; };
+  WB.subjects = function () { return _subjects.length ? _subjects.slice() : WB.meta().slice(); };
   WB.getSubject = function (id) {
     for (var i = 0; i < _subjects.length; i++) if (_subjects[i].id === id) return _subjects[i];
     return null;
@@ -88,8 +91,10 @@
   };
 
   WB.stats = function () {
-    var t = { subjects: _subjects.length, chapters: 0, knowledge: 0, quiz: 0 };
-    _subjects.forEach(function (s) {
+    var list = WB.subjects();
+    var t = { subjects: list.length, chapters: 0, knowledge: 0, quiz: 0 };
+    list.forEach(function (s) {
+      if (!s._count) return;
       t.chapters += s._count.chapters; t.knowledge += s._count.knowledge; t.quiz += s._count.quiz;
     });
     return t;

@@ -77,8 +77,19 @@
       }, { rootMargin: '0px 0px -8% 0px', threshold: .06 });
     }
     for (var j = 0; j < els.length; j++) io.observe(els[j]);
+
+    /* 先同步把「已经在视口内」的元素显示出来：
+       观察器回调是异步的，页面加载很快时首屏会短暂空白 */
+    revealVisible();
+
     clearTimeout(revealFailsafe);
-    revealFailsafe = setTimeout(revealVisible, 1000);
+    revealFailsafe = setTimeout(revealVisible, 600);
+    /* 字体/图片加载完成后布局会变，再补一次 */
+    if (!fx._revealOnLoad) {
+      fx._revealOnLoad = true;
+      window.addEventListener('load', function () { revealVisible(); });
+      window.addEventListener('resize', function () { revealVisible(); }, { passive: true });
+    }
   };
 
   /* ---------------- 3. 光斑跟随 ---------------- */

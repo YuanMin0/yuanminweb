@@ -8,7 +8,7 @@
    缓存版本号跟随发布版本，升级后旧缓存自动清理。
    ========================================================================== */
 
-const VERSION = 'v1.0.5.2';
+const VERSION = 'v1.0.5.3';
 const CACHE = 'medilearn-' + VERSION;
 const OFFLINE = '/offline';   // 线上无扩展名地址
 
@@ -25,6 +25,7 @@ const PRECACHE = [
   '/js/fx.js',
   '/js/auth.js',
   '/js/pwa.js',
+  '/data/_meta.js',
   '/js/changelog.js',
   '/js/export.js',
   '/icons/icon-192.png',

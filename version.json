@@ -1,8 +1,8 @@
 {
-"v":"1.0.15",
-"build":"2026-10-23T01:02:31+0800",
+"v":"1.0.14",
+"build":"2026-10-23T01:07:01+0800",
 "count":115,
-"bytes":6360441,
+"bytes":6359648,
 "files":{
 "404.html":{
 "size":4217,
@@ -121,8 +121,8 @@
 "sha1":"7bcc7ab86e7fba2ed1be3d7b3802b117d4d1fe19"
 },
 "data/changelog.js":{
-"size":16267,
-"sha1":"e1764321f61c7d72be227ddb2a60af1944ba4199"
+"size":15474,
+"sha1":"c2adb4d55d77d52682eec5f25b5f7a5eda620c39"
 },
 "data/dermatology.js":{
 "size":13409,

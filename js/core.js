@@ -53,6 +53,17 @@
     return s;
   }
 
+  /* 科目大类：航医 / 预防 / 临床 / 护理 / 公共 */
+  WB.CATS = [
+    { id: 'all', name: '全部' },
+    { id: 'hangyi', name: '航医' },
+    { id: 'yufang', name: '预防' },
+    { id: 'linchuang', name: '临床' },
+    { id: 'huli', name: '护理' },
+    { id: 'gonggong', name: '公共' }
+  ];
+  WB.catOf = function (s) { return (s && s.cat) || 'linchuang'; };
+
   /* 没加载全文时（首页），退回 data/_meta.js 的轻量元数据 */
   WB.meta = function () { return window.WB_META || []; };
   WB.usingMeta = function () { return _subjects.length === 0 && !!window.WB_META; };

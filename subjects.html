@@ -38,6 +38,8 @@
       </div>
     </div>
 
+    <div class="cat-tabs rv rv-d1" id="catTabs" role="tablist"></div>
+
     <div class="toolbar rv rv-d1">
       <div class="search" style="position:relative">
         <input type="search" id="q" placeholder="搜索科目、章节、知识点、术语…（如 t 检验、肝、强军目标）" autocomplete="off">
@@ -98,6 +100,8 @@
 <script src="data/health-stats.js"></script>
 <script src="data/pathophys.js"></script>
 <script src="data/pathology.js"></script>
+<script src="data/hangwei.js"></script>
+<script src="data/hangxin.js"></script>
 <script src="data/medical-english.js"></script>
 <script src="js/fx.js"></script>
 <script>
@@ -105,9 +109,11 @@
   WB.mountChrome('subjects');
 
   var sortBy = 'order';
+  var curCat = 'all';
 
   function subjList() {
     var list = WB.subjects().slice();
+    if (curCat !== 'all') list = list.filter(function (s) { return WB.catOf(s) === curCat; });
     if (sortBy === 'quiz') list.sort(function (a, b) { return b._count.quiz - a._count.quiz; });
     else if (sortBy === 'progress') list.sort(function (a, b) { return WB.store.subjectPct(b.id) - WB.store.subjectPct(a.id); });
     else if (sortBy === 'name') list.sort(function (a, b) { return a.name.localeCompare(b.name, 'zh'); });
@@ -127,7 +133,6 @@
       '</div>' +
       '<p class="subj-desc">' + WB.esc(s.desc) + '</p>' +
       WB.subjectProgress(s) +
-      '<div class="bar fx" style="margin-bottom:14px"><i style="width:' + pct + '%"></i></div>' +
       '<div class="subj-foot">' +
         '<div class="subj-meta">' +
           '<span><b>' + s._count.chapters + '</b> 章</span>' +
@@ -144,6 +149,27 @@
     document.getElementById('grid').innerHTML = list.map(card).join('');
     WB.fx.refresh();
   }
+  function renderTabs() {
+    var all = WB.subjects();
+    document.getElementById('catTabs').innerHTML = WB.CATS.map(function (c) {
+      var n = c.id === 'all' ? all.length
+        : all.filter(function (s) { return WB.catOf(s) === c.id; }).length;
+      if (!n && c.id !== 'all') return '';
+      return '<button role="tab" class="cat-tab' + (curCat === c.id ? ' on' : '') +
+        '" data-cat="' + c.id + '" aria-selected="' + (curCat === c.id) + '">' +
+        WB.esc(c.name) + '<span class="cat-n">' + n + '</span></button>';
+    }).join('');
+  }
+
+  document.getElementById('catTabs').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-cat]');
+    if (!b) return;
+    curCat = b.getAttribute('data-cat');
+    renderTabs();
+    render();
+  });
+
+  renderTabs();
   render();
 
   /* 排序 */

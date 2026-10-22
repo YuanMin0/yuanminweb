@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>重难点精讲 · MediLearn</title>
+<meta name="description" content="各科重难点精讲：一句话点透核心逻辑，拆解易错点，配口诀与对比表。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#2563eb">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="MediLearn">
+<link rel="stylesheet" href="css/changelog.css">
+<script src="js/auth.js"></script>
+<script>if(window.WB&&WB.auth)WB.auth.guard();</script>
+<style>
+  .lec-layout { display: grid; grid-template-columns: 232px 1fr; gap: 22px; align-items: start; }
+  .lec-side {
+    position: sticky; top: calc(var(--hdr) + 18px);
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r-lg); padding: 10px; max-height: calc(100vh - var(--hdr) - 40px);
+    overflow-y: auto;
+  }
+  .lec-side h4 {
+    font-size: 11.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text-3); margin: 12px 8px 6px;
+  }
+  .lec-side h4:first-child { margin-top: 4px; }
+  .lec-side a {
+    display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 9px;
+    font-size: 13.5px; color: var(--text-2); text-decoration: none; transition: .16s var(--ease);
+  }
+  .lec-side a:hover { background: var(--surface-2); color: var(--text); }
+  .lec-side a.on { background: color-mix(in srgb, var(--brand) 12%, transparent); color: var(--brand); font-weight: 700; }
+  .lec-side a .n { margin-left: auto; font-size: 11.5px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+
+  .lec-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+  .lec-head h2 { margin: 0; font-size: 26px; }
+  .lec-head .sub { color: var(--text-3); font-size: 13.5px; }
+
+  .lec {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r-lg); padding: 22px 24px; margin-bottom: 16px;
+    box-shadow: var(--shadow-xs);
+  }
+  .lec-t { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+  .lec-t h3 { margin: 0; font-size: 18px; letter-spacing: -.01em; }
+  .lec-tag {
+    font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px;
+    background: var(--brand-soft); color: var(--brand-ink);
+  }
+  .lec-tag.hot { background: var(--rose-soft); color: var(--rose); }
+  .lec-tag.trap { background: var(--amber-soft); color: var(--amber); }
+
+  .lec-core {
+    font-size: 15.5px; line-height: 1.85; color: var(--text);
+    padding: 12px 14px; border-radius: 10px;
+    background: color-mix(in srgb, var(--brand) 6%, transparent);
+    border-left: 3px solid var(--brand); margin-bottom: 14px;
+  }
+  .lec-core b { color: var(--brand-ink); }
+
+  .lec-sec { margin-top: 14px; }
+  .lec-sec h5 {
+    font-size: 12.5px; font-weight: 800; color: var(--text-3);
+    letter-spacing: .06em; margin: 0 0 6px;
+  }
+  .lec-steps { margin: 0; padding-left: 20px; }
+  .lec-steps li { margin-bottom: 5px; line-height: 1.8; font-size: 14.6px; }
+  .lec-steps li::marker { color: var(--brand); font-weight: 700; }
+
+  .lec-trap {
+    margin-top: 14px; padding: 11px 14px; border-radius: 10px;
+    background: var(--amber-soft); border-left: 3px solid var(--amber);
+    font-size: 14px; line-height: 1.8;
+  }
+  .lec-trap b { color: var(--amber); }
+  .lec-mn {
+    margin-top: 10px; padding: 11px 14px; border-radius: 10px;
+    background: var(--violet-soft); border-left: 3px solid var(--violet);
+    font-size: 14px; line-height: 1.8;
+  }
+  .lec-mn b { color: var(--violet); }
+
+  @media (max-width: 900px) {
+    .lec-layout { grid-template-columns: 1fr; }
+    .lec-side {
+      position: static; max-height: none; display: flex; gap: 6px;
+      overflow-x: auto; padding: 8px;
+    }
+    .lec-side h4 { display: none; }
+    .lec-side a { white-space: nowrap; padding: 7px 12px; }
+    .lec-side a .n { display: none; }
+    .lec { padding: 18px 16px; }
+  }
+</style>
+</head>
+<body>
+<noscript>
+<div style="max-width:600px;margin:64px auto;padding:24px 26px;border:1px solid #e3e8f0;border-radius:16px;background:#fff;color:#0f172a;font:15px/1.85 -apple-system,'PingFang SC','Microsoft YaHei',sans-serif">
+  <b style="font-size:17px">需要启用 JavaScript</b>
+  <p style="margin:8px 0 0;color:#475569">本站是纯前端站点，内容与练习均由浏览器脚本渲染。请在浏览器设置中开启 JavaScript 后刷新页面。</p>
+</div>
+</noscript>
+
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <h2 style="font-size:24px">重难点精讲</h2>
+        <div class="sub">每科挑出最容易卡住的地方，讲清逻辑、拆开步骤、标出陷阱</div>
+      </div>
+    </div>
+
+    <div class="lec-layout">
+      <aside class="lec-side rv" id="lecSide"></aside>
+      <div id="lecMain"></div>
+    </div>
+  </div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="js/core.js"></script>
+<script src="data/_meta.js"></script>
+<script src="data/lectures.js"></script>
+<script src="js/fx.js"></script>
+<script src="js/pwa.js"></script>
+<script src="data/changelog.js"></script>
+<script src="js/changelog.js"></script>
+<script>
+(function () {
+  WB.mountChrome('lecture');
+
+  var LEC = window.LECTURES || [];
+  var side = document.getElementById('lecSide');
+  var main = document.getElementById('lecMain');
+  var cur = WB.qs('s') || (LEC[0] && LEC[0].sid);
+
+  function subjectOf(sid) {
+    var list = WB.subjects();
+    for (var i = 0; i < list.length; i++) if (list[i].id === sid) return list[i];
+    return null;
+  }
+
+  function renderSide() {
+    var groups = {};
+    LEC.forEach(function (x) {
+      var s = subjectOf(x.sid);
+      if (!s) return;
+      var cat = WB.catOf(s);
+      (groups[cat] = groups[cat] || []).push({ s: s, n: x.items.length });
+    });
+    side.innerHTML = WB.CATS.filter(function (c) { return c.id !== 'all' && groups[c.id]; })
+      .map(function (c) {
+        return '<h4>' + WB.esc(c.name) + '</h4>' + groups[c.id].map(function (it) {
+          return '<a href="lecture.html?s=' + it.s.id + '"' + (it.s.id === cur ? ' class="on"' : '') + '>' +
+            '<span>' + WB.esc(it.s.name) + '</span><span class="n">' + it.n + '</span></a>';
+        }).join('');
+      }).join('');
+  }
+
+  function renderMain() {
+    var s = subjectOf(cur);
+    var pack = null;
+    LEC.forEach(function (x) { if (x.sid === cur) pack = x; });
+    if (!s || !pack) {
+      main.innerHTML = WB.empty('🧭', '暂无该科精讲', '换一门科目看看，或在左侧选择。', '', 'book');
+      return;
+    }
+
+    var html = '<div class="rv">' +
+      '<div class="lec-head"><h2>' + WB.esc(s.name) + '</h2>' +
+      '<span class="sub">' + pack.items.length + ' 个重难点 · ' + WB.esc(s.en || '') + '</span></div>' +
+      '<p style="color:var(--text-3);font-size:13.5px;margin:0 0 18px">' +
+      '先看「核心逻辑」建立框架，再看「拆解」补细节，最后扫一眼「陷阱」。</p>' +
+      '</div>';
+
+    html += pack.items.map(function (it) {
+      return '<article class="lec rv">' +
+        '<div class="lec-t"><h3>' + WB.esc(it.t) + '</h3>' +
+        (it.tags || []).map(function (g) {
+          var cls = g === '易错' ? ' trap' : (g === '高频' ? ' hot' : '');
+          return '<span class="lec-tag' + cls + '">' + WB.esc(g) + '</span>';
+        }).join('') + '</div>' +
+        '<div class="lec-core">' + WB.rich(it.core) + '</div>' +
+        (it.steps && it.steps.length
+          ? '<div class="lec-sec"><h5>拆开看</h5><ol class="lec-steps">' +
+            it.steps.map(function (x) { return '<li>' + WB.rich(x) + '</li>'; }).join('') + '</ol></div>'
+          : '') +
+        (it.table
+          ? '<div class="lec-sec"><h5>对比</h5><div class="blk-table"><table><thead><tr>' +
+            it.table.head.map(function (h) { return '<th>' + WB.rich(h) + '</th>'; }).join('') +
+            '</tr></thead><tbody>' + it.table.rows.map(function (r) {
+              return '<tr>' + r.map(function (c) { return '<td>' + WB.rich(c) + '</td>'; }).join('') + '</tr>';
+            }).join('') + '</tbody></table></div></div>'
+          : '') +
+        (it.trap ? '<div class="lec-trap"><b>陷阱：</b>' + WB.rich(it.trap) + '</div>' : '') +
+        (it.mnemonic ? '<div class="lec-mn"><b>记：</b>' + WB.rich(it.mnemonic) + '</div>' : '') +
+        '</article>';
+    }).join('');
+
+    main.innerHTML = html;
+    WB.fx.refresh();
+  }
+
+  renderSide();
+  renderMain();
+  window.scrollTo(0, 0);
+})();
+</script>
+</body>
+</html>

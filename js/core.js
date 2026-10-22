@@ -304,11 +304,11 @@
         tb.innerHTML = TABS.map(function (t) {
           var on = t.match.indexOf(pageName) > -1;
           var badge = (t.href === 'wrongbook.html' && wrongN)
-            ? '<i class="tab-badge">' + (wrongN > 99 ? '99+' : wrongN) + '</i>' : '';
-          return '<a class="tab' + (on ? ' on' : '') + '" href="' + t.href + '"' +
+            ? '<i class="tb-badge">' + (wrongN > 99 ? '99+' : wrongN) + '</i>' : '';
+          return '<a class="tb' + (on ? ' on' : '') + '" href="' + t.href + '"' +
             (on ? ' aria-current="page"' : '') + '>' +
-            '<span class="tab-ico">' + t.ico + '</span>' +
-            '<span class="tab-label">' + t.label + '</span>' + badge + '</a>';
+            '<span class="tb-ico">' + t.ico + '</span>' +
+            '<span class="tb-label">' + t.label + '</span>' + badge + '</a>';
         }).join('');
         document.body.appendChild(tb);
         document.body.classList.add('has-tabbar');

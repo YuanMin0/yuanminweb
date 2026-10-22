@@ -1558,30 +1558,44 @@ html[data-theme="dark"] .vz-kv { background: var(--surface-2); }
     padding-bottom: env(safe-area-inset-bottom, 0px);
     box-shadow: 0 -8px 26px -16px rgba(15, 23, 42, .22);
   }
-  .tab {
+  /* 注意：类名用 .tb 而非 .tab —— .tab 已被站点其他胶囊标签占用，
+     复用会导致选中态变成实心蓝块盖住文字 */
+  .tabbar .tb {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 3px; min-height: 52px; padding: 6px 0 7px;
+    gap: 4px; min-height: 58px; padding: 9px 2px 8px;
     color: var(--text-3); text-decoration: none;
-    font-size: 11px; font-weight: 600; letter-spacing: .02em;
-    position: relative; -webkit-tap-highlight-color: transparent;
-    transition: color .16s var(--ease);
+    font-size: 11px; font-weight: 650; letter-spacing: .01em; line-height: 1;
+    position: relative; border-radius: 12px;
+    -webkit-tap-highlight-color: transparent;
+    transition: color .16s var(--ease), background .16s var(--ease);
   }
-  .tab-ico { font-size: 17px; line-height: 1; transition: transform .18s var(--ease); }
-  .tab.on { color: var(--brand); }
-  .tab.on .tab-ico { transform: translateY(-1px) scale(1.06); }
-  .tab:active { background: color-mix(in srgb, var(--brand) 8%, transparent); }
-  .tab-badge {
-    position: absolute; top: 3px; left: 50%; margin-left: 5px;
+  .tabbar .tb-ico {
+    font-size: 19px; line-height: 1;
+    transition: transform .18s var(--ease);
+  }
+  .tabbar .tb-label {
+    font-size: 11px; line-height: 1.1; white-space: nowrap;
+  }
+  .tabbar .tb.on { color: var(--brand); font-weight: 750; }
+  .tabbar .tb.on .tb-ico { transform: translateY(-1px) scale(1.08); }
+  .tabbar .tb.on::after {
+    content: ""; position: absolute; top: 4px; left: 50%; transform: translateX(-50%);
+    width: 18px; height: 2.5px; border-radius: 99px;
+    background: linear-gradient(90deg, var(--brand), var(--violet));
+  }
+  .tabbar .tb:active { background: color-mix(in srgb, var(--brand) 9%, transparent); }
+  .tabbar .tb-badge {
+    position: absolute; top: 4px; left: 50%; margin-left: 7px;
     min-width: 16px; height: 16px; padding: 0 4px; border-radius: 99px;
     background: var(--rose); color: #fff; font-size: 10px; font-style: normal;
     line-height: 16px; text-align: center; font-weight: 700;
   }
 
-  /* 给底部栏让位，避免遮住正文与浮动按钮 */
-  body.has-tabbar { padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px)); }
-  #mlTop { bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
-  .to-top { bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
-  .pwa-bar { bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
+  /* 给底部栏让位：栏体 58 + 上边框 1，再留 8px 呼吸 */
+  body.has-tabbar { padding-bottom: calc(67px + env(safe-area-inset-bottom, 0px)); }
+  #mlTop { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+  .to-top { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+  .pwa-bar { bottom: calc(70px + env(safe-area-inset-bottom, 0px)); }
 
   /* 触摸目标不小于 40px */
   .icon-btn { width: 40px; height: 40px; }
@@ -1885,4 +1899,19 @@ html[data-theme="dark"] .card {
   display: inline-block; width: 6px; height: 6px; border-radius: 50%;
   background: linear-gradient(135deg, var(--brand), var(--violet));
   margin-left: 6px; vertical-align: middle;
+}
+
+/* ---------- 移动端顶栏：桌面版按钮收成普通图标按钮，减少视觉噪音 ---------- */
+@media (max-width: 760px) {
+  .hdr-dl {
+    width: 40px; height: 40px; padding: 0;
+    border-radius: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-2);
+    box-shadow: none;
+  }
+  .hdr-dl::after { display: none; }
+  .hdr-dl:hover { transform: none; box-shadow: none; border-color: var(--border-2); }
+  .hdr-dl-i { font-size: 16px; }
 }

@@ -1,8 +1,8 @@
 {
-"v":"1.0.11",
-"build":"2026-10-23T00:15:04+0800",
+"v":"1.0.12",
+"build":"2026-10-23T00:28:25+0800",
 "count":114,
-"bytes":6216327,
+"bytes":6301925,
 "files":{
 "404.html":{
 "size":4217,
@@ -121,8 +121,8 @@
 "sha1":"7bcc7ab86e7fba2ed1be3d7b3802b117d4d1fe19"
 },
 "data/changelog.js":{
-"size":12948,
-"sha1":"8ed68f7f41705f3a4410f31a5a5434e6311a61c4"
+"size":13832,
+"sha1":"4f03189766c19b709b588623085b4febf7c2a36d"
 },
 "data/dermatology.js":{
 "size":13409,
@@ -225,8 +225,8 @@
 "sha1":"b560a4f5615fec75f3ffc15e396d80ec40d6f44c"
 },
 "data/materials.js":{
-"size":41153,
-"sha1":"b539382fa9eb95ff767076bc2003ebb092bdf04e"
+"size":125867,
+"sha1":"36b26b72aaef395269773b59225b9506ff1837d8"
 },
 "data/neurology.js":{
 "size":29432,

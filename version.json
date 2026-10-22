@@ -1,8 +1,8 @@
 {
-"v":"1.0.13",
-"build":"2026-10-23T00:33:49+0800",
-"count":114,
-"bytes":6309058,
+"v":"1.0.14",
+"build":"2026-10-23T00:44:18+0800",
+"count":116,
+"bytes":6361863,
 "files":{
 "404.html":{
 "size":4217,
@@ -23,6 +23,10 @@
 "knowledge.html":{
 "size":15803,
 "sha1":"2d305b5960cc1c2aeb9bf616390bb6ebece99711"
+},
+"lecture.html":{
+"size":9531,
+"sha1":"7a2e84242c56a8499ad37e18340fe22330752585"
 },
 "login.html":{
 "size":22392,
@@ -73,8 +77,8 @@
 "sha1":"e401a062542968d48c2e0409442f7d1f4f0250c9"
 },
 "js/core.js":{
-"size":37973,
-"sha1":"da11deab90490472bf104fd7c2b235b0fe020439"
+"size":38036,
+"sha1":"2a1fb480792bde7aa0bc6424462cc4269a3a2401"
 },
 "js/export.js":{
 "size":13074,
@@ -121,8 +125,8 @@
 "sha1":"7bcc7ab86e7fba2ed1be3d7b3802b117d4d1fe19"
 },
 "data/changelog.js":{
-"size":14625,
-"sha1":"6befd14323a6be56bd8fe0ad71e2136afd9d66fa"
+"size":15541,
+"sha1":"0b41634918e61abd21c4a05539dc648fca446777"
 },
 "data/dermatology.js":{
 "size":13409,
@@ -223,6 +227,10 @@
 "data/internal-nursing.js":{
 "size":44115,
 "sha1":"b560a4f5615fec75f3ffc15e396d80ec40d6f44c"
+},
+"data/lectures.js":{
+"size":42295,
+"sha1":"006ac11ba2016ab0f370350e4a9c154a2916f5a7"
 },
 "data/materials.js":{
 "size":125867,

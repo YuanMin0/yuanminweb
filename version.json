@@ -1,8 +1,8 @@
 {
 "v":"1.0.14",
-"build":"2026-10-23T01:07:01+0800",
+"build":"2026-10-23T02:10:43+0800",
 "count":115,
-"bytes":6359648,
+"bytes":6360769,
 "files":{
 "404.html":{
 "size":4217,
@@ -61,8 +61,8 @@
 "sha1":"ed5ba9d001c4b6e8bf4fe35a40cf058ce23bc936"
 },
 "css/style.css":{
-"size":88933,
-"sha1":"67efe5443e81e8b3b1e321f7e569a63877f3ea32"
+"size":90058,
+"sha1":"e655574e5706765e4f368211c206262a3b83f7c6"
 },
 "js/auth.js":{
 "size":8411,
@@ -73,8 +73,8 @@
 "sha1":"e401a062542968d48c2e0409442f7d1f4f0250c9"
 },
 "js/core.js":{
-"size":37973,
-"sha1":"da11deab90490472bf104fd7c2b235b0fe020439"
+"size":37969,
+"sha1":"c0ca1525bfc2db38b8c4edd5428da5c591c28559"
 },
 "js/export.js":{
 "size":13074,

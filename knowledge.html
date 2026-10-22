@@ -72,6 +72,7 @@
 <script src="data/neurology.js"></script>
 <script src="data/hangwei.js"></script>
 <script src="data/hangxin.js"></script>
+<script src="data/lectures.js"></script>
 <script src="js/fx.js"></script>
 <script src="js/export.js"></script>
 <script src="js/viz.js"></script>
@@ -234,6 +235,46 @@
   } catch (e) {}
 
   /* ---------- 交互动画（统计学） ---------- */
+  /* ---------- 精讲：该知识点若有精讲，插到正文最前面 ---------- */
+  (function () {
+    var L = window.LECTURES || [];
+    var pack = null;
+    for (var i = 0; i < L.length; i++) if (L[i].sid === s.id) { pack = L[i]; break; }
+    if (!pack) return;
+    var mine = pack.items.filter(function (x) { return x.kp === k.title; });
+    if (!mine.length) return;
+    var body = document.getElementById('body');
+    if (!body) return;
+
+    function tag(g) {
+      var cls = g === '易错' ? ' trap' : (g === '高频' ? ' hot' : '');
+      return '<span class="kp-lec-tag' + cls + '">' + WB.esc(g) + '</span>';
+    }
+
+    var html = '<div class="kp-lec-wrap">' + mine.map(function (it) {
+      return '<section class="kp-lec">' +
+        '<div class="kp-lec-h"><span class="badge">精讲</span><h4>' + WB.esc(it.t) + '</h4>' +
+        (it.tags || []).map(tag).join('') + '</div>' +
+        '<div class="kp-lec-core">' + WB.rich(it.core) + '</div>' +
+        (it.steps && it.steps.length
+          ? '<div class="kp-lec-sec"><h5>拆开看</h5><ol class="kp-lec-steps">' +
+            it.steps.map(function (x) { return '<li>' + WB.rich(x) + '</li>'; }).join('') + '</ol></div>'
+          : '') +
+        (it.table
+          ? '<div class="kp-lec-sec"><h5>对比</h5><div class="blk-table"><table><thead><tr>' +
+            it.table.head.map(function (h) { return '<th>' + WB.rich(h) + '</th>'; }).join('') +
+            '</tr></thead><tbody>' + it.table.rows.map(function (r) {
+              return '<tr>' + r.map(function (c) { return '<td>' + WB.rich(c) + '</td>'; }).join('') + '</tr>';
+            }).join('') + '</tbody></table></div></div>'
+          : '') +
+        (it.trap ? '<div class="kp-lec-trap"><b>陷阱：</b>' + WB.rich(it.trap) + '</div>' : '') +
+        (it.mnemonic ? '<div class="kp-lec-mn"><b>记：</b>' + WB.rich(it.mnemonic) + '</div>' : '') +
+        '</section>';
+    }).join('') + '</div>' +
+    '<div class="kp-lec-sep"><span>详细内容</span></div>';
+
+    body.insertAdjacentHTML('afterbegin', html);
+  })();
   if (WB.viz) WB.viz.mount(document.getElementById('body'));
 
   /* 记录「上次学习」 */

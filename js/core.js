@@ -264,7 +264,6 @@
   var NAV = [
     { href: 'index.html', label: '总览', key: 'home' },
     { href: 'subjects.html', label: '全部科目', key: 'subjects' },
-    { href: 'lecture.html', label: '精讲', key: 'lecture' },
     { href: 'materials.html', label: '资料汇总', key: 'materials' },
     { href: 'wrongbook.html', label: '错题本', key: 'wrong' },
     { href: 'about.html', label: '关于', key: 'about' }

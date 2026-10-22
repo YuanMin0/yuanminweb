@@ -73,6 +73,7 @@
 <script src="data/hangwei.js"></script>
 <script src="data/hangxin.js"></script>
 <script src="data/materials.js"></script>
+<script src="data/lectures.js"></script>
 <script src="js/fx.js"></script>
 <script src="js/export.js"></script>
 <script>
@@ -80,6 +81,16 @@
   WB.mountChrome('subjects');
   var sid = WB.qs('s');
   var s = WB.getSubject(sid);
+
+  /* 该知识点是否配了精讲 */
+  var LEC = window.LECTURES || [];
+  function hasLec(title) {
+    for (var i = 0; i < LEC.length; i++) {
+      if (LEC[i].sid !== sid) continue;
+      for (var j = 0; j < LEC[i].items.length; j++) if (LEC[i].items[j].kp === title) return true;
+    }
+    return false;
+  }
   var root = document.getElementById('root');
 
   if (!s) {
@@ -143,6 +154,7 @@
             (done ? 'background:var(--ok);border-color:var(--ok);color:#fff' : '') + '">' + (done ? '✓' : '') + '</button>' +
           '<div class="krow-main">' +
             '<div class="krow-t">' + WB.esc(k.title) +
+              (hasLec(k.title) ? '<span class="kp-lec-dot" title="含精讲"></span>' : '') +
               (k.tags || []).slice(0, 3).map(function (t) { return '<span class="chip chip-line tiny">' + WB.esc(t) + '</span>'; }).join('') +
             '</div>' +
             '<div class="krow-d">' + WB.esc(k.summary || '') + '</div>' +

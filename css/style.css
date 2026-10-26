@@ -1940,14 +1940,49 @@ html[data-theme="dark"] .card {
   .sec-block-d { font-size: 12.8px; }
 }
 
-/* ---------- 资料汇总：分组折叠 ---------- */
-.mgroup-hd { padding: 12px 16px; }
-.mgroup .chapter-no { font-size: 18px; }
-.mgroup-bd { display: none; padding: 2px 12px 10px; }
-.mgroup.open .mgroup-bd { display: block; }
-.mgroup.open .caret { transform: rotate(90deg); }
+/* ---------- 资料汇总：分组折叠（高度过渡 + 错峰入场） ---------- */
+.mgroup { transition: box-shadow .24s var(--ease), border-color .24s var(--ease); }
+.mgroup.open { border-color: var(--border-2); box-shadow: 0 8px 22px -16px rgba(15, 23, 42, .28); }
+.mgroup-hd { padding: 12px 16px; transition: background .18s var(--ease); }
+.mgroup .chapter-no { font-size: 18px; transition: transform .26s var(--ease); }
+.mgroup.open .chapter-no { transform: scale(1.06); }
+.mgroup .caret { transition: transform .3s var(--ease), color .2s var(--ease); }
+.mgroup.open .caret { transform: rotate(90deg); color: var(--accent, var(--brand)); }
+
+/* 高度由 JS 测量后设置，transition 负责补间；关闭态保持 0 */
+.mgroup-bd {
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: height .36s cubic-bezier(.32, .72, 0, 1),
+              opacity .24s var(--ease);
+  will-change: height;
+}
+.mgroup.open .mgroup-bd { opacity: 1; }
+.mgroup-in { padding: 2px 12px 10px; }
+
+/* 展开时文件行轻微上浮，最多错开 8 行 */
+.mgroup.open .mgroup-in > * { animation: mgIn .36s var(--ease) both; }
+.mgroup.open .mgroup-in > *:nth-child(1) { animation-delay: .04s; }
+.mgroup.open .mgroup-in > *:nth-child(2) { animation-delay: .07s; }
+.mgroup.open .mgroup-in > *:nth-child(3) { animation-delay: .10s; }
+.mgroup.open .mgroup-in > *:nth-child(4) { animation-delay: .13s; }
+.mgroup.open .mgroup-in > *:nth-child(5) { animation-delay: .16s; }
+.mgroup.open .mgroup-in > *:nth-child(6) { animation-delay: .19s; }
+.mgroup.open .mgroup-in > *:nth-child(7) { animation-delay: .21s; }
+.mgroup.open .mgroup-in > *:nth-child(n+8) { animation-delay: .23s; }
+@keyframes mgIn {
+  from { opacity: 0; transform: translateY(-7px); }
+  to { opacity: 1; transform: none; }
+}
+
 @media (max-width: 760px) {
   .mgroup-hd { padding: 11px 12px; gap: 10px; }
-  .mgroup-bd { padding: 2px 8px 8px; }
+  .mgroup-in { padding: 2px 8px 8px; }
   .mgroup .gbtn-sm { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mgroup-bd, .mgroup .caret, .mgroup .chapter-no { transition: none; }
+  .mgroup.open .mgroup-in > * { animation: none; }
 }

@@ -637,7 +637,7 @@
           (s ? '<a class="gbtn gbtn-sm" href="' + WB.link('subject.html', { s: g.id }) + '" data-no-toggle>进入科目 →</a>' : '') +
           '<span class="caret">▶</span>' +
         '</div>' +
-        '<div class="mgroup-bd">' + files.map(function (f) { return fileRow(f, accent, g.id); }).join('') + '</div>' +
+        '<div class="mgroup-bd"><div class="mgroup-in">' + files.map(function (f) { return fileRow(f, accent, g.id); }).join('') + '</div></div>' +
       '</section>';
     });
 
@@ -651,16 +651,47 @@
     if (html) {
       var mgs = list.querySelectorAll('.mgroup');
       if (kw || curSubj || mgs.length === 1) {
-        for (var mi = 0; mi < mgs.length; mi++) mgs[mi].classList.add('open');
+        for (var mi = 0; mi < mgs.length; mi++) setGroupOpen(mgs[mi], true, false);
       }
     }
 
-  /* 分组标题点击展开 / 收起 */
+  /* 分组折叠：先测高再补间，避免 auto 高度无法过渡 */
+  function setGroupOpen(sec, open, animate) {
+    var bd = sec.querySelector('.mgroup-bd');
+    if (!bd) return;
+    var h = bd.scrollHeight;
+    if (!animate) {
+      sec.classList.toggle('open', open);
+      bd.style.height = open ? '' : '0px';
+      return;
+    }
+    if (open) {
+      sec.classList.add('open');
+      bd.style.height = '0px';
+      void bd.offsetHeight;          // 强制重排，让 0 生效
+      bd.style.height = h + 'px';
+    } else {
+      bd.style.height = h + 'px';
+      void bd.offsetHeight;
+      sec.classList.remove('open');
+      bd.style.height = '0px';
+    }
+  }
+
   document.getElementById('list').addEventListener('click', function (e) {
     if (e.target.closest('[data-no-toggle]')) return;
     var hd = e.target.closest('.mgroup-hd');
     if (!hd) return;
-    hd.parentNode.classList.toggle('open');
+    var sec = hd.parentNode;
+    setGroupOpen(sec, !sec.classList.contains('open'), true);
+  });
+
+  /* 过渡结束：展开态交回 auto，避免内容变化后被写死高度 */
+  document.getElementById('list').addEventListener('transitionend', function (e) {
+    if (e.propertyName !== 'height') return;
+    var bd = e.target;
+    if (!bd.classList || !bd.classList.contains('mgroup-bd')) return;
+    if (bd.parentNode.classList.contains('open')) bd.style.height = '';
   });
 
     list.querySelectorAll('[data-prev]').forEach(function (b) {

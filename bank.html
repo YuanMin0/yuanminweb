@@ -113,41 +113,33 @@
   /* ---------- 动效 ---------- */
   /* 只动位移、不动透明度：动画被冻结时内容也不会消失 */
   @keyframes panelIn {
-    from { transform: translateY(-10px); }
+    from { transform: translateY(-14px) scale(.994); }
     to   { transform: none; }
   }
   @keyframes itemIn {
-    from { transform: translateY(-6px); opacity: .55; }
+    from { transform: translateY(-4px); opacity: .65; }
     to   { transform: none; opacity: 1; }
   }
-  @keyframes qIn {
-    from { transform: translateY(10px); opacity: .55; }
+  @keyframes listIn {
+    from { transform: translateY(7px); opacity: .6; }
     to   { transform: none; opacity: 1; }
   }
 
   .exam-panel[hidden] { display: none; }
-  .exam-panel.show { animation: panelIn .34s var(--ease) both; }
-  .exam-item { animation: itemIn .3s var(--ease) both; }
+  .exam-panel.show { animation: panelIn .44s var(--ease-out) both; }
+  .exam-item { animation: itemIn .38s var(--ease-out) both; }
   .exam-item:hover { transform: translateY(-1px); }
 
-  /* 题目卡入场错峰，最多 8 档 */
-  .qcard { animation: qIn .3s var(--ease) both; }
-  .qcard:nth-child(1) { animation-delay: .02s; }
-  .qcard:nth-child(2) { animation-delay: .05s; }
-  .qcard:nth-child(3) { animation-delay: .08s; }
-  .qcard:nth-child(4) { animation-delay: .11s; }
-  .qcard:nth-child(5) { animation-delay: .13s; }
-  .qcard:nth-child(6) { animation-delay: .15s; }
-  .qcard:nth-child(7) { animation-delay: .17s; }
-  .qcard:nth-child(n+8) { animation-delay: .19s; }
-  .qcard { transition: box-shadow .2s var(--ease), border-color .2s var(--ease); }
-  .qcard:hover { box-shadow: 0 8px 22px -18px rgba(15, 23, 42, .35); }
+  /* 列表整体入场：一张卡一卡地动会显得零碎，改成整块轻推 */
+  #list.anim { animation: listIn .3s var(--ease-out) both; }
+  .qcard { transition: box-shadow .24s var(--ease-out), border-color .24s var(--ease-out); }
+  .qcard:hover { box-shadow: 0 10px 26px -20px rgba(15, 23, 42, .38); }
 
   /* 筛选条更细腻的反馈 */
-  .cat-tab { transition: transform .16s var(--ease), background .18s var(--ease),
-             border-color .18s var(--ease), color .18s var(--ease); }
+  .cat-tab { transition: transform .2s var(--ease-out), background .22s var(--ease-out),
+             border-color .22s var(--ease-out), color .22s var(--ease-out); }
   .cat-tab:active { transform: scale(.97); }
-  .bank-stat { transition: transform .2s var(--ease), border-color .2s var(--ease); }
+  .bank-stat { transition: transform .24s var(--ease-out), border-color .24s var(--ease-out); }
   .bank-stat:hover { transform: translateY(-2px); border-color: var(--border-2); }
 
   /* 加载更多按钮 */
@@ -418,7 +410,7 @@
         '<div class="sub">该科暂无往年真题数据，先看高频考点（按题量排序）。</div>' +
         (hArr.length
           ? '<div class="exam-grid">' + hArr.map(function (o, i) {
-              return '<div class="exam-item" data-kp="' + WB.esc(o.ktitle) + '" style="animation-delay:' + (i * 25) + 'ms">' +
+              return '<div class="exam-item" data-kp="' + WB.esc(o.ktitle) + '" style="animation-delay:' + (i * 18) + 'ms">' +
                 '<span class="bar-mini"><i style="width:' + Math.round(o.n / hArr[0].n * 100) + '%"></i></span>' +
                 '<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' +
                 WB.esc(o.ktitle) + '</span><span class="n">' + o.n + '</span></div>';
@@ -458,7 +450,7 @@
       '<div class="sub">共 ' + exam.length + ' 道真题，分布在 ' + Object.keys(byKp).length +
       ' 个考点。点任一考点可筛选出该考点的全部题目。</div>' +
       '<div class="exam-grid">' + arr.map(function (o, i) {
-        return '<div class="exam-item" data-kp="' + WB.esc(o.ktitle) + '" style="animation-delay:' + (i * 25) + 'ms">' +
+        return '<div class="exam-item" data-kp="' + WB.esc(o.ktitle) + '" style="animation-delay:' + (i * 18) + 'ms">' +
           '<span class="bar-mini"><i style="width:' + Math.round(o.n / max * 100) + '%"></i></span>' +
           '<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' +
           WB.esc(o.ktitle) + '</span><span class="n">' + o.n + '</span></div>';
@@ -467,15 +459,16 @@
         ? '<div style="margin-top:16px">' +
           '<div class="small" style="font-weight:800;color:var(--text-2);margin-bottom:8px">重难点（易错考点）</div>' +
           '<div class="exam-grid">' + traps.map(function (o, i) {
-            return '<div class="exam-item" data-kp="' + WB.esc(o.ktitle) + '" style="animation-delay:' + (i * 25 + 80) + 'ms">' +
+            return '<div class="exam-item" data-kp="' + WB.esc(o.ktitle) + '" style="animation-delay:' + (i * 18 + 60) + 'ms">' +
               '<span class="qtag trap">易错</span>' +
               '<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' +
               WB.esc(o.ktitle) + '</span><span class="n">' + o.n + '</span></div>';
           }).join('') + '</div></div>'
         : '') +
       '<div class="small dim" style="margin-top:12px">' +
-      '本科标为<b>高频</b>的共 ' + hotKp + ' 题，标为<b>易错</b>的共 ' + trapKp +
-      ' 题 —— 复习时优先刷这两类。</div>';
+      '本科标为<b>高频</b>的共 ' + hotKp + ' 题' +
+      (trapKp ? '，标为<b>易错</b>的共 ' + trapKp + ' 题' : '') +
+      ' —— 复习时优先刷' + (trapKp ? '这两类' : '高频考点') + '。</div>';
   }
 
   /* ---------- 渲染：题目卡 ---------- */
@@ -526,6 +519,12 @@
         ? WB.empty('🎉', '这个范围内没有错题', '说明掌握得不错；也可以去错题本看全部记录',
             '<a class="gbtn gbtn-primary" href="wrongbook.html">打开错题本</a>', 'check')
         : WB.empty('🔍', '没有匹配的题目', '换个关键词，或切换学期 / 科目试试', '', 'search'));
+    /* 重放整块入场（先移除再强制重排，保证动画能重跑） */
+    var lbox = document.getElementById('list');
+    lbox.classList.remove('anim');
+    void lbox.offsetWidth;
+    lbox.classList.add('anim');
+
     document.getElementById('moreWrap').innerHTML = list.length > shown
       ? '<button class="gbtn" id="more">加载更多（还有 ' + (list.length - shown) + ' 题）</button>'
       : '';

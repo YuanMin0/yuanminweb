@@ -675,6 +675,26 @@
       }
     }
 
+
+
+    list.querySelectorAll('[data-prev]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        openPreview(b.getAttribute('data-prev'), b.getAttribute('data-name'));
+      });
+    });
+    list.querySelectorAll('[data-dl]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        download(b.getAttribute('data-dl'), b.getAttribute('data-name'));
+      });
+    });
+    list.querySelectorAll('[data-copy]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        WB.copy(b.getAttribute('data-copy'), '路径已复制，粘贴到资源管理器地址栏即可打开');
+      });
+    });
+    WB.fx.refresh();
+  }
+
   /* 分组折叠：先测高再补间，避免 auto 高度无法过渡 */
   function setGroupOpen(sec, open, animate) {
     var bd = sec.querySelector('.mgroup-bd');
@@ -714,23 +734,6 @@
     if (bd.parentNode.classList.contains('open')) bd.style.height = '';
   });
 
-    list.querySelectorAll('[data-prev]').forEach(function (b) {
-      b.addEventListener('click', function () {
-        openPreview(b.getAttribute('data-prev'), b.getAttribute('data-name'));
-      });
-    });
-    list.querySelectorAll('[data-dl]').forEach(function (b) {
-      b.addEventListener('click', function () {
-        download(b.getAttribute('data-dl'), b.getAttribute('data-name'));
-      });
-    });
-    list.querySelectorAll('[data-copy]').forEach(function (b) {
-      b.addEventListener('click', function () {
-        WB.copy(b.getAttribute('data-copy'), '路径已复制，粘贴到资源管理器地址栏即可打开');
-      });
-    });
-    WB.fx.refresh();
-  }
 
   renderSemSeg();
   renderSubjSeg();

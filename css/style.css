@@ -1965,7 +1965,9 @@ html[data-theme="dark"] .card {
               opacity .3s var(--spring-fast);
   will-change: height;
 }
-.mgroup.open .mgroup-bd { opacity: 1; }
+/* 展开态必须回到 auto：JS 在过渡结束后会清掉行内高度，
+   若这里仍是 0，就会「展开一下又缩回去」 */
+.mgroup.open .mgroup-bd { height: auto; opacity: 1; }
 .mgroup-in { padding: 2px 12px 10px; }
 
 /* 展开时文件行轻微上浮，最多错开 6 行（错峰太多会显得拖沓） */

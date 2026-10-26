@@ -298,9 +298,13 @@
     var hotN = list.filter(function (x) { return x.hot; }).length;
     var examN = list.filter(function (x) { return x.exam; }).length;
     var rate = done ? Math.round(right / done * 100) : 0;
+    var filteredOn = (curSem || curSubj || curTag || kw || sortBy !== 'order');
+    var subjN = {};
+    list.forEach(function (x) { subjN[x.sid] = 1; });
     document.getElementById('stats').innerHTML =
-      '<div class="bank-stat"><b>' + inFilter + '</b><span>当前筛选题目</span></div>' +
-      '<div class="bank-stat"><b>' + ALL.length + '</b><span>题库总量</span></div>' +
+      '<div class="bank-stat"><b>' + (filteredOn ? inFilter : ALL.length) + '</b><span>' +
+        (filteredOn ? '当前筛选题目' : '题库总量') + '</span></div>' +
+      '<div class="bank-stat"><b>' + Object.keys(subjN).length + '</b><span>覆盖科目</span></div>' +
       '<div class="bank-stat"><b>' + hotN + '</b><span>其中高频考点</span></div>' +
       '<div class="bank-stat"><b>' + examN + '</b><span>往年真题</span></div>' +
       '<div class="bank-stat"><b>' + rate + '%</b><span>已做 ' + done + ' 题 · 正确率</span></div>';
@@ -440,6 +444,7 @@
       ? '<button class="gbtn" id="more">加载更多（还有 ' + (list.length - shown) + ' 题）</button>'
       : '';
     renderStats(list);
+    if (WB.fx && WB.fx.refresh) WB.fx.refresh();
   }
 
   /* ---------- 判题 ---------- */
@@ -618,6 +623,7 @@
   document.getElementById('subLine').textContent =
     '共 ' + ALL.length + ' 道题，覆盖 ' + WB.subjects().length + ' 门科目；每题标注来源，配答案解析';
   renderSem(); renderSubj(); renderExam(); renderList(true);
+  WB.fx.init();          /* 启动滚动揭示，否则 .rv 会停在 opacity:0 */
 })();
 </script>
 </body>

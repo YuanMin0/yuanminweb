@@ -91,6 +91,18 @@
 <!-- 访问门禁：未登录直接跳转登录页（置于 head 内，避免内容闪现） -->
 <script src="js/auth.js"></script>
 <script>if(window.WB&&WB.auth)WB.auth.guard();</script>
+  <style>
+  /* 学期切换时，筛选条与列表整体轻推一次（不逐项错峰，避免碎） */
+  @keyframes mIn { from { opacity: .55; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+  #subjSeg.anim, #list.anim { animation: mIn .36s var(--spring-fast) both; }
+  #semSeg .cat-tab { transition: transform .2s var(--spring-fast), background .24s var(--spring-fast),
+                     border-color .24s var(--spring-fast), color .24s var(--spring-fast); }
+  #semSeg .cat-tab:active { transform: scale(.97); transition: transform 100ms ease-out; }
+  @media (prefers-reduced-motion: reduce) {
+    #subjSeg.anim, #list.anim { animation: none; }
+    #semSeg .cat-tab:active { transform: none; }
+  }
+  </style>
 </head>
 <body>
 <noscript>
@@ -498,6 +510,14 @@
   }
 
   /* ================= 列表 ================= */
+  /* 重新触发容器入场动画 */
+  function pulse(el) {
+    if (!el) return;
+    el.classList.remove('anim');
+    void el.offsetWidth;
+    el.classList.add('anim');
+  }
+
   /* 资料分组 → 学期：优先用同名科目，找不到的归「其他」 */
   /* 资料页只加载部分科目，元数据统一从 _meta 查，保证 26 门都能对上 */
   function metaOf(gid) {
@@ -726,12 +746,15 @@
       if (!g0 || !groupInSem(g0)) curSubj = '';
     }
     renderSemSeg(); renderSubjSeg(); render();
+    pulse(document.getElementById('subjSeg'));
+    pulse(document.getElementById('list'));
   });
 
   document.getElementById('subjSeg').addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
     this.querySelectorAll('button').forEach(function (x) { x.classList.remove('on'); });
     b.classList.add('on'); curSubj = b.getAttribute('data-subj'); render();
+    pulse(document.getElementById('list'));
   });
   document.getElementById('catSeg').addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;

@@ -1915,3 +1915,27 @@ html[data-theme="dark"] .card {
   .hdr-dl:hover { transform: none; box-shadow: none; border-color: var(--border-2); }
   .hdr-dl-i { font-size: 16px; }
 }
+
+/* ---------- 科目内板块分组 ---------- */
+.sec-block { margin: 26px 0 14px; }
+.sec-block:first-child { margin-top: 6px; }
+.sec-block-h {
+  display: flex; align-items: center; gap: 10px;
+}
+.sec-block-h h3 {
+  margin: 0; font-size: 17px; letter-spacing: -.01em;
+  display: flex; align-items: center; gap: 9px;
+}
+.sec-block-h h3::before {
+  content: ""; width: 4px; height: 17px; border-radius: 2px;
+  background: linear-gradient(180deg, var(--brand), var(--violet));
+}
+.sec-block-d {
+  margin: 7px 0 0; font-size: 13.2px; line-height: 1.75;
+  color: var(--text-3); padding-left: 13px;
+}
+@media (max-width: 760px) {
+  .sec-block { margin: 20px 0 12px; }
+  .sec-block-h h3 { font-size: 15.5px; }
+  .sec-block-d { font-size: 12.8px; }
+}

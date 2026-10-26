@@ -146,7 +146,19 @@
     '<button class="gbtn gbtn-sm" id="expandAll">展开全部</button>' +
     '<button class="gbtn gbtn-sm" id="exportAll" title="把整门科目导出成一个 HTML 文件"><span class="gbtn-ico">⤓</span> 导出全册</button></div>' +
     '<div class="acc" id="acc">' +
-    s.chapters.map(function (ch, ci) {
+    (function () {
+      var lastG = null, secMap = {};
+      (s.sections || []).forEach(function (x) { secMap[x.id] = x; });
+      return s.chapters.map(function (ch, ci) {
+      var head = '';
+      if (ch.group && ch.group !== lastG && secMap[ch.group]) {
+        var sec = secMap[ch.group];
+        head = '<div class="sec-block">' +
+          '<div class="sec-block-h"><h3>' + WB.esc(sec.name) + '</h3></div>' +
+          '<p class="sec-block-d">' + WB.esc(sec.desc || '') + '</p>' +
+          '</div>';
+        lastG = ch.group;
+      }
       var rows = (ch.knowledge || []).map(function (k) {
         var done = WB.store.isLearned(s.id, k.id);
         return '<div class="krow' + (done ? ' done' : '') + '" data-kid="' + k.id + '">' +
@@ -164,7 +176,7 @@
             '<a class="gbtn gbtn-sm" href="' + WB.link('quiz.html', { s: s.id, k: k.id }) + '">做题 ' + k.quiz.length + '</a>' +
           '</div></div>';
       }).join('');
-      return '<div class="chapter' + (ci === 0 ? ' open' : '') + '" data-ch="' + ci + '" style="--accent:' + s.accent + ';--accent-soft:' + s.accentSoft + '">' +
+      return head + '<div class="chapter' + (ci === 0 ? ' open' : '') + '" data-ch="' + ci + '" style="--accent:' + s.accent + ';--accent-soft:' + s.accentSoft + '">' +
         '<div class="chapter-hd">' +
           '<div class="chapter-no">' + (ci + 1) + '</div>' +
           '<div style="flex:1;min-width:0">' +
@@ -176,7 +188,8 @@
         '</div>' +
         '<div class="chapter-bd"><div class="klist">' + rows + '</div></div>' +
       '</div>';
-    }).join('') + '</div></section>';
+    }).join('');
+    })() + '</div></section>';
 
   /* ---------- 速记手册 ---------- */
   var cheat = '';

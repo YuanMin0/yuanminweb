@@ -55,14 +55,12 @@
 
   /* 科目大类：航医 / 预防 / 临床 / 护理 / 公共 */
   WB.CATS = [
-    { id: 'all', name: '全部' },
-    { id: 'hangyi', name: '航医' },
-    { id: 'yufang', name: '预防' },
-    { id: 'linchuang', name: '临床' },
-    { id: 'huli', name: '护理' },
-    { id: 'gonggong', name: '公共' }
+    { id: 'all', name: '全部科目' },
+    { id: 'dasan1', name: '大三上' },
+    { id: 'dasan2', name: '大三下' },
+    { id: 'other', name: '其他' }
   ];
-  WB.catOf = function (s) { return (s && s.cat) || 'linchuang'; };
+  WB.catOf = function (s) { return (s && s.sem) || 'other'; };
 
   /* 没加载全文时（首页），退回 data/_meta.js 的轻量元数据 */
   WB.meta = function () { return window.WB_META || []; };

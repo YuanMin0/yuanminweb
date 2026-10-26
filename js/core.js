@@ -263,6 +263,7 @@
     { href: 'index.html', label: '总览', key: 'home' },
     { href: 'subjects.html', label: '全部科目', key: 'subjects' },
     { href: 'materials.html', label: '资料汇总', key: 'materials' },
+    { href: 'bank.html', label: '题库', key: 'bank' },
     { href: 'wrongbook.html', label: '错题本', key: 'wrong' },
     { href: 'about.html', label: '关于', key: 'about' }
   ];

@@ -109,6 +109,54 @@
     .bank-stat b { font-size: 18px; }
     .exam-grid { grid-template-columns: 1fr 1fr; }
   }
+
+  /* ---------- 动效 ---------- */
+  /* 只动位移、不动透明度：动画被冻结时内容也不会消失 */
+  @keyframes panelIn {
+    from { transform: translateY(-10px); }
+    to   { transform: none; }
+  }
+  @keyframes itemIn {
+    from { transform: translateY(-6px); opacity: .55; }
+    to   { transform: none; opacity: 1; }
+  }
+  @keyframes qIn {
+    from { transform: translateY(10px); opacity: .55; }
+    to   { transform: none; opacity: 1; }
+  }
+
+  .exam-panel[hidden] { display: none; }
+  .exam-panel.show { animation: panelIn .34s var(--ease) both; }
+  .exam-item { animation: itemIn .3s var(--ease) both; }
+  .exam-item:hover { transform: translateY(-1px); }
+
+  /* 题目卡入场错峰，最多 8 档 */
+  .qcard { animation: qIn .3s var(--ease) both; }
+  .qcard:nth-child(1) { animation-delay: .02s; }
+  .qcard:nth-child(2) { animation-delay: .05s; }
+  .qcard:nth-child(3) { animation-delay: .08s; }
+  .qcard:nth-child(4) { animation-delay: .11s; }
+  .qcard:nth-child(5) { animation-delay: .13s; }
+  .qcard:nth-child(6) { animation-delay: .15s; }
+  .qcard:nth-child(7) { animation-delay: .17s; }
+  .qcard:nth-child(n+8) { animation-delay: .19s; }
+  .qcard { transition: box-shadow .2s var(--ease), border-color .2s var(--ease); }
+  .qcard:hover { box-shadow: 0 8px 22px -18px rgba(15, 23, 42, .35); }
+
+  /* 筛选条更细腻的反馈 */
+  .cat-tab { transition: transform .16s var(--ease), background .18s var(--ease),
+             border-color .18s var(--ease), color .18s var(--ease); }
+  .cat-tab:active { transform: scale(.97); }
+  .bank-stat { transition: transform .2s var(--ease), border-color .2s var(--ease); }
+  .bank-stat:hover { transform: translateY(-2px); border-color: var(--border-2); }
+
+  /* 加载更多按钮 */
+  #moreWrap .gbtn { transition: transform .16s var(--ease); }
+  #moreWrap .gbtn:active { transform: scale(.97); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .exam-panel.show, .exam-item, .qcard { animation: none !important; }
+  }
 </style>
 </head>
 <body>
@@ -154,7 +202,7 @@
 
     <div class="cat-tabs rv rv-d1" id="subjSeg" role="tablist" style="margin-top:0"></div>
 
-    <section class="exam-panel rv" id="examPanel"></section>
+    <section class="exam-panel" id="examPanel" hidden></section>
 
     <div id="list"></div>
     <div style="text-align:center;margin:22px 0 8px" id="moreWrap"></div>
@@ -340,9 +388,44 @@
 
   /* ---------- 渲染：考情分析（往年真题分布） ---------- */
   function renderExam() {
-    var exam = ALL.filter(function (x) { return x.exam; });
     var panel = document.getElementById('examPanel');
-    if (!exam.length) { panel.style.display = 'none'; return; }
+    /* 只在选中具体科目时出现，避免一进页面就被大块面板占满 */
+    if (!curSubj) {
+      panel.hidden = true;
+      panel.classList.remove('show');
+      panel.innerHTML = '';
+      return;
+    }
+    var exam = ALL.filter(function (x) { return x.exam && x.sid === curSubj; });
+
+    var subjName = '';
+    var subjObj = WB.getSubject(curSubj);
+    if (subjObj) subjName = subjObj.name;
+
+    if (!exam.length) {
+      /* 该科没有真题：用「高频考点」代替，仍然有用 */
+      var hotKps = ALL.filter(function (x) { return x.sid === curSubj && x.hot; });
+      var hm = {};
+      hotKps.forEach(function (x) {
+        hm[x.ktitle] = hm[x.ktitle] || { ktitle: x.ktitle, n: 0 };
+        hm[x.ktitle].n++;
+      });
+      var hArr = Object.keys(hm).map(function (k) { return hm[k]; })
+        .sort(function (a, b) { return b.n - a.n; }).slice(0, 8);
+      panel.hidden = false;
+      panel.classList.add('show');
+      panel.innerHTML = '<h3>' + WB.esc(subjName) + ' · 高频考点</h3>' +
+        '<div class="sub">该科暂无往年真题数据，先看高频考点（按题量排序）。</div>' +
+        (hArr.length
+          ? '<div class="exam-grid">' + hArr.map(function (o, i) {
+              return '<div class="exam-item" data-kp="' + WB.esc(o.ktitle) + '" style="animation-delay:' + (i * 25) + 'ms">' +
+                '<span class="bar-mini"><i style="width:' + Math.round(o.n / hArr[0].n * 100) + '%"></i></span>' +
+                '<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' +
+                WB.esc(o.ktitle) + '</span><span class="n">' + o.n + '</span></div>';
+            }).join('') + '</div>'
+          : '<div class="small dim">该科暂无标注为高频的考点。</div>');
+      return;
+    }
 
     var byKp = {};
     exam.forEach(function (x) {
@@ -354,12 +437,13 @@
       .sort(function (a, b) { return b.n - a.n; }).slice(0, 10);
     var max = arr.length ? arr[0].n : 1;
 
-    var hotKp = ALL.filter(function (x) { return x.hot; }).length;
-    var trapKp = ALL.filter(function (x) { return x.trap; }).length;
+    var mine = ALL.filter(function (x) { return x.sid === curSubj; });
+    var hotKp = mine.filter(function (x) { return x.hot; }).length;
+    var trapKp = mine.filter(function (x) { return x.trap; }).length;
 
     /* 重难点：标为「易错」的考点，按题量排序 */
     var trapMap = {};
-    ALL.filter(function (x) { return x.trap; }).forEach(function (x) {
+    ALL.filter(function (x) { return x.trap && x.sid === curSubj; }).forEach(function (x) {
       var key = x.sname + ' · ' + x.ktitle;
       trapMap[key] = trapMap[key] || { ktitle: x.ktitle, sname: x.sname, n: 0 };
       trapMap[key].n++;
@@ -367,12 +451,14 @@
     var traps = Object.keys(trapMap).map(function (k) { return trapMap[k]; })
       .sort(function (a, b) { return b.n - a.n; }).slice(0, 10);
 
+    panel.hidden = false;
+    panel.classList.add('show');
     panel.innerHTML =
-      '<h3>往年真题 · 考情分析</h3>' +
+      '<h3>' + WB.esc(subjName) + ' · 往年真题考情</h3>' +
       '<div class="sub">共 ' + exam.length + ' 道真题，分布在 ' + Object.keys(byKp).length +
       ' 个考点。点任一考点可筛选出该考点的全部题目。</div>' +
-      '<div class="exam-grid">' + arr.map(function (o) {
-        return '<div class="exam-item" data-kp="' + WB.esc(o.ktitle) + '">' +
+      '<div class="exam-grid">' + arr.map(function (o, i) {
+        return '<div class="exam-item" data-kp="' + WB.esc(o.ktitle) + '" style="animation-delay:' + (i * 25) + 'ms">' +
           '<span class="bar-mini"><i style="width:' + Math.round(o.n / max * 100) + '%"></i></span>' +
           '<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' +
           WB.esc(o.ktitle) + '</span><span class="n">' + o.n + '</span></div>';
@@ -380,15 +466,15 @@
       (traps.length
         ? '<div style="margin-top:16px">' +
           '<div class="small" style="font-weight:800;color:var(--text-2);margin-bottom:8px">重难点（易错考点）</div>' +
-          '<div class="exam-grid">' + traps.map(function (o) {
-            return '<div class="exam-item" data-kp="' + WB.esc(o.ktitle) + '">' +
+          '<div class="exam-grid">' + traps.map(function (o, i) {
+            return '<div class="exam-item" data-kp="' + WB.esc(o.ktitle) + '" style="animation-delay:' + (i * 25 + 80) + 'ms">' +
               '<span class="qtag trap">易错</span>' +
               '<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' +
               WB.esc(o.ktitle) + '</span><span class="n">' + o.n + '</span></div>';
           }).join('') + '</div></div>'
         : '') +
       '<div class="small dim" style="margin-top:12px">' +
-      '全站标为<b>高频</b>的考点共 ' + hotKp + ' 题，标为<b>易错</b>的共 ' + trapKp +
+      '本科标为<b>高频</b>的共 ' + hotKp + ' 题，标为<b>易错</b>的共 ' + trapKp +
       ' 题 —— 复习时优先刷这两类。</div>';
   }
 
@@ -511,14 +597,14 @@
     if (!b) return;
     curSem = b.getAttribute('data-sem');
     curSubj = '';
-    renderSem(); renderSubj(); renderList(true);
+    renderSem(); renderSubj(); renderExam(); renderList(true);
   });
 
   document.getElementById('subjSeg').addEventListener('click', function (e) {
     var b = e.target.closest('[data-subj]');
     if (!b) return;
     curSubj = b.getAttribute('data-subj');
-    renderSubj(); renderList(true);
+    renderSubj(); renderExam(); renderList(true);
   });
 
   document.getElementById('tagSeg').addEventListener('click', function (e) {

@@ -1145,7 +1145,7 @@ window.MATERIALS = [
  },
  {
   "id": "surgery",
-  "name": "外科学与治疗",
+  "name": "外科学",
   "dir": "大三下/治疗",
   "files": [
    {

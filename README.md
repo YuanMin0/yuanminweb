@@ -41,7 +41,7 @@ medilearn/
     ├── hematology.js               血液系统
     ├── endocrinology.js            内分泌系统
     ├── diagnostics.js              诊断学
-    ├── surgery.js                  外科学与治疗
+    ├── surgery.js                  外科学
     ├── materials.js                资料汇总索引（由 _tools/gen_materials.py 生成）
     └── exam-*.js                   各科目「往年真题精析」外挂章节（11 个）
 ```
@@ -146,7 +146,7 @@ HASH: '313e7f9bd2dc3b6a1f921165506c3c2dc195613fc89e06b74cfd32a3829f4ca1',
 | 血液系统 | 4 | 10 | 76 |
 | 内分泌系统 | 4 | 11 | 60 |
 | 诊断学 | 5 | 16 | 89 |
-| 外科学与治疗 | 6 | 16 | 91 |
+| 外科学 | 6 | 16 | 91 |
 | 外科护理学 | 5 | 12 | 51 |
 | 内科护理学 | 6 | 12 | 51 |
 | 器官系统基础IV | 7 | 24 | 121 |

@@ -11,6 +11,7 @@ WB.register({
   accent: 'var(--violet)',
   accentSoft: 'var(--violet-soft)',
   order: 2,
+  sem: 'dasan1',
   cat: 'hangyi',
   desc: '飞行空间定向与错觉、应激、飞行失误、心理选拔与训练。',
   intro: '航心的核心是**「人—机—环境」中人的信息加工**：感觉系统给出（有时错误的）空间信息，认知据此判断，最后落到操作。\n考试重灾区是**飞行错觉的分类与科里奥利错觉**，务必按「通道」和「形态」两套分类分别记。',

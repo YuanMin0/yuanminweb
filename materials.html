@@ -144,6 +144,7 @@
       </div>
     </div>
 
+    <div class="cat-tabs rv rv-d2" id="semSeg" role="tablist" style="margin:0 0 12px"></div>
     <div class="seg rv rv-d2" id="subjSeg" style="margin-bottom:22px;flex-wrap:wrap"></div>
 
     <div id="list"></div>
@@ -154,6 +155,7 @@
 <footer class="ftr" data-ftr></footer>
 
 <script src="js/core.js"></script>
+<script src="data/_meta.js"></script>
 <script src="data/xssx.js"></script>
 <script src="data/exam-xssx.js"></script>
 <script src="data/ethics.js"></script>
@@ -193,7 +195,7 @@
     var m = /[?&]s=([^&#]+)/.exec(location.search);
     return m ? decodeURIComponent(m[1]) : '';
   })();
-  var curCat = '', kw = '';
+  var curCat = '', kw = '', curSem = '';
 
   var TYPE_META = {
     PDF:  { ico: '📕', cls: 'chip-bad' },
@@ -496,9 +498,42 @@
   }
 
   /* ================= 列表 ================= */
-  function renderSubjSeg() {
-    var html = '<button class="' + (curSubj ? '' : 'on') + '" data-subj="">全部科目</button>';
+  /* 资料分组 → 学期：优先用同名科目，找不到的归「其他」 */
+  /* 资料页只加载部分科目，元数据统一从 _meta 查，保证 26 门都能对上 */
+  function metaOf(gid) {
+    var m = WB.meta();
+    for (var i = 0; i < m.length; i++) if (m[i].id === gid) return m[i];
+    return WB.getSubject(gid);
+  }
+  /* 没有同名科目的资料分组，手工归学期（基操属于大三下） */
+  var SEM_FALLBACK = { skills: 'dasan2', hangyi: 'dasan1' };
+  function semOfGroup(gid) {
+    var m = metaOf(gid);
+    if (m && m.sem) return m.sem;
+    return SEM_FALLBACK[gid] || 'other';
+  }
+  function groupInSem(g) { return !curSem || semOfGroup(g.id) === curSem; }
+
+  function renderSemSeg() {
+    var counts = {};
     GROUPS.forEach(function (g) {
+      var k = semOfGroup(g.id);
+      counts[k] = (counts[k] || 0) + 1;
+    });
+    var html = WB.CATS.map(function (c) {
+      var n = c.id === 'all' ? GROUPS.length : (counts[c.id] || 0);
+      if (!n && c.id !== 'all') return '';
+      return '<button role="tab" class="cat-tab' + (curSem === (c.id === 'all' ? '' : c.id) ? ' on' : '') +
+        '" data-sem="' + (c.id === 'all' ? '' : c.id) + '">' + WB.esc(c.name) +
+        '<span class="cat-n">' + n + '</span></button>';
+    }).join('');
+    document.getElementById('semSeg').innerHTML = html;
+  }
+
+  function renderSubjSeg() {
+    var html = '<button class="' + (curSubj ? '' : 'on') + '" data-subj="">全部</button>';
+    GROUPS.forEach(function (g) {
+      if (!groupInSem(g)) return;
       html += '<button class="' + (curSubj === g.id ? 'on' : '') + '" data-subj="' + g.id + '">' +
         WB.esc(g.name) + ' <span class="tiny dim">' + g.files.length + '</span></button>';
     });
@@ -576,6 +611,7 @@
   function render() {
     var html = '', total = 0, shown = 0, ready = 0;
     GROUPS.forEach(function (g) {
+      if (!groupInSem(g)) return;
       if (curSubj && curSubj !== g.id) return;
       var files = g.files.filter(match);
       total += g.files.length;
@@ -587,7 +623,7 @@
         return (CDN.ready && !!f.key) || (!window.CDN_READERS_BROKEN && !!READERS[g.id + '/' + f.n]);
       }).length;
 
-      var s = WB.getSubject(g.id);
+      var s = metaOf(g.id);
       var accent = s ? s.accent : 'var(--brand)';
       var icon = s ? s.icon : '📚';
       html += '<section class="rv" style="margin-bottom:34px">' +
@@ -627,9 +663,21 @@
     WB.fx.refresh();
   }
 
+  renderSemSeg();
   renderSubjSeg();
   if (!CDN.ready) document.getElementById('r2Warn').classList.remove('hide');
   render();
+
+  document.getElementById('semSeg').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-sem]');
+    if (!b) return;
+    curSem = b.getAttribute('data-sem');
+    if (curSubj) {
+      var g0 = GROUPS.filter(function (x) { return x.id === curSubj; })[0];
+      if (!g0 || !groupInSem(g0)) curSubj = '';
+    }
+    renderSemSeg(); renderSubjSeg(); render();
+  });
 
   document.getElementById('subjSeg').addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;

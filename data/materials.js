@@ -1486,7 +1486,7 @@ window.MATERIALS = [
  },
  {
   "id": "organ3",
-  "name": "器官三（泌尿）",
+  "name": "器官系统基础IV",
   "dir": "器官3",
   "files": [
    {

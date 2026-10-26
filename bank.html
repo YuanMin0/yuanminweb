@@ -126,28 +126,37 @@
   }
 
   .exam-panel[hidden] { display: none; }
-  .exam-panel.show { animation: panelIn .44s var(--ease-out) both; }
-  .exam-item { animation: itemIn .38s var(--ease-out) both; }
+  .exam-panel.show { animation: panelIn .6s var(--spring) both; }
+  .exam-item { animation: itemIn .42s var(--spring-fast) both; }
   .exam-item:hover { transform: translateY(-1px); }
 
   /* 列表整体入场：一张卡一卡地动会显得零碎，改成整块轻推 */
-  #list.anim { animation: listIn .3s var(--ease-out) both; }
-  .qcard { transition: box-shadow .24s var(--ease-out), border-color .24s var(--ease-out); }
+  #list.anim { animation: listIn .42s var(--spring-fast) both; }
+  .qcard { transition: box-shadow .28s var(--spring-fast), border-color .28s var(--spring-fast); }
   .qcard:hover { box-shadow: 0 10px 26px -20px rgba(15, 23, 42, .38); }
 
   /* 筛选条更细腻的反馈 */
-  .cat-tab { transition: transform .2s var(--ease-out), background .22s var(--ease-out),
-             border-color .22s var(--ease-out), color .22s var(--ease-out); }
+  .cat-tab { transition: transform .2s var(--spring-fast), background .24s var(--spring-fast),
+             border-color .24s var(--spring-fast), color .24s var(--spring-fast); }
   .cat-tab:active { transform: scale(.97); }
-  .bank-stat { transition: transform .24s var(--ease-out), border-color .24s var(--ease-out); }
+  .bank-stat { transition: transform .3s var(--spring-fast), border-color .24s var(--spring-fast); }
   .bank-stat:hover { transform: translateY(-2px); border-color: var(--border-2); }
 
   /* 加载更多按钮 */
   #moreWrap .gbtn { transition: transform .16s var(--ease); }
   #moreWrap .gbtn:active { transform: scale(.97); }
 
+
+  /* 按压反馈：pointer-down 即刻给，100ms 落位 */
+  .cat-tab:active, .bank-stat:active, .exam-item:active,
+  .gbtn:active, #moreWrap .gbtn:active { transform: scale(.97); transition: transform 100ms ease-out; }
+  .qopt:active { transform: scale(.988); transition: transform 100ms ease-out; }
+  .qcard { transform-origin: 50% 0; }
+
   @media (prefers-reduced-motion: reduce) {
-    .exam-panel.show, .exam-item, .qcard { animation: none !important; }
+    .exam-panel.show, .exam-item, .qcard, #list.anim { animation: none !important; }
+    .cat-tab:active, .bank-stat:active, .exam-item:active, .qopt:active,
+    .gbtn:active, #moreWrap .gbtn:active { transform: none !important; }
   }
 </style>
 </head>

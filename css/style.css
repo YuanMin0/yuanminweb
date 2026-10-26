@@ -57,6 +57,9 @@
   --ease: cubic-bezier(.4, 0, .2, 1);
   --ease-out: cubic-bezier(.16, 1, .3, 1);   /* 长尾减速，适合入场 */
   --ease-soft: cubic-bezier(.22, 1, .36, 1);  /* 柔和版，适合高度/位移 */
+  --spring: linear(0.000, 0.024, 0.082, 0.158, 0.243, 0.330, 0.413, 0.491, 0.562, 0.626, 0.682, 0.732, 0.774, 0.811, 0.842, 0.868, 0.891, 0.910, 0.925, 0.939, 0.949, 0.959, 0.966, 0.972, 0.978, 0.982, 0.985, 0.988, 0.990, 0.992, 0.994, 0.995, 0.996, 0.997, 0.998, 0.998, 0.999, 0.999, 1.000, 1.000, 1.000);   /* 弹簧 response=0.40s，落位 0.60s */
+  --spring-fast: linear(0.000, 0.024, 0.082, 0.158, 0.243, 0.330, 0.413, 0.491, 0.562, 0.626, 0.682, 0.732, 0.774, 0.811, 0.842, 0.868, 0.891, 0.910, 0.925, 0.939, 0.949, 0.959, 0.966, 0.972, 0.978, 0.982, 0.985, 0.988, 0.990, 0.992, 0.994, 0.995, 0.996, 0.997, 0.998, 0.998, 0.999, 0.999, 1.000, 1.000, 1.000);   /* 弹簧 response=0.28s，落位 0.42s */
+  --spring-pop: linear(0.000, 0.025, 0.087, 0.172, 0.269, 0.370, 0.470, 0.563, 0.648, 0.723, 0.787, 0.842, 0.887, 0.924, 0.953, 0.975, 0.991, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000, 1.000);   /* 弹簧 response=0.34s，落位 0.51s */
 }
 
 html[data-theme="dark"] {
@@ -147,8 +150,8 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 28px 0; }
   position: sticky; top: 0; z-index: 60;
   height: var(--hdr);
   background: color-mix(in srgb, var(--surface) 82%, transparent);
-  backdrop-filter: saturate(180%) blur(14px);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 1px solid var(--border);
 }
 .hdr-in { display: flex; align-items: center; gap: 16px; height: 100%; }
@@ -896,10 +899,12 @@ html[data-theme="dark"] .dock .gbtn:hover { background: rgba(255, 255, 255, .1);
 .spot > * { position: relative; z-index: 1; }
 
 /* ---------- 4. 滚动揭示 ---------- */
-.rv { opacity: 0; transform: translateY(22px); transition: opacity .68s var(--ease), transform .68s var(--ease); }
+.rv { opacity: 0; transform: translateY(14px);
+      transition: opacity .42s cubic-bezier(.22, 1, .36, 1),
+                  transform .62s var(--spring); }
 .rv.rv-in { opacity: 1; transform: none; }
-.rv-l { transform: translateX(-26px); }
-.rv-r { transform: translateX(26px); }
+.rv-l { transform: translateX(-18px); }
+.rv-r { transform: translateX(18px); }
 .rv-s { transform: scale(.94); }
 .rv-d1 { transition-delay: .06s; } .rv-d2 { transition-delay: .12s; } .rv-d3 { transition-delay: .18s; }
 .rv-d4 { transition-delay: .24s; } .rv-d5 { transition-delay: .3s; } .rv-d6 { transition-delay: .36s; }
@@ -1956,15 +1961,15 @@ html[data-theme="dark"] .card {
   height: 0;
   overflow: hidden;
   opacity: 0;
-  transition: height .44s var(--ease-soft),
-              opacity .28s var(--ease-out);
+  transition: height .6s var(--spring),
+              opacity .3s var(--spring-fast);
   will-change: height;
 }
 .mgroup.open .mgroup-bd { opacity: 1; }
 .mgroup-in { padding: 2px 12px 10px; }
 
 /* 展开时文件行轻微上浮，最多错开 6 行（错峰太多会显得拖沓） */
-.mgroup.open .mgroup-in > * { animation: mgIn .42s var(--ease-out) both; }
+.mgroup.open .mgroup-in > * { animation: mgIn .42s var(--spring-fast) both; }
 .mgroup.open .mgroup-in > *:nth-child(1) { animation-delay: 20ms; }
 .mgroup.open .mgroup-in > *:nth-child(2) { animation-delay: 40ms; }
 .mgroup.open .mgroup-in > *:nth-child(3) { animation-delay: 60ms; }

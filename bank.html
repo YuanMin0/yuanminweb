@@ -148,6 +148,7 @@
         <button class="on" data-sort="order">按科目</button>
         <button data-sort="random">随机</button>
         <button data-sort="undone">只做未做</button>
+        <button data-sort="wrong">错题重练</button>
       </div>
     </div>
 
@@ -276,6 +277,10 @@
     var list = ALL.filter(match);
     var dm = doneMap();
     if (sortBy === 'undone') list = list.filter(function (x) { return dm[x.uid] === undefined; });
+    if (sortBy === 'wrong') {
+      var wm = (WB.store && WB.store.wrong) ? WB.store.wrong() : {};
+      list = list.filter(function (x) { return !!wm[x.uid]; });
+    }
     if (sortBy === 'random') {
       for (var i = list.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
@@ -427,7 +432,10 @@
     if (reset) shown = PAGE;
     var slice = list.slice(0, shown);
     document.getElementById('list').innerHTML = slice.map(qcard).join('') ||
-      WB.empty('🔍', '没有匹配的题目', '换个关键词，或切换学期 / 科目试试', '', 'search');
+      (sortBy === 'wrong'
+        ? WB.empty('🎉', '这个范围内没有错题', '说明掌握得不错；也可以去错题本看全部记录',
+            '<a class="gbtn gbtn-primary" href="wrongbook.html">打开错题本</a>', 'check')
+        : WB.empty('🔍', '没有匹配的题目', '换个关键词，或切换学期 / 科目试试', '', 'search'));
     document.getElementById('moreWrap').innerHTML = list.length > shown
       ? '<button class="gbtn" id="more">加载更多（还有 ' + (list.length - shown) + ' 题）</button>'
       : '';
@@ -453,6 +461,10 @@
     box.innerHTML = '<span class="res ' + (ok ? 'ok' : 'no') + '">' + (ok ? '✓ 答对' : '✗ 答错') + '</span>' +
       '<b>答案：</b>' + WB.esc(ans) + (myText ? '　<b>你的答案：</b>' + WB.esc(myText) : '') +
       (q.explain ? '<div style="margin-top:6px">' + WB.rich(q.explain) + '</div>' : '');
+    if (sortBy === 'wrong' && ok) {
+      box.innerHTML += '<div style="margin-top:8px">' +
+        '<button class="gbtn gbtn-sm" data-uncwrong="' + WB.esc(x.uid) + '">✓ 答对了，移出错题本</button></div>';
+    }
     card.classList.add(ok ? 'ok' : 'no');
     markDone(x.uid, ok);
     if (!ok && WB.store && WB.store.addWrong) {
@@ -581,6 +593,18 @@
         reveal(card, x, ok, val);
       }
     }
+  });
+
+  document.getElementById('list').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-uncwrong]');
+    if (!b) return;
+    var uid = b.getAttribute('data-uncwrong');
+    if (WB.store && WB.store.removeWrong) WB.store.removeWrong(uid);
+    var card = b.closest('.qcard');
+    card.style.transition = 'opacity .25s, transform .25s';
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(-6px)';
+    setTimeout(function () { card.remove(); renderStats(filtered()); }, 260);
   });
 
   document.getElementById('list').addEventListener('keydown', function (e) {

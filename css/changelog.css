@@ -6,9 +6,8 @@
   display: flex; align-items: center; justify-content: center;
   padding: 20px; background: rgba(8, 11, 18, .62);
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  animation: clFade .2s ease both;
+  /* 遮罩不做透明度动画：动画被冻结时会导致浮层完全透明、内容与页面叠在一起 */
 }
-@keyframes clFade { from { opacity: 0 } to { opacity: 1 } }
 
 .cl-box {
   width: min(620px, 96vw); max-height: min(86vh, 760px);

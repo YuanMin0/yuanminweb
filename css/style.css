@@ -1992,3 +1992,57 @@ html[data-theme="dark"] .card {
   .mgroup-bd, .mgroup .caret, .mgroup .chapter-no { transition: none; }
   .mgroup.open .mgroup-in > * { animation: none; }
 }
+
+/* ==========================================================================
+   页面切换：跨文档 View Transition（点链接不再硬跳，白闪变淡入）
+   Chrome 126+ / Safari 18.2+ 支持；不支持的浏览器保持原来的即时跳转
+   ========================================================================== */
+@view-transition { navigation: auto; }
+
+/* 旧页轻微下沉淡出，新页从下方轻推上来 —— 方向一致，符合空间连续性 */
+::view-transition-old(root) {
+  animation: vtOut .26s cubic-bezier(.4, 0, 1, 1) both;
+}
+::view-transition-new(root) {
+  animation: vtIn .42s var(--spring) both;
+}
+
+@keyframes vtOut {
+  to { opacity: 0; transform: translateY(-6px) scale(.99); }
+}
+@keyframes vtIn {
+  from { opacity: 0; transform: translateY(12px) scale(.994); }
+}
+
+/* 顶栏与底栏保持不动，只换内容区 —— 像 App 的 chrome 不动 */
+.hdr { view-transition-name: site-chrome; }
+::view-transition-old(site-chrome),
+::view-transition-new(site-chrome) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* 有 VT 的浏览器就不再用 .page 自己的入场，避免两层位移叠加 */
+@supports (view-transition-name: none) {
+  .page { animation: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation: none; }
+}
+
+/* 可点击卡片的按压反馈：按下瞬间给，不等跳转 */
+.subj-card:active,
+.krow:active,
+.mgroup-hd:active,
+.qcard:active,
+.toc a:active { transform: scale(.99); }
+
+.subj-card, .krow, .mgroup-hd {
+  transition: transform 120ms ease-out, box-shadow .24s var(--spring-fast),
+              border-color .2s var(--spring-fast), background .18s var(--spring-fast);
+}
+@media (prefers-reduced-motion: reduce) {
+  .subj-card:active, .krow:active, .mgroup-hd:active, .qcard:active, .toc a:active { transform: none; }
+}

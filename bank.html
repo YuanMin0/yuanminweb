@@ -508,7 +508,7 @@
         (type === 'multiple' ? '<div style="margin-top:10px"><button class="gbtn gbtn-primary gbtn-sm" data-submit>提交答案</button></div>' : '');
     }
 
-    return '<article class="qcard' + cls + '" data-uid="' + WB.esc(x.uid) + '" data-type="' + type + '">' +
+    return '<article class="qcard spot' + cls + '" data-uid="' + WB.esc(x.uid) + '" data-type="' + type + '">' +
       '<div class="qmeta">' +
         '<span class="src"><b>' + WB.esc(x.sname) + '</b> › ' + WB.esc(x.ctitle) + ' › ' + WB.esc(x.ktitle) + '</span>' +
         '<span class="qtag">' + (TYPES[type] || '单选') + '</span>' + tags +

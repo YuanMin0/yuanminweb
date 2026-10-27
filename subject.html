@@ -176,7 +176,7 @@
             '<a class="gbtn gbtn-sm" href="' + WB.link('quiz.html', { s: s.id, k: k.id }) + '">做题 ' + k.quiz.length + '</a>' +
           '</div></div>';
       }).join('');
-      return head + '<div class="chapter' + (ci === 0 ? ' open' : '') + '" data-ch="' + ci + '" style="--accent:' + s.accent + ';--accent-soft:' + s.accentSoft + '">' +
+      return head + '<div class="chapter spot' + (ci === 0 ? ' open' : '') + '" data-ch="' + ci + '" style="--accent:' + s.accent + ';--accent-soft:' + s.accentSoft + '">' +
         '<div class="chapter-hd">' +
           '<div class="chapter-no">' + (ci + 1) + '</div>' +
           '<div style="flex:1;min-width:0">' +

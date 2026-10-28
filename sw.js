@@ -8,7 +8,7 @@
    缓存版本号跟随发布版本，升级后旧缓存自动清理。
    ========================================================================== */
 
-const VERSION = 'v1.0.15a';
+const VERSION = 'v1.0.15b';
 const CACHE = 'medilearn-' + VERSION;
 const OFFLINE = '/offline';   // 线上无扩展名地址
 

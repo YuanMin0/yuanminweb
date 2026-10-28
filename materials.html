@@ -234,7 +234,11 @@
   }
   function cdnUrl(key) {
     if (!CDN.ready || !key) return '';
-    return CDN.base + '/' + CDN.prefix + encPath(key);
+    var k = String(key);
+    /* 数据里 key 有两种写法：有的自带 materials/ 前缀，有的没有。
+       统一在这里判断，避免拼成 materials/materials/… 导致 404 */
+    if (CDN.prefix && k.indexOf(CDN.prefix) === 0) return CDN.base + '/' + encPath(k);
+    return CDN.base + '/' + CDN.prefix + encPath(k);
   }
 
   /* ================= 路径工具 ================= */

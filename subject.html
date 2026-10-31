@@ -74,6 +74,7 @@
 <script src="data/hangxin.js"></script>
 <script src="data/materials.js"></script>
 <script src="data/lectures.js"></script>
+<script src="data/extra-subjects.js"></script>
 <script src="js/fx.js"></script>
 <script src="js/export.js"></script>
 <script>
@@ -117,19 +118,25 @@
           '<div class="subj-en" style="margin-top:2px">' + WB.esc(s.en || '') + '</div>' +
           '<p class="muted mt-2 mb-0" style="max-width:720px">' + WB.rich(s.intro || s.desc) + '</p>' +
           '<div class="metric-strip">' +
-            '<div class="metric"><b data-count="' + s._count.chapters + '">0</b><span>章节</span></div>' +
-            '<div class="metric"><b data-count="' + s._count.knowledge + '">0</b><span>知识点</span></div>' +
-            '<div class="metric"><b data-count="' + s._count.quiz + '">0</b><span>练习题</span></div>' +
+            (s._count.chapters
+              ? '<div class="metric"><b data-count="' + s._count.chapters + '">0</b><span>章节</span></div>' +
+                '<div class="metric"><b data-count="' + s._count.knowledge + '">0</b><span>知识点</span></div>' +
+                '<div class="metric"><b data-count="' + s._count.quiz + '">0</b><span>练习题</span></div>'
+              : '<div class="metric"><b data-count="' + (s.matCount || 0) + '">0</b><span>份资料</span></div>') +
             '<div class="metric"><b data-count="' + WB.store.learnedCount(s.id) + '">0</b><span>已学</span></div>' +
           '</div>' +
         '</div>' +
-        '<div style="text-align:center">' + WB.ring(pct, { color: s.accent, size: 96, sw: 8, lg: true }) +
-          '<div class="small dim mt-1">学习进度</div></div>' +
+        (s._count.chapters
+          ? '<div style="text-align:center">' + WB.ring(pct, { color: s.accent, size: 96, sw: 8, lg: true }) +
+            '<div class="small dim mt-1">学习进度</div></div>'
+          : '') +
       '</div>' +
       '<div class="hero-actions mt-3">' +
-        '<a class="gbtn gbtn-primary" href="' + WB.link('quiz.html', { s: s.id }) + '"><span class="gbtn-ico">◉</span> 开始全科练习</a>' +
-        '<button class="gbtn" id="dlBtn"><span class="gbtn-ico">⇩</span> 下载全册讲义</button>' +
-        '<a class="gbtn" href="' + WB.link('quiz.html', { s: s.id, mode: 'random' }) + '"><span class="gbtn-ico">⚡</span> 随机抽题</a>' +
+        (s._count.chapters
+          ? '<a class="gbtn gbtn-primary" href="' + WB.link('quiz.html', { s: s.id }) + '"><span class="gbtn-ico">◉</span> 开始全科练习</a>' +
+            '<button class="gbtn" id="dlBtn"><span class="gbtn-ico">⇩</span> 下载全册讲义</button>' +
+            '<a class="gbtn" href="' + WB.link('quiz.html', { s: s.id, mode: 'random' }) + '"><span class="gbtn-ico">⚡</span> 随机抽题</a>'
+          : '') +
         (function () {
           var mg = (window.MATERIALS || []).filter(function (g) { return g.id === s.id; })[0];
           return mg && mg.files.length
@@ -205,6 +212,25 @@
       }).join('') + '</div></section>';
   }
 
+  /* 资料型科目：没有章节时，给出资料入口 */
+  if (!s.chapters.length) {
+    acc = '<div class="sec-head rv rv-d2"><div><h2>资料与要点</h2>' +
+      '<div class="sub">这门课目前以资料为主：知识点与题目尚未整理，先看整理好的讲义、真题与总结。</div></div></div>' +
+      '<div class="card card-pad rv" style="margin-bottom:20px">' +
+        '<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">' +
+          '<span class="chip chip-teal">资料型科目</span>' +
+          '<span class="small dim">共 ' + (s.matCount || 0) + ' 份资料</span>' +
+        '</div>' +
+        '<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">' +
+          (s.matGroups || []).map(function (gid) {
+            return '<a class="gbtn gbtn-primary" href="materials.html?s=' + encodeURIComponent(gid) + '">打开资料汇总 →</a>';
+          }).join('') +
+          '<a class="gbtn" href="quiz.html?mode=random">随机刷题</a>' +
+        '</div>' +
+        '<p class="small dim" style="margin-top:14px">资料已按类型分好：往年真题 / 题库练习 / 重点归纳 / 讲义笔记，可在资料页按标签筛选。</p>' +
+      '</div>';
+  }
+
   root.innerHTML = head + acc + cheat;
 
   /* ---------- 交互 ---------- */
@@ -225,14 +251,18 @@
   });
 
   var allOpen = true;
-  document.getElementById('exportAll').addEventListener('click', function () { WB.exportSubject(s); });
-  document.getElementById('expandAll').addEventListener('click', function () {
+  /* 资料型科目没有章节，这些按钮不存在，需判空 */
+  var btnExport = document.getElementById('exportAll');
+  var btnExpand = document.getElementById('expandAll');
+  if (btnExport) btnExport.addEventListener('click', function () { WB.exportSubject(s); });
+  if (btnExpand) btnExpand.addEventListener('click', function () {
     allOpen = !allOpen;
     root.querySelectorAll('.chapter').forEach(function (c) { c.classList.toggle('open', allOpen); });
     this.textContent = allOpen ? '收起全部' : '展开全部';
   });
 
-  document.getElementById('dlBtn').addEventListener('click', function () {
+  var btnDl = document.getElementById('dlBtn');
+  if (btnDl) btnDl.addEventListener('click', function () {
     WB.downloadModal('下载《' + s.name + '》', [
       { icon: '📘', label: '全册讲义（含习题与答案）', desc: 'Markdown 格式，含全部知识点、练习题与参考答案',
         run: function () { WB.download('MediLearn-' + WB.slug(s.name) + '-全册.md', WB.subjectToMd(s, { withQuiz: true })); WB.toast('已开始下载'); } },
@@ -253,7 +283,7 @@
     ]
   });
   var dock = document.querySelector('.dock');
-  if (dock) dock.lastElementChild.addEventListener('click', function (e) { e.preventDefault(); document.getElementById('dlBtn').click(); });
+  if (dock && document.getElementById('dlBtn')) dock.lastElementChild.addEventListener('click', function (e) { e.preventDefault(); document.getElementById('dlBtn').click(); });
 })();
 </script>
 <script src="data/changelog.js"></script>

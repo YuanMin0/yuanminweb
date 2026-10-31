@@ -109,6 +109,7 @@
 <script src="data/neurology.js"></script>
 <script src="data/hangwei.js"></script>
 <script src="data/hangxin.js"></script>
+<script src="data/extra-subjects.js"></script>
 <script src="js/fx.js"></script>
 <script>
 (function () {
@@ -141,9 +142,12 @@
       WB.subjectProgress(s) +
       '<div class="subj-foot">' +
         '<div class="subj-meta">' +
-          '<span><b>' + s._count.chapters + '</b> 章</span>' +
-          '<span><b>' + s._count.knowledge + '</b> 知识点</span>' +
-          '<span><b>' + s._count.quiz + '</b> 题</span>' +
+          (s._count.chapters
+            ? '<span><b>' + s._count.chapters + '</b> 章</span>' +
+              '<span><b>' + s._count.knowledge + '</b> 知识点</span>' +
+              '<span><b>' + s._count.quiz + '</b> 题</span>'
+            : '<span class="chip chip-teal">资料型</span>' +
+              '<span><b>' + (s.matCount || 0) + '</b> 份资料</span>') +
         '</div><div class="spacer"></div>' +
         '<span class="chip chip-line">进入 →</span>' +
       '</div></a>';

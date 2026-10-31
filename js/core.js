@@ -56,6 +56,9 @@
   /* 科目大类：航医 / 预防 / 临床 / 护理 / 公共 */
   WB.CATS = [
     { id: 'all', name: '全部科目' },
+    { id: 'dayi1', name: '大一下' },
+    { id: 'daer1', name: '大二上' },
+    { id: 'daer2', name: '大二下' },
     { id: 'dasan1', name: '大三上' },
     { id: 'dasan2', name: '大三下' },
     { id: 'other', name: '其他' }

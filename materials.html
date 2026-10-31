@@ -532,6 +532,10 @@
   /* 没有同名科目的资料分组，手工归学期（基操属于大三下） */
   var SEM_FALLBACK = { skills: 'dasan2', hangyi: 'dasan1' };
   function semOfGroup(gid) {
+    /* 新增的低年级资料分组自带 sem 字段，直接用 */
+    var g = null;
+    for (var i = 0; i < GROUPS.length; i++) if (GROUPS[i].id === gid) { g = GROUPS[i]; break; }
+    if (g && g.sem) return g.sem;
     var m = metaOf(gid);
     if (m && m.sem) return m.sem;
     return SEM_FALLBACK[gid] || 'other';
@@ -573,7 +577,7 @@
   function fileRow(f, accent, gid) {
     var m = TYPE_META[f.t] || { ico: '📄', cls: 'chip-line' };
     var isPdf = f.t === 'PDF';
-    var missing = (window.CDN_MISSING || []).indexOf(f.key) > -1;
+    var missing = (window.CDN_MISSING || []).indexOf(f.key) > -1 || f.pending === true;
     var reader = (!missing && !window.CDN_READERS_BROKEN) ? READERS[gid + '/' + f.n] : '';
     var docPage = missing ? '' : ((window.DOCS || {})[gid + '/' + f.n] || '');
     var quizN = (window.DOC_QUIZ || {})[gid + '/' + f.n] || 0;

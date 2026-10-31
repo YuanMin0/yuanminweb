@@ -3412,7 +3412,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/细胞/PPT/03细胞膜2.pdf",
     "rel": "大二上/细胞/PPT/03细胞膜2.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "04内膜系统.pptx",
@@ -3968,7 +3969,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/生化/PPT/2024-4年制-脂代谢-2-李霞.pdf",
     "rel": "大二上/生化/PPT/2024-4年制-脂代谢-2-李霞.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "2024春-3-四年制-生化-糖代谢1-申亮亮.pdf",
@@ -3978,7 +3980,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/生化/PPT/2024春-3-四年制-生化-糖代谢1-申亮亮.pdf",
     "rel": "大二上/生化/PPT/2024春-3-四年制-生化-糖代谢1-申亮亮.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "2024春-4年制-脂代谢-1-终 李霞.pdf",
@@ -3988,7 +3991,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/生化/PPT/2024春-4年制-脂代谢-1-终 李霞.pdf",
     "rel": "大二上/生化/PPT/2024春-4年制-脂代谢-1-终 李霞.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "2024春-五年制-生化-糖代谢2-申亮亮.pdf",
@@ -3998,7 +4002,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/生化/PPT/2024春-五年制-生化-糖代谢2-申亮亮.pdf",
     "rel": "大二上/生化/PPT/2024春-五年制-生化-糖代谢2-申亮亮.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "v2-3280c53891ed926ad90c5be4eff4e113_r.jpg",
@@ -4148,7 +4153,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/生化/PPT/幻灯-2023级四年制生技药学-氨基酸代谢-1-茹....pdf",
     "rel": "大二上/生化/PPT/幻灯-2023级四年制生技药学-氨基酸代谢-1-茹....pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "幻灯-2023级四年制生技药学-氨基酸代谢-2-茹....pdf",
@@ -4158,7 +4164,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/生化/PPT/幻灯-2023级四年制生技药学-氨基酸代谢-2-茹....pdf",
     "rel": "大二上/生化/PPT/幻灯-2023级四年制生技药学-氨基酸代谢-2-茹....pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "幻灯-2024春-四年制生技药学-生化-16-物质代....pdf",
@@ -4168,7 +4175,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/生化/PPT/幻灯-2024春-四年制生技药学-生化-16-物质代....pdf",
     "rel": "大二上/生化/PPT/幻灯-2024春-四年制生技药学-生化-16-物质代....pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "维生素-李霞.pdf",
@@ -4178,7 +4186,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/生化/PPT/维生素-李霞.pdf",
     "rel": "大二上/生化/PPT/维生素-李霞.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "1.docx",
@@ -4842,7 +4851,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/神生/PPT/10中枢神经损伤修复.pdf",
     "rel": "大二上/神生/PPT/10中枢神经损伤修复.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "11脑卒中的神经机理.pdf",
@@ -4912,7 +4922,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/神生/PPT/17神经网络与人工智能.pdf",
     "rel": "大二上/神生/PPT/17神经网络与人工智能.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "18脑科学应用拓展.pdf",
@@ -4922,7 +4933,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/神生/PPT/18脑科学应用拓展.pdf",
     "rel": "大二上/神生/PPT/18脑科学应用拓展.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "1学习与记忆.pptx",
@@ -4942,7 +4954,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/神生/PPT/2睡眠与生物节律.pdf",
     "rel": "大二上/神生/PPT/2睡眠与生物节律.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "3奖赏和成瘾.pdf",
@@ -4952,7 +4965,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/神生/PPT/3奖赏和成瘾.pdf",
     "rel": "大二上/神生/PPT/3奖赏和成瘾.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "4情绪.pdf",
@@ -4962,7 +4976,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/神生/PPT/4情绪.pdf",
     "rel": "大二上/神生/PPT/4情绪.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "5语言.pdf",
@@ -4992,7 +5007,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/神生/PPT/7运动调节与疾病.pdf",
     "rel": "大二上/神生/PPT/7运动调节与疾病.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "8神经发育性疾病的机制.pdf",
@@ -5002,7 +5018,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二上/神生/PPT/8神经发育性疾病的机制.pdf",
     "rel": "大二上/神生/PPT/8神经发育性疾病的机制.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "9神经退行性疾病机制.pdf",
@@ -5240,7 +5257,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二下/病理/病理理论/PPT/10心血管1.pdf",
     "rel": "大二下/病理/病理理论/PPT/10心血管1.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "11心血管2.pptx",
@@ -5786,7 +5804,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二下/寄生虫/寄生虫 理论/PPT/节肢动物概述20235.pdf",
     "rel": "大二下/寄生虫/寄生虫 理论/PPT/节肢动物概述20235.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "(33.2)--PPT-总论-第一章引言(7).pdf",
@@ -5876,7 +5895,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二下/寄生虫/寄生虫 理论/PPT/{36}--土源性线虫（蛔虫、蛲虫）/(1.1)--线虫概述、蛔虫、蛲虫2022-05-13.pdf",
     "rel": "大二下/寄生虫/寄生虫 理论/PPT/{36}--土源性线虫（蛔虫、蛲虫）/(1.1)--线虫概述、蛔虫、蛲虫2022-05-13.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "(36.3)--蛔虫(2).pdf",
@@ -5906,7 +5926,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二下/寄生虫/寄生虫 理论/PPT/{36}--土源性线虫（蛔虫、蛲虫）/线虫概述、蛔虫、蛲虫2022-05-13.pdf",
     "rel": "大二下/寄生虫/寄生虫 理论/PPT/{36}--土源性线虫（蛔虫、蛲虫）/线虫概述、蛔虫、蛲虫2022-05-13.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "(1.2)--钩虫旋毛虫.pdf",
@@ -6006,7 +6027,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二下/寄生虫/寄生虫 理论/PPT/{48}--绦虫（沈燕）/(1.5)--绦虫（3学时）.pdf",
     "rel": "大二下/寄生虫/寄生虫 理论/PPT/{48}--绦虫（沈燕）/(1.5)--绦虫（3学时）.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "(48.2)--带绦虫(4).pdf",
@@ -6386,7 +6408,8 @@ window.MATERIALS = [
     "c": "题库练习",
     "key": "大二下/寄生虫/寄生虫 理论/知识点和自测题/知识点/寄生虫总结.pdf",
     "rel": "大二下/寄生虫/寄生虫 理论/知识点和自测题/知识点/寄生虫总结.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "寄生虫总结.xlsx",
@@ -6714,7 +6737,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二下/微生物/微生物理论/PPT/ppt/01绪论.pdf",
     "rel": "大二下/微生物/微生物理论/PPT/ppt/01绪论.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "02细菌形态和结构.pdf",
@@ -6724,7 +6748,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二下/微生物/微生物理论/PPT/ppt/02细菌形态和结构.pdf",
     "rel": "大二下/微生物/微生物理论/PPT/ppt/02细菌形态和结构.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "03细菌的生理.pdf",
@@ -6744,7 +6769,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二下/微生物/微生物理论/PPT/ppt/04细菌的遗传与变异.pdf",
     "rel": "大二下/微生物/微生物理论/PPT/ppt/04细菌的遗传与变异.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "05细菌感染与免疫五年制.pdf",
@@ -6784,7 +6810,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二下/微生物/微生物理论/PPT/ppt/08球菌.pdf",
     "rel": "大二下/微生物/微生物理论/PPT/ppt/08球菌.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "09肠杆菌科.pdf",
@@ -6794,7 +6821,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二下/微生物/微生物理论/PPT/ppt/09肠杆菌科.pdf",
     "rel": "大二下/微生物/微生物理论/PPT/ppt/09肠杆菌科.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "10弧菌螺杆菌.pdf",
@@ -6834,7 +6862,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二下/微生物/微生物理论/PPT/ppt/13动物源性细菌及其它.pdf",
     "rel": "大二下/微生物/微生物理论/PPT/ppt/13动物源性细菌及其它.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "14支原体.pdf",
@@ -6884,7 +6913,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二下/微生物/微生物理论/PPT/ppt/15病毒的基本性状.pdf",
     "rel": "大二下/微生物/微生物理论/PPT/ppt/15病毒的基本性状.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "16病毒的感染与免疫.pdf",
@@ -6894,7 +6924,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二下/微生物/微生物理论/PPT/ppt/16病毒的感染与免疫.pdf",
     "rel": "大二下/微生物/微生物理论/PPT/ppt/16病毒的感染与免疫.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "17病毒感染的检查方法与防治原则.pdf",
@@ -6904,7 +6935,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二下/微生物/微生物理论/PPT/ppt/17病毒感染的检查方法与防治原则.pdf",
     "rel": "大二下/微生物/微生物理论/PPT/ppt/17病毒感染的检查方法与防治原则.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "18呼吸道病毒.pdf",
@@ -6934,7 +6966,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二下/微生物/微生物理论/PPT/ppt/20肝炎病毒.pdf",
     "rel": "大二下/微生物/微生物理论/PPT/ppt/20肝炎病毒.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "21虫媒病毒.pptx",
@@ -6954,7 +6987,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大二下/微生物/微生物理论/PPT/ppt/23出血热病毒.pdf",
     "rel": "大二下/微生物/微生物理论/PPT/ppt/23出血热病毒.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "24逆转录病毒.pdf",
@@ -7330,7 +7364,8 @@ window.MATERIALS = [
     "c": "重点归纳",
     "key": "大二下/文献/文献复习/PPT/{2}--中文文摘数据库/(2.1)--2022中文检索（一）.pdf",
     "rel": "大二下/文献/文献复习/PPT/{2}--中文文摘数据库/(2.1)--2022中文检索（一）.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "中文文摘数据库检索.pptx",
@@ -7350,7 +7385,8 @@ window.MATERIALS = [
     "c": "重点归纳",
     "key": "大二下/文献/文献复习/PPT/{3}--中文全文数据库/(3.1)--2022中文检索（二）.pdf",
     "rel": "大二下/文献/文献复习/PPT/{3}--中文全文数据库/(3.1)--2022中文检索（二）.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "CBM2+中文全文.pptx",
@@ -7380,7 +7416,8 @@ window.MATERIALS = [
     "c": "重点归纳",
     "key": "大二下/文献/文献复习/PPT/{5}--综合检索/(5.1)--综合检索-2022春季(1).pdf",
     "rel": "大二下/文献/文献复习/PPT/{5}--综合检索/(5.1)--综合检索-2022春季(1).pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "综合检索.pptx",
@@ -7676,7 +7713,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大一下/计算机/计算机/课件/4 医学数据分析呈现.pdf",
     "rel": "大一下/计算机/计算机/课件/4 医学数据分析呈现.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "5 数据库技术概述_2023.pdf",
@@ -7706,7 +7744,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大一下/计算机/计算机/课件/7 数据库查询与SQL应用-2023.pdf",
     "rel": "大一下/计算机/计算机/课件/7 数据库查询与SQL应用-2023.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "8 Python1概述-你需要Python.pdf",
@@ -8700,7 +8739,8 @@ window.MATERIALS = [
     "c": "重点归纳",
     "key": "大一下/局解/局解2/专业课/#1生化实验 生物化学与分子生物学实验复习总结.pdf",
     "rel": "大一下/局解/局解2/专业课/#1生化实验 生物化学与分子生物学实验复习总结.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "#1生物化学复习总结.pdf",
@@ -8930,7 +8970,8 @@ window.MATERIALS = [
     "c": "重点归纳",
     "key": "大一下/局解/局解2/2023ppt局解、/Ⅰ上肢/08上肢总结.pdf",
     "rel": "大一下/局解/局解2/2023ppt局解、/Ⅰ上肢/08上肢总结.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "09胸部总结.pdf",
@@ -8970,7 +9011,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大一下/局解/局解2/2023ppt局解、/Ⅲ颈部/12颈部器官布局及筋膜.pdf",
     "rel": "大一下/局解/局解2/2023ppt局解、/Ⅲ颈部/12颈部器官布局及筋膜.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "13颈浅部、颈前区解剖.ppt",
@@ -9070,7 +9112,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大一下/局解/局解2/2023ppt局解、/Ⅴ腹部/22腹部概述.pdf",
     "rel": "大一下/局解/局解2/2023ppt局解、/Ⅴ腹部/22腹部概述.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "23腹前外侧壁和腹股沟区.pdf",
@@ -9140,7 +9183,8 @@ window.MATERIALS = [
     "c": "重点归纳",
     "key": "大一下/局解/局解2/2023ppt局解、/Ⅶ盆部和会阴/29盆部会阴总结.pdf",
     "rel": "大一下/局解/局解2/2023ppt局解、/Ⅶ盆部和会阴/29盆部会阴总结.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "30盆部和会阴解剖.pdf",
@@ -9170,7 +9214,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大一下/局解/局解2/2023ppt局解、/Ⅷ头部/32位听器官.pdf",
     "rel": "大一下/局解/局解2/2023ppt局解、/Ⅷ头部/32位听器官.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "33开颅取脑.ppt",
@@ -9320,7 +9365,8 @@ window.MATERIALS = [
     "c": "重点归纳",
     "key": "大一下/局解/局解2/局解PPT/Ⅱ上肢/11 上肢总结-董玉琳-20230308-雨课堂.pdf",
     "rel": "大一下/局解/局解2/局解PPT/Ⅱ上肢/11 上肢总结-董玉琳-20230308-雨课堂.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "上肢总结3.pdf",
@@ -9330,7 +9376,8 @@ window.MATERIALS = [
     "c": "重点归纳",
     "key": "大一下/局解/局解2/局解PPT/Ⅱ上肢/上肢总结3.pdf",
     "rel": "大一下/局解/局解2/局解PPT/Ⅱ上肢/上肢总结3.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "12椎前区、咽喉解剖.pdf",
@@ -9380,7 +9427,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大一下/局解/局解2/局解PPT/Ⅲ颈部/颈部器官布局及筋膜陈涛.pdf",
     "rel": "大一下/局解/局解2/局解PPT/Ⅲ颈部/颈部器官布局及筋膜陈涛.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "13新。23年.pptx",
@@ -9410,7 +9458,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大一下/局解/局解2/局解PPT/Ⅳ胸部/14心脏纵隔解剖.pdf",
     "rel": "大一下/局解/局解2/局解PPT/Ⅳ胸部/14心脏纵隔解剖.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "14新。23年.ppt",
@@ -9550,7 +9599,8 @@ window.MATERIALS = [
     "c": "讲义笔记",
     "key": "大一下/局解/局解2/局解PPT/Ⅶ盆部和会阴/盆部和huiyin.pdf",
     "rel": "大一下/局解/局解2/局解PPT/Ⅶ盆部和会阴/盆部和huiyin.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "21开颅取脑.ppt",
@@ -9748,7 +9798,8 @@ window.MATERIALS = [
     "c": "往年真题",
     "key": "大一下/马原/马原/《政治选择题押题库（肖8单独版）》试卷顺序.pdf",
     "rel": "大一下/马原/马原/《政治选择题押题库（肖8单独版）》试卷顺序.pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "整理2018.docx",
@@ -10534,7 +10585,8 @@ window.MATERIALS = [
     "c": "其他",
     "key": "大一下/有机化学/有机化学2/有机化学学习指导 (何玮 尤文玮) (Z-Library).pdf",
     "rel": "大一下/有机化学/有机化学2/有机化学学习指导 (何玮 尤文玮) (Z-Library).pdf",
-    "pending": true
+    "pending": true,
+    "noUpload": true
    },
    {
     "n": "第10章 羧酸衍生物.pdf",

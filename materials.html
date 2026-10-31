@@ -579,7 +579,7 @@
     var isPdf = f.t === 'PDF';
     var missing = (window.CDN_MISSING || []).indexOf(f.key) > -1 || f.pending === true;
     var reader = (!missing && !window.CDN_READERS_BROKEN) ? READERS[gid + '/' + f.n] : '';
-    var docPage = missing ? '' : ((window.DOCS || {})[gid + '/' + f.n] || '');
+    var docPage = (window.DOCS || {})[gid + '/' + f.n] || '';   /* 大文件转成的站内阅读页，即使原文件没上传也能看 */
     var quizN = (window.DOC_QUIZ || {})[gid + '/' + f.n] || 0;
     var cloud = (!missing && CDN.ready) ? cdnUrl(f.key) : '';
     var isLocalSite = location.protocol === 'file:';
@@ -628,7 +628,7 @@
           (docPage ? '<span class="chip chip-brand" title="已提取文字，可在站内直接阅读">可阅读</span>' : '') +
           (quizN ? '<span class="chip chip-teal" title="打开文档后切到「练习」页签即可刷题">✍ ' + quizN + ' 题</span>' : '') +
           (!cloud && reader ? '<span class="chip chip-teal" title="超大文件已转成站内阅读页">站内阅读</span>' : '') +
-          (missing ? '<span class="chip chip-mid" title="该文件还没有上传">待上传</span>' : '') +
+          (missing && !docPage ? '<span class="chip chip-mid" title="该文件还没有上传">待上传</span>' : '') +
           (!missing && localOnly ? '<span class="chip chip-mid" title="该文件未托管到云端，只能在本机浏览本站时打开">仅本机</span>' : '') +
         '</div>' +
       '</div>' +

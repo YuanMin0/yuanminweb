@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>7 数据库查询与SQL应用-2023 · 资料阅读 · MediLearn</title>
+<meta name="description" content="7 数据库查询与SQL应用-2023 的文字提取版，由 PDF 原文重新排版，便于检索与移动端阅读。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="manifest" href="../../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../../icons/apple-touch-icon.png">
+<script src="../../js/auth.js"></script>
+<script>if(window.WB&&WB.auth)WB.auth.guard();</script>
+</head>
+<body>
+<header class="hdr" data-hdr></header>
+
+<main class="page">
+  <div class="wrap">
+    <div class="crumb"><a href="../../materials.html">资料汇总</a> / <span>7 数据库查询与SQL应用-2023</span></div>
+
+    <div class="doc-head">
+      <h1>7 数据库查询与SQL应用-2023</h1>
+      <a class="gbtn gbtn-sm" href="../../materials.html">← 返回资料汇总</a>
+    </div>
+    <div class="doc-sub">99 页 · 6 段 · 4 个小节 · 原文 10.7 MB</div>
+
+    <div class="doc-tip">本文由 PDF 原文提取并重新排版，<b>图片与公式未保留</b>；需要精确版式请在本机打开原文件。</div>
+
+    <div class="klayout">
+      <button class="toc-toggle" id="tocToggle" aria-expanded="false" aria-controls="docToc">
+        <span>本页目录</span><i class="toc-toggle-i">▾</i>
+      </button>
+      <aside class="toc" id="docToc">
+        <div class="toc-h">本页目录</div>
+        <div class="toc-prog" aria-hidden="true"><i id="tocProg"></i></div>
+      </aside>
+      <article class="article">
+        <div id="body"></div>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer class="ftr" data-ftr></footer>
+
+<script src="../../js/core.js"></script>
+<script src="../../js/fx.js"></script>
+<script>window.__DOC_BLOCKS = [{"type": "note", "variant": "info", "title": "本文为文字提取版", "text": "原 PDF 超过 10 MB，这里按页提取文字重新排版；图片、公式与原始版式未保留，需要精确内容请在本机打开原文件。"}, {"type": "list", "items": ["基础医学院计算机基础教研室", "罗 翔 电 话：15091588361 Email:51551588@qq.com"]}, {"type": "h", "text": "医学信息的数据库管理-3"}, {"type": "list", "items": ["医学信息的数据库管理"]}, {"type": "h", "text": "一、数据管理模式的演变"}, {"type": "list", "items": ["二、", "数据库的设计与编辑", "三、数据库应用与", "SQL", "语句"]}, {"type": "list", "items": ["本专题知识结构", "关系模型设计：", "设计体检数据库，概念模型—— 逻辑模型 Access创建数据库六个步骤："]}, {"type": "p", "text": "建库——建表——确定字段—— 确定数据类型——确定主键——表 间关系 数据库查询六个步骤： 1、执行查询 2、选择关系表； 3、选择字段； 4、设定查询条件，排序或过滤； 5、展示查询结果。 6、保存查询结果。"}, {"type": "list", "items": ["三、数据库应用与SQL语句", "1、窗体的设计与输出", "3、SQL查询语句", "2、报表的设计与输出", "4、SQL插入、删除与更新语句"]}, {"type": "list", "items": ["1. 认识窗体"]}, {"type": "list", "items": ["2. 窗体的基本结构"]}, {"type": "list", "items": ["2. 窗体的基本结构"]}, {"type": "list", "items": ["3. 窗体的数据来源"]}, {"type": "list", "items": ["4. 窗体的创建", "程序员还是设计师？"]}, {"type": "list", "items": ["10", "4. 窗体的创建", "常规操作入口： 利用“窗体向导”创建窗体"]}, {"type": "list", "items": ["11", "4. 窗体的创建-选择字段"]}, {"type": "p", "text": "下拉列表选择表/查询： “ > ”——单个字段添加 “>>”——展示字段全部添加 “< ” ——剔除单个选定字段 “<<”——批量剔除选定字段"}, {"type": "list", "items": ["12", "4. 窗体的创建-展示布局"]}, {"type": "list", "items": ["13", "4. 窗体的创建-展示布局"]}, {"type": "list", "items": ["14", "4. 窗体的创建"]}, {"type": "list", "items": ["15", "5. 窗体的修改", "性别字段展示框过长怎么办？", "生成“体检者表窗体”"]}, {"type": "list", "items": ["16", "5. 窗体的修改", "进入设计视图： 方法1：窗体名右键——点击设计视图 方法2：右下脚直接切换设计视图", "窗体视图--布局视图--设计视图"]}, {"type": "list", "items": ["17", "窗体的3种视图"]}, {"type": "list", "items": ["18", "5. 窗体的修改"]}, {"type": "p", "text": "在“设计视图”中可调整窗体的布局和结构（字 体大小、颜色、标签大小和位置等），也可以添 加表达式，展示计算结果。如何添加文本框？"}, {"type": "list", "items": ["点中文本框，拖拽可修 改文本框形状大小。 点中“性别”文本框， 缩短其所占宽度。"]}, {"type": "list", "items": ["19", "5. 窗体的修改-主要控件", "选择：拖动、修改文本框形状和区域", "文本框：显示文本、数字、日期、时间、备注字段，也可以", "显示计算值。", "标签：可展示独立的文本标签。"]}, {"type": "list", "items": ["20", "5. 窗体的修改-控件", "添加文本框：点击文本框 鼠标变 图标，在需要 设置的位置插入即可"]}, {"type": "list", "items": ["21", "5. 窗体的修改-控件", "文本框含两部分： Text是文本框展示名 称； 未绑定可选择展示数 据来源字段或表达式"]}, {"type": "list", "items": ["22", "5. 窗体的修改", "窗体视图浏览效果：表 达式计算结果会根据表 格变化自动更新"]}, {"type": "list", "items": ["23", "6. 窗体的设计（图像显示）", "思考：如何在窗体中展示", "头像？", "问题1：原表中无此字段", "问题2：该字段数据类型不", "属于常用的文本、数值、", "日期/时间和逻辑值型。", "解决办法：", "1、新增字段：需在数据源“体检者表”中添加字段“头像”；", "2、设置数据类型：将“头像”字段设置“附件”数据类型。"]}, {"type": "list", "items": ["24", "6. 窗体的设计（图像显示）"]}, {"type": "list", "items": ["25", "6. 窗体的设计（图像显示）"]}, {"type": "list", "items": ["26", "6. 窗体的设计（图像显示）"]}, {"type": "p", "text": "创建新的窗体，命名 后保存： 1、在“设计视图”中， 添加需要的字段，包 括新建的“头像”； 2、按需求调整显示布 局。"}, {"type": "list", "items": ["27", "6. 窗体的设计（图像显示）", "附件(数据类型)：该控件可选择基础数据中的附件字段进行", "绑定，例如图片。", "那么如果要单独添加“附件”类型的控件怎么操作？", "方法：在“控件”中找到“附件”控件（回形针）添加即可"]}, {"type": "list", "items": ["28", "6. 窗体的设计（图像显示）"]}, {"type": "list", "items": ["29", "7. 创建分割窗体"]}, {"type": "list", "items": ["三、数据库应用与SQL语句", "30", "、窗体的设计与输出", "SQL", "查询语句", "、报表的设计与输出", "SQL", "插入、删除与更新语句"]}, {"type": "list", "items": ["31"]}, {"type": "list", "items": ["32"]}, {"type": "list", "items": ["33"]}, {"type": "list", "items": ["34"]}, {"type": "list", "items": ["35"]}, {"type": "list", "items": ["36"]}, {"type": "list", "items": ["37"]}, {"type": "list", "items": ["38"]}, {"type": "list", "items": ["39"]}, {"type": "list", "items": ["40"]}, {"type": "list", "items": ["41"]}, {"type": "list", "items": ["42"]}, {"type": "list", "items": ["43", "“报表视图”展示结果，需要修改布局， 可切换至“设计视图”"]}, {"type": "list", "items": ["44", "同窗体类似，报表设计视 图可以修改布局，可以添 加计算和汇总字段"]}, {"type": "list", "items": ["45"]}, {"type": "list", "items": ["46"]}, {"type": "list", "items": ["47"]}, {"type": "list", "items": ["48"]}, {"type": "list", "items": ["三、数据库应用与SQL语句", "49", "1、窗体的设计与输出", "3、SQL查询语句", "2、报表的设计与输出", "4、SQL插入、删除与更新语句"]}, {"type": "list", "items": ["“手术器械传递”", "——特殊的肢体"]}, {"type": "h", "text": "50 语 言"}, {"type": "list", "items": ["特点： • 语义明确 • 简单高效"]}, {"type": "list", "items": ["51"]}, {"type": "h", "text": "语 言"}, {"type": "list", "items": ["Structure Query Language", "结构化查询语言", "SQL"]}, {"type": "list", "items": ["52", "SQL是什么？", "• SQL是一种专门用途的计算机语言", "• 用来与关系型数据库进行“对话”", "DBMS R Relational", "• 主要用于查询和更新数据库中的数据"]}, {"type": "list", "items": ["53", "SQL支持的数据库", "RDBMS", "MySQL", "SQL Server", "PostgreSQL", "Oracle", "Access", "······", "• DML", "数据操纵语言", "• DDL", "数据定义语言", "不同版本SQL", "SQL"]}, {"type": "list", "items": ["54", "•SELECT - 从数据库表中获取数据", "•UPDATE - 更新数据库表中的数据", "•DELETE - 从数据库表中删除数据", "•INSERT INTO - 向数据库表中插入数据", "•CREATE DATABASE - 创建新数据库", "•ALTER DATABASE - 修改数据库", "•CREATE TABLE - 创建新表", "•ALTER TABLE - 变更数据库表", "•DROP TABLE - 删除表", "•CREATE INDEX - 创建索引", "•DROP INDEX - 删除索引"]}, {"type": "list", "items": ["55", "SQL通用语法", "1. 可以单行或多行书写，以英文分号“ ；”结尾。", "2. 单词间使用空格或者换行符进行分割。", "3. 一般不区分大小写，关键字建议使用大写。"]}, {"type": "list", "items": ["56", "SQL通用语法", "4. 字符串和日期常数需要使用单引号或双引号括起来。", "注：数字常数无需添加单引号。直接书写即可。", "5. 注释：单行注释：-- 注释内容", "多行注释：/* 注释内容*/"]}, {"type": "list", "items": ["57", "SQL中常用的运算符", "运算符类型 运算符说明", "算术运算符 + 、- 、* 、/ 、%", "比较运算符 = 、> 、< 、<= 、>= 、<>或!=", "逻辑运算符 and 、or 、not", "位运算符 &", "例：3&5 按位与运算，3的二进制11，5的二进制101，结果为1"]}, {"type": "list", "items": ["58"]}, {"type": "list", "items": ["59", "示例：=YEAR(DATE()) - YEAR([出生日期])"]}, {"type": "list", "items": ["60"]}, {"type": "list", "items": ["61", "在Access中创建SQL查询"]}, {"type": "p", "text": "创建查询后选择“视图”切 换至“SQL视图”，可进行 SQL语言查询，编辑区默认 语句“SELECT；”"}, {"type": "list", "items": ["62"]}, {"type": "list", "items": ["63", "SQL的应用", "体检者信息表"]}, {"type": "list", "items": ["64", "1. SELECT查询字段语句", "任务1： 查询表中体检者ID, 姓名, 性别, 出生日期", "(取列运算：投影)"]}, {"type": "list", "items": ["65", "1. SELECT查询字段语句", "作 用：从数据库表中获取数据", "语 法：SELECT 字段1 , 字段2 , …", "FROM 表名;", "实 现：SELECT", "(关系运算：投影)", "FROM后面是我们要查 询的字段的所在表"]}, {"type": "list", "items": ["66 66", "实 现：SELECT", "Ctrl+S保存查询结果"]}, {"type": "list", "items": ["67", "2. SELECT带条件查询语句", "任务2： 查询所有男性", "(关系运算：选择+投影)"]}, {"type": "list", "items": ["68", "2. SELECT带条件查询语句", "任务2： 查询所有男性", "(关系运算：选择+投影)"]}, {"type": "list", "items": ["69", "2. SELECT带条件查询语句", "作 用：从数据库表中获取指定条件的数据", "语 法：SELECT 字段1 , 字段2 , …", "FROM 表名", "WHERE 条件表达式;", "实 现：SELECT", "(关系运算：选择+投影)", "年龄和出生日期的关系？"]}, {"type": "list", "items": ["70", "2. SELECT带条件查询语句", "条件表达式WHERE", "SELECT", "通过表达式和已有字段计算AS：对字段或公式起别名", "(关系运算：选择+投影)"]}, {"type": "list", "items": ["71", "任务3： 查询表中所有汉族体检者的体检者ID、姓名、性别、出生日期， 要求出生日期按升序排序", "3. SELECT语句-带条件和排序的查询"]}, {"type": "list", "items": ["72", "3. SELECT语句-带条件和排序的查询", "实 现：SELECT", "如何排序囔？", "按…排序 升序 降序 利用排序子句"]}, {"type": "list", "items": ["73", "3. SELECT语句-带条件和排序的查询", "结果：出生日期按升序排列"]}, {"type": "list", "items": ["74", "4. SELECT语句-带分组的查询", "任务4："]}, {"type": "list", "items": ["75", "实 现：SELECT", "; --用于结合合计函数进行计数", "4. SELECT语句-带分组的查询", "民族 人数 汉族 7 蒙古族 1 壮族 2"]}, {"type": "list", "items": ["76", "4. SELECT语句-带分组的查询"]}, {"type": "list", "items": ["77"]}, {"type": "list", "items": ["78", "姓名 性别 出生日期", "李小萌 女 1993/11/6", "刘菲菲 女 1994/1/28", "王芳 女 1994/10/9"]}, {"type": "list", "items": ["79"]}, {"type": "list", "items": ["80"]}, {"type": "list", "items": ["三、数据库应用与SQL语句", "81", "、窗体的设计与输出", "SQL", "查询语句", "、报表的设计与输出", "SQL", "插入、删除与更新语句"]}, {"type": "list", "items": ["82"]}, {"type": "list", "items": ["83", "1. INSERT INTO语句"]}, {"type": "list", "items": ["84", "1. INSERT INTO语句", "任务5："]}, {"type": "list", "items": ["85", "1. INSERT INTO语句", "实 现：——VALUES后的字符需要用引号，日期需要用#号"]}, {"type": "p", "text": "SQL视图：输入SQL语句后，进入“查询设计”，点击“运行”完成插 入，切换至数据表视图，查看已添加的记录。"}, {"type": "list", "items": ["86", "1. INSERT INTO语句", "任务6： 在表中再增加一条记录"]}, {"type": "list", "items": ["87", "1. INSERT INTO语句", "新插入的记录需要关闭“体检者 信息表”后，再次打开可显示"]}, {"type": "list", "items": ["88", "2. DELETE语句", "作 用：", "语 法：", "谨 慎", "注意事项："]}, {"type": "list", "items": ["89", "任务7： 删除“体检者信息表”中体检者ID为11的体检者信息", "2. DELETE语句"]}, {"type": "list", "items": ["90", "2. DELETE语句", "实 现：", "DELETE执行结果： 查看“体检者信息 表”，ID为11的记 录显示已删除"]}, {"type": "list", "items": ["91", "任务8：", "2. DELETE语句", "“李明明”ID 为1，在“体 检信息表”中 是外键，在 “体检者信息 表”中是主键。", "请问：参照完 整性约束允许 直接删除吗？", "主 键", "外 键"]}, {"type": "list", "items": ["92", "2. DELETE语句", "执行："]}, {"type": "list", "items": ["93", "2. DELETE语句", "实 现：", "删除所有外键记录 1", "删除主键记录 2"]}, {"type": "list", "items": ["94", "任务9：", "3. UPDATE语句"]}, {"type": "list", "items": ["95", "3. UPDATE语句", "作 用：", "语 法："]}, {"type": "list", "items": ["96", "实 现：", "执行：UPDATE 体检者信息表 SET 体重=  76；", "注：缺省WHERE 子句时，所有体检者体重修改为76", "3. UPDATE语句"]}, {"type": "list", "items": ["97", "3. UPDATE语句", "任务10：", "实 现：", "语 法："]}, {"type": "list", "items": ["98", "SQL"]}, {"type": "list", "items": ["99"]}];</script>
+<script>
+(function () {
+  WB.mountChrome('materials');
+  var body = document.getElementById('body');
+  body.innerHTML = WB.renderBlocks(window.__DOC_BLOCKS || []);
+
+  /* 目录：按 h3 生成 */
+  var toc = document.getElementById('docToc');
+  var hs = body.querySelectorAll('h3');
+  hs.forEach(function (h, i) {
+    h.id = 's' + (i + 1);
+    if (i >= 60) return;
+    var a = document.createElement('a');
+    a.href = '#s' + (i + 1);
+    a.textContent = h.textContent;
+    toc.appendChild(a);
+  });
+  if (hs.length > 60) {
+    var more = document.createElement('div');
+    more.className = 'small dim';
+    more.style.cssText = 'padding:6px 11px';
+    more.textContent = '… 另有 ' + (hs.length - 60) + ' 个小节';
+    toc.appendChild(more);
+  }
+  if (!hs.length) toc.style.display = 'none';
+
+  /* 阅读进度 */
+  var prog = document.getElementById('tocProg');
+  function onScroll() {
+    if (!prog) return;
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.width = (h > 0 ? Math.min(100, window.scrollY / h * 100) : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* 移动端目录折叠 */
+  var tg = document.getElementById('tocToggle');
+  if (tg) tg.addEventListener('click', function () {
+    var open = tg.getAttribute('aria-expanded') === 'true';
+    tg.setAttribute('aria-expanded', String(!open));
+    toc.classList.toggle('open', !open);
+  });
+
+  WB.fx.init();
+})();
+</script>
+
+<script src="../../js/pwa.js"></script>
+</body>
+</html>

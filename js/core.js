@@ -271,19 +271,22 @@
     { href: 'about.html', label: '关于', key: 'about' }
   ];
   WB.mountChrome = function (active) {
+    /* doc/<科目>/ 这类子目录页要回退两级，否则导航链接会 404 */
+    var B = /\/doc\/[^/]+\//.test(location.pathname) ? '../../' : '';
+    WB.BASE = B;
     var hdr = document.querySelector('[data-hdr]');
     if (hdr) {
       var links = NAV.map(function (n) {
-        return '<a href="' + n.href + '"' + (n.key === active ? ' class="on"' : '') + '>' + n.label + '</a>';
+        return '<a href="' + B + n.href + '"' + (n.key === active ? ' class="on"' : '') + '>' + n.label + '</a>';
       }).join('');
       hdr.innerHTML =
         '<div class="wrap hdr-in">' +
-        '<a class="logo" href="index.html"><span class="logo-mark">✚</span><span>MediLearn</span></a>' +
+        '<a class="logo" href="' + B + 'index.html"><span class="logo-mark">✚</span><span>MediLearn</span></a>' +
         '<nav class="nav" id="site-nav" data-nav>' + links + '</nav>' +
         '<div class="hdr-tools">' +
         '<button class="icon-btn" data-theme-btn title="切换主题" aria-label="切换主题">◑</button>' +
         '<button class="icon-btn" data-logout-btn title="退出登录">⏻</button>' +
-        '<a class="hdr-dl" href="download.html" data-desktop-dl title="下载 Windows 桌面版（离线可用）">' +
+        '<a class="hdr-dl" href="' + B + 'download.html" data-desktop-dl title="下载 Windows 桌面版（离线可用）">' +
           '<span class="hdr-dl-i">⤓</span><span class="hdr-dl-t">桌面版</span>' +
         '</a>' +
         '<button class="icon-btn menu-btn" data-menu-btn title="菜单" aria-label="打开菜单" aria-expanded="false" aria-controls="site-nav">☰</button>' +

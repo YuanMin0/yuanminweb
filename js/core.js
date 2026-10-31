@@ -104,7 +104,10 @@
 
   WB.stats = function () {
     var list = WB.subjects();
-    var t = { subjects: list.length, chapters: 0, knowledge: 0, quiz: 0 };
+    /* 有的页面只加载了 26 个有题库的科目，_meta 里才是全站科目数，
+       两者取大，避免页脚「26 个科目」和首页「43 科目」打架 */
+    var n = Math.max(list.length, WB.meta().length);
+    var t = { subjects: n, chapters: 0, knowledge: 0, quiz: 0 };
     list.forEach(function (s) {
       if (!s._count) return;
       t.chapters += s._count.chapters; t.knowledge += s._count.knowledge; t.quiz += s._count.quiz;

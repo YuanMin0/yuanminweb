@@ -184,7 +184,8 @@
           '</div></div>';
       }).join('');
       return head + '<div class="chapter spot' + (ci === 0 ? ' open' : '') + '" data-ch="' + ci + '" style="--accent:' + s.accent + ';--accent-soft:' + s.accentSoft + '">' +
-        '<div class="chapter-hd">' +
+        '<div class="chapter-hd" role="button" tabindex="0" aria-expanded="' + (ci === 0 ? 'true' : 'false') + '"' +
+          ' aria-label="展开或收起：' + WB.esc(ch.title) + '">' +
           '<div class="chapter-no">' + (ci + 1) + '</div>' +
           '<div style="flex:1;min-width:0">' +
             '<div class="chapter-t">' + WB.esc(ch.title) + '</div>' +
@@ -233,10 +234,64 @@
 
   root.innerHTML = head + acc + cheat;
 
+  /* ---------- 章节展开：实测高度后补间 ----------
+     之前用 max-height:0→4000px，短内容会「一开就弹到底」，
+     长内容超过 4000px 还会被裁掉。改成测 scrollHeight 再补间，
+     过渡结束把行内高度交回 auto，内容变化（图片加载、展开子项）也能自适应。 */
+  function setChapterOpen(el, open, animate) {
+    var bd = el.querySelector('.chapter-bd');
+    if (!bd) return;
+    if (!animate) {
+      el.classList.toggle('open', open);
+      bd.style.height = open ? '' : '0px';
+      return;
+    }
+    var h = bd.scrollHeight;
+    if (open) {
+      el.classList.add('open');
+      bd.style.height = '0px';
+      void bd.offsetHeight;          /* 强制重排，让 0 先落地 */
+      bd.style.height = h + 'px';
+      /* 兜底：transitionend 没触发（过渡被禁用/元素被隐藏）时也要交回 auto，
+         否则内容变化后高度会被写死、裁掉后面的内容 */
+      setTimeout(function () {
+        if (el.classList.contains('open')) bd.style.height = '';
+      }, 520);
+    } else {
+      bd.style.height = h + 'px';
+      void bd.offsetHeight;
+      el.classList.remove('open');
+      bd.style.height = '0px';
+    }
+  }
+
+  /* 键盘可达：章节头支持 Enter / 空格 */
+  root.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var hd = e.target.closest('.chapter-hd');
+    if (!hd) return;
+    e.preventDefault();
+    hd.click();
+  });
+
+  /* 过渡结束：展开态交回 auto，避免高度被写死 */
+  root.addEventListener('transitionend', function (e) {
+    if (e.propertyName !== 'height') return;
+    var bd = e.target;
+    if (!bd.classList || !bd.classList.contains('chapter-bd')) return;
+    if (bd.parentNode.classList.contains('open')) bd.style.height = '';
+  });
+
   /* ---------- 交互 ---------- */
   root.addEventListener('click', function (e) {
     var hd = e.target.closest('.chapter-hd');
-    if (hd && !e.target.closest('a')) { hd.parentNode.classList.toggle('open'); return; }
+    if (hd && !e.target.closest('a')) {
+      var ch = hd.parentNode;
+      var willOpen = !ch.classList.contains('open');
+      setChapterOpen(ch, willOpen, true);
+      hd.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      return;
+    }
     var tg = e.target.closest('[data-toggle]');
     if (tg) {
       var row = tg.closest('.krow');
@@ -250,14 +305,16 @@
     }
   });
 
-  var allOpen = true;
+  /* 初始只有第一章展开，按钮文案是「展开全部」，
+     所以状态必须从 false 开始，否则第一次点击会变成「收起全部」 */
+  var allOpen = false;
   /* 资料型科目没有章节，这些按钮不存在，需判空 */
   var btnExport = document.getElementById('exportAll');
   var btnExpand = document.getElementById('expandAll');
   if (btnExport) btnExport.addEventListener('click', function () { WB.exportSubject(s); });
   if (btnExpand) btnExpand.addEventListener('click', function () {
     allOpen = !allOpen;
-    root.querySelectorAll('.chapter').forEach(function (c) { c.classList.toggle('open', allOpen); });
+    root.querySelectorAll('.chapter').forEach(function (c) { setChapterOpen(c, allOpen, true); });
     this.textContent = allOpen ? '收起全部' : '展开全部';
   });
 

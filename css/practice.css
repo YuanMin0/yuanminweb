@@ -11,14 +11,14 @@
   position: relative; border: 0; background: none; cursor: pointer;
   padding: 10px 16px 13px; font-size: 14.5px; font-weight: 650;
   color: var(--text-3); border-radius: 10px 10px 0 0;
-  transition: color .2s, background .2s;
+  transition: color .2s var(--spring-fast), background .2s var(--spring-fast);
 }
 .doc-tabs button:hover { color: var(--text); background: var(--surface-2); }
 .doc-tabs button.on { color: var(--brand-ink); }
 .doc-tabs button.on::after {
   content: ''; position: absolute; left: 12px; right: 12px; bottom: -1px;
   height: 2.5px; border-radius: 3px; background: var(--brand);
-  animation: tabIn .28s cubic-bezier(.2,.8,.3,1) both;
+  animation: tabIn .28s var(--spring-fast) both;
 }
 @keyframes tabIn { from { transform: scaleX(.2); opacity: 0 } to { transform: none; opacity: 1 } }
 .doc-tabs .cnt {
@@ -38,7 +38,7 @@
   display: block; height: 100%; width: 0; border-radius: 999px;
   background: linear-gradient(90deg, var(--brand), var(--violet));
   box-shadow: 0 0 12px color-mix(in srgb, var(--brand) 55%, transparent);
-  transition: width .45s cubic-bezier(.2,.8,.3,1);
+  transition: width .45s var(--spring-fast);
 }
 .qp-meta {
   display: flex; gap: 14px; font-size: 12.5px; color: var(--text-3);
@@ -61,7 +61,7 @@
   background: linear-gradient(90deg, var(--brand), var(--violet), var(--teal));
   opacity: .85;
 }
-.qcard.enter { animation: qIn .32s cubic-bezier(.2,.8,.3,1); }
+.qcard.enter { animation: qIn .32s var(--spring-fast); }
 @keyframes qIn {
   from { transform: translateY(14px) scale(.985) }
   to { transform: none }
@@ -73,7 +73,7 @@
   30%, 50%, 70% { transform: translateX(-7px) }
   40%, 60% { transform: translateX(7px) }
 }
-.qcard.pop { animation: qPop .45s cubic-bezier(.2,.8,.3,1) both; }
+.qcard.pop { animation: qPop .45s var(--spring-fast) both; }
 @keyframes qPop {
   0% { transform: none }
   35% { transform: scale(1.012) }
@@ -102,7 +102,7 @@
   padding: 14px 16px; border-radius: 14px;
   border: 1.5px solid var(--border-2); background: var(--surface);
   font-size: 15.5px; line-height: 1.65; color: var(--text-2);
-  transition: transform .18s cubic-bezier(.2,.8,.3,1), border-color .18s,
+  transition: transform .18s var(--spring-fast), border-color .18s,
               background .18s, box-shadow .18s, color .18s;
 }
 .q-opt:hover:not(.locked) {
@@ -117,7 +117,7 @@
   display: grid; place-items: center;
   font-size: 12.5px; font-weight: 800; font-variant-numeric: tabular-nums;
   background: var(--surface-3); color: var(--text-3);
-  transition: background .2s, color .2s, transform .2s;
+  transition: background .2s var(--spring-fast), color .2s var(--spring-fast), transform .22s var(--spring-fast);
 }
 .q-opt:hover:not(.locked) .badge { background: var(--brand-soft); color: var(--brand-ink); }
 
@@ -125,12 +125,12 @@
 .q-opt.right {
   border-color: var(--teal); background: color-mix(in srgb, var(--teal-soft) 70%, var(--surface));
   color: var(--text); box-shadow: 0 8px 22px -14px color-mix(in srgb, var(--teal) 60%, transparent);
-  animation: optPop .34s cubic-bezier(.2,.8,.3,1) both;
+  animation: optPop .34s var(--spring-fast) both;
 }
 .q-opt.right .badge { background: var(--teal); color: #fff; }
 .q-opt.wrong {
   border-color: var(--rose); background: color-mix(in srgb, var(--rose-soft) 70%, var(--surface));
-  color: var(--text); animation: optWrong .38s ease both;
+  color: var(--text); animation: optWrong .38s var(--spring-fast) both;
 }
 .q-opt.wrong .badge { background: var(--rose); color: #fff; }
 .q-opt.dim { opacity: .48; }
@@ -139,19 +139,22 @@
 @keyframes optWrong { 0%,100% { transform: none } 25% { transform: translateX(-5px) } 75% { transform: translateX(5px) } }
 
 /* ---------- 反馈条 ---------- */
+/* 反馈条：高度由 JS 实测后补间，内容多长都能完整展开
+   （原来的 max-height:460px 会把长解析截断；grid 0fr→1fr 在本布局下解析成 0，不可用） */
 .q-fb {
-  margin-top: 18px; padding: 0 16px; max-height: 0; overflow: hidden;
-  border-radius: 12px; font-size: 14px; line-height: 1.7;
-  transition: max-height .34s ease, padding .34s ease;
+  height: 0; overflow: hidden; opacity: 0;
+  margin-top: 18px; border-radius: 12px; font-size: 14px; line-height: 1.7;
+  transition: height .4s var(--spring-fast), opacity .26s var(--spring-fast);
 }
-.q-fb.on { max-height: 460px; padding: 13px 16px; }
+.q-fb > .q-fb-in { padding: 13px 16px; }
+.q-fb.on { height: auto; opacity: 1; }
 .q-fb.ok { background: color-mix(in srgb, var(--teal-soft) 65%, var(--surface)); color: var(--text); border-left: 3px solid var(--teal); }
 .q-fb.no { background: color-mix(in srgb, var(--rose-soft) 65%, var(--surface)); color: var(--text); border-left: 3px solid var(--rose); }
 .q-fb b { font-weight: 800; }
 .q-exp {
   margin-top: 11px; padding-top: 11px; font-size: 13.8px; line-height: 1.78;
   color: var(--text-2); border-top: 1px dashed color-mix(in srgb, currentColor 18%, transparent);
-  animation: expIn .3s cubic-bezier(.2,.8,.3,1) both;
+  animation: expIn .3s var(--spring-fast) both;
 }
 .q-exp-t {
   display: inline-block; margin-right: 8px; padding: 1px 8px; border-radius: 999px;
@@ -174,7 +177,7 @@
 }
 
 /* ---------- 结算 ---------- */
-.qdone { text-align: center; padding: 46px 20px 60px; animation: qIn .4s cubic-bezier(.2,.8,.3,1); }
+.qdone { text-align: center; padding: 46px 20px 60px; animation: qIn .4s var(--spring-fast); }
 .qdone .ring {
   width: 148px; height: 148px; margin: 0 auto 22px; position: relative;
 }

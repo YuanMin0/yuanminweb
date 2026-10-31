@@ -62,6 +62,14 @@
   };
   el.tot.textContent = DATA.length;
 
+  /* 反馈条高度过渡结束 → 交回 auto，内容变化（长解析、字号放大）也能自适应 */
+  if (el.fb) {
+    el.fb.addEventListener('transitionend', function (e) {
+      if (e.propertyName !== 'height') return;
+      if (el.fb.classList.contains('on')) el.fb.style.height = '';
+    });
+  }
+
   /* ---------------- 渲染 ---------------- */
   function cur() { return DATA[st.order[st.pos]]; }
   function curKey() { return st.order[st.pos]; }
@@ -83,6 +91,7 @@
 
     el.fb.className = 'q-fb';
     el.fb.textContent = '';
+    el.fb.style.height = '0px';
 
     el.card.classList.remove('enter', 'shake', 'pop');
     void el.card.offsetWidth;
@@ -112,13 +121,16 @@
 
     var ok = pick === q.a;
     el.fb.className = 'q-fb on ' + (ok ? 'ok' : 'no');
+    el.fb.style.height = '0px';
     var head = ok
       ? '<b>✓ 回答正确</b>　正确答案：' + LETTER[q.a]
       : '<b>✗ 回答错误</b>　你选了 ' + LETTER[pick] + '，正确答案：<b>' + LETTER[q.a] + '</b>';
     var exp = q.e
       ? '<div class="q-exp"><span class="q-exp-t">解析</span>' + esc(q.e) + '</div>'
       : '';
-    el.fb.innerHTML = head + exp;
+    el.fb.innerHTML = '<div class="q-fb-in">' + head + exp + '</div>';
+    void el.fb.offsetHeight;                        /* 让 0 先落地 */
+    el.fb.style.height = el.fb.scrollHeight + 'px';  /* 再补间到实际高度 */
 
     if (!silent) {
       if (ok) {

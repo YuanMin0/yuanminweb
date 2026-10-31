@@ -27,20 +27,19 @@
     display: flex; align-items: center; justify-content: center;
     padding: 18px; background: rgba(8, 11, 18, .74);
     backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-    animation: pvFade .18s ease both;
+    /* 遮罩不做透明度动画：动画被冻结时整层会变透明，弹窗和页面叠在一起 */
   }
-  @keyframes pvFade { from { opacity: 0 } to { opacity: 1 } }
   .pv-box {
     width: min(1200px, 97vw); height: min(90vh, 940px);
     display: flex; flex-direction: column;
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 16px; overflow: hidden;
     box-shadow: 0 30px 90px rgba(0, 0, 0, .48);
-    animation: pvRise .2s cubic-bezier(.2,.8,.3,1) both;
+    animation: pvRise .3s var(--spring) both;
   }
-  @keyframes pvRise { from { transform: translateY(10px) scale(.99) } to { transform: none } }
+  @keyframes pvRise { from { transform: translateY(12px) scale(.985) } to { transform: none } }
   @media (prefers-reduced-motion: reduce) {
-    .pv-mask, .pv-box { animation: none; }
+    .pv-box { animation: none; }
   }
   .pv-box:fullscreen, .pv-box:-webkit-full-screen {
     width: 100vw; height: 100vh; border-radius: 0; border: 0;
@@ -646,9 +645,14 @@
       if (!files.length) return;
       shown += files.length;
       ready += files.filter(function (f) {
-        if ((window.CDN_MISSING || []).indexOf(f.key) > -1) return false;
+        var key = f.key || '';
+        if ((window.CDN_MISSING || []).indexOf(key) > -1) return false;
+        /* 站内阅读页 / 阅读器可用 → 算可看，即使原文件没上传 */
         if ((window.DOCS || {})[g.id + '/' + f.n]) return true;
-        return (CDN.ready && !!f.key) || (!window.CDN_READERS_BROKEN && !!READERS[g.id + '/' + f.n]);
+        if (!window.CDN_READERS_BROKEN && READERS[g.id + '/' + f.n]) return true;
+        /* 尚未上传的文件不算「可预览」（之前只要 CDN 就绪就全算，导致数字虚高） */
+        if (f.pending === true || f.noUpload === true) return false;
+        return CDN.ready && !!key;
       }).length;
 
       var s = metaOf(g.id);
@@ -656,7 +660,8 @@
       var icon = s ? s.icon : '📚';
       html += '<section class="chapter mgroup rv spot" data-gid="' + g.id + '"' +
         ' style="margin-bottom:12px;--accent:' + accent + ';--accent-soft:' + (s && s.accentSoft ? s.accentSoft : 'var(--brand-soft)') + '">' +
-        '<div class="chapter-hd mgroup-hd">' +
+        '<div class="chapter-hd mgroup-hd" role="button" tabindex="0" aria-expanded="false"' +
+          ' aria-label="展开或收起：' + WB.esc(g.name) + '">' +
           '<div class="chapter-no">' + icon + '</div>' +
           '<div style="flex:1;min-width:0">' +
             '<div class="chapter-t">' + WB.esc(g.name) + '</div>' +
@@ -707,6 +712,8 @@
   function setGroupOpen(sec, open, animate) {
     var bd = sec.querySelector('.mgroup-bd');
     if (!bd) return;
+    var hd0 = sec.querySelector('.mgroup-hd');
+    if (hd0) hd0.setAttribute('aria-expanded', open ? 'true' : 'false');
     var h = bd.scrollHeight;
     if (!animate) {
       sec.classList.toggle('open', open);
@@ -718,6 +725,10 @@
       bd.style.height = '0px';
       void bd.offsetHeight;          // 强制重排，让 0 生效
       bd.style.height = h + 'px';
+      /* 兜底：transitionend 未触发时也交回 auto，避免高度被写死 */
+      setTimeout(function () {
+        if (sec.classList.contains('open')) bd.style.height = '';
+      }, 520);
     } else {
       bd.style.height = h + 'px';
       void bd.offsetHeight;
@@ -726,12 +737,22 @@
     }
   }
 
+  /* 键盘可达：分组标题支持 Enter / 空格 */
+  document.getElementById('list').addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var kd = e.target.closest('.mgroup-hd');
+    if (!kd) return;
+    e.preventDefault();
+    kd.click();
+  });
+
   document.getElementById('list').addEventListener('click', function (e) {
     if (e.target.closest('[data-no-toggle]')) return;
     var hd = e.target.closest('.mgroup-hd');
     if (!hd) return;
     var sec = hd.parentNode;
-    setGroupOpen(sec, !sec.classList.contains('open'), true);
+    var willOpen = !sec.classList.contains('open');
+    setGroupOpen(sec, willOpen, true);
   });
 
   /* 过渡结束：展开态交回 auto，避免内容变化后被写死高度 */

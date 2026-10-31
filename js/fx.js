@@ -37,8 +37,8 @@
       cx += (tx - cx) * .06; cy += (ty - cy) * .06;
       for (var i = 0; i < orbs.length; i++) {
         var k = (i + 1) * 9;
-        orbs[i].style.marginLeft = (cx * k) + 'px';
-        orbs[i].style.marginTop = (cy * k) + 'px';
+        /* 用独立的 translate 属性：既不走重排，也不会覆盖关键帧里的 transform 漂移 */
+        orbs[i].style.translate = (cx * k).toFixed(2) + 'px ' + (cy * k).toFixed(2) + 'px';
       }
       if (Math.abs(tx - cx) > .002 || Math.abs(ty - cy) > .002) raf = requestAnimationFrame(step);
       else raf = 0;
@@ -186,24 +186,6 @@
     }
   };
 
-  /* ---------------- 6. 顶部滚动进度 ---------------- */
-  fx.scrollBar = function () {
-    if (document.querySelector('.fx-prog')) return;
-    var d = document.createElement('div');
-    d.className = 'fx-prog';
-    d.setAttribute('aria-hidden', 'true');
-    d.style.cssText = 'position:fixed;left:0;top:0;height:3px;z-index:99;width:0;pointer-events:none;' +
-      'background:linear-gradient(90deg,var(--brand),var(--teal),var(--violet));transition:width .12s linear';
-    document.body.appendChild(d);
-    function upd() {
-      var h = document.documentElement.scrollHeight - window.innerHeight;
-      d.style.width = (h > 0 ? Math.min(100, (window.scrollY / h) * 100) : 0) + '%';
-    }
-    window.addEventListener('scroll', upd, { passive: true });
-    window.addEventListener('resize', upd);
-    upd();
-  };
-
   /* ---------------- 7. 悬浮操作坞 ---------------- */
   fx.dock = function (items) {
     if (!items || !items.length || document.querySelector('.dock')) return;
@@ -313,41 +295,12 @@
   fx.init = function (opts) {
     opts = opts || {};
     fx.aurora();
-    fx.scrollBar();
     fx.ripple(document);
     fx.spotlight(document);
     fx.autoCount(document);
     fx.reveal(document);
     fx.tilt(document);
-    fx.toTop();
     if (opts.dock) fx.dock(opts.dock);
-  };
-
-  /** 返回顶部：滚动超过一屏后浮现 */
-  fx.toTop = function () {
-    if (document.querySelector('.to-top')) return;
-    var b = document.createElement('button');
-    b.className = 'to-top';
-    b.type = 'button';
-    b.setAttribute('aria-label', '返回顶部');
-    b.title = '返回顶部';
-    b.innerHTML = '↑';
-    b.addEventListener('click', function () {
-      try { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); }
-      catch (e) { window.scrollTo(0, 0); }
-    });
-    document.body.appendChild(b);
-
-    var shown = false;
-    function onScroll() {
-      var y = window.pageYOffset || document.documentElement.scrollTop || 0;
-      var want = y > (window.innerHeight || 600) * 0.9;
-      if (want === shown) return;
-      shown = want;
-      b.classList.toggle('on', shown);
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
   };
 
   /** 内容动态插入后调用，重新绑定特效 */
@@ -385,7 +338,7 @@
       var max = doc.scrollHeight - window.innerHeight;
       var y = window.scrollY || doc.scrollTop || 0;
       var ratio = max > 240 ? Math.min(1, y / max) : 0;
-      bar.style.width = (ratio * 100).toFixed(2) + '%';
+      bar.style.transform = 'scaleX(' + ratio.toFixed(4) + ')';
       bar.classList.toggle('on', max > 240 && y > 40);
       top.classList.toggle('on', y > 520);
     }

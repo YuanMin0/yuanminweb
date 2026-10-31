@@ -15,7 +15,7 @@
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 20px; overflow: hidden;
   box-shadow: 0 30px 90px rgba(0, 0, 0, .45);
-  animation: clRise .28s cubic-bezier(.2,.8,.3,1) both;
+  animation: clRise .28s var(--spring-fast) both;
 }
 @keyframes clRise { from { transform: translateY(16px) scale(.985) } to { transform: none } }
 @media (prefers-reduced-motion: reduce) {
@@ -37,7 +37,7 @@
   margin-left: auto; width: 30px; height: 30px; border-radius: 50%;
   border: 1px solid var(--border); background: var(--surface-2);
   color: var(--text-3); font-size: 13px; cursor: pointer;
-  transition: background .18s, color .18s, transform .18s;
+  transition: background .18s var(--spring-fast), color .18s var(--spring-fast), transform .22s var(--spring-fast);
 }
 .cl-x:hover { background: var(--surface-3); color: var(--text); transform: rotate(90deg); }
 
@@ -70,7 +70,7 @@
   font-size: 14px; line-height: 1.72; color: var(--text-2);
   background: var(--surface-2); border-radius: 10px;
   border-left: 2px solid transparent;
-  animation: clItem .34s cubic-bezier(.2,.8,.3,1) both;
+  animation: clItem .34s var(--spring-fast) both;
   animation-delay: calc(var(--i, 0) * 40ms);
 }
 @keyframes clItem { from { transform: translateY(6px) } to { transform: none } }

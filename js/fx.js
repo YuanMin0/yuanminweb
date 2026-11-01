@@ -284,13 +284,17 @@
       (function (el) {
         el.setAttribute('data-tilted', '1');
         var max = parseFloat(el.getAttribute('data-tilt')) || 6;
+        var rect = null;   /* 进入时量一次，移动中不再读布局 */
+        el.addEventListener('mouseenter', function () {
+          rect = el.getBoundingClientRect();
+        }, { passive: true });
         el.addEventListener('mousemove', function (e) {
-          var r = el.getBoundingClientRect();
-          var px = (e.clientX - r.left) / r.width - .5;
-          var py = (e.clientY - r.top) / r.height - .5;
+          if (!rect) rect = el.getBoundingClientRect();
+          var px = (e.clientX - rect.left) / rect.width - .5;
+          var py = (e.clientY - rect.top) / rect.height - .5;
           el.style.transform = 'perspective(900px) rotateY(' + (px * max) + 'deg) rotateX(' + (-py * max) + 'deg) translateY(-4px)';
         }, { passive: true });
-        el.addEventListener('mouseleave', function () { el.style.transform = ''; });
+        el.addEventListener('mouseleave', function () { rect = null; el.style.transform = ''; });
       })(els[i]);
     }
   };
@@ -354,24 +358,35 @@
     document.body.appendChild(bar);
     document.body.appendChild(top);
 
+    /* 可滚动高度缓存：scrollHeight 是布局读取，每帧读会强制同步布局。
+       改成内容尺寸变化时才量一次（ResizeObserver 事件驱动）。 */
+    var maxScroll = 0;
+    function measure() {
+      var doc = document.documentElement;
+      maxScroll = Math.max(0, doc.scrollHeight - window.innerHeight);
+    }
+    if ('ResizeObserver' in window) {
+      try { new ResizeObserver(measure).observe(document.body); } catch (e) {}
+    }
+    window.addEventListener('resize', function () { measure(); onScroll(); }, { passive: true });
+
     var raf = 0;
     function paint() {
       raf = 0;
-      var doc = document.documentElement;
-      var max = doc.scrollHeight - window.innerHeight;
-      var y = window.scrollY || doc.scrollTop || 0;
-      var ratio = max > 240 ? Math.min(1, y / max) : 0;
+      if (!maxScroll) measure();   /* 缓存还没建立时补量一次（只在极少数情况触发） */
+      var y = window.scrollY || document.documentElement.scrollTop || 0;
+      var ratio = maxScroll > 240 ? Math.min(1, y / maxScroll) : 0;
       bar.style.transform = 'scaleX(' + ratio.toFixed(4) + ')';
-      bar.classList.toggle('on', max > 240 && y > 40);
+      bar.classList.toggle('on', maxScroll > 240 && y > 40);
       top.classList.toggle('on', y > 520);
     }
     function onScroll() { if (!raf) raf = requestAnimationFrame(paint); }
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
     top.addEventListener('click', function () {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+    measure();
     paint();
   }
 

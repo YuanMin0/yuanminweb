@@ -559,9 +559,11 @@ mark.hl {
   position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 22px);
   background: var(--text); color: var(--bg); padding: 11px 20px; border-radius: var(--r-full);
   font-size: 13.5px; font-weight: 650; box-shadow: var(--shadow-lg); opacity: 0;
-  pointer-events: none; transition: .28s var(--ease); z-index: 999; max-width: 90vw; text-align: center;
+  pointer-events: none; z-index: 999; max-width: 90vw; text-align: center;
+  transition: opacity .26s var(--spring-fast), transform .34s var(--spring);
 }
-.toast.on { opacity: 1; transform: translate(-50%, 0); }
+.toast.on { opacity: 1; transform: translate(-50%, 0) scale(1); }
+.toast:not(.on) { transform: translate(-50%, 22px) scale(.96); }
 
 /* ---------- Footer ---------- */
 .ftr { border-top: 1px solid var(--border); padding: 46px 0 26px; margin-top: 64px; color: var(--text-3); font-size: 13px; }
@@ -665,7 +667,8 @@ mark.hl {
 /* ---------- Modal ---------- */
 .mask {
   position: fixed; inset: 0; background: rgba(8, 14, 26, .55); backdrop-filter: blur(4px);
-  z-index: 200; display: grid; place-items: center; padding: 22px; opacity: 0; pointer-events: none; transition: .2s var(--ease);
+  z-index: 200; display: grid; place-items: center; padding: 22px; opacity: 0; pointer-events: none;
+  transition: opacity .2s var(--spring-fast);
 }
 .mask.on { opacity: 1; pointer-events: auto; }
 .modal {
@@ -1283,7 +1286,7 @@ html[data-theme="dark"] .vz-kv { background: var(--surface-2); }
   body.nav-lock .hdr { z-index: 66; }
   .nav.open a { padding: 13px 14px; border-radius: 12px; font-size: 15.5px; }
   .nav.open a.on { background: var(--brand-soft); }
-  @keyframes navDrop { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+  @keyframes navDrop { from { opacity: .35; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
 
   .nav-scrim {
     position: fixed; inset: 0; z-index: 55; background: rgba(8, 14, 26, .38);
@@ -1388,7 +1391,10 @@ html[data-theme="dark"] .vz-kv { background: var(--surface-2); }
   .mask { padding: 14px; align-items: flex-end; }
   .modal { max-height: 88dvh; padding: 20px 18px; border-radius: var(--r-lg) var(--r-lg) 14px 14px; }
   .modal h3 { font-size: 17px; }
-  .toast { left: 14px; right: 14px; transform: none; bottom: calc(74px + env(safe-area-inset-bottom)); text-align: center; }
+  /* 窄屏用 left/right 定位，不能再带 translate(-50%)，否则会偏出屏幕一半 */
+  .toast { left: 14px; right: 14px; bottom: calc(74px + env(safe-area-inset-bottom)); text-align: center; }
+  .toast, .toast:not(.on) { transform: translateY(22px) scale(.96); }
+  .toast.on { transform: none; }
 }
 
 /* ---------- 18.9 性能降级：小屏减少模糊与视差开销 ---------- */

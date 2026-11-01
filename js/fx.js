@@ -99,11 +99,18 @@
     for (var i = 0; i < els.length; i++) {
       (function (el) {
         el.setAttribute('data-spot', '1');
-        el.addEventListener('mousemove', function (e) {
-          var r = el.getBoundingClientRect();
-          el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-          el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+        var rect = null;   /* 每次进入才量一次，避免每帧强制同步布局 */
+        function place(e) {
+          if (!rect) rect = el.getBoundingClientRect();
+          el.style.setProperty('--mx', (e.clientX - rect.left).toFixed(1) + 'px');
+          el.style.setProperty('--my', (e.clientY - rect.top).toFixed(1) + 'px');
+        }
+        el.addEventListener('mouseenter', function (e) {
+          rect = el.getBoundingClientRect();
+          place(e);
         }, { passive: true });
+        el.addEventListener('mousemove', place, { passive: true });
+        el.addEventListener('mouseleave', function () { rect = null; }, { passive: true });
       })(els[i]);
     }
   };
@@ -111,6 +118,10 @@
   /* ---------------- 4. 涟漪 ---------------- */
   fx.ripple = function (root) {
     root = root || document;
+    /* 多个页面会在 render 里再调一次 fx.init()，这里必须幂等，
+       否则 document 上会叠出多个 click 监听，一次点击冒出好几圈涟漪 */
+    if (root.__fxRipple) return;
+    root.__fxRipple = true;
     root.addEventListener('click', function (e) {
       if (reduce) return;
       var t = e.target.closest ? e.target.closest('.gbtn, .btn, .tab, .tile, .qdot') : null;
@@ -134,7 +145,8 @@
     var dur = opt.dur || 900, from = opt.from || 0, dec = opt.dec || 0, suf = opt.suffix || '';
     if (reduce) { el.textContent = to.toFixed(dec) + suf; return; }
     var t0 = 0, done = false;
-    function ease(t) { return 1 - Math.pow(1 - t, 3); }
+    /* expo-out：前段冲得快、后段稳稳落位，比三次方更像「数字自己停下来」 */
+    function ease(t) { return t >= 1 ? 1 : 1 - Math.pow(2, -10 * t); }
     function settle() {
       if (done) return;
       done = true;
@@ -213,7 +225,8 @@
       }, 2800);
     }
 
-    function onScroll() {
+    function apply() {
+      raf = 0;
       var y = window.scrollY, dy = y - lastY;
       lastY = y;
       var on = y > 260;
@@ -225,9 +238,19 @@
         if (acc > 90) { acc = 0; peek(); }
       }
     }
+
+    /* 滚动事件比帧还密，合并到每帧算一次，避免一帧内反复读写 class */
+    var raf = 0;
+    function onScroll() { if (!raf) raf = requestAnimationFrame(apply); }
     window.addEventListener('scroll', onScroll, { passive: true });
+
+    /* 只有指针真的进入底部热区、且坞是收起状态时才处理，
+       否则每次 mousemove 都会 clearTimeout 一次，纯属浪费 */
     document.addEventListener('mousemove', function (e) {
-      if (e.clientY > window.innerHeight - 130) { clearTimeout(peekT); show(); }
+      if (e.clientY < window.innerHeight - 130) return;
+      if (!d.classList.contains('hide') && d.classList.contains('on')) return;
+      clearTimeout(peekT);
+      show();
     }, { passive: true });
     d.addEventListener('mouseenter', function () { clearTimeout(peekT); show(); });
     d.addEventListener('focusin', function () { clearTimeout(peekT); show(); });

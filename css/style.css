@@ -30,9 +30,11 @@
   --cyan: #0891b2;
   --cyan-soft: #e0f6fb;
 
-  --ok: #12855f;
+  /* 反馈色加深一档：原 #12855f / #d92d3f 在各自的浅底色上只有 4.1:1，
+     低于 WCAG AA 的 4.5:1，答对/答错的提示文字读起来偏淡 */
+  --ok: #0f7350;
   --ok-soft: #e2f6ee;
-  --bad: #d92d3f;
+  --bad: #c01f31;
   --bad-soft: #ffeaed;
 
   --shadow-xs: 0 1px 2px rgba(15, 23, 42, .06);
@@ -883,15 +885,22 @@ html[data-theme="dark"] .dock { background: rgba(20, 28, 45, .72); box-shadow: 0
 .dock .gbtn:hover { background: var(--surface-3); transform: translateY(-2px); box-shadow: 0 8px 18px -8px rgba(15, 23, 42, .3); }
 html[data-theme="dark"] .dock .gbtn:hover { background: rgba(255, 255, 255, .1); }
 
-/* ---------- 3. 光斑跟随卡片 ---------- */
+/* ---------- 3. 光斑跟随卡片 ----------
+   旧写法把坐标塞进 radial-gradient 的 at 位置：每移动 1px 就要重绘整张卡片的渐变。
+   现在光斑是一个固定尺寸的圆，只用 transform 平移 —— 走合成层，不再重绘。 */
 .spot { position: relative; overflow: hidden; }
 .spot::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
-  background: radial-gradient(340px circle at var(--mx, 50%) var(--my, 50%),
-    color-mix(in srgb, var(--accent, var(--brand)) 20%, transparent), transparent 62%);
-  transition: opacity .32s var(--ease);
+  content: ""; position: absolute; left: 0; top: 0;
+  width: 640px; height: 640px; margin: -320px 0 0 -320px;
+  border-radius: 50%; pointer-events: none; opacity: 0;
+  background: radial-gradient(closest-side circle,
+    color-mix(in srgb, var(--accent, var(--brand)) 20%, transparent),
+    color-mix(in srgb, var(--accent, var(--brand)) 7%, transparent) 58%,
+    transparent 100%);
+  transform: translate3d(var(--mx, 50%), var(--my, 50%), 0);
+  transition: opacity .32s var(--spring-fast);
 }
-.spot:hover::before { opacity: 1; }
+.spot:hover::before { opacity: 1; will-change: transform; }
 .spot > * { position: relative; z-index: 1; }
 
 /* ---------- 4. 滚动揭示 ---------- */

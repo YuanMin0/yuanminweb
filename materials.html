@@ -207,6 +207,7 @@
     return m ? decodeURIComponent(m[1]) : '';
   })();
   var curCat = '', kw = '', curSem = '';
+  var PENDING = {};   /* gid → 当前筛选下要展示的文件，展开时才渲染 */
 
   var TYPE_META = {
     PDF:  { ico: '📕', cls: 'chip-bad' },
@@ -637,6 +638,7 @@
 
   function render() {
     var html = '', total = 0, shown = 0, ready = 0;
+    PENDING = {};
     GROUPS.forEach(function (g) {
       if (!groupInSem(g)) return;
       if (curSubj && curSubj !== g.id) return;
@@ -658,6 +660,10 @@
       var s = metaOf(g.id);
       var accent = s ? s.accent : 'var(--brand)';
       var icon = s ? s.icon : '📚';
+      /* 只登记，不渲染：1140 行一次性拼进 innerHTML 会让首屏 DOM 到 78 万字符，
+         展开某个分组时再按需生成它的行 */
+      PENDING[g.id] = files;
+
       html += '<section class="chapter mgroup rv spot" data-gid="' + g.id + '"' +
         ' style="margin-bottom:12px;--accent:' + accent + ';--accent-soft:' + (s && s.accentSoft ? s.accentSoft : 'var(--brand-soft)') + '">' +
         '<div class="chapter-hd mgroup-hd" role="button" tabindex="0" aria-expanded="false"' +
@@ -670,7 +676,7 @@
           (s ? '<a class="gbtn gbtn-sm" href="' + WB.link('subject.html', { s: g.id }) + '" data-no-toggle>进入科目 →</a>' : '') +
           '<span class="caret">▶</span>' +
         '</div>' +
-        '<div class="mgroup-bd"><div class="mgroup-in">' + files.map(function (f) { return fileRow(f, accent, g.id); }).join('') + '</div></div>' +
+        '<div class="mgroup-bd"><div class="mgroup-in"></div></div>' +
       '</section>';
     });
 
@@ -690,28 +696,46 @@
 
 
 
-    list.querySelectorAll('[data-prev]').forEach(function (b) {
+    WB.fx.refresh();
+  }
+
+  /* 按需生成某一组的文件行：只在第一次展开时做一次 */
+  function fillGroup(sec) {
+    var inner = sec.querySelector('.mgroup-in');
+    if (!inner || inner.getAttribute('data-filled') === '1') return;
+    var gid = sec.getAttribute('data-gid');
+    var files = PENDING[gid] || [];
+    var m = metaOf(gid);
+    var accent = m ? m.accent : 'var(--brand)';
+    inner.innerHTML = files.map(function (f) { return fileRow(f, accent, gid); }).join('');
+    inner.setAttribute('data-filled', '1');
+    bindRows(inner);
+  }
+
+  /* 行内按钮绑定（新生成的行也要绑） */
+  function bindRows(scope) {
+    scope.querySelectorAll('[data-prev]').forEach(function (b) {
       b.addEventListener('click', function () {
         openPreview(b.getAttribute('data-prev'), b.getAttribute('data-name'));
       });
     });
-    list.querySelectorAll('[data-dl]').forEach(function (b) {
+    scope.querySelectorAll('[data-dl]').forEach(function (b) {
       b.addEventListener('click', function () {
         download(b.getAttribute('data-dl'), b.getAttribute('data-name'));
       });
     });
-    list.querySelectorAll('[data-copy]').forEach(function (b) {
+    scope.querySelectorAll('[data-copy]').forEach(function (b) {
       b.addEventListener('click', function () {
         WB.copy(b.getAttribute('data-copy'), '路径已复制，粘贴到资源管理器地址栏即可打开');
       });
     });
-    WB.fx.refresh();
   }
 
   /* 分组折叠：先测高再补间，避免 auto 高度无法过渡 */
   function setGroupOpen(sec, open, animate) {
     var bd = sec.querySelector('.mgroup-bd');
     if (!bd) return;
+    if (open) fillGroup(sec);   /* 先有内容，再测高 */
     var hd0 = sec.querySelector('.mgroup-hd');
     if (hd0) hd0.setAttribute('aria-expanded', open ? 'true' : 'false');
     var h = bd.scrollHeight;
@@ -792,12 +816,13 @@
     var b = e.target.closest('button'); if (!b) return;
     this.querySelectorAll('button').forEach(function (x) { x.classList.remove('on'); });
     b.classList.add('on'); curCat = b.getAttribute('data-cat'); render();
+    pulse(document.getElementById('list'));
   });
   var tmr = null;
   document.getElementById('q').addEventListener('input', function () {
     clearTimeout(tmr);
     var v = this.value.trim().toLowerCase();
-    tmr = setTimeout(function () { kw = v; render(); }, 150);
+    tmr = setTimeout(function () { kw = v; render(); pulse(document.getElementById('list')); }, 150);
   });
 
   WB.fx.init();

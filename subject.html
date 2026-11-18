@@ -101,6 +101,9 @@
     WB.fx.init(); return;
   }
 
+  /* 外部链接型科目：直接跳转到独立 HTML 页面 */
+  if (s.ext) { location.href = s.ext; return; }
+
   document.title = s.name + ' · MediLearn';
   document.documentElement.style.setProperty('--accent', s.accent);
   document.documentElement.style.setProperty('--accent-soft', s.accentSoft);

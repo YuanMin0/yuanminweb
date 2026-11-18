@@ -130,11 +130,12 @@
 
   function card(s, i) {
     var pct = WB.store.subjectPct(s.id);
-    return '<a class="subj-card spot rv rv-d' + ((i % 3) + 1) + '" style="--accent:' + s.accent + ';--accent-soft:' + s.accentSoft + '" href="' + WB.link('subject.html', { s: s.id }) + '">' +
+    var href = s.ext ? s.ext : WB.link('subject.html', { s: s.id });
+    return '<a class="subj-card spot rv rv-d' + ((i % 3) + 1) + '" style="--accent:' + s.accent + ';--accent-soft:' + s.accentSoft + '" href="' + href + '">' +
       '<div class="subj-top">' +
         '<div class="subj-ico">' + s.icon + '</div>' +
         '<div style="min-width:0;flex:1">' +
-          '<div class="subj-name">' + WB.esc(s.name) + '</div>' +
+          '<div class="subj-name">' + WB.esc(s.name) + (s.tag ? '<span class="subj-tag">' + WB.esc(s.tag) + '</span>' : '') + '</div>' +
           '<div class="subj-en">' + WB.esc(s.en || '') + '</div>' +
         '</div>' + 
       '</div>' +
@@ -149,7 +150,7 @@
             : '<span class="chip chip-teal">资料型</span>' +
               '<span><b>' + (s.matCount || 0) + '</b> 份资料</span>') +
         '</div><div class="spacer"></div>' +
-        '<span class="chip chip-line">进入 →</span>' +
+        '<span class="chip chip-line">' + (s.ext ? '打开 →' : '进入 →') + '</span>' +
       '</div></a>';
   }
 

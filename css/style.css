@@ -308,6 +308,13 @@ mark.hl {
   background: var(--accent-soft, var(--brand-soft));
 }
 .subj-name { font-size: 18px; font-weight: 750; }
+/* 学科大类标注（如「预防医学」），跟在科目名后 */
+.subj-tag {
+  display: inline-block; margin-left: 7px; padding: 1px 7px;
+  border-radius: var(--r-full); vertical-align: 2px;
+  background: var(--teal-soft); color: var(--teal);
+  font-size: 11px; font-weight: 700; letter-spacing: .02em; white-space: nowrap;
+}
 .subj-en { font-size: 12px; color: var(--text-3); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; margin-top: 1px; }
 .subj-desc { font-size: 13.5px; color: var(--text-2); margin: 0 0 16px; min-height: 42px; }
 .subj-foot { display: flex; align-items: center; gap: 12px; padding-top: 14px; border-top: 1px solid var(--border); }

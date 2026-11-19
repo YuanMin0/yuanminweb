@@ -63,20 +63,6 @@ WB.register({
 });
 
 WB.register({
-  id: 'fenzi', matCount: 23, name: '分子生物学', en: 'Molecular Biology', icon: '🧬',
-  accent: 'var(--violet)', accentSoft: 'var(--violet-soft)', sem: 'daer1',
-  desc: '复制、转录、翻译与基因表达调控，配套 23 份课件与真题。',
-  matGroups: ['fenzi'], chapters: []
-});
-
-WB.register({
-  id: 'shenghua', matCount: 42, name: '生物化学', en: 'Biochemistry', icon: '⚡',
-  accent: 'var(--amber)', accentSoft: 'var(--amber-soft)', sem: 'daer1',
-  desc: '糖、脂、氨基酸代谢与生物氧化，配套 42 份课件与真题。',
-  matGroups: ['shenghua'], chapters: []
-});
-
-WB.register({
   id: 'shengli', matCount: 13, name: '生理学', en: 'Physiology', icon: '🫀',
   accent: 'var(--rose)', accentSoft: 'var(--rose-soft)', sem: 'daer1',
   desc: '细胞、血液、循环、呼吸、消化与神经系统的功能调节，配套 13 份资料。',
@@ -84,39 +70,10 @@ WB.register({
 });
 
 WB.register({
-  id: 'shensheng', matCount: 27, name: '神经生物学', en: 'Neurobiology', icon: '🧠',
-  accent: 'var(--violet)', accentSoft: 'var(--violet-soft)', sem: 'daer1',
-  desc: '学习记忆、情绪、睡眠与神经发育，配套 27 份课件。',
-  matGroups: ['shensheng'], chapters: []
-});
-
-WB.register({
-  id: 'shenjie', matCount: 30, name: '神经解剖学', en: 'Neuroanatomy', icon: '🕸️',
-  accent: 'var(--teal)', accentSoft: 'var(--teal-soft)', sem: 'daer1',
-  desc: '中枢与周围神经系统的结构与传导通路，配套 30 份图谱与课件。',
-  matGroups: ['shenjie'], chapters: []
-});
-
-WB.register({
   id: 'chuantong', matCount: 2, name: '中医学基础', en: 'Fundamentals of TCM', icon: '🌿',
   accent: 'var(--teal)', accentSoft: 'var(--teal-soft)', sem: 'daer2',
   desc: '阴阳五行、藏象与辨证思路，配套 2 份讲义。',
   matGroups: ['chuantong'], chapters: []
-});
-
-
-WB.register({
-  id: 'weishengwu', matCount: 66, name: '医学微生物学', en: 'Medical Microbiology', icon: '🦠',
-  accent: 'var(--cyan)', accentSoft: 'var(--cyan-soft)', sem: 'daer2',
-  desc: '细菌、病毒与真菌的生物学性状、致病与免疫，配套 66 份课件与真题。',
-  matGroups: ['weishengwu', 'weishengwu2'], chapters: []
-});
-
-WB.register({
-  id: 'wenxian', matCount: 19, name: '文献检索', en: 'Literature Retrieval', icon: '🔎',
-  accent: 'var(--brand)', accentSoft: 'var(--brand-soft)', sem: 'daer2',
-  desc: '中文数据库检索、检索式构建与文献管理，配套 19 份资料与习题。',
-  matGroups: ['wenxian'], chapters: []
 });
 
 /* ==========================================================================

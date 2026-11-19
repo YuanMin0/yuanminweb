@@ -104,12 +104,6 @@ WB.register({
   matGroups: ['chuantong'], chapters: []
 });
 
-WB.register({
-  id: 'jishengchong', matCount: 77, name: '人体寄生虫学', en: 'Human Parasitology', icon: '🪱',
-  accent: 'var(--amber)', accentSoft: 'var(--amber-soft)', sem: 'daer2',
-  desc: '线虫、吸虫、绦虫与原虫的形态、生活史与致病，配套 77 份课件与题库。',
-  matGroups: ['jishengchong'], chapters: []
-});
 
 WB.register({
   id: 'weishengwu', matCount: 66, name: '医学微生物学', en: 'Medical Microbiology', icon: '🦠',
@@ -131,7 +125,6 @@ WB.register({
    该科目以完整的自包含 HTML 页面呈现（知识点 + 题库 + 答案解析），
    不走 subject.html 动态渲染，通过 ext 字段直接跳转。
    ========================================================================== */
-
 
 /* ==========================================================================
    环境卫生学 — 知识点页 + 刷题页（双入口）

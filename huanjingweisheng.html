@@ -2,6 +2,9 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
+  <!-- 访问门禁：未登录直接跳转登录页（置于 head 内，避免内容闪现） -->
+  <script src="js/auth.js"></script>
+  <script>if(window.WB&&WB.auth)WB.auth.guard();</script>
   <meta name="theme-color" content="#211336">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="元泯">

@@ -2,6 +2,9 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+  <!-- 访问门禁：未登录直接跳转登录页（置于 head 内，避免内容闪现） -->
+  <script src="js/auth.js"></script>
+  <script>if(window.WB&&WB.auth)WB.auth.guard();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0B1B33">
 <title>环境卫生学 · 选择题刷题</title>

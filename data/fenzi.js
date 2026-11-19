@@ -60,11 +60,11 @@ WB.register({
               "stem": "DNA 复制中，后随链的合成特点是：",
               "options": [
                 "连续合成",
-                "形成冈崎片段",
                 "不需要引物",
+                "形成冈崎片段",
                 "由 RNA 聚合酶完成"
               ],
-              "answer": 1,
+              "answer": 2,
               "explain": "后随链随解旋分段合成冈崎片段，再连接成完整链。",
               "source": "《分子生物学》名解与大题（含答案）"
             },
@@ -72,9 +72,9 @@ WB.register({
               "type": "single",
               "stem": "遗传信息传递的中心法则中，转录是指：",
               "options": [
-                "DNA→DNA",
-                "DNA→RNA",
                 "RNA→蛋白质",
+                "DNA→RNA",
+                "DNA→DNA",
                 "RNA→DNA"
               ],
               "answer": 1,
@@ -125,12 +125,12 @@ WB.register({
               "type": "single",
               "stem": "转录过程中，与模板链 A 配对的是：",
               "options": [
-                "T",
                 "U",
                 "G",
+                "T",
                 "C"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "转录产物为 RNA，A 配 U。",
               "source": "《分子生物学》名解与大题（含答案）"
             },
@@ -138,12 +138,12 @@ WB.register({
               "type": "single",
               "stem": "蛋白质合成的场所是：",
               "options": [
-                "细胞核",
                 "核糖体",
+                "细胞核",
                 "线粒体",
                 "高尔基体"
               ],
-              "answer": 1,
+              "answer": 0,
               "explain": "翻译在核糖体上进行。",
               "source": "《分子生物学》名解与大题（含答案）"
             }
@@ -194,10 +194,10 @@ WB.register({
               "options": [
                 "退火",
                 "延伸",
-                "变性",
-                "终止"
+                "终止",
+                "变性"
               ],
-              "answer": 2,
+              "answer": 3,
               "explain": "变性阶段高温（94–95 ℃）使双链解开。",
               "source": "《分子生物学》名解与大题（含答案）"
             },
@@ -205,12 +205,12 @@ WB.register({
               "type": "single",
               "stem": "PCR 中常用的耐热 DNA 聚合酶是：",
               "options": [
-                "Klenow 片段",
-                "Taq 酶",
                 "逆转录酶",
-                "连接酶"
+                "Klenow 片段",
+                "连接酶",
+                "Taq 酶"
               ],
-              "answer": 1,
+              "answer": 3,
               "explain": "Taq 酶耐高温，是 PCR 的关键酶。",
               "source": "《分子生物学》名解与大题（含答案）"
             },
@@ -218,9 +218,9 @@ WB.register({
               "type": "multiple",
               "stem": "PCR 技术的应用包括：",
               "options": [
-                "病原体检测",
                 "基因突变分析",
                 "法医学鉴定",
+                "病原体检测",
                 "蛋白质纯化"
               ],
               "answer": [

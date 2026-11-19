@@ -288,9 +288,10 @@
     { href: 'subjects.html', label: '全部科目', key: 'subjects' },
     { href: 'materials.html', label: '资料汇总', key: 'materials' },
     { href: 'bank.html', label: '题库', key: 'bank' },
-    { href: 'drill.html', label: '刷题', key: 'drill' },
     { href: 'wrongbook.html', label: '错题本', key: 'wrong' },
-    { href: 'about.html', label: '关于', key: 'about' }
+    { href: 'about.html', label: '关于', key: 'about' },
+    /* 刷题放在最右，作为主行动按钮 */
+    { href: 'drill.html', label: '点击刷题', key: 'drill' }
   ];
   WB.mountChrome = function (active) {
     /* doc/<科目>/ 这类子目录页要回退两级，否则导航链接会 404 */

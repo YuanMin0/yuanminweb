@@ -178,25 +178,50 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 28px 0; }
 .nav a.on { background: var(--brand-soft); color: var(--brand-ink); font-weight: 650; }
 /* 导航里的「刷题」：漫画贴纸风，固定配色以在深浅主题下都醒目 */
 .nav a.nav-drill {
-  margin: 0 7px; padding: 5px 13px;
+  position: relative;
+  margin: 0 7px; padding: 10px 22px;
   background: linear-gradient(135deg, #F0FF0A, #DBF007);
-  color: #0B1220; border: 2px solid #0B1220; border-radius: 999px;
+  color: #0B1220; border: 3px solid #0B1220; border-radius: 999px;
   box-shadow: 3px 3px 0 rgba(11, 18, 32, .82);
-  font-weight: 900; font-size: 13.5px;
+  font-weight: 900; font-size: 15.5px; letter-spacing: .5px;
   transform: rotate(-2.5deg);
   transition: transform .18s var(--spring-fast), box-shadow .18s ease;
+  animation: drillGlow 2.2s ease-in-out infinite;
+}
+/* 光晕脉冲：外扩的黄绿光圈，持续吸引注意 */
+@keyframes drillGlow {
+  0%, 100% { box-shadow: 3px 3px 0 rgba(11, 18, 32, .82), 0 0 0 0 rgba(240, 255, 10, .70); }
+  50%      { box-shadow: 3px 3px 0 rgba(11, 18, 32, .82), 0 0 0 9px rgba(240, 255, 10, 0); }
+}
+/* 涟漪扩散：一圈描边由内向外淡出 */
+.nav a.nav-drill::after {
+  content: ''; position: absolute; inset: -3px; border-radius: 999px;
+  border: 2px solid rgba(240, 255, 10, .85); pointer-events: none;
+  animation: drillRing 2.2s ease-out infinite;
+}
+@keyframes drillRing {
+  0%   { transform: scale(1);    opacity: .85; }
+  70%  { transform: scale(1.30); opacity: 0; }
+  100% { transform: scale(1.30); opacity: 0; }
 }
 .nav a.nav-drill:hover {
   background: linear-gradient(135deg, #F0FF0A, #DBF007);
   color: #0B1220;
-  transform: rotate(-2.5deg) translate(-2px, -2px);
+  transform: rotate(-2.5deg) translate(-2px, -2px) scale(1.05);
   box-shadow: 5px 5px 0 rgba(11, 18, 32, .82);
+  animation-play-state: paused;
 }
-.nav a.nav-drill:active { transform: rotate(-2.5deg) translate(1px, 1px); box-shadow: 2px 2px 0 rgba(11, 18, 32, .82); }
+.nav a.nav-drill:hover::after { animation-play-state: paused; }
+.nav a.nav-drill:active { transform: rotate(-2.5deg) translate(1px, 1px) scale(1); box-shadow: 2px 2px 0 rgba(11, 18, 32, .82); }
 .nav a.nav-drill.on {
   background: linear-gradient(135deg, #F0FF0A, #DBF007);
   color: #0B1220;
   box-shadow: 3px 3px 0 rgba(11, 18, 32, .82), 0 0 0 3px rgba(240, 255, 10, .3);
+}
+/* 无障碍：用户偏好减少动效时关闭动画 */
+@media (prefers-reduced-motion: reduce) {
+  .nav a.nav-drill { animation: none; }
+  .nav a.nav-drill::after { display: none; }
 }
 .hdr-tools { margin-left: auto; display: flex; align-items: center; gap: 8px; }
 

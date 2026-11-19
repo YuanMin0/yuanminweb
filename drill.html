@@ -110,7 +110,7 @@ body::after{
 .st-ch{background:transparent; color:var(--ink); border-color:var(--ink); border-style:solid}
 /* 难度：难点最重，重点次之，基础最轻 */
 .st-lv-hard{background:var(--rose); color:#fff}
-.st-lv-key{background:var(--deep); color:var(--ocean)}
+.st-lv-key{background:var(--deep); color:#8FD8FF}
 .st-lv-base{background:rgba(11,18,32,.13); color:#2E3B4C; border-color:rgba(11,18,32,.45)}
 /* 考频：高频用琥珀色，避免与柠檬黄题卡同色 */
 .st-fq-high{background:var(--amber); color:var(--ink)}
@@ -257,6 +257,49 @@ body.mode-pick .wrap{padding-bottom:40px}
 .dr-title{font-size:17px}
 .fillwrap input{font-size:16px; padding:13px 15px}
 .dock .hint{font-size:13px}
+
+/* ── 主观题（名词解释 / 简答 / 论述） ── */
+.subj-hint{
+  margin:0 0 14px; padding:10px 14px; border-radius:10px;
+  background:rgba(11,18,32,.10); color:#2E3B4C; font:700 13.5px/1.6 var(--font);
+}
+.points{margin:0; padding:0; list-style:none; counter-reset:pt}
+.points li{
+  position:relative; padding:9px 0 9px 32px; font-size:15px; line-height:1.8;
+  border-bottom:1px dashed rgba(11,18,32,.14);
+}
+.points li:last-child{border-bottom:0}
+.points li::before{
+  counter-increment:pt; content:counter(pt); position:absolute; left:0; top:10px;
+  width:22px; height:22px; display:grid; place-items:center;
+  background:var(--ink); color:var(--lemon); border-radius:6px; font:900 11.5px var(--font);
+}
+.term-full{font-size:15px; line-height:1.85}
+.term-brief{
+  margin-top:12px; padding:12px 14px; border-radius:8px; font-size:14.5px; line-height:1.8;
+  background:rgba(30,155,255,.13); border-left:4px solid var(--ocean);
+}
+.brief-tag{
+  display:inline-block; margin-right:8px; padding:1px 8px; border-radius:999px; vertical-align:1px;
+  background:var(--ocean); color:#fff; font:900 11px var(--font);
+}
+.case-box{
+  margin-top:12px; padding:12px 14px; border-radius:8px; font-size:14.5px; line-height:1.8;
+  background:rgba(34,211,166,.16); border-left:4px solid var(--mint);
+}
+.case-tag{
+  display:inline-block; margin-right:8px; padding:1px 8px; border-radius:999px; vertical-align:1px;
+  background:var(--mint); color:#0B1220; font:900 11px var(--font);
+}
+.subj-note{
+  margin-top:12px; padding-top:10px; font-size:14px; line-height:1.8; color:#3A4A5E;
+  border-top:1px dashed rgba(11,18,32,.18);
+}
+.src-line{
+  margin-top:12px; padding-top:10px; font-size:12.5px; line-height:1.7; color:#5B6B80;
+  border-top:1px dashed rgba(11,18,32,.18); word-break:break-word;
+}
+.src-line a{color:var(--ocean); text-decoration:underline}
 
 @media (max-width:560px){
   .dock .hint{display:none}
@@ -455,6 +498,9 @@ body.mode-pick .wrap{padding-bottom:40px}
           var m = qm[flat++] || [];
           out.push({
             type: q.type, stem: q.stem, options: q.options, answer: q.answer, explain: q.explain,
+            /* 主观题与来源字段必须一并带出，否则渲染时拿不到 */
+            explainBrief: q.explainBrief, answerPoints: q.answerPoints,
+            caseText: q.caseText, source: q.source, sourceUrl: q.sourceUrl,
             freq: q.freq || m[1], level: q.level || m[0], years: q.years,
             uid: uidOf(s.id, k.id, i),
             subjectId: s.id, subjectName: s.name,
@@ -576,7 +622,8 @@ body.mode-pick .wrap{padding-bottom:40px}
   function save() {
     try {
       localStorage.setItem(KEY, JSON.stringify({
-        ans: st.ans, checked: st.checked, i: st.i, ch: st.ch, wrongOnly: st.wrongOnly, order: st.order
+        ans: st.ans, checked: st.checked, revealed: st.revealed,
+        i: st.i, ch: st.ch, wrongOnly: st.wrongOnly, order: st.order
       }));
     } catch (e) {}
   }
@@ -587,6 +634,7 @@ body.mode-pick .wrap{padding-bottom:40px}
   st.ch = st.ch || '';
   st.wrongOnly = !!st.wrongOnly;
   st.order = st.order || 'seq';
+  st.revealed = st.revealed || {};   /* 主观题是否已展开参考答案 */
 
   /* ---------------- 题池（受筛选影响） ---------------- */
   var pool = [];
@@ -655,12 +703,55 @@ body.mode-pick .wrap{padding-bottom:40px}
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
+  /* 来源行：所有解析底部统一标注 */
+  function srcLine(q) {
+    if (!q.source) return '';
+    var txt = WB.esc(q.source);
+    if (q.sourceUrl) {
+      txt = '<a href="' + WB.esc(q.sourceUrl) + '" target="_blank" rel="noopener">' + txt + '</a>';
+    }
+    return '<div class="src-line">来源：' + txt + '</div>';
+  }
+
+  /* 主观题参考答案 */
+  function subjBody(q) {
+    var out = '';
+    if (q.type === 'term') {
+      out += '<div class="term-full">' + (q.explain || '') + '</div>';
+      if (q.explainBrief) {
+        out += '<div class="term-brief"><span class="brief-tag">简化版</span>' + q.explainBrief + '</div>';
+      }
+    } else {
+      var pts = q.answerPoints || [];
+      if (pts.length) {
+        out += '<ol class="points">' + pts.map(function (p) {
+          return '<li>' + p + '</li>';
+        }).join('') + '</ol>';
+      } else if (q.explain) {
+        out += '<div>' + q.explain + '</div>';
+      }
+      if (q.caseText) {
+        out += '<div class="case-box"><span class="case-tag">案例</span>' + q.caseText + '</div>';
+      }
+      if (q.explain && pts.length) {
+        out += '<div class="subj-note">' + q.explain + '</div>';
+      }
+    }
+    return out;
+  }
+
   function answerText(q) {
     if (q.type === 'single') return 'ABCDEFGH'[q.answer] || String(q.answer);
     if (q.type === 'multiple') return (q.answer || []).map(function (i) { return 'ABCDEFGH'[i]; }).join('');
     if (q.type === 'judge') return q.answer ? '正确' : '错误';
     if (q.type === 'fill') return (q.answer || []).join(' / ');
     return '';
+  }
+
+  /* 主观题没有标准答案字母，用自评结果（true/false）判对错 */
+  function isRight(q, ans) {
+    if (WB.isSubjective(q.type)) return ans === true;
+    return WB.isCorrect(q, ans);
   }
 
   function render() {
@@ -684,7 +775,9 @@ body.mode-pick .wrap{padding-bottom:40px}
     var q = pool[st.i];
     var my = st.ans[q.uid];
     var checked = !!st.checked[q.uid];
-    var right = checked && WB.isCorrect(q, my);
+    var right = checked && isRight(q, my);
+    var subjective = WB.isSubjective(q.type);
+    var revealed = !!st.revealed[q.uid];
 
     /* 贴纸：来源 / 题型 / 章节（有 freq、level 时优先展示） */
     var sticks = '';
@@ -698,7 +791,9 @@ body.mode-pick .wrap{padding-bottom:40px}
     sticks += sticker('st-ch', clip(q.chapterTitle, 10), q._chFull);
 
     var body = '';
-    if (q.type === 'fill') {
+    if (subjective) {
+      body = '<p class="subj-hint">' + (revealed ? '对照参考答案，自评是否掌握：' : '先在心里默答，再展开参考答案对照。') + '</p>';
+    } else if (q.type === 'fill') {
       body = '<div class="fillwrap"><input id="fillInput" type="text" autocomplete="off" ' +
         'placeholder="输入答案，多个答案用 / 分隔" value="' + (my == null ? '' : esc4(my)) + '"' +
         (checked ? ' disabled' : '') + '></div>';
@@ -722,7 +817,12 @@ body.mode-pick .wrap{padding-bottom:40px}
     }
 
     var actions = '';
-    if (checked) {
+    if (subjective && !checked) {
+      actions = revealed
+        ? '<button class="btn" data-self="1" type="button">✓ 记住了</button>' +
+          '<button class="btn btn-ghost" data-self="0" type="button">✕ 没记住</button>'
+        : '<button class="btn" id="revealBtn" type="button">查看参考答案</button>';
+    } else if (checked) {
       actions = '<button class="btn" id="nextInline" type="button">下一题 →</button>';
     } else if (q.type === 'multiple') {
       actions = '<button class="btn" id="submitBtn" type="button">确认作答</button>';
@@ -731,12 +831,20 @@ body.mode-pick .wrap{padding-bottom:40px}
     }
 
     var expHtml = '';
-    if (checked) {
+    if (subjective) {
+      if (revealed) {
+        expHtml = '<div class="exp">' +
+          '<h4>参考答案</h4>' +
+          subjBody(q) + srcLine(q) +
+          '</div>';
+      }
+    } else if (checked) {
       expHtml = '<div class="exp">' +
         '<h4>解析</h4>' +
         '<span class="verdict ' + (right ? 'v-ok' : 'v-bad') + '">' + (right ? '✓ 答对了' : '✕ 答错了') + '</span>' +
         '<p class="ansline">正确答案：' + esc4(answerText(q)) + '</p>' +
         (q.explain ? '<div>' + q.explain + '</div>' : '<div style="color:#5B6B80">这道题暂无解析。</div>') +
+        srcLine(q) +
         '</div>';
     }
 
@@ -774,7 +882,7 @@ body.mode-pick .wrap{padding-bottom:40px}
     var ok = 0, bad = 0;
     base.forEach(function (q) {
       if (!st.checked[q.uid]) return;
-      if (WB.isCorrect(q, st.ans[q.uid])) ok++; else bad++;
+      if (isRight(q, st.ans[q.uid])) ok++; else bad++;
     });
     scoreEl.textContent = '✓ ' + ok + '　✕ ' + bad;
   }
@@ -820,6 +928,21 @@ body.mode-pick .wrap{padding-bottom:40px}
           /* 单选：选中即判分 */
           setTimeout(function () { check(); }, 120);
         }
+      });
+    });
+
+    var reveal = document.getElementById('revealBtn');
+    if (reveal) reveal.addEventListener('click', function () {
+      st.revealed[q.uid] = true;
+      save(); render();
+    });
+
+    stage.querySelectorAll('[data-self]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var ok = btn.getAttribute('data-self') === '1';
+        st.ans[q.uid] = ok;
+        st.checked[q.uid] = true;
+        save(); render();
       });
     });
 

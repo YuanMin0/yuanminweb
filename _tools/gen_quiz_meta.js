@@ -68,6 +68,9 @@ const BASE = { judge: 0, single: 1, fill: 2, multiple: 3 };
 
 function judgeLevel(q) {
   const stem = (q.stem || '').trim();
+  /* 主观题按题型定档：论述需综合运用与举例 → 难点；名词解释与简答 → 重点 */
+  if (q.type === 'essay') return '难点';
+  if (q.type === 'term' || q.type === 'short') return '重点';
   let sc = BASE[q.type] !== undefined ? BASE[q.type] : 1;
   const hi = HIGH.test(stem), ng = NEG.test(stem), mem = MEM.test(stem);
   if (hi) sc += 2;

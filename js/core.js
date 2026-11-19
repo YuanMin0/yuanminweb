@@ -726,8 +726,13 @@
     return false;
   };
   WB.typeLabel = function (t) {
-    return { single: '单选题', multiple: '多选题', judge: '判断题', fill: '填空题' }[t] || '题目';
+    return {
+      single: '单选题', multiple: '多选题', judge: '判断题', fill: '填空题',
+      term: '名词解释', short: '简答题', essay: '论述题'
+    }[t] || '题目';
   };
+  /* 主观题：无法自动判分，靠自评 */
+  WB.isSubjective = function (t) { return t === 'term' || t === 'short' || t === 'essay'; };
   /* 考频 / 重难点 / 年份 标记 → chip HTML
      q.freq  ∈ '高频' | '中频' | '低频'（也可直接写次数，如 '5 次'）
      q.level ∈ '重点' | '难点' | '易错'（可数组）

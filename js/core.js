@@ -131,6 +131,15 @@
     return page + (q.length ? '?' + q.join('&') : '');
   };
 
+  /* 科目「刷题」入口地址；返回空串表示该科目没有题目。
+     优先级：独立刷题页(extAlt) > 外部页内题库锚点 > 通用刷题页 */
+  WB.drillHref = function (s) {
+    if (!s) return '';
+    if (s.extAlt) return s.extAlt;
+    if (s.ext) return (s.chapters && s.chapters.length) ? '' : s.ext + '#question-bank';
+    return (s._count && s._count.quiz > 0) ? WB.link('drill.html', { s: s.id }) : '';
+  };
+
   /* ---------------- 工具 ---------------- */
   WB.esc = function (s) {
     return String(s == null ? '' : s)
@@ -274,6 +283,7 @@
     { href: 'subjects.html', label: '全部科目', key: 'subjects' },
     { href: 'materials.html', label: '资料汇总', key: 'materials' },
     { href: 'bank.html', label: '题库', key: 'bank' },
+    { href: 'drill.html', label: '刷题', key: 'drill' },
     { href: 'wrongbook.html', label: '错题本', key: 'wrong' },
     { href: 'about.html', label: '关于', key: 'about' }
   ];
@@ -284,7 +294,10 @@
     var hdr = document.querySelector('[data-hdr]');
     if (hdr) {
       var links = NAV.map(function (n) {
-        return '<a href="' + B + n.href + '"' + (n.key === active ? ' class="on"' : '') + '>' + n.label + '</a>';
+        var cls = [];
+        if (n.key === active) cls.push('on');
+        if (n.key === 'drill') cls.push('nav-drill');
+        return '<a href="' + B + n.href + '"' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') + '>' + n.label + '</a>';
       }).join('');
       hdr.innerHTML =
         '<div class="wrap hdr-in">' +
@@ -304,7 +317,7 @@
         var TABS = [
           { href: 'index.html', label: '总览', ico: '⌂', match: ['index'] },
           { href: 'subjects.html', label: '科目', ico: '▦', match: ['subjects', 'subject', 'knowledge'] },
-          { href: 'quiz.html', label: '刷题', ico: '✎', match: ['quiz'] },
+          { href: 'drill.html', label: '刷题', ico: '✎', match: ['drill'] },
           { href: 'wrongbook.html', label: '错题', ico: '✦', match: ['wrongbook'] },
           { href: 'materials.html', label: '资料', ico: '▤', match: ['materials'] }
         ];

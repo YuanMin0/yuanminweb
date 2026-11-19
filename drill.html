@@ -1,0 +1,995 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B1B33">
+<title>刷题 · MediLearn</title>
+<meta name="description" content="漫画风刷题：按章节分类，即时判分，错题自动收录。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='white'/%3E%3C/svg%3E">
+<script src="js/auth.js"></script>
+<script>if(window.WB&&WB.auth)WB.auth.guard();</script>
+<style>
+:root{
+  --lemon:#F0FF0A; --ocean:#1E9BFF; --ink:#0B1220; --deep:#0B1B33;
+  --deep-2:#123A6E; --cream:#FFFDF0; --lime-ink:#2A3A00;
+  --mint:#22D3A6; --rose:#FF3B6B; --amber:#FFB020;
+  --shadow:10px 10px 0 rgba(11,18,32,.9);
+  --shadow-sm:5px 5px 0 rgba(11,18,32,.9);
+  --font:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+html{overflow-x:hidden}
+body{
+  min-height:100vh; color:var(--ink); font-family:var(--font);
+  background:
+    radial-gradient(circle at 14% 8%, rgba(240,255,10,.20), transparent 42%),
+    radial-gradient(circle at 88% 78%, rgba(30,155,255,.42), transparent 48%),
+    linear-gradient(158deg,#08224B 0%,#12489E 46%,#1E9BFF 100%);
+  background-attachment:fixed;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:radial-gradient(rgba(240,255,10,.18) 1.3px, transparent 1.3px);
+  background-size:13px 13px; opacity:.42;
+}
+body::after{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.10;
+  background:repeating-linear-gradient(115deg, transparent 0 26px, rgba(255,255,255,.5) 26px 27px);
+}
+.wrap{position:relative; z-index:1; max-width:940px; margin:0 auto; padding:22px 18px 130px}
+
+/* ── 顶栏 ── */
+.top{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:16px}
+.logo{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 16px; background:var(--lemon); color:var(--ink);
+  border:3px solid var(--ink); border-radius:999px; box-shadow:var(--shadow-sm);
+  font-weight:900; font-size:15px; letter-spacing:.02em;
+}
+.logo .spark{color:var(--rose); font-size:16px}
+.top-right{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.pill{
+  display:inline-flex; align-items:center; gap:6px; padding:7px 12px;
+  background:var(--deep); color:var(--lemon); border:3px solid var(--ink);
+  border-radius:999px; box-shadow:var(--shadow-sm); font-weight:800; font-size:13px;
+}
+.pill b{color:#fff; font-size:14px; font-variant-numeric:tabular-nums}
+.pill-link{background:var(--cream); color:var(--ink); text-decoration:none; transition:transform .18s ease, box-shadow .18s ease}
+.pill-link:hover{transform:translate(-2px,-2px); box-shadow:8px 8px 0 rgba(11,18,32,.9)}
+.pill-link:active{transform:translate(1px,1px); box-shadow:2px 2px 0 rgba(11,18,32,.9)}
+
+/* ── 进度 ── */
+.progress{display:flex; align-items:center; gap:10px; margin-bottom:18px; padding:10px 14px;
+  background:rgba(11,27,51,.82); border:3px solid var(--ink); border-radius:14px; box-shadow:var(--shadow-sm)}
+.track{flex:1; height:14px; background:rgba(255,255,255,.14); border-radius:999px; overflow:hidden; border:2px solid rgba(11,18,32,.6)}
+.track i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--lemon),var(--mint)); border-radius:999px; transition:width .3s ease}
+.progress span{color:#DCE7F5; font-size:12.5px; font-weight:700; white-space:nowrap}
+
+/* ── 工具条 ── */
+.tools{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px}
+.tool{
+  padding:9px 15px; background:var(--deep); color:var(--lemon);
+  border:3px solid var(--ink); border-radius:999px; box-shadow:var(--shadow-sm);
+  font:800 13px var(--font); cursor:pointer; transition:transform .16s ease, box-shadow .16s ease, background .16s ease;
+}
+.tool:hover{transform:translate(-2px,-2px); box-shadow:8px 8px 0 rgba(11,18,32,.9)}
+.tool:active{transform:translate(1px,1px); box-shadow:2px 2px 0 rgba(11,18,32,.9)}
+.tool.on{background:var(--lemon); color:var(--ink)}
+.tool .badge{
+  display:inline-block; min-width:18px; margin-left:6px; padding:0 5px;
+  background:var(--rose); color:#fff; border-radius:999px; font-size:11px; line-height:18px; text-align:center;
+}
+
+/* ── 题卡 ── */
+.card{
+  position:relative; padding:24px 22px 20px; background:var(--lemon); color:var(--ink);
+  border:3px solid var(--ink); border-radius:18px; box-shadow:var(--shadow);
+}
+.card::after{
+  content:""; position:absolute; inset:0; pointer-events:none; border-radius:15px;
+  background:repeating-linear-gradient(115deg, transparent 0 22px, rgba(11,18,32,.045) 22px 23px);
+}
+.stickers{position:relative; z-index:1; display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px}
+.sticker{
+  position:relative; display:inline-block; padding:5px 12px 4px; overflow:hidden;
+  border:3px solid var(--ink); border-radius:7px;
+  font:900 12px/1.5 var(--font); letter-spacing:.03em;
+  transform:skewX(-10deg) rotate(-1.5deg);
+  box-shadow:3px 3px 0 rgba(11,18,32,.9);
+}
+.sticker > span{display:inline-block; transform:skewX(10deg) rotate(1.5deg)}
+.sticker::before{
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:.28;
+  background:repeating-linear-gradient(115deg, transparent 0 5px, rgba(255,255,255,.75) 5px 6px);
+}
+.st-src{background:var(--cream); color:var(--ink)}
+.st-type{background:var(--deep); color:var(--lemon)}
+/* 章节：描边胶囊，与实底贴纸区分开 */
+.st-ch{background:transparent; color:var(--ink); border-color:var(--ink); border-style:solid}
+/* 难度：难点最重，重点次之，基础最轻 */
+.st-lv-hard{background:var(--rose); color:#fff}
+.st-lv-key{background:var(--deep); color:var(--ocean)}
+.st-lv-base{background:rgba(11,18,32,.13); color:#2E3B4C; border-color:rgba(11,18,32,.45)}
+/* 考频：高频用琥珀色，避免与柠檬黄题卡同色 */
+.st-fq-high{background:var(--amber); color:var(--ink)}
+.st-fq-mid{background:var(--ocean); color:#fff}
+.st-ex{background:var(--cream); color:var(--ink); border-style:dashed}
+
+.stem{position:relative; z-index:1; margin:0 0 16px; font-size:17px; line-height:1.75; font-weight:800}
+.opts{position:relative; z-index:1; display:flex; flex-direction:column; gap:9px}
+.opt{
+  display:flex; gap:12px; align-items:flex-start; width:100%; text-align:left;
+  padding:13px 15px; background:var(--deep); color:#F2F6FF;
+  border:3px solid var(--ink); border-radius:12px; box-shadow:var(--shadow-sm);
+  font:700 14.5px/1.6 var(--font); cursor:pointer;
+  transition:transform .16s ease, box-shadow .16s ease, background .16s ease;
+}
+.opt:hover{transform:translate(-2px,-2px); box-shadow:7px 7px 0 rgba(11,18,32,.9)}
+.opt .k{
+  flex:0 0 auto; width:24px; height:24px; display:grid; place-items:center;
+  background:var(--lemon); color:var(--ink); border:2px solid var(--ink); border-radius:6px;
+  font:900 12px var(--font);
+}
+.opt.sel{background:var(--ocean); color:#fff}
+.opt.sel .k{background:#fff; color:var(--ink)}
+.opt.ok{background:var(--mint); color:var(--ink)}
+.opt.ok .k{background:var(--ink); color:var(--mint)}
+.opt.bad{background:var(--rose); color:#fff}
+.opt.bad .k{background:#fff; color:var(--rose)}
+.opt[disabled]{cursor:default}
+.opt[disabled]:hover{transform:none; box-shadow:var(--shadow-sm)}
+
+.fillwrap{position:relative; z-index:1; display:flex; gap:9px; flex-wrap:wrap}
+.fillwrap input{
+  flex:1; min-width:200px; padding:12px 14px; background:var(--cream); color:var(--ink);
+  border:3px solid var(--ink); border-radius:12px; box-shadow:var(--shadow-sm);
+  font:700 15px var(--font);
+}
+.fillwrap input:focus-visible{outline:3px solid var(--ocean); outline-offset:2px}
+
+.actions{position:relative; z-index:1; display:flex; gap:9px; flex-wrap:wrap; margin-top:16px}
+.btn{
+  padding:11px 22px; background:var(--ink); color:var(--lemon);
+  border:3px solid var(--ink); border-radius:999px; box-shadow:var(--shadow-sm);
+  font:900 14px var(--font); cursor:pointer; transition:transform .16s ease, box-shadow .16s ease;
+}
+.btn:hover{transform:translate(-2px,-2px); box-shadow:8px 8px 0 rgba(11,18,32,.9)}
+.btn:active{transform:translate(1px,1px); box-shadow:2px 2px 0 rgba(11,18,32,.9)}
+.btn-ghost{background:transparent; color:var(--ink); border-color:var(--ink)}
+.btn:disabled{opacity:.45; cursor:not-allowed; transform:none}
+
+/* 解析 */
+.exp{
+  position:relative; z-index:1; margin-top:16px; padding:15px 16px;
+  background:var(--cream); color:var(--ink);
+  border:3px solid var(--ink); border-radius:14px; box-shadow:var(--shadow-sm);
+  font-size:14px; line-height:1.8;
+}
+.exp h4{margin:0 0 8px; font-size:13px; letter-spacing:.06em; text-transform:uppercase; color:var(--ocean)}
+.exp .verdict{display:inline-block; margin-bottom:8px; padding:3px 10px; border-radius:999px; font-weight:900; font-size:12.5px; border:2px solid var(--ink)}
+.exp .v-ok{background:var(--mint)}
+.exp .v-bad{background:var(--rose); color:#fff}
+.exp b{color:var(--rose)}
+.exp code{background:#EDEBC8; padding:1px 5px; border-radius:4px; font-size:13px}
+.exp .ansline{margin:0 0 8px; font-weight:800}
+
+/* ── 底部导航 ── */
+.dock{
+  position:fixed; left:0; right:0; bottom:0; z-index:40;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  padding:12px 16px; background:rgba(8,18,36,.92);
+  border-top:3px solid var(--ink); backdrop-filter:blur(10px);
+}
+.dock .btn{min-width:104px; justify-content:center}
+/* 底部深色栏里，幽灵按钮需用浅色描边，否则墨色边与底色糊在一起 */
+.dock .btn-ghost{color:#CBD9EA; border-color:rgba(203,217,234,.55)}
+.dock .btn-ghost:hover{color:#fff; border-color:#fff; background:rgba(255,255,255,.08)}
+.dock .hint{color:#9FB4CE; font-size:12px; font-weight:700; padding:0 8px}
+/* ── 科目选择页 ── */
+body.mode-pick .progress,
+body.mode-pick .tools,
+body.mode-pick .dock{display:none}
+body.mode-pick .top-right .pill:not(.pill-link){display:none}
+body.mode-pick .wrap{padding-bottom:40px}
+.pick-head{margin:4px 0 22px}
+.pick-head h1{margin:0 0 7px; font-size:clamp(20px,3.4vw,29px); font-weight:900; color:#fff; letter-spacing:.02em}
+.pick-head p{margin:0; color:#A9C0DA; font-size:13.5px; font-weight:700}
+.grade{margin-bottom:24px}
+.grade-h{display:flex; align-items:baseline; gap:10px; margin:0 0 12px; flex-wrap:wrap}
+.grade-h b{
+  display:inline-block; padding:5px 13px; background:var(--lemon); color:var(--ink);
+  border:3px solid var(--ink); border-radius:8px; box-shadow:3px 3px 0 rgba(11,18,32,.9);
+  font:900 14px var(--font); transform:rotate(-1.5deg);
+}
+.grade-h span{color:#9FB4CE; font-size:12px; font-weight:700}
+.sg{display:grid; grid-template-columns:repeat(auto-fill,minmax(196px,1fr)); gap:12px}
+.scard{
+  position:relative; display:block; padding:14px 15px 13px; text-decoration:none;
+  background:var(--cream); color:var(--ink);
+  border:3px solid var(--ink); border-radius:14px; box-shadow:var(--shadow-sm);
+  transition:transform .16s ease, box-shadow .16s ease;
+}
+.scard:hover{transform:translate(-2px,-2px); box-shadow:8px 8px 0 rgba(11,18,32,.9)}
+.scard:active{transform:translate(1px,1px); box-shadow:2px 2px 0 rgba(11,18,32,.9)}
+.scard-t{font:900 14.5px/1.45 var(--font); margin-bottom:7px; word-break:break-word}
+.scard-tag{
+  display:inline-block; margin-left:6px; padding:1px 7px; vertical-align:1px;
+  background:var(--ocean); color:#fff; border-radius:999px; font-size:10px; font-weight:900;
+}
+.scard-m{display:flex; align-items:center; justify-content:space-between; gap:8px; color:#4A5A70; font:800 11.5px var(--font)}
+.scard-bar{height:7px; margin-top:8px; background:rgba(11,18,32,.14); border-radius:999px; overflow:hidden}
+.scard-bar i{display:block; height:100%; background:linear-gradient(90deg,var(--mint),var(--ocean)); border-radius:999px}
+
+/* ── 字号提升 ─────────────────────────────────────────────
+   依据 WCAG 2.2：正文基准不小于 16px；桌面正文推荐 16–18px，
+   中文正文不低于 12px。刷题场景按「题干 > 选项 > 辅助信息」分层：
+   题干 19px、选项 16px、解析 15.5px、贴纸与工具条 13–14px。 */
+.stem{font-size:19px; line-height:1.8}
+.opt{font-size:16px; line-height:1.65; padding:14px 16px}
+.opt .k{width:26px; height:26px; font-size:13px}
+.exp{font-size:15.5px; line-height:1.85}
+.exp h4{font-size:13.5px}
+.exp .verdict{font-size:13px}
+.sticker{font-size:13px; padding:8px 13px 7px; line-height:1.4}
+.logo{font-size:16px}
+.pill{font-size:14px; padding:8px 13px}
+.pill b{font-size:15px}
+.tool{font-size:14px; padding:10px 16px}
+.tool .badge{font-size:12px; min-width:19px}
+.btn{font-size:15px; padding:12px 24px}
+.progress span{font-size:13.5px}
+.pick-head h1{font-size:clamp(22px,3.6vw,32px)}
+.pick-head p{font-size:14.5px}
+.grade-h b{font-size:15px; padding:6px 14px}
+.grade-h span{font-size:13px}
+.scard{padding:16px 17px 15px}
+.scard-t{font-size:16px; line-height:1.5}
+.scard-m{font-size:12.5px}
+.scard-tag{font-size:10.5px}
+.chip{font-size:13px; padding:7px 12px}
+.grp-t{font-size:13.5px}
+.grp-n{font-size:12.5px}
+.gcell{font-size:13px}
+.legend{font-size:12.5px}
+.dr-title{font-size:17px}
+.fillwrap input{font-size:16px; padding:13px 15px}
+.dock .hint{font-size:13px}
+
+@media (max-width:560px){
+  .dock .hint{display:none}
+  .top{gap:8px; margin-bottom:12px}
+  .logo{font-size:14.5px; padding:7px 12px; border-width:2px}
+  .top-right{gap:6px}
+  .pill{padding:6px 10px; font-size:12.5px; border-width:2px; box-shadow:3px 3px 0 rgba(11,18,32,.9)}
+  .pill b{font-size:13.5px}
+  .sticker{font-size:12px; padding:7px 10px 6px; line-height:1.4; border-width:2px; box-shadow:2px 2px 0 rgba(11,18,32,.9)}
+  .card{padding:20px 15px 17px; border-radius:15px}
+  .stem{font-size:17px}
+  .opt{padding:12px 13px; font-size:15px; gap:9px}
+  .opt .k{width:23px; height:23px; font-size:12px}
+  .tools{gap:6px}
+  .tool{padding:8px 13px; font-size:13px; border-width:2px}
+  .sg{grid-template-columns:1fr 1fr; gap:9px}
+  .scard{padding:11px 12px 10px; border-width:2px; box-shadow:3px 3px 0 rgba(11,18,32,.9)}
+  .scard-t{
+    font-size:14px; line-height:1.42; margin-bottom:6px;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .scard-m{font-size:11.5px}
+  .scard-tag{font-size:9px; padding:0 5px}
+  .grade-h b{font-size:14px; padding:5px 12px; border-width:2px}
+  .pick-head h1{font-size:21px}
+}
+
+/* ── 选题抽屉 ── */
+.mask{position:fixed; inset:0; z-index:60; background:rgba(6,14,28,.72); display:none}
+.mask.on{display:block}
+.drawer{
+  position:fixed; top:0; right:0; bottom:0; z-index:70; width:min(462px,100vw);
+  display:flex; flex-direction:column; background:var(--deep);
+  border-left:3px solid var(--ink); box-shadow:-12px 0 0 rgba(11,18,32,.35);
+  transform:translateX(102%); transition:transform .28s cubic-bezier(.2,.9,.2,1);
+}
+.drawer.on{transform:none}
+.dr-head{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:16px 18px; border-bottom:3px solid rgba(240,255,10,.18)}
+.dr-title{color:var(--lemon); font:900 16px var(--font)}
+.dr-close{width:34px; height:34px; display:grid; place-items:center; background:var(--lemon); color:var(--ink); border:3px solid var(--ink); border-radius:10px; font:900 16px var(--font); cursor:pointer}
+.dr-body{flex:1; min-height:0; overflow:auto; padding:14px 16px 30px}
+.chbar{display:flex; gap:7px; flex-wrap:wrap; margin-bottom:16px}
+.chip{
+  padding:6px 11px; background:rgba(255,255,255,.08); color:#D8E6F7;
+  border:2px solid rgba(11,18,32,.85); border-radius:999px;
+  font:800 12px var(--font); cursor:pointer; white-space:nowrap;
+  max-width:100%; overflow:hidden; text-overflow:ellipsis;
+  transition:background .16s ease, color .16s ease;
+}
+.chip:hover{background:rgba(240,255,10,.2); color:#fff}
+.chip.on{background:var(--lemon); color:var(--ink)}
+.grp{margin-bottom:18px}
+.grp-h{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:8px}
+.grp-t{color:#CFE0F5; font:800 12.5px var(--font); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.grp-n{color:var(--lemon); font:800 11.5px var(--font); white-space:nowrap}
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(42px,1fr)); gap:7px}
+.gcell{
+  aspect-ratio:1; display:grid; place-items:center;
+  background:rgba(255,255,255,.10); color:#DCE9F9;
+  border:2px solid rgba(11,18,32,.9); border-radius:9px;
+  font:800 12px var(--font); cursor:pointer; font-variant-numeric:tabular-nums;
+  transition:transform .14s ease, background .14s ease;
+}
+.gcell:hover{transform:translate(-1px,-1px); background:rgba(240,255,10,.24); color:#fff}
+.gcell.ok{background:var(--mint); color:var(--ink)}
+.gcell.bad{background:var(--rose); color:#fff}
+.gcell.cur{outline:3px solid var(--lemon); outline-offset:1px}
+.legend{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:14px; color:#9FB4CE; font-size:11.5px; font-weight:700}
+.legend i{display:inline-block; width:11px; height:11px; margin-right:5px; border-radius:3px; border:2px solid rgba(11,18,32,.9); vertical-align:-1px}
+.lg-ok{background:var(--mint)} .lg-bad{background:var(--rose)} .lg-cur{background:transparent; border-color:var(--lemon)}
+.empty{color:#9FB4CE; text-align:center; padding:26px 10px; font-size:13.5px; line-height:1.9}
+.empty .btn{margin-top:12px}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important; animation:none!important}
+}
+@media print{ body{background:#fff} body::before,body::after,.dock,.drawer,.mask{display:none} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="logo"><span class="spark">✦</span> <span id="brand">刷题</span></div>
+    <div class="top-right">
+      <a class="pill pill-link" id="backLink" href="bank.html">← 返回</a>
+      <span class="pill">题号 <b id="pos">— / —</b></span>
+      <span class="pill">战绩 <b id="score">✓ 0　✕ 0</b></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="track"><i id="bar"></i></div>
+    <span id="progressText">已答 0 / 0</span>
+  </div>
+
+  <div class="tools">
+    <button class="tool" id="pickBtn" type="button">选题</button>
+    <button class="tool" id="orderBtn" type="button">顺序出题</button>
+    <button class="tool" id="wrongBtn" type="button">只刷错题<span class="badge" id="wrongCount">0</span></button>
+    <button class="tool" id="resetBtn" type="button">重置进度</button>
+  </div>
+
+  <div id="stage"></div>
+</div>
+
+<div class="dock">
+  <button class="btn btn-ghost" id="prevBtn" type="button">← 上一题</button>
+  <span class="hint" id="dockHint">点选项判分 · 键盘 ← → 翻页</span>
+  <button class="btn" id="nextBtn" type="button">下一题 →</button>
+</div>
+
+<div class="mask" id="mask"></div>
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="dr-head">
+    <span class="dr-title">选题</span>
+    <button class="dr-close" id="drClose" type="button" aria-label="关闭">✕</button>
+  </div>
+  <div class="dr-body">
+    <div class="chbar" id="chbar"></div>
+    <div class="legend">
+      <span><i class="lg-ok"></i>答对</span>
+      <span><i class="lg-bad"></i>答错</span>
+      <span><i class="lg-cur"></i>当前题</span>
+    </div>
+    <div id="gridWrap"></div>
+  </div>
+</div>
+
+<script src="js/core.js"></script>
+<script src="data/_meta.js"></script>
+<script src="data/xssx.js"></script>
+<script src="data/exam-xssx.js"></script>
+<script src="data/ethics.js"></script>
+<script src="data/exam-ethics.js"></script>
+<script src="data/bigdata.js"></script>
+<script src="data/exam-bigdata.js"></script>
+<script src="data/statistics.js"></script>
+<script src="data/exam-statistics.js"></script>
+<script src="data/pharmacology.js"></script>
+<script src="data/exam-pharmacology.js"></script>
+<script src="data/respiratory.js"></script>
+<script src="data/exam-respiratory.js"></script>
+<script src="data/cardiology.js"></script>
+<script src="data/exam-cardiology.js"></script>
+<script src="data/hematology.js"></script>
+<script src="data/exam-hematology.js"></script>
+<script src="data/endocrinology.js"></script>
+<script src="data/exam-endocrinology.js"></script>
+<script src="data/diagnostics.js"></script>
+<script src="data/exam-diagnostics.js"></script>
+<script src="data/surgery.js"></script>
+<script src="data/exam-surgery.js"></script>
+<script src="data/surgery-nursing.js"></script>
+<script src="data/internal-nursing.js"></script>
+<script src="data/organ3.js"></script>
+<script src="data/health-stats.js"></script>
+<script src="data/pathophys.js"></script>
+<script src="data/pathology.js"></script>
+<script src="data/hangwei.js"></script>
+<script src="data/hangxin.js"></script>
+<script src="data/digestive.js"></script>
+<script src="data/infectious.js"></script>
+<script src="data/neurology.js"></script>
+<script src="data/ophthalmology.js"></script>
+<script src="data/dermatology.js"></script>
+<script src="data/ent.js"></script>
+<script src="data/pediatrics.js"></script>
+<script src="data/extra-subjects.js"></script>
+<script src="data/quiz-meta.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var sid = WB.qs('s');
+  var subject = sid ? WB.getSubject(sid) : null;
+  var single = !!subject;
+
+  /* ---------------- 收集题目 ---------------- */
+  function uidOf(s, k, i) { return s + '|' + k + '|' + i; }
+
+  var base = [];   /* 原始顺序的全量题池 */
+  function collect(s) {
+    var out = [];
+    /* 难度/考频标注：按科目扁平顺序对齐；长度不符则整体忽略，避免错位 */
+    var qm = (window.QUIZ_META || {})[s.id] || [];
+    var total = 0;
+    (s.chapters || []).forEach(function (ch) {
+      (ch.knowledge || []).forEach(function (k) { total += (k.quiz || []).length; });
+    });
+    if (qm.length !== total) qm = [];
+    var flat = 0;
+
+    (s.chapters || []).forEach(function (ch) {
+      (ch.knowledge || []).forEach(function (k) {
+        (k.quiz || []).forEach(function (q, i) {
+          var m = qm[flat++] || [];
+          out.push({
+            type: q.type, stem: q.stem, options: q.options, answer: q.answer, explain: q.explain,
+            freq: q.freq || m[1], level: q.level || m[0], years: q.years,
+            uid: uidOf(s.id, k.id, i),
+            subjectId: s.id, subjectName: s.name,
+            chapterTitle: ch.title, kTitle: k.title,
+            _exam: !!ch._exam
+          });
+        });
+      });
+    });
+    return out;
+  }
+
+  /* ---------------- 科目选择页（按年级分组） ---------------- */
+  function hasPool(s) {
+    return (s.chapters || []).some(function (c) {
+      return (c.knowledge || []).some(function (k) { return (k.quiz || []).length; });
+    });
+  }
+
+  function doneOf(sid) {
+    try {
+      var d = JSON.parse(localStorage.getItem('medilearn.drill.v2|' + sid) || '{}');
+      var c = d.checked || {}, n = 0;
+      for (var k in c) if (c[k]) n++;
+      return n;
+    } catch (e) { return 0; }
+  }
+
+  function renderPicker() {
+    document.body.classList.add('mode-pick');
+    document.title = '刷题 · MediLearn';
+
+    var brand = document.getElementById('brand');
+    if (brand) brand.textContent = '刷题';
+    var back = document.getElementById('backLink');
+    if (back) { back.href = 'bank.html'; back.textContent = '← 返回题库'; }
+    var pos = document.getElementById('pos');
+    if (pos) pos.textContent = '— / —';
+    var pt = document.getElementById('progressText');
+    if (pt) pt.textContent = '请先选择科目';
+
+    var subs = WB.subjects().filter(function (s) {
+      return s._count && s._count.quiz > 0;
+    });
+
+    var groups = {}, order = [];
+    (WB.CATS || []).forEach(function (c) {
+      if (c.id !== 'all') order.push({ id: c.id, name: c.name });
+    });
+    subs.forEach(function (s) {
+      var g = s.sem || 'other';
+      if (!groups[g]) groups[g] = [];
+      groups[g].push(s);
+    });
+    /* 兜底：sem 不在 CATS 里的归到「其他」 */
+    Object.keys(groups).forEach(function (g) {
+      if (!order.some(function (o) { return o.id === g; })) order.push({ id: g, name: '其他' });
+    });
+
+    var html = '<div class="pick-head"><h1>选一个科目开始</h1>' +
+      '<p>按年级分类 · 共 ' + subs.length + ' 个科目有题目</p></div>';
+
+    order.forEach(function (cat) {
+      var list = groups[cat.id];
+      if (!list || !list.length) return;
+      list = list.slice().sort(function (a, b) { return (a.order || 99) - (b.order || 99); });
+      var totalQ = 0;
+      list.forEach(function (s) { totalQ += s._count.quiz; });
+
+      html += '<section class="grade"><h2 class="grade-h"><b>' + WB.esc(cat.name) + '</b>' +
+        '<span>' + list.length + ' 科 · ' + totalQ + ' 题</span></h2><div class="sg">';
+
+      list.forEach(function (s) {
+        var href = WB.drillHref(s);
+        if (!href) return;
+        var pool = hasPool(s);
+        var done = pool ? doneOf(s.id) : 0;
+        var pct = (pool && s._count.quiz) ? Math.min(100, Math.round(done / s._count.quiz * 100)) : 0;
+        html += '<a class="scard" href="' + href + '">' +
+          '<div class="scard-t">' + WB.esc(s.name) +
+            (pool ? '' : '<span class="scard-tag">独立页</span>') + '</div>' +
+          '<div class="scard-m"><span>' + s._count.quiz + ' 题</span>' +
+            '<span>' + (pool ? (done ? '已答 ' + done + ' · ' + pct + '%' : '未开始') : '—') + '</span></div>' +
+          '<div class="scard-bar"><i style="width:' + pct + '%"></i></div>' +
+          '</a>';
+      });
+
+      html += '</div></section>';
+    });
+
+    document.getElementById('stage').innerHTML = html;
+  }
+
+  if (single) {
+    base = collect(subject);
+  } else {
+    /* 无科目参数：先按年级选科目，不加载全量题池 */
+    renderPicker();
+    return;
+  }
+
+  if (!base.length) {
+    document.getElementById('stage').innerHTML =
+      '<div class="card"><p class="stem" style="margin:0">这个科目还没有题目。</p></div>';
+    document.getElementById('pos').textContent = '— / —';
+    document.getElementById('progressText').textContent = '暂无题目';
+    return;
+  }
+
+  /* ---------------- 状态 ---------------- */
+  var KEY = 'medilearn.drill.v2|' + (single ? subject.id : 'all');
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { return {}; }
+  }
+  function save() {
+    try {
+      localStorage.setItem(KEY, JSON.stringify({
+        ans: st.ans, checked: st.checked, i: st.i, ch: st.ch, wrongOnly: st.wrongOnly, order: st.order
+      }));
+    } catch (e) {}
+  }
+  var st = load();
+  st.ans = st.ans || {};
+  st.checked = st.checked || {};
+  st.i = st.i || 0;
+  st.ch = st.ch || '';
+  st.wrongOnly = !!st.wrongOnly;
+  st.order = st.order || 'seq';
+
+  /* ---------------- 题池（受筛选影响） ---------------- */
+  var pool = [];
+
+  function rebuild() {
+    var list = base.slice();
+    if (st.order === 'rand') {
+      /* 稳定打乱：以 uid 的哈希为种子，保证刷新后顺序不变 */
+      list.sort(function (a, b) {
+        function h(x) { var n = 0; for (var i = 0; i < x.length; i++) n = (n * 31 + x.charCodeAt(i)) >>> 0; return n; }
+        return h(a.uid) - h(b.uid);
+      });
+    }
+    if (st.ch) list = list.filter(function (q) { return q._chKey === st.ch; });
+    if (st.wrongOnly) {
+      var w = WB.store.wrong();
+      list = list.filter(function (q) { return !!w[q.uid]; });
+    }
+    pool = list;
+    if (st.i >= pool.length) st.i = Math.max(0, pool.length - 1);
+    if (st.i < 0) st.i = 0;
+  }
+
+  /* 分组 key：单科按章节，全科按科目（否则 151 个章节会把抽屉撑爆） */
+  base.forEach(function (q) {
+    q._chKey = single ? q.chapterTitle : q.subjectName;
+    q._chFull = single ? q.chapterTitle : (q.subjectName + ' · ' + q.chapterTitle);
+  });
+
+  /* ---------------- 渲染 ---------------- */
+  var stage = document.getElementById('stage');
+  var posEl = document.getElementById('pos');
+  var scoreEl = document.getElementById('score');
+  var barEl = document.getElementById('bar');
+  var ptextEl = document.getElementById('progressText');
+  var wrongCountEl = document.getElementById('wrongCount');
+  var orderBtn = document.getElementById('orderBtn');
+  var wrongBtn = document.getElementById('wrongBtn');
+  var brandEl = document.getElementById('brand');
+  var backLink = document.getElementById('backLink');
+
+  brandEl.textContent = single ? (subject.name + ' · 刷题') : '全科刷题';
+  document.title = (single ? subject.name : '全科') + ' 刷题 · MediLearn';
+  backLink.href = single ? ('subject.html?s=' + encodeURIComponent(subject.id)) : 'bank.html';
+  backLink.textContent = single ? '← 返回科目' : '← 返回题库';
+
+  function sticker(cls, text, title) {
+    return '<span class="sticker ' + cls + '"' + (title ? ' title="' + WB.esc(title) + '"' : '') + '><span>' + WB.esc(text) + '</span></span>';
+  }
+
+  function clip(s, n) { return s.length > n ? s.slice(0, n) + '…' : s; }
+
+  function lvCls(v) { return v === '难点' ? 'hard' : (v === '重点' ? 'key' : 'base'); }
+  function fqCls(v) { return v === '高频' ? 'high' : 'mid'; }
+  function lvHint(v) {
+    return v === '难点' ? '多选 / 高阶认知（分析·鉴别·诊断）/ 否定式 / 长题干'
+      : (v === '重点' ? '需理解或应用，非纯识记' : '识记类，题型较易');
+  }
+  function fqHint(v) {
+    return v === '高频' ? '往年真题精析中出现' : '本科目有真题数据，此题未直接命中';
+  }
+
+  function typeText(t) { return WB.typeLabel(t); }
+
+  function esc4(s) {
+    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function answerText(q) {
+    if (q.type === 'single') return 'ABCDEFGH'[q.answer] || String(q.answer);
+    if (q.type === 'multiple') return (q.answer || []).map(function (i) { return 'ABCDEFGH'[i]; }).join('');
+    if (q.type === 'judge') return q.answer ? '正确' : '错误';
+    if (q.type === 'fill') return (q.answer || []).join(' / ');
+    return '';
+  }
+
+  function render() {
+    rebuild();
+
+    if (!pool.length) {
+      stage.innerHTML = '<div class="card"><p class="stem" style="margin:0 0 14px">这里没有题。</p>' +
+        '<p style="margin:0;font-weight:700;font-size:14px">当前筛选下没有可练的题目，可能都答对了或该讲暂无题。</p>' +
+        '<div class="actions"><button class="btn" id="toAll" type="button">回到全部题目</button></div></div>';
+      posEl.textContent = '— / —';
+      ptextEl.textContent = '没有可练的题';
+      barEl.style.width = '0%';
+      var b = document.getElementById('toAll');
+      if (b) b.addEventListener('click', function () {
+        st.ch = ''; st.wrongOnly = false; st.i = 0; save(); renderAll();
+      });
+      updateTools();
+      return;
+    }
+
+    var q = pool[st.i];
+    var my = st.ans[q.uid];
+    var checked = !!st.checked[q.uid];
+    var right = checked && WB.isCorrect(q, my);
+
+    /* 贴纸：来源 / 题型 / 章节（有 freq、level 时优先展示） */
+    var sticks = '';
+    sticks += sticker('st-src', q._exam ? '往年真题' : '题库原题');
+    sticks += sticker('st-type', typeText(q.type));
+    if (q.level) {
+      var lv = Array.isArray(q.level) ? q.level.join(' · ') : q.level;
+      sticks += sticker('st-lv st-lv-' + lvCls(lv), lv, lvHint(lv));
+    }
+    if (q.freq) sticks += sticker('st-freq st-fq-' + fqCls(q.freq), q.freq, fqHint(q.freq));
+    sticks += sticker('st-ch', clip(q.chapterTitle, 10), q._chFull);
+
+    var body = '';
+    if (q.type === 'fill') {
+      body = '<div class="fillwrap"><input id="fillInput" type="text" autocomplete="off" ' +
+        'placeholder="输入答案，多个答案用 / 分隔" value="' + (my == null ? '' : esc4(my)) + '"' +
+        (checked ? ' disabled' : '') + '></div>';
+    } else if (q.type === 'judge') {
+      body = '<div class="opts">' +
+        judgeOpt(q, my, checked, true) + judgeOpt(q, my, checked, false) + '</div>';
+    } else {
+      body = '<div class="opts">' + (q.options || []).map(function (o, idx) {
+        var cls = 'opt';
+        if (checked) {
+          var isAns = q.type === 'multiple' ? (q.answer || []).indexOf(idx) > -1 : idx === q.answer;
+          var isMine = q.type === 'multiple' ? (Array.isArray(my) && my.indexOf(idx) > -1) : idx === my;
+          if (isAns) cls += ' ok';
+          else if (isMine) cls += ' bad';
+        } else if (q.type === 'multiple' ? (Array.isArray(my) && my.indexOf(idx) > -1) : idx === my) {
+          cls += ' sel';
+        }
+        return '<button class="' + cls + '" type="button" data-i="' + idx + '"' + (checked ? ' disabled' : '') + '>' +
+          '<span class="k">' + 'ABCDEFGH'[idx] + '</span><span>' + WB.esc(o) + '</span></button>';
+      }).join('') + '</div>';
+    }
+
+    var actions = '';
+    if (checked) {
+      actions = '<button class="btn" id="nextInline" type="button">下一题 →</button>';
+    } else if (q.type === 'multiple') {
+      actions = '<button class="btn" id="submitBtn" type="button">确认作答</button>';
+    } else if (q.type === 'fill') {
+      actions = '<button class="btn" id="submitBtn" type="button">确认作答</button>';
+    }
+
+    var expHtml = '';
+    if (checked) {
+      expHtml = '<div class="exp">' +
+        '<h4>解析</h4>' +
+        '<span class="verdict ' + (right ? 'v-ok' : 'v-bad') + '">' + (right ? '✓ 答对了' : '✕ 答错了') + '</span>' +
+        '<p class="ansline">正确答案：' + esc4(answerText(q)) + '</p>' +
+        (q.explain ? '<div>' + q.explain + '</div>' : '<div style="color:#5B6B80">这道题暂无解析。</div>') +
+        '</div>';
+    }
+
+    stage.innerHTML = '<div class="card">' +
+      '<div class="stickers">' + sticks + '</div>' +
+      '<h1 class="stem">' + esc4(q.stem) + '</h1>' +
+      body + actions + expHtml +
+      '</div>';
+
+    posEl.textContent = WB.pad(st.i + 1) + ' / ' + WB.pad(pool.length);
+    ptextEl.textContent = '已答 ' + answeredCount() + ' / ' + pool.length + (st.ch ? ' · ' + st.ch : '');
+    barEl.style.width = (pool.length ? Math.round(answeredCount() / pool.length * 100) : 0) + '%';
+    updateScore();
+    updateTools();
+    bind();
+  }
+
+  function judgeOpt(q, my, checked, val) {
+    var cls = 'opt';
+    if (checked) {
+      if (q.answer === val) cls += ' ok';
+      else if (my === val) cls += ' bad';
+    } else if (my === val) cls += ' sel';
+    return '<button class="' + cls + '" type="button" data-v="' + val + '"' + (checked ? ' disabled' : '') + '>' +
+      '<span class="k">' + (val ? 'T' : 'F') + '</span><span>' + (val ? '正确' : '错误') + '</span></button>';
+  }
+
+  function answeredCount() {
+    var n = 0;
+    pool.forEach(function (q) { if (st.checked[q.uid]) n++; });
+    return n;
+  }
+
+  function updateScore() {
+    var ok = 0, bad = 0;
+    base.forEach(function (q) {
+      if (!st.checked[q.uid]) return;
+      if (WB.isCorrect(q, st.ans[q.uid])) ok++; else bad++;
+    });
+    scoreEl.textContent = '✓ ' + ok + '　✕ ' + bad;
+  }
+
+  function updateTools() {
+    orderBtn.textContent = st.order === 'rand' ? '随机出题' : '顺序出题';
+    orderBtn.classList.toggle('on', st.order === 'rand');
+    wrongBtn.classList.toggle('on', st.wrongOnly);
+    var w = WB.store.wrong();
+    var n = base.filter(function (q) { return !!w[q.uid]; }).length;
+    wrongCountEl.textContent = n;
+  }
+
+  /* ---------------- 交互 ---------------- */
+  function pick(i) {
+    if (st.checked[pool[st.i].uid] === undefined) { /* noop */ }
+    st.ans[pool[st.i].uid] = i;
+    save();
+    render();
+  }
+
+  function bind() {
+    var q = pool[st.i];
+
+    stage.querySelectorAll('.opt').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (st.checked[q.uid]) return;
+        if (q.type === 'judge') {
+          st.ans[q.uid] = btn.getAttribute('data-v') === 'true';
+          save(); render();
+          return;
+        }
+        var idx = +btn.getAttribute('data-i');
+        if (q.type === 'multiple') {
+          var arr = Array.isArray(st.ans[q.uid]) ? st.ans[q.uid].slice() : [];
+          var at = arr.indexOf(idx);
+          if (at > -1) arr.splice(at, 1); else arr.push(idx);
+          st.ans[q.uid] = arr;
+          save(); render();
+        } else {
+          st.ans[q.uid] = idx;
+          save(); render();
+          /* 单选：选中即判分 */
+          setTimeout(function () { check(); }, 120);
+        }
+      });
+    });
+
+    var submit = document.getElementById('submitBtn');
+    if (submit) submit.addEventListener('click', function () {
+      if (q.type === 'fill') {
+        var inp = document.getElementById('fillInput');
+        st.ans[q.uid] = inp ? inp.value : '';
+      }
+      check();
+    });
+
+    var nx = document.getElementById('nextInline');
+    if (nx) nx.addEventListener('click', function () { go(1); });
+
+    var inp = document.getElementById('fillInput');
+    if (inp) inp.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); st.ans[q.uid] = inp.value; check(); }
+    });
+  }
+
+  function check() {
+    var q = pool[st.i];
+    var my = st.ans[q.uid];
+    if (q.type === 'multiple' && (!Array.isArray(my) || !my.length)) return;
+    if (q.type === 'fill' && !String(my == null ? '' : my).trim()) return;
+    if (my === undefined) return;
+    st.checked[q.uid] = true;
+    if (!WB.isCorrect(q, my)) {
+      WB.store.addWrong({
+        uid: q.uid, subjectId: q.subjectId, subjectName: q.subjectName,
+        kid: q.uid, kTitle: q.kTitle, chapterTitle: q.chapterTitle,
+        stem: q.stem, type: q.type, options: q.options || null,
+        answer: q.answer, explain: q.explain || '', myAnswer: my
+      });
+    }
+    save(); render();
+  }
+
+  function go(d) {
+    rebuild();
+    if (!pool.length) return;
+    st.i = (st.i + d + pool.length) % pool.length;
+    save(); render();
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', function () { go(-1); });
+  document.getElementById('nextBtn').addEventListener('click', function () { go(1); });
+
+  orderBtn.addEventListener('click', function () {
+    st.order = st.order === 'rand' ? 'seq' : 'rand';
+    st.i = 0; save(); render();
+  });
+
+  wrongBtn.addEventListener('click', function () {
+    st.wrongOnly = !st.wrongOnly;
+    st.i = 0; save(); render();
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function () {
+    if (!confirm('清空本科目的刷题进度与已判记录？（错题本不受影响）')) return;
+    st.ans = {}; st.checked = {}; st.i = 0; save(); render();
+  });
+
+  /* 抽屉 */
+  var drawer = document.getElementById('drawer');
+  var mask = document.getElementById('mask');
+  var chbar = document.getElementById('chbar');
+  var gridWrap = document.getElementById('gridWrap');
+
+  function openDrawer() {
+    renderDrawer();
+    drawer.classList.add('on'); mask.classList.add('on');
+    drawer.setAttribute('aria-hidden', 'false');
+  }
+  function closeDrawer() {
+    drawer.classList.remove('on'); mask.classList.remove('on');
+    drawer.setAttribute('aria-hidden', 'true');
+  }
+  document.getElementById('pickBtn').addEventListener('click', openDrawer);
+  document.getElementById('drClose').addEventListener('click', closeDrawer);
+  mask.addEventListener('click', closeDrawer);
+
+  function chList() {
+    var seen = {}, out = [];
+    base.forEach(function (q) {
+      if (seen[q._chKey]) return;
+      seen[q._chKey] = 1; out.push(q._chKey);
+    });
+    return out;
+  }
+
+  function renderDrawer() {
+    var chs = chList();
+    var counts = {};
+    base.forEach(function (q) { counts[q._chKey] = (counts[q._chKey] || 0) + 1; });
+
+    chbar.innerHTML = '<button class="chip' + (st.ch ? '' : ' on') + '" type="button" data-ch="">全部 ' + base.length + '</button>' +
+      chs.map(function (c) {
+        return '<button class="chip' + (st.ch === c ? ' on' : '') + '" type="button" data-ch="' + WB.esc(c) + '" title="' + WB.esc(c) + ' · ' + counts[c] + ' 题">' +
+          WB.esc(shortCh(c)) + '</button>';
+      }).join('');
+
+    /* 题号网格按章节分组（用当前顺序下的序号） */
+    var ordered = base.slice();
+    if (st.order === 'rand') {
+      ordered.sort(function (a, b) {
+        function h(x) { var n = 0; for (var i = 0; i < x.length; i++) n = (n * 31 + x.charCodeAt(i)) >>> 0; return n; }
+        return h(a.uid) - h(b.uid);
+      });
+    }
+    var groups = [], map = {};
+    ordered.forEach(function (q, idx) {
+      if (!map[q._chKey]) { map[q._chKey] = { key: q._chKey, items: [] }; groups.push(map[q._chKey]); }
+      map[q._chKey].items.push({ q: q, n: idx });
+    });
+
+    var curUid = pool.length ? pool[st.i].uid : '';
+    gridWrap.innerHTML = groups.map(function (g) {
+      var done = g.items.filter(function (it) { return st.checked[it.q.uid]; }).length;
+      var cells = g.items.map(function (it) {
+        var cls = 'gcell';
+        if (st.checked[it.q.uid]) cls += WB.isCorrect(it.q, st.ans[it.q.uid]) ? ' ok' : ' bad';
+        if (it.q.uid === curUid) cls += ' cur';
+        return '<button class="' + cls + '" type="button" data-uid="' + it.q.uid + '" data-n="' + it.n + '">' + WB.pad(it.n + 1) + '</button>';
+      }).join('');
+      return '<div class="grp"><div class="grp-h"><span class="grp-t" title="' + WB.esc(g.key) + '">' + WB.esc(g.key) + '</span>' +
+        '<span class="grp-n">' + done + '/' + g.items.length + '</span></div><div class="grid">' + cells + '</div></div>';
+    }).join('');
+
+    chbar.querySelectorAll('.chip').forEach(function (b) {
+      b.addEventListener('click', function () {
+        st.ch = b.getAttribute('data-ch'); st.i = 0; save(); render(); renderDrawer();
+      });
+    });
+    gridWrap.querySelectorAll('.gcell').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var uid = b.getAttribute('data-uid');
+        /* 若目标题不在当前筛选范围内，自动把范围切到它所属章节 */
+        var target = base.filter(function (q) { return q.uid === uid; })[0];
+        if (!target) return;
+        var inPool = pool.some(function (q) { return q.uid === uid; });
+        if (!inPool) {
+          if (st.wrongOnly && !WB.store.wrong()[uid]) st.wrongOnly = false;
+          st.ch = target._chKey;
+          save(); render();
+          rebuild();
+        }
+        var at = -1;
+        pool.forEach(function (q, i) { if (q.uid === uid) at = i; });
+        if (at > -1) { st.i = at; save(); render(); }
+        closeDrawer();
+      });
+    });
+  }
+
+  function shortCh(s) {
+    return s.length > 10 ? s.slice(0, 9) + '…' : s;
+  }
+
+  /* 键盘 */
+  document.addEventListener('keydown', function (e) {
+    if (e.target && /^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
+    if (drawer.classList.contains('on')) {
+      if (e.key === 'Escape') closeDrawer();
+      return;
+    }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
+  });
+
+  function renderAll() { render(); }
+
+  renderAll();
+})();
+</script>
+</body>
+</html>

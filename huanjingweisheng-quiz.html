@@ -43,16 +43,16 @@ body::after{
   display:inline-flex; align-items:center; gap:8px;
   padding:8px 14px; background:var(--lemon); border:3px solid var(--ink);
   border-radius:12px; box-shadow:var(--shadow-sm); transform:rotate(-1.2deg);
-  font-weight:900; font-size:15px; letter-spacing:.04em;
+  font-weight:900; font-size:16.5px; letter-spacing:.04em;
 }
 .logo .spark{font-size:17px; line-height:1}
 .top-right{margin-left:auto; display:flex; gap:8px; flex-wrap:wrap}
 .pill{
   display:inline-flex; align-items:center; gap:6px; padding:7px 12px;
   background:var(--deep); color:var(--lemon); border:3px solid var(--ink);
-  border-radius:999px; box-shadow:var(--shadow-sm); font-weight:800; font-size:13px;
+  border-radius:999px; box-shadow:var(--shadow-sm); font-weight:800; font-size:14px;
 }
-.pill b{color:#fff; font-size:14px}
+.pill b{color:#fff; font-size:15px}
 
 /* ── 进度 ── */
 .progress{
@@ -62,7 +62,7 @@ body::after{
 }
 .track{flex:1; height:12px; background:#061225; border-radius:999px; overflow:hidden; border:2px solid #061225}
 .track i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--lemon),#C8FF3D); transition:width .35s ease}
-.progress span{color:var(--lemon); font-weight:900; font-size:13px; letter-spacing:.05em; white-space:nowrap}
+.progress span{color:var(--lemon); font-weight:900; font-size:14px; letter-spacing:.05em; white-space:nowrap}
 
 /* ── 题卡 ── */
 .card{
@@ -78,11 +78,11 @@ body::after{
 .chips{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px}
 .chip{
   padding:4px 11px; background:var(--ink); color:var(--lemon); border-radius:8px;
-  font-size:12px; font-weight:800; letter-spacing:.06em;
+  font-size:13px; font-weight:800; letter-spacing:.06em;
 }
 .chip.ghost{background:transparent; color:var(--ink); border:2.5px solid var(--ink)}
 .stem{
-  margin:0 0 18px; font-size:20px; line-height:1.6; font-weight:900; letter-spacing:.01em;
+  margin:0 0 18px; font-size:22px; line-height:1.62; font-weight:900; letter-spacing:.01em;
 }
 .stem b{color:#B3005C; background:linear-gradient(transparent 62%, rgba(30,155,255,.45) 62%)}
 
@@ -93,7 +93,7 @@ body::after{
   border:2.5px solid var(--ink); border-radius:3px;
   transform:skewX(-10deg) rotate(-1.4deg);
   box-shadow:3px 3px 0 rgba(11,18,32,.85);
-  font:900 12px/1 inherit; letter-spacing:.1em; overflow:hidden;
+  font:900 13px/1.45 inherit; letter-spacing:.1em; overflow:hidden;
 }
 .tag i{display:inline-block; font-style:normal; transform:skewX(10deg) rotate(1.4deg)}
 .tag::after{
@@ -117,7 +117,7 @@ body::after{
   display:flex; align-items:flex-start; gap:12px; width:100%; text-align:left;
   padding:14px 16px; background:var(--deep); color:#F6FFC0;
   border:3px solid var(--ink); border-radius:14px; box-shadow:var(--shadow-sm);
-  font:800 16px/1.5 inherit; cursor:pointer;
+  font:800 17px/1.55 inherit; cursor:pointer;
   transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
 }
 .opt:hover:not(.locked){transform:translate(-2px,-2px); box-shadow:8px 8px 0 rgba(11,18,32,.9); background:var(--deep-2)}
@@ -153,13 +153,13 @@ body::after{
 }
 .bubble h4{
   margin:0 0 8px; display:inline-block; padding:3px 10px; background:var(--lemon);
-  color:var(--ink); border:2.5px solid var(--ink); border-radius:8px; font-size:12.5px; letter-spacing:.08em;
+  color:var(--ink); border:2.5px solid var(--ink); border-radius:8px; font-size:13.5px; letter-spacing:.08em;
 }
-.bubble p{margin:8px 0; font-size:15px; line-height:1.75; color:#EAF7A8}
+.bubble p{margin:9px 0; font-size:16px; line-height:1.75; color:#EAF7A8}
 .bubble p b, .bubble p strong{color:var(--lemon)}
 .verdict{
   display:flex; align-items:center; gap:10px; margin-bottom:10px;
-  font-weight:900; font-size:16px;
+  font-weight:900; font-size:17px;
 }
 .verdict .tag{
   padding:3px 12px; border:3px solid var(--ink); border-radius:999px;
@@ -175,7 +175,7 @@ body::after{
 .dock-in{max-width:940px; margin:0 auto; display:flex; gap:10px; align-items:center; flex-wrap:wrap}
 .btn{
   padding:13px 20px; border:3px solid var(--ink); border-radius:14px; cursor:pointer;
-  font:900 15px/1 inherit; letter-spacing:.03em; box-shadow:var(--shadow-sm);
+  font:900 16px/1 inherit; letter-spacing:.03em; box-shadow:var(--shadow-sm);
   transition:transform .12s ease, box-shadow .12s ease;
 }
 .btn:active{transform:translate(3px,3px); box-shadow:2px 2px 0 rgba(11,18,32,.9)}
@@ -184,7 +184,7 @@ body::after{
 .btn-ghost{background:var(--deep); color:var(--lemon)}
 .btn:disabled{opacity:.4; cursor:not-allowed; box-shadow:none}
 .dock .grow{flex:1}
-.hint{color:#BFE3FF; font-size:12px; font-weight:700; letter-spacing:.03em}
+.hint{color:#BFE3FF; font-size:13px; font-weight:700; letter-spacing:.03em}
 
 /* ── 顶部工具 ── */
 .tools{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px}

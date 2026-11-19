@@ -150,7 +150,10 @@
             : '<span class="chip chip-teal">资料型</span>' +
               '<span><b>' + (s.matCount || 0) + '</b> 份资料</span>') +
         '</div><div class="spacer"></div>' +
-        (s.extAlt ? '<span class="chip chip-quiz" role="link" tabindex="0" data-alt="' + s.extAlt + '" aria-label="' + WB.esc(s.name) + ' 刷题">刷题</span>' : '') +
+        (function () {
+          var dh = WB.drillHref(s);
+          return dh ? '<span class="chip chip-quiz" role="link" tabindex="0" data-alt="' + dh + '" aria-label="' + WB.esc(s.name) + ' 刷题"><span class="chip-quiz-i" aria-hidden="true">✎</span>刷题</span>' : '';
+        })() +
         '<span class="chip chip-line">' + (s.ext ? '打开 →' : '进入 →') + '</span>' +
       '</div></a>';
   }

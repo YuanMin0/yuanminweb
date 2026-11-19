@@ -176,6 +176,28 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 28px 0; }
 }
 .nav a:hover { background: var(--surface-3); color: var(--text); text-decoration: none; }
 .nav a.on { background: var(--brand-soft); color: var(--brand-ink); font-weight: 650; }
+/* 导航里的「刷题」：漫画贴纸风，固定配色以在深浅主题下都醒目 */
+.nav a.nav-drill {
+  margin: 0 7px; padding: 5px 13px;
+  background: linear-gradient(135deg, #F0FF0A, #DBF007);
+  color: #0B1220; border: 2px solid #0B1220; border-radius: 999px;
+  box-shadow: 3px 3px 0 rgba(11, 18, 32, .82);
+  font-weight: 900; font-size: 13.5px;
+  transform: rotate(-2.5deg);
+  transition: transform .18s var(--spring-fast), box-shadow .18s ease;
+}
+.nav a.nav-drill:hover {
+  background: linear-gradient(135deg, #F0FF0A, #DBF007);
+  color: #0B1220;
+  transform: rotate(-2.5deg) translate(-2px, -2px);
+  box-shadow: 5px 5px 0 rgba(11, 18, 32, .82);
+}
+.nav a.nav-drill:active { transform: rotate(-2.5deg) translate(1px, 1px); box-shadow: 2px 2px 0 rgba(11, 18, 32, .82); }
+.nav a.nav-drill.on {
+  background: linear-gradient(135deg, #F0FF0A, #DBF007);
+  color: #0B1220;
+  box-shadow: 3px 3px 0 rgba(11, 18, 32, .82), 0 0 0 3px rgba(240, 255, 10, .3);
+}
 .hdr-tools { margin-left: auto; display: flex; align-items: center; gap: 8px; }
 
 .icon-btn {
@@ -220,10 +242,19 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 28px 0; }
 .chip-ok { background: var(--ok-soft); color: var(--ok); }
 .chip-bad { background: var(--bad-soft); color: var(--bad); }
 .chip-line { background: transparent; border-color: var(--border-2); color: var(--text-3); }
-/* 卡片内的次入口（如「刷题」）：可点击，视觉上比主按钮轻 */
-.chip-quiz { background: var(--teal-soft); color: var(--teal); cursor: pointer; user-select: none; }
-.chip-quiz:hover { background: var(--teal); color: #fff; }
-.chip-quiz:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+/* 卡片内的次入口（如「刷题」）：实底渐变 + 投影，比主按钮更抓眼 */
+.chip-quiz {
+  background: linear-gradient(135deg, var(--teal), var(--cyan));
+  color: #fff; font-weight: 800;
+  cursor: pointer; user-select: none;
+  border-color: transparent;
+  box-shadow: 0 2px 10px -2px rgba(13, 148, 136, .55);
+  transition: transform .18s var(--spring-fast), box-shadow .2s ease, filter .18s ease;
+}
+.chip-quiz:hover { filter: brightness(1.08); transform: translateY(-1px); box-shadow: 0 5px 16px -3px rgba(13, 148, 136, .7); }
+.chip-quiz:active { transform: translateY(0) scale(.97); }
+.chip-quiz:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+.chip-quiz-i { font-size: 11px; margin-right: 1px; }
 .subj-foot .chip + .chip { margin-left: -5px; }
 /* 考频 / 重难点标记 */
 .chip-hot { background: var(--bad-soft); color: var(--bad); border-color: color-mix(in srgb, var(--bad) 26%, transparent); }

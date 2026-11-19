@@ -131,12 +131,15 @@
     return page + (q.length ? '?' + q.join('&') : '');
   };
 
-  /* 科目「刷题」入口地址；返回空串表示该科目没有题目。
-     优先级：独立刷题页(extAlt) > 外部页内题库锚点 > 通用刷题页 */
+  /* 科目「刷题」入口地址；返回空串表示该科目没有可用的刷题入口。
+     - extAlt：独立刷题页，体验与 drill 一致，直接跳转
+     - ext：外部文档页（如劳动卫生学），题在文档里、没有逐题判分交互，
+            不提供「刷题」入口，避免点了却不是题目
+     - 其余：通用刷题页 drill.html?s=科目id */
   WB.drillHref = function (s) {
     if (!s) return '';
     if (s.extAlt) return s.extAlt;
-    if (s.ext) return (s.chapters && s.chapters.length) ? '' : s.ext + '#question-bank';
+    if (s.ext) return '';
     return (s._count && s._count.quiz > 0) ? WB.link('drill.html', { s: s.id }) : '';
   };
 

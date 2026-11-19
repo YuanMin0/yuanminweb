@@ -2826,6 +2826,18 @@ main p, main li, main td, main th, main dd, main dt,
   function unlock(){
     others.forEach(function(el){ if('inert' in el){ el.inert = false; } });
     root.classList.remove('entry-locked');
+    /* 从刷题页带锚点跳进来时，解锁后直接定位到题库，避免只看到封面 */
+    var __h = location.hash.slice(1);
+    if (__h) {
+      var __jump = function () {
+        var t = document.getElementById(__h);
+        if (!t) { return; }
+        var y = t.getBoundingClientRect().top + (window.scrollY || document.documentElement.scrollTop) - 8;
+        window.scrollTo({ top: y, behavior: 'auto' });
+      };
+      /* 图片与字体加载会改变高度，多次补位 */
+      [150, 600, 1400].forEach(function (ms) { setTimeout(__jump, ms); });
+    }
   }
 
   function enter(ev){
@@ -2938,5 +2950,43 @@ main p, main li, main td, main th, main dd, main dt,
 })();
 </script>
 
+<script>
+/* 带锚点进入时（例如从刷题页点「刷题」跳来）：跳过入口遮罩并直接定位到目标区块。
+   本页是 html{overflow:hidden} 的锁定布局，未解锁前任何滚动都不会生效。 */
+(function () {
+  var h = location.hash.slice(1);
+  if (!h) { return; }
+
+  function openGate() {
+    document.documentElement.classList.remove('entry-locked');
+    var gate = document.getElementById('entryGate');
+    if (gate && gate.parentNode) { gate.parentNode.removeChild(gate); }
+    var all = document.querySelectorAll('[inert]');
+    for (var i = 0; i < all.length; i++) {
+      all[i].inert = false;
+      all[i].removeAttribute('inert');
+    }
+  }
+
+  function jump() {
+    var t = document.getElementById(h);
+    if (!t) { return; }
+    var y = t.getBoundingClientRect().top + (window.scrollY || document.documentElement.scrollTop) - 8;
+    window.scrollTo({ top: y, behavior: 'auto' });
+  }
+
+  function boot() {
+    openGate();
+    [60, 300, 800, 1500].forEach(function (ms) { setTimeout(jump, ms); });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+  window.addEventListener('load', boot);
+})();
+</script>
 </body>
 </html>

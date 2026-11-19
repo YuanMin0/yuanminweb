@@ -2061,5 +2061,19 @@ main p, main li, main td, main th, main dd, main dt,
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !zoom.hidden) close(); });
   })();
   </script>
+<script>
+/* 锚点补偿：页面体积大、图片加载后高度会变化，首次 scrollIntoView 常落空。
+   这里在 load 之后与稍后各补一次，确保 #question-bank 之类的外链锚点能到位。 */
+(function () {
+  function jump() {
+    var h = location.hash.slice(1);
+    if (!h) return;
+    var el = document.getElementById(h);
+    if (el) el.scrollIntoView({ block: 'start' });
+  }
+  window.addEventListener('load', function () { setTimeout(jump, 60); });
+  setTimeout(jump, 600);
+})();
+</script>
 </body>
 </html>

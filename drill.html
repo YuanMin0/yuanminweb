@@ -218,6 +218,7 @@ body.mode-pick .wrap{padding-bottom:40px}
   display:inline-block; margin-left:6px; padding:1px 7px; vertical-align:1px;
   background:var(--ocean); color:#fff; border-radius:999px; font-size:10px; font-weight:900;
 }
+.scard-tag-doc{background:#7C8BA1}
 .scard-m{display:flex; align-items:center; justify-content:space-between; gap:8px; color:#4A5A70; font:800 11.5px var(--font)}
 .scard-bar{height:7px; margin-top:8px; background:rgba(11,18,32,.14); border-radius:999px; overflow:hidden}
 .scard-bar i{display:block; height:100%; background:linear-gradient(90deg,var(--mint),var(--ocean)); border-radius:999px}
@@ -528,13 +529,17 @@ body.mode-pick .wrap{padding-bottom:40px}
 
       list.forEach(function (s) {
         var href = WB.drillHref(s);
-        if (!href) return;
+        /* 没有刷题入口但有外部文档页（如劳动卫生学）：仍列出，标「文档页」，
+           避免用户以为它消失了，也不会误点成刷题 */
+        var isDoc = !href && !!s.ext;
+        if (!href && !isDoc) return;
+        var link = href || s.ext;
         var pool = hasPool(s);
         var done = pool ? doneOf(s.id) : 0;
         var pct = (pool && s._count.quiz) ? Math.min(100, Math.round(done / s._count.quiz * 100)) : 0;
-        html += '<a class="scard" href="' + href + '">' +
+        html += '<a class="scard" href="' + link + '">' +
           '<div class="scard-t">' + WB.esc(s.name) +
-            (pool ? '' : '<span class="scard-tag">独立页</span>') + '</div>' +
+            (isDoc ? '<span class="scard-tag scard-tag-doc">文档页</span>' : (pool ? '' : '<span class="scard-tag">独立页</span>')) + '</div>' +
           '<div class="scard-m"><span>' + s._count.quiz + ' 题</span>' +
             '<span>' + (pool ? (done ? '已答 ' + done + ' · ' + pct + '%' : '未开始') : '—') + '</span></div>' +
           '<div class="scard-bar"><i style="width:' + pct + '%"></i></div>' +

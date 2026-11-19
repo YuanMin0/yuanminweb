@@ -177,8 +177,25 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 28px 0; }
 .nav a:hover { background: var(--surface-3); color: var(--text); text-decoration: none; }
 .nav a.on { background: var(--brand-soft); color: var(--brand-ink); font-weight: 650; }
 /* 导航里的「刷题」：漫画贴纸风，固定配色以在深浅主题下都醒目 */
-/* 导航中的刷题与其它项保持一致，不再使用贴纸样式 */
-.nav a.nav-drill { margin: 0; }
+/* 导航中的刷题：字号与其它项一致，仅加一个脉冲红点作为醒目标志 */
+.nav a.nav-drill { margin: 0; position: relative; font-weight: 650; }
+.nav a.nav-drill::before {
+  content: '';
+  display: inline-block;
+  width: 7px; height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #FF3B5C;
+  vertical-align: 1px;
+  animation: navDotPulse 1.7s ease-in-out infinite;
+}
+@keyframes navDotPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 59, 92, .55); transform: scale(1); }
+  50%      { box-shadow: 0 0 0 5px rgba(255, 59, 92, 0); transform: scale(1.18); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav a.nav-drill::before { animation: none; }
+}
 /* ── Hero 主行动按钮：点击刷题 ── */
 .gbtn.gbtn-drill {
   position: relative;

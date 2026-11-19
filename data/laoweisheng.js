@@ -1,5 +1,8 @@
 WB.register({
   "id": "laoweisheng",
+  "ext": "laoweisheng.html",
+  "drill": true,
+  "_count": { "chapters": 10, "knowledge": 53, "quiz": 44 },
   "name": "劳动卫生学",
   "en": "Occupational Hygiene",
   "icon": "🦺",

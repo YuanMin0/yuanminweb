@@ -1,5 +1,15 @@
 window.CHANGELOG = [
   {
+    v: 'v1.0.35',
+    date: '2026-11-20',
+    title: '修复劳动卫生学入口丢失',
+    sub: '数据文件补回 ext 字段，知识点页与刷题入口同时保留。',
+    items: [
+      { t: 'fix', text: '修复劳动卫生学卡片「打开 →」入口消失：数据文件补回 ext 指向 laoweisheng.html。' },
+      { t: 'opt', text: '同时声明 drill 标记与 _count，刷题入口与知识点页并存，不再二选一。' }
+    ]
+  },
+  {
     v: 'v1.0.34',
     date: '2026-11-20',
     title: '十科全部接入刷题',

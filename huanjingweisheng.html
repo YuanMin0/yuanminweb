@@ -12,17 +12,18 @@
   <title>环境卫生学 | 知识点精编</title>
   <style>
     :root {
+      color-scheme: light only;
       --navy:#5C7A10; --navy-deep:#3D4F08; --blue:#E91379; --blue-soft:#FDE9F2;
       --gray-050:#FBF7E4; --gray-100:#F5EFD2; --gray-200:#E4DDB6; --gray-500:#5E6440;
       --ink:#232A16; --paper:#FFFDF2; --gold:#88AE1B; --shadow:0 18px 54px rgba(92,122,16,.10);
       --font-title:"方正小标宋简体","FZXiaoBiaoSong-B05S","STZhongsong","SimSun",serif;
       --font-heading:"黑体","SimHei","Microsoft YaHei",sans-serif;
-      --font-body:"仿宋_GB2312","FangSong_GB2312","仿宋","FangSong","Microsoft YaHei",serif;
+      --font-body:"思源宋体","Source Han Serif SC","Noto Serif SC","宋体",SimSun,"Microsoft YaHei",sans-serif;
       --font-kai:"楷体_GB2312","KaiTi","STKaiti",serif;
     }
     * { box-sizing:border-box; }
     html { scroll-behavior:smooth; scroll-padding-top:112px; }
-    body { margin:0; overflow-x:hidden; color:var(--ink); background:linear-gradient(180deg,var(--navy-deep) 0 330px,var(--gray-050) 330px); font:17px/1.75 var(--font-body); }
+    body { margin:0; overflow-x:hidden; color:var(--ink); background:linear-gradient(180deg,var(--navy-deep) 0 330px,var(--gray-050) 330px); font:17.5px/1.85 var(--font-body); }
     a { color:var(--blue); text-underline-offset:3px; }
     h1,h2 { font-family:var(--font-title); font-weight:400; }
     h3,h4 { font-family:var(--font-heading); }
@@ -61,7 +62,7 @@
     .knowledge-block > h3 { margin:0 0 12px; padding-bottom:8px; color:var(--navy); border-bottom:1px solid var(--gray-200); font-size:1.28rem; }
     .exam-badge { display:inline-block; margin-left:10px; padding:2px 8px; color:#B01060; background:#FDE8F1; border:1px solid #F3BBD6; border-radius:999px; font:700 13px var(--font-heading); vertical-align:middle; white-space:nowrap; }
     .exam-hot { color:#E91379; background:linear-gradient(transparent 58%,rgba(216,184,154,.34) 58%); font-family:var(--font-heading); font-weight:700; }
-    .knowledge-content { color:#2C3418; }
+    .knowledge-content { color:#1B2110; font-weight:500; }
     .knowledge-content p { margin:10px 0; }
     .knowledge-content ul,.knowledge-content ol { margin:10px 0 15px; padding-left:1.35rem; }
     .knowledge-content li { margin:6px 0; }
@@ -1707,6 +1708,15 @@ main p, main li, main td, main th, main dd, main dt,
     } else {
       playCounters();
     }
+    /* 兜底：rAF 被暂停（后台标签页 / 无头渲染）时动画不跑，
+       2.5 秒后仍未填充则直接写入最终值，避免统计恒显示 0 */
+    setTimeout(function(){
+      counters.forEach(function(el){
+        if(el.textContent === '0'){
+          el.textContent = el.getAttribute('data-to') || '0';
+        }
+      });
+    }, 2500);
   })();
 
   /* ---- 3. 章节幽灵编号 ---- */

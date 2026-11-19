@@ -13,17 +13,18 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='8'%20fill='%23083f44'/%3E%3Ccircle%20cx='32'%20cy='32'%20r='23'%20fill='none'%20stroke='%23c6a15b'%20stroke-width='3'/%3E%3Ccircle%20cx='32'%20cy='32'%20r='16'%20fill='none'%20stroke='%239ed8d4'%20stroke-width='2'/%3E%3C/svg%3E">
   <style>
     :root {
+      color-scheme: light only;
       --navy:#083f44; --navy-deep:#062f33; --blue:#0e939c; --blue-soft:#e9f4f2;
       --gray-050:#f4f6f2; --gray-100:#edece6; --gray-200:#dcded7; --gray-500:#5d6a67;
       --ink:#17292b; --paper:#fcfdfb; --gold:#c6a15b; --shadow:0 18px 54px rgba(8,63,68,.10);
       --font-title:"方正小标宋简体","FZXiaoBiaoSong-B05S","STZhongsong","SimSun",serif;
       --font-heading:"黑体","SimHei","Microsoft YaHei",sans-serif;
-      --font-body:"仿宋_GB2312","FangSong_GB2312","仿宋","FangSong","Microsoft YaHei",serif;
+      --font-body:"思源宋体","Source Han Serif SC","Noto Serif SC","宋体",SimSun,"Microsoft YaHei",sans-serif;
       --font-kai:"楷体_GB2312","KaiTi","STKaiti",serif;
     }
     * { box-sizing:border-box; }
     html { scroll-behavior:smooth; scroll-padding-top:112px; }
-    body { margin:0; overflow-x:hidden; color:var(--ink); background:linear-gradient(180deg,var(--navy-deep) 0 330px,var(--gray-050) 330px); font:17px/1.75 var(--font-body); }
+    body { margin:0; overflow-x:hidden; color:var(--ink); background:linear-gradient(180deg,var(--navy-deep) 0 330px,var(--gray-050) 330px); font:17.5px/1.85 var(--font-body); }
     a { color:var(--blue); text-underline-offset:3px; }
     h1,h2 { font-family:var(--font-title); font-weight:400; }
     h3,h4 { font-family:var(--font-heading); }
@@ -62,7 +63,7 @@
     .knowledge-block > h3 { margin:0 0 12px; padding-bottom:8px; color:var(--navy); border-bottom:1px solid var(--gray-200); font-size:1.28rem; }
     .exam-badge { display:inline-block; margin-left:10px; padding:2px 8px; color:#8a4a24; background:#f7eadf; border:1px solid #d8b89a; border-radius:999px; font:700 13px var(--font-heading); vertical-align:middle; white-space:nowrap; }
     .exam-hot { color:#9a5a2c; background:linear-gradient(transparent 58%,rgba(216,184,154,.34) 58%); font-family:var(--font-heading); font-weight:700; }
-    .knowledge-content { color:#29343f; }
+    .knowledge-content { color:#1B2110; font-weight:500; }
     .knowledge-content p { margin:10px 0; }
     .knowledge-content ul,.knowledge-content ol { margin:10px 0 15px; padding-left:1.35rem; }
     .knowledge-content li { margin:6px 0; }
@@ -2333,6 +2334,15 @@ main p, main li, main td, main th, main dd, main dt,
     } else {
       playCounters();
     }
+    /* 兜底：rAF 被暂停（后台标签页 / 无头渲染）时动画不跑，
+       2.5 秒后仍未填充则直接写入最终值，避免统计恒显示 0 */
+    setTimeout(function(){
+      counters.forEach(function(el){
+        if(el.textContent === '0'){
+          el.textContent = el.getAttribute('data-to') || '0';
+        }
+      });
+    }, 2500);
   })();
 
   /* ---- 3. 章节幽灵编号 ---- */

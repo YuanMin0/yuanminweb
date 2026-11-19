@@ -164,9 +164,27 @@
           '<span><b>' + s._count.quiz + '</b> 题</span>' +
         '</div>' +
         '<div class="spacer"></div>' +
+        (s.extAlt ? '<span class="chip chip-quiz" role="link" tabindex="0" data-alt="' + s.extAlt + '" aria-label="' + WB.esc(s.name) + ' 刷题">刷题</span>' : '') +
         '<span class="chip chip-line">' + (s.ext ? '打开 →' : '进入 →') + '</span>' +
       '</div></a>';
   }).join('');
+
+  /* 卡片内次入口（刷题）：卡片本身是 <a>，用 data-alt 的 span 承载并拦截默认跳转 */
+  (function () {
+    var g = document.getElementById('subjGrid');
+    if (!g) return;
+    function goAlt(e) {
+      var el = e.target.closest('[data-alt]');
+      if (!el) return;
+      e.preventDefault(); e.stopPropagation();
+      location.href = el.getAttribute('data-alt');
+    }
+    g.addEventListener('click', goAlt);
+    g.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+      goAlt(e);
+    });
+  })();
 
   /* ---------- 特色 ---------- */
   var feats = [

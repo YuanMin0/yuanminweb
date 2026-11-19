@@ -139,3 +139,19 @@ WB.register({
   ext: 'laoweisheng.html',
   chapters: [], _count: { chapters: 10, knowledge: 223, quiz: 26 }
 });
+
+/* ==========================================================================
+   环境卫生学 — 知识点页 + 刷题页（双入口）
+   --------------------------------------------------------------------------
+   ext    : 知识点精编（主入口）
+   extAlt : 选择题刷题（次入口，卡片上单独一个按钮）
+   ========================================================================== */
+WB.register({
+  id: 'huanjingweisheng', name: '环境卫生学', en: 'Environmental Hygiene', icon: '🌍',
+  accent: 'var(--teal)', accentSoft: 'var(--teal-soft)', sem: 'dasan1', order: 15.7,
+  tag: '预防医学',
+  desc: '大气、水体、饮用水、土壤、公共场所、环境质量评价与家用化学品，13 讲 60 个知识点、135 题，另配 114 题选择题刷题页。',
+  ext: 'huanjingweisheng.html',
+  extAlt: 'huanjingweisheng-quiz.html',
+  chapters: [], _count: { chapters: 13, knowledge: 60, quiz: 135 }
+});

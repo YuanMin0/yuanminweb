@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0B1B33">
+<title>环境卫生学 · 选择题刷题</title>
+<style>
+:root{
+  --lemon:#F0FF0A; --ocean:#1E9BFF; --ink:#0B1220; --deep:#0B1B33;
+  --deep-2:#123A6E; --cream:#FFFDF0; --lime-ink:#2A3A00;
+  --shadow:10px 10px 0 rgba(11,18,32,.9);
+  --shadow-sm:5px 5px 0 rgba(11,18,32,.9);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+html{overflow-x:hidden}
+body{
+  min-height:100vh; color:var(--ink);
+  font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",-apple-system,sans-serif;
+  background:
+    radial-gradient(circle at 14% 8%, rgba(240,255,10,.22), transparent 42%),
+    radial-gradient(circle at 88% 78%, rgba(30,155,255,.45), transparent 48%),
+    linear-gradient(158deg,#08224B 0%,#12489E 46%,#1E9BFF 100%);
+  background-attachment:fixed;
+}
+/* 半调网点：漫画印刷质感 */
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:radial-gradient(rgba(240,255,10,.20) 1.3px, transparent 1.3px);
+  background-size:13px 13px; opacity:.45;
+}
+/* 斜向速度线 */
+body::after{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.12;
+  background:repeating-linear-gradient(115deg, transparent 0 26px, rgba(255,255,255,.5) 26px 27px);
+}
+.wrap{position:relative; z-index:1; max-width:940px; margin:0 auto; padding:22px 18px 130px}
+
+/* ── 顶栏 ── */
+.top{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px}
+.logo{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 14px; background:var(--lemon); border:3px solid var(--ink);
+  border-radius:12px; box-shadow:var(--shadow-sm); transform:rotate(-1.2deg);
+  font-weight:900; font-size:15px; letter-spacing:.04em;
+}
+.logo .spark{font-size:17px; line-height:1}
+.top-right{margin-left:auto; display:flex; gap:8px; flex-wrap:wrap}
+.pill{
+  display:inline-flex; align-items:center; gap:6px; padding:7px 12px;
+  background:var(--deep); color:var(--lemon); border:3px solid var(--ink);
+  border-radius:999px; box-shadow:var(--shadow-sm); font-weight:800; font-size:13px;
+}
+.pill b{color:#fff; font-size:14px}
+
+/* ── 进度 ── */
+.progress{
+  display:flex; align-items:center; gap:10px; margin-bottom:18px;
+  padding:10px 14px; background:rgba(11,27,51,.82); border:3px solid var(--ink);
+  border-radius:14px; box-shadow:var(--shadow-sm);
+}
+.track{flex:1; height:12px; background:#061225; border-radius:999px; overflow:hidden; border:2px solid #061225}
+.track i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--lemon),#C8FF3D); transition:width .35s ease}
+.progress span{color:var(--lemon); font-weight:900; font-size:13px; letter-spacing:.05em; white-space:nowrap}
+
+/* ── 题卡 ── */
+.card{
+  position:relative; padding:26px 26px 22px; background:var(--lemon);
+  border:4px solid var(--ink); border-radius:22px; box-shadow:var(--shadow);
+  transform:rotate(-.35deg);
+}
+.card::before{
+  content:"✦"; position:absolute; right:-6px; top:-16px; font-size:32px;
+  color:var(--lemon); -webkit-text-stroke:3px var(--ink); transform:rotate(12deg);
+}
+
+.chips{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px}
+.chip{
+  padding:4px 11px; background:var(--ink); color:var(--lemon); border-radius:8px;
+  font-size:12px; font-weight:800; letter-spacing:.06em;
+}
+.chip.ghost{background:transparent; color:var(--ink); border:2.5px solid var(--ink)}
+.stem{
+  margin:0 0 18px; font-size:20px; line-height:1.6; font-weight:900; letter-spacing:.01em;
+}
+.stem b{color:#B3005C; background:linear-gradient(transparent 62%, rgba(30,155,255,.45) 62%)}
+
+/* ── 斜切笔刷标签：来源 / 重难点 / 考频 ── */
+.tags{display:flex; gap:10px; flex-wrap:wrap; margin:-2px 0 14px}
+.tag{
+  position:relative; display:inline-block; padding:5px 13px 6px;
+  border:2.5px solid var(--ink); border-radius:3px;
+  transform:skewX(-10deg) rotate(-1.4deg);
+  box-shadow:3px 3px 0 rgba(11,18,32,.85);
+  font:900 12px/1 inherit; letter-spacing:.1em; overflow:hidden;
+}
+.tag i{display:inline-block; font-style:normal; transform:skewX(10deg) rotate(1.4deg)}
+.tag::after{
+  content:""; position:absolute; inset:-2px; pointer-events:none; opacity:.16;
+  background:repeating-linear-gradient(104deg, transparent 0 4px, #fff 4px 5px);
+}
+.tag.src-file{background:#FFFDF0; color:var(--ink)}
+.tag.src-ext{background:var(--ocean); color:#04182F}
+.tag.lv-重点{background:var(--ink); color:var(--lemon)}
+.tag.lv-难点{background:var(--ink); color:var(--ocean)}
+.tag.lv-基础{background:transparent; color:var(--ink); box-shadow:none}
+.tag.lv-基础::after{opacity:.07}
+.tag.fq-高频{background:var(--lemon); color:var(--ink)}
+.tag.fq-中频{background:var(--ocean); color:#04182F}
+.tag.fq-低频{background:transparent; color:var(--ink); box-shadow:none}
+.tag.fq-低频::after{opacity:.07}
+
+/* ── 选项 ── */
+.opts{display:grid; gap:11px}
+.opt{
+  display:flex; align-items:flex-start; gap:12px; width:100%; text-align:left;
+  padding:14px 16px; background:var(--deep); color:#F6FFC0;
+  border:3px solid var(--ink); border-radius:14px; box-shadow:var(--shadow-sm);
+  font:800 16px/1.5 inherit; cursor:pointer;
+  transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.opt:hover:not(.locked){transform:translate(-2px,-2px); box-shadow:8px 8px 0 rgba(11,18,32,.9); background:var(--deep-2)}
+.opt:active:not(.locked){transform:translate(2px,2px); box-shadow:2px 2px 0 rgba(11,18,32,.9)}
+.opt .k{
+  flex:0 0 auto; width:28px; height:28px; display:grid; place-items:center;
+  background:var(--lemon); color:var(--ink); border:2.5px solid var(--ink);
+  border-radius:8px; font-weight:900; font-size:14px;
+}
+.opt .t{flex:1; min-width:0}
+.opt.correct{background:#FFFDF0; color:var(--ink); box-shadow:0 0 0 3px var(--lemon), var(--shadow-sm)}
+.opt.correct .k{background:var(--ink); color:var(--lemon)}
+.opt.wrong{background:var(--ocean); color:#04182F; border-color:var(--ink)}
+.opt.wrong .k{background:#04182F; color:var(--ocean)}
+.opt.dim{
+  background:rgba(11,27,51,.14); color:rgba(11,18,32,.42);
+  border-color:rgba(11,18,32,.22); box-shadow:none;
+}
+.opt.dim .k{background:rgba(11,18,32,.22); color:rgba(255,255,255,.55); border-color:transparent}
+.opt.locked{cursor:default}
+.opt .mark{font-weight:900; font-size:16px; flex:0 0 auto}
+
+/* ── 解析气泡 ── */
+.explain{margin-top:18px; position:relative}
+.bubble{
+  position:relative; padding:16px 18px 16px 20px; background:var(--deep); color:#F2FFC2;
+  border:3px solid var(--ink); border-radius:16px; box-shadow:var(--shadow-sm);
+}
+.bubble::before{
+  content:""; position:absolute; left:34px; top:-13px; width:20px; height:20px;
+  background:var(--deep); border-left:3px solid var(--ink); border-top:3px solid var(--ink);
+  transform:rotate(45deg);
+}
+.bubble h4{
+  margin:0 0 8px; display:inline-block; padding:3px 10px; background:var(--lemon);
+  color:var(--ink); border:2.5px solid var(--ink); border-radius:8px; font-size:12.5px; letter-spacing:.08em;
+}
+.bubble p{margin:8px 0; font-size:15px; line-height:1.75; color:#EAF7A8}
+.bubble p b, .bubble p strong{color:var(--lemon)}
+.verdict{
+  display:flex; align-items:center; gap:10px; margin-bottom:10px;
+  font-weight:900; font-size:16px;
+}
+.verdict .tag{
+  padding:3px 12px; border:3px solid var(--ink); border-radius:999px;
+  background:var(--lemon); color:var(--ink); box-shadow:3px 3px 0 rgba(11,18,32,.9);
+}
+.verdict .tag.bad{background:var(--ocean); color:#04182F}
+
+/* ── 底部操作条 ── */
+.dock{
+  position:fixed; left:0; right:0; bottom:0; z-index:30; padding:12px 18px 16px;
+  background:linear-gradient(180deg, rgba(8,34,75,0), rgba(6,18,37,.92) 42%);
+}
+.dock-in{max-width:940px; margin:0 auto; display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.btn{
+  padding:13px 20px; border:3px solid var(--ink); border-radius:14px; cursor:pointer;
+  font:900 15px/1 inherit; letter-spacing:.03em; box-shadow:var(--shadow-sm);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.btn:active{transform:translate(3px,3px); box-shadow:2px 2px 0 rgba(11,18,32,.9)}
+.btn-primary{background:var(--lemon); color:var(--ink)}
+.btn-ocean{background:var(--ocean); color:#04182F}
+.btn-ghost{background:var(--deep); color:var(--lemon)}
+.btn:disabled{opacity:.4; cursor:not-allowed; box-shadow:none}
+.dock .grow{flex:1}
+.hint{color:#BFE3FF; font-size:12px; font-weight:700; letter-spacing:.03em}
+
+/* ── 顶部工具 ── */
+.tools{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px}
+.tool{
+  padding:8px 13px; background:var(--deep); color:var(--lemon); border:3px solid var(--ink);
+  border-radius:10px; box-shadow:4px 4px 0 rgba(11,18,32,.9); cursor:pointer;
+  font:800 13px/1 inherit; letter-spacing:.03em; transition:transform .12s ease;
+}
+.tool:active{transform:translate(2px,2px); box-shadow:1px 1px 0 rgba(11,18,32,.9)}
+.tool.on{background:var(--lemon); color:var(--ink)}
+.tool .badge{
+  display:inline-block; margin-left:6px; padding:0 6px; border-radius:6px;
+  background:var(--ocean); color:#04182F; font-size:11px; line-height:16px;
+}
+.tool.on .badge{background:var(--ink); color:var(--lemon)}
+
+/* ── 错题抽屉 ── */
+.drawer{
+  position:fixed; inset:0; z-index:60; display:none;
+  background:rgba(4,14,28,.72); backdrop-filter:blur(4px);
+}
+.drawer.open{display:block}
+.panel{
+  position:absolute; right:0; top:0; bottom:0; width:min(430px,92vw);
+  background:var(--deep); border-left:4px solid var(--ink); padding:20px;
+  overflow:auto; box-shadow:-12px 0 0 rgba(11,18,32,.5);
+}
+.panel h3{
+  margin:0 0 4px; color:var(--lemon); font-size:20px; letter-spacing:.06em;
+}
+.panel .sub{color:#9FC7EC; font-size:12.5px; margin-bottom:14px; font-weight:700}
+.wrong-item{
+  display:block; width:100%; text-align:left; margin-bottom:10px; padding:12px 13px;
+  background:#10305C; color:#E9F6FF; border:2.5px solid #061225; border-radius:12px;
+  cursor:pointer; font:700 13.5px/1.55 inherit;
+}
+.wrong-item:hover{background:#16407A}
+.wrong-item em{
+  display:block; font-style:normal; color:var(--lemon); font-size:11.5px;
+  letter-spacing:.06em; margin-bottom:4px; font-weight:900;
+}
+.empty{color:#8FB6DA; font-size:13.5px; padding:16px 4px; line-height:1.7}
+.close-x{
+  position:absolute; right:16px; top:14px; width:34px; height:34px; border-radius:10px;
+  background:var(--lemon); border:3px solid var(--ink); font-weight:900; cursor:pointer;
+}
+
+/* ── 选题抽屉 ── */
+.drawer.left .panel{
+  left:0; right:auto; width:min(462px,94vw); border-left:0; border-right:4px solid var(--ink);
+  box-shadow:12px 0 0 rgba(11,18,32,.5);
+}
+.qgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(44px,1fr)); gap:8px; margin:4px 0 14px}
+.qgroup{margin-bottom:16px}
+.qgroup h5{
+  margin:0 0 7px; display:flex; align-items:center; justify-content:space-between; gap:8px;
+  color:var(--lemon); font-size:12.5px; font-weight:900; letter-spacing:.05em;
+}
+.qgroup h5 span{color:#9FC7EC; font-size:11.5px; font-weight:800}
+.qgroup .qgrid{margin:0}
+.chips-row{display:flex; flex-wrap:wrap; gap:6px; margin:2px 0 16px}
+.chchip{
+  padding:6px 10px; background:var(--deep); color:#CDE6FF; border:2.5px solid #061225;
+  border-radius:999px; font:800 12px/1 inherit; cursor:pointer; transition:.12s;
+}
+.chchip:hover{background:var(--deep-2); color:#fff}
+.chchip.on{background:var(--lemon); color:var(--ink); border-color:var(--ink)}
+.qcell{
+  aspect-ratio:1/1; display:grid; place-items:center; padding:0;
+  background:var(--deep); color:var(--lemon); border:2.5px solid #061225; border-radius:9px;
+  font:900 13px/1 inherit; cursor:pointer; box-shadow:3px 3px 0 rgba(11,18,32,.85);
+  transition:transform .1s ease, background .12s ease;
+}
+.qcell:hover{transform:translate(-1px,-1px); background:var(--deep-2)}
+.qcell.ok{background:var(--lemon); color:var(--ink)}
+.qcell.bad{background:var(--ocean); color:#04182F}
+.qcell.on{outline:3px solid #FFFFFF; outline-offset:2px; transform:scale(1.06)}
+.legend{display:flex; gap:14px; flex-wrap:wrap; color:#9FC7EC; font-size:12px; font-weight:700; margin-top:4px}
+.legend span{display:inline-flex; align-items:center}
+.legend i{
+  display:inline-block; width:12px; height:12px; border-radius:3px;
+  border:2px solid #061225; margin-right:5px;
+}
+
+/* ── 结算 ── */
+.done{
+  text-align:center; padding:34px 22px; background:var(--lemon); border:4px solid var(--ink);
+  border-radius:22px; box-shadow:var(--shadow);
+}
+.done h2{margin:0 0 6px; font-size:30px; letter-spacing:.05em}
+.done .big{font-size:58px; font-weight:900; line-height:1.1; color:var(--ocean); -webkit-text-stroke:2px var(--ink)}
+.done p{color:#2A3A00; font-weight:800}
+.done .btn{margin-top:14px}
+
+@media (max-width:640px){
+  .wrap{padding:16px 12px 150px}
+  .card{padding:20px 16px 18px; border-radius:18px}
+  .stem{font-size:17.5px}
+  .opt{font-size:14.5px; padding:12px 13px}
+  .btn{padding:12px 15px; font-size:14px}
+  .dock-in{gap:8px}
+  .hint{display:none}
+}
+@media print{ body{background:#fff} body::before,body::after,.dock,.tools{display:none} }
+
+/* 返回知识点入口：柠檬黄底硬阴影，与顶栏 pill 同形 */
+.pill-link{
+  background:var(--lemon); color:var(--ink); text-decoration:none;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.pill-link:hover{ transform:translate(-2px,-2px); box-shadow:8px 8px 0 rgba(11,18,32,.9); }
+.pill-link:active{ transform:translate(1px,1px); box-shadow:2px 2px 0 rgba(11,18,32,.9); }
+@media (prefers-reduced-motion:reduce){ .pill-link{ transition:none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="logo"><span class="spark">✦</span> 环境卫生学 · 选择题</div>
+    <div class="top-right">
+      <a class="pill pill-link" href="huanjingweisheng.html"><span aria-hidden="true">📖</span> 看知识点</a>
+      <span class="pill">题号 <b id="pos">01 / 114</b></span>
+      <span class="pill">战绩 <b id="score">✓ 0　✕ 0</b></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="track"><i id="bar"></i></div>
+    <span id="progressText">已答 0 / 57</span>
+  </div>
+
+  <div class="tools">
+    <button class="tool" id="jumpBtn" type="button">选题</button>
+    <button class="tool" id="mode" type="button">顺序出题</button>
+    <button class="tool" id="onlyWrong" type="button">只刷错题<span class="badge" id="wrongCount">0</span></button>
+    <button class="tool" id="wrongBtn" type="button">错题集</button>
+    <button class="tool" id="reset" type="button">重置进度</button>
+  </div>
+
+  <div id="stage"></div>
+</div>
+
+<div class="dock">
+  <div class="dock-in">
+    <button class="btn btn-ghost" id="prev" type="button">← 上一题</button>
+    <span class="hint">点选项即判分 · 键盘 1-5 选择 · ← → 翻页</span>
+    <span class="grow"></span>
+    <button class="btn btn-primary" id="next" type="button">下一题 →</button>
+  </div>
+</div>
+
+<div class="drawer left" id="jumpDrawer">
+  <div class="panel">
+    <button class="close-x" id="closeJump" type="button">✕</button>
+    <h3>选题</h3>
+    <div class="sub" id="jumpSub">点击题号直接跳转</div>
+    <div class="chips-row" id="chChips"></div>
+    <div class="legend" style="margin:0 0 14px">
+      <span><i style="background:#0B1B33"></i>未答</span>
+      <span><i style="background:#F0FF0A"></i>答对</span>
+      <span><i style="background:#1E9BFF"></i>答错</span>
+      <span><i style="background:#fff"></i>当前题</span>
+    </div>
+    <div id="qgrid"></div>
+  </div>
+</div>
+
+<div class="drawer" id="drawer">
+  <div class="panel">
+    <button class="close-x" id="closeDrawer" type="button">✕</button>
+    <h3>错题集</h3>
+    <div class="sub">答错自动收录，点条目直接跳回原题</div>
+    <div id="wlist"></div>
+  </div>
+</div>
+
+<script>
+const DATA = [{"ch": "01 环境与健康", "q": "关于剂量-效应关系与剂量-反应关系的区别，下列说法正确的是", "o": ["前者描述群体中出现效应的比例，后者描述个体效应强度", "前者描述个体效应强度，后者描述群体中出现效应的比例", "两者完全等价，只是表述习惯不同", "两者都只适用于急性中毒"], "a": 1, "e": "<p>剂量-效应关系（dose-effect）反映<b>个体</b>身上效应强度随剂量的变化；剂量-反应关系（dose-response）反映<b>群体</b>中出现某种效应的个体比例随剂量的变化。二者共同构成卫生标准制定的依据。</p>", "src": "file", "lv": "难点", "freq": "低频", "pt": ""}, {"ch": "01 环境与健康", "q": "下列现象中，属于环境污染\"间接健康效应\"的是", "o": ["化工厂泄漏导致周边居民急性中毒", "长期饮用含砷地下水导致皮肤角化", "氟骨症", "臭氧层破坏使地面紫外线增强，皮肤癌发病增加"], "a": 3, "e": "<p>A 属急性危害，B、C 属慢性危害。D 中污染物并未直接进入人体，而是先改变环境（平流层臭氧减少），再由改变后的环境作用于人，属间接效应。</p>", "src": "file", "lv": "基础", "freq": "低频", "pt": ""}, {"ch": "01 环境与健康", "q": "构成环境的四个基本介质（环境介质）是", "o": ["空气、水、土壤、食物", "空气、水、土壤、生物", "大气、水、岩石、阳光", "空气、水、食物、住宅"], "a": 1, "e": "<p>环境介质指<b>空气、水、土壤、生物</b>四类。食物、住宅属于由介质派生的暴露载体，不属于基本介质。</p>", "src": "file", "lv": "基础", "freq": "低频", "pt": ""}, {"pt": "环境介质", "lv": "基础", "freq": "低频", "q": "下列各项中，不属于环境介质的是", "o": ["空气", "水", "土壤", "食物"], "a": 3, "e": "环境介质指<b>空气、水、土壤、生物</b>四类；食物、衣物、住宅是由介质派生的暴露载体，不是基本介质。", "ch": "01 环境与健康", "src": "ext"}, {"pt": "环境卫生学任务", "lv": "基础", "freq": "中频", "q": "环境卫生学的基本任务不包括", "o": ["识别环境有害因素", "评价环境质量与健康风险", "控制不利环境因素", "对个体患者进行临床治疗"], "a": 3, "e": "环境卫生学面向<b>人群与环境</b>，任务是识别、评价、控制和预防；个体诊治属于临床医学与职业医学的范畴。", "ch": "01 环境与健康", "src": "ext"}, {"pt": "剂量-反应关系", "lv": "重点", "freq": "中频", "q": "某污染物暴露剂量增加时，人群中出现某效应的个体比例随之升高，这一关系称为", "o": ["剂量-效应关系", "剂量-反应关系", "时间-效应关系", "阈值效应"], "a": 1, "e": "描述<b>群体</b>中发生效应的个体比例随剂量变化，是剂量-反应关系；描述<b>个体</b>效应强度的是剂量-效应关系。", "ch": "01 环境与健康", "src": "ext"}, {"ch": "02 空气卫生（一）大气特征与物理性状", "q": "关于对流层，下列哪一项正确", "o": ["气温随高度的增加而升高", "随地球纬度增高厚度而变薄", "能够反射无线电波", "能使地球生物免受射线损害"], "a": 1, "e": "<p>对流层气温随高度<b>递减</b>（A 错）；反射无线电波是热层（C 错）；吸收短波紫外线是平流层臭氧层（D 错）。对流层厚度在赤道约 17–18 km、两极约 8–9 km，故随纬度增高而变薄。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"ch": "02 空气卫生（一）大气特征与物理性状", "q": "到达地面的太阳辐射中，紫外线的波长", "o": ["均大于 290 nm", "均小于 290 nm", "介于 200–275 nm", "介于 275–320 nm"], "a": 0, "e": "<p>波长 &lt;290 nm 的紫外线被平流层臭氧层吸收，因此地面紫外线均 &gt;290 nm。UV-C（200–275 nm）在自然环境中到不了地面。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"ch": "02 空气卫生（一）大气特征与物理性状", "q": "某室外作业点测得湿球温度 26 ℃、黑球温度 34 ℃、干球温度 32 ℃，其 WBGT 约为", "o": ["27.8 ℃", "28.4 ℃", "30.0 ℃", "32.0 ℃"], "a": 1, "e": "<p>室外 WBGT = 0.7×26 + 0.2×34 + 0.1×32 = 18.2 + 6.8 + 3.2 = <b>28.2 ℃</b>，最接近 28.4 ℃。注意室内公式为 0.7 湿球 + 0.3 黑球，不含干球。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"ch": "02 空气卫生（一）大气特征与物理性状", "q": "下列场所中，空气负离子浓度最高的是", "o": ["城市办公室", "街道绿化带", "公园", "海滨瀑布"], "a": 3, "e": "<p>负离子浓度顺序大致为：海滨/森林/瀑布（约 20000 个/cm³）&gt; 疗养地（10000）&gt; 乡村（5000）&gt; 清洁空气（1000–1500）&gt; 公园（400–800）&gt; 街道绿化带（100–200）&gt; 城市办公室（约 100）。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"ch": "02 空气卫生（一）大气特征与物理性状", "q": "关于有效温度（ET），下列说法错误的是", "o": ["由受试者对温度、湿度、风速的主观反映得出", "考虑了辐射热的影响", "在一定范围内与皮温、氧耗量、体重变化相关", "存在个体差异"], "a": 1, "e": "<p>有效温度<b>未考虑辐射</b>对人体的影响，这正是它的主要缺点，后来才有修正有效温度和 WBGT 的出现。</p>", "src": "file", "lv": "难点", "freq": "高频", "pt": ""}, {"pt": "大气分层", "lv": "重点", "freq": "高频", "q": "大气圈中臭氧层主要位于", "o": ["对流层", "平流层", "中间层", "热层"], "a": 1, "e": "平流层 20 km 左右存在臭氧层，可吸收短波紫外线，使地面生物免受杀伤；对流层集中 75% 空气与全部水汽。", "ch": "02 空气卫生（一）大气特征与物理性状", "src": "ext"}, {"pt": "紫外线生物学作用", "lv": "重点", "freq": "高频", "q": "具有抗佝偻病作用的紫外线波段是", "o": ["UV-A", "UV-B", "UV-C", "红外线"], "a": 1, "e": "UV-B（275～320 nm，红斑线）促使 7-脱氢胆固醇转化为维生素 D₃，故能抗佝偻病；过量则引起红斑与雪盲。", "ch": "02 空气卫生（一）大气特征与物理性状", "src": "ext"}, {"pt": "WBGT", "lv": "难点", "freq": "高频", "q": "室内三球温度指数的计算公式是", "o": ["0.7 湿球＋0.2 黑球＋0.1 干球", "0.7 湿球＋0.3 黑球", "0.3 湿球＋0.7 黑球", "干球＋湿球＋黑球之和"], "a": 1, "e": "室内无太阳辐射，故 <b>WBGT＝0.7 湿球＋0.3 黑球</b>；室外才用 0.7 湿＋0.2 黑＋0.1 干。", "ch": "02 空气卫生（一）大气特征与物理性状", "src": "ext"}, {"pt": "空气离子", "lv": "基础", "freq": "低频", "q": "按大小与迁移率划分，空气中迁移率最小的离子是", "o": ["轻离子", "中离子", "重离子", "正离子"], "a": 2, "e": "重离子由轻离子吸附尘埃、水滴形成，直径 ≥10⁻⁵ cm，迁移率仅 0.0003～0.001，迁移率最小。", "ch": "02 空气卫生（一）大气特征与物理性状", "src": "ext"}, {"pt": "单极系数", "lv": "重点", "freq": "中频", "q": "某场所空气单极系数 q 明显大于 1.2，说明", "o": ["负离子占优势，空气清洁", "正离子相对过多，空气污浊", "离子总数过少", "臭氧浓度偏高"], "a": 1, "e": "q＝正离子数/负离子数，低层大气不应大于 1.2；q 偏大说明正离子相对增多，多见于人多拥挤、通风不良场所。", "ch": "02 空气卫生（一）大气特征与物理性状", "src": "ext"}, {"ch": "03 空气卫生（二）大气污染与健康", "q": "有关 O₃ 的说法，哪项不正确", "o": ["属于二次污染物", "易进入呼吸道深部", "来自汽车尾气", "可引起哮喘发作", "儿童对 O₃ 敏感"], "a": 2, "e": "<p>O₃ 不是汽车尾气直接排出的，而是 NOx 与烃类在强紫外线作用下经光化学反应生成的<b>二次污染物</b>。汽车尾气排出的是 NOx 与烃类等前体物。</p>", "src": "file", "lv": "难点", "freq": "高频", "pt": ""}, {"ch": "03 空气卫生（二）大气污染与健康", "q": "光化学烟雾中含量最多的成分是", "o": ["PANs", "NOx", "O₃", "烃类", "醛类"], "a": 2, "e": "<p>光化学烟雾的主要成分包括 O₃、PANs、醛类、酮类等，其中 <b>O₃ 含量最高</b>，且氧化能力最强，是造成眼、喉刺激与呼吸道损伤的主要物质。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"ch": "03 空气卫生（二）大气污染与健康", "q": "大气中的 NOx 主要指", "o": ["NO₂ 和 NO", "NO 和 N₂O₃", "N₂O₅ 和 NO₂", "NO₃ 和 N₂O"], "a": 0, "e": "<p>大气中的氮氧化物（NOx）通常指 <b>NO 与 NO₂</b> 的混合物。N₂O 为温室气体，不属于通常意义的 NOx。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"ch": "03 空气卫生（二）大气污染与健康", "q": "下面关于细颗粒物的说法中，不正确的是", "o": ["细颗粒物易沉积于肺泡中", "细颗粒物又称飘尘", "细颗粒物的某些较细组分甚至可穿透肺泡进入血液", "细颗粒物的空气动力学直径 ≤2.5 μm", "细颗粒物易于吸附各种重金属元素"], "a": 1, "e": "<p>\"飘尘\"是 <b>PM10</b> 的旧称（可吸入颗粒物），不是 PM2.5。其余四项均正确：PM2.5 直径 ≤2.5 μm，沉积于肺泡，比表面积大，易吸附重金属，超细组分可入血。</p>", "src": "file", "lv": "难点", "freq": "高频", "pt": ""}, {"ch": "03 空气卫生（二）大气污染与健康", "q": "某城市夏季晴热、日照强烈，市区出现浅蓝色烟雾，居民普遍眼刺痛、流泪、咽喉不适，最可能的污染类型及首要污染物是", "o": ["煤烟型烟雾，SO₂", "光化学烟雾，O₃", "煤烟型烟雾，PM2.5", "光化学烟雾，SO₂"], "a": 1, "e": "<p>强日照、高温、低湿是光化学烟雾的典型气象条件；浅蓝色烟雾、眼与上呼吸道刺激是其典型表现；首要污染物为 <b>O₃</b>。煤烟型烟雾多发于冬季采暖期，以 SO₂ 与颗粒物为主。</p>", "src": "file", "lv": "难点", "freq": "高频", "pt": ""}, {"pt": "光化学烟雾", "lv": "重点", "freq": "高频", "q": "光化学烟雾形成的主要前体物是", "o": ["二氧化硫和颗粒物", "氮氧化物和烃类", "一氧化碳和水蒸气", "氟化物和氯气"], "a": 1, "e": "汽车尾气中的 <b>NOx 与烃类</b>在强紫外线作用下发生光化学反应，生成以 O₃ 为主的二次污染物。", "ch": "03 空气卫生（二）大气污染与健康", "src": "ext"}, {"pt": "大气污染来源", "lv": "重点", "freq": "高频", "q": "我国大气污染最主要的来源是", "o": ["生活炉灶", "工业生产", "交通运输", "地面扬尘"], "a": 1, "e": "工业生产（燃料燃烧与工艺排放）是大气污染的<b>主要来源</b>；生活炉灶因烟囱低矮、燃烧不充分在采暖季突出。", "ch": "03 空气卫生（二）大气污染与健康", "src": "ext"}, {"pt": "颗粒物分级", "lv": "基础", "freq": "中频", "q": "空气动力学直径 ≤0.1 μm 的颗粒物称为", "o": ["总悬浮颗粒物", "可吸入颗粒物", "细颗粒物", "超细颗粒物"], "a": 3, "e": "≤0.1 μm 为超细颗粒物，可穿透肺泡进入血液；≤2.5 μm 为细颗粒物，≤10 μm 为可吸入颗粒物。", "ch": "03 空气卫生（二）大气污染与健康", "src": "ext"}, {"pt": "颗粒物防御", "lv": "重点", "freq": "中频", "q": "颗粒物进入呼吸道的第一道关卡是", "o": ["鼻毛与黏液", "气管纤毛", "肺泡巨噬细胞", "气血屏障"], "a": 0, "e": "三道关卡依次为<b>鼻毛与黏液、气管纤毛的吸附摆动、肺泡巨噬细胞</b>；≥10 μm 者 90% 以上被阻留。", "ch": "03 空气卫生（二）大气污染与健康", "src": "ext"}, {"pt": "逆温", "lv": "难点", "freq": "中频", "q": "出现逆温时大气污染往往加重，其原因是", "o": ["污染物排放量增加", "抑制垂直对流，污染物不易扩散", "紫外線增强促进反应", "空气湿度下降"], "a": 1, "e": "逆温层下冷上热，<b>垂直对流被抑制</b>，污染物在近地面聚集，是伦敦烟雾等事件的气象条件。", "ch": "03 空气卫生（二）大气污染与健康", "src": "ext"}, {"ch": "04 水体卫生", "q": "水体自净过程中起核心作用的是", "o": ["稀释扩散", "沉降", "微生物分解", "氧化还原"], "a": 2, "e": "<p>物理自净（稀释、沉降、挥发）与化学自净（氧化还原、水解、吸附）都只是转移或改变形态，只有<b>微生物对有机物的分解</b>才真正把污染物转化为无机物，是自净的核心。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"ch": "04 水体卫生", "q": "氧垂曲线上溶解氧最低的位置称为", "o": ["对照点", "临界点", "消减点", "混合点"], "a": 1, "e": "<p>临界点（critical point）是有机物耗氧速率与复氧速率相等的位置，此时溶解氧最低、水质最差，是评价水体污染程度的关键指标。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"ch": "04 水体卫生", "q": "了解某河流本底水质，应设置的断面是", "o": ["控制断面", "消减断面", "对照断面", "混合断面"], "a": 2, "e": "<p>对照断面设于所有污染源上游（排污口上游 100–500 m 且避开回流处），用于掌握水体<b>本底值</b>；控制断面反映污染影响；消减断面反映自净后水质。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"ch": "04 水体卫生", "q": "下列属于面源污染的是", "o": ["城市污水处理厂排放口", "冶金厂废水总排口", "农田氮磷随降雨径流进入河流", "医院污水排放口"], "a": 2, "e": "<p>A、B、D 均有固定排放口，属点源污染。农业退水随降水径流分散进入水体，无固定排口，属<b>面源（非点源）污染</b>。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"pt": "氧垂曲线", "lv": "难点", "freq": "高频", "q": "氧垂曲线上的临界点是指", "o": ["排污口所在位置", "溶解氧开始下降的位置", "耗氧速率与复氧速率相等、溶解氧最低的位置", "溶解氧恢复到饱和的位置"], "a": 2, "e": "临界点处耗氧与复氧速率相等，<b>溶解氧最低、水质最差</b>，是评价水体污染程度的关键位置。", "ch": "04 水体卫生", "src": "ext"}, {"pt": "监测断面", "lv": "重点", "freq": "中频", "q": "为掌握某排污口对下游水质的影响，应设置", "o": ["对照断面", "控制断面", "消减断面", "混合断面"], "a": 1, "e": "<b>控制断面</b>设在排污口下游水质较充分混合处，用于监测污染源对水质的影响；对照断面在上游摸本底。", "ch": "04 水体卫生", "src": "ext"}, {"pt": "水源选择", "lv": "重点", "freq": "中频", "q": "与地面水相比，地下水作为饮用水源的突出优点是", "o": ["水量随季节变化大", "水质较稳定、不易受污染", "硬度低、无需处理", "取水工程简单"], "a": 1, "e": "地下水经地层过滤，<b>水质稳定、不易受污染</b>，但硬度较高、一旦污染难以恢复，故取水点须设防护带。", "ch": "04 水体卫生", "src": "ext"}, {"pt": "富营养化", "lv": "基础", "freq": "低频", "q": "水体富营养化的主要限制性营养元素是", "o": ["铁和锰", "氮和磷", "钙和镁", "钾和钠"], "a": 1, "e": "氮、磷过量导致藻类异常繁殖，是富营养化的关键因素；生活污水与农业退水是主要来源。", "ch": "04 水体卫生", "src": "ext"}, {"ch": "05 饮用水与健康", "q": "某部队营区一周内出现大量腹泻患者，调查发现患者均饮用同一自备井水，停用该井水后疫情迅速平息。最可能的病因是", "o": ["食物中毒", "介水传染病", "地方性氟中毒", "中暑"], "a": 1, "e": "<p>\"患者集中于同一供水区域 + 停用污染水源后疫情迅速平息\"是<b>介水传染病</b>的典型流行病学特征。地方病与地质环境有关，不会因停水而迅速平息。</p>", "src": "file", "lv": "难点", "freq": "中频", "pt": ""}, {"ch": "05 饮用水与健康", "q": "长期饮用含氟过高的地下水，可引起", "o": ["地方性甲状腺肿", "氟斑牙与氟骨症", "水俣病", "痛痛病"], "a": 1, "e": "<p>氟摄入过量主要损害牙齿与骨骼，表现为<b>氟斑牙</b>（儿童期）与<b>氟骨症</b>（成人）。甲状腺肿与碘缺乏有关；水俣病为甲基汞；痛痛病为镉。</p>", "src": "file", "lv": "基础", "freq": "中频", "pt": ""}, {"ch": "05 饮用水与健康", "q": "关于介水传染病的流行特点，错误的是", "o": ["常呈暴发流行", "潜伏期短", "患者多集中在同一供水区域", "与特定食物有明显关联"], "a": 3, "e": "<p>介水传染病与<b>供水</b>相关而非特定食物；D 描述的是食物中毒的特点。其余三项均为介水传染病的典型特征。</p>", "src": "file", "lv": "难点", "freq": "中频", "pt": ""}, {"pt": "地方病", "lv": "重点", "freq": "中频", "q": "长期饮用含氟量过高的地下水引起的地方性氟中毒，属于", "o": ["介水传染病", "生物地球化学性地方病", "化学性食物中毒", "职业病"], "a": 1, "e": "由地质环境中某元素过多或过少、经饮水食物作用于人体引起，属<b>生物地球化学性地方病</b>。", "ch": "05 饮用水与健康", "src": "ext"}, {"pt": "水俣病", "lv": "基础", "freq": "中频", "q": "水俣病的致病物质是", "o": ["甲基汞", "镉", "砷", "铅"], "a": 0, "e": "水俣病由<b>甲基汞</b>污染水体、经鱼贝类富集后引起，表现为中枢神经损害；痛痛病则源于镉。", "ch": "05 饮用水与健康", "src": "ext"}, {"pt": "饮用水卫生要求", "lv": "重点", "freq": "高频", "q": "饮用水\"流行病学上安全\"的含义是", "o": ["不含病原微生物和寄生虫卵", "不含任何化学物质", "无色无味", "硬度适中"], "a": 0, "e": "四项基本卫生要求之首，即<b>不含病原微生物和寄生虫卵</b>，防止介水传染病；化学组成无害是另一项要求。", "ch": "05 饮用水与健康", "src": "ext"}, {"ch": "06 饮用水卫生标准", "q": "GB 5749-2022《生活饮用水卫生标准》规定的水质指标共", "o": ["106 项，其中常规 42 项", "97 项，其中常规 43 项", "97 项，其中常规 54 项", "106 项，其中常规 64 项"], "a": 1, "e": "<p>GB 5749-2022 共 <b>97 项</b>，其中常规指标 43 项、扩展指标 54 项。106/42/64 是 2006 版的数据。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"ch": "06 饮用水卫生标准", "q": "按 GB 5749-2022，生活饮用水浑浊度的限值为", "o": ["≤1 NTU", "≤3 NTU", "≤5 NTU", "≤15 度"], "a": 0, "e": "<p>浑浊度限值为 <b>≤1 NTU</b>。15 度是<b>色度</b>的限值，两者常被混淆。浑浊度不仅影响感官，还会包裹微生物、削弱消毒效果。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"ch": "06 饮用水卫生标准", "q": "关于生活饮用水的游离氯，下列说法正确的是", "o": ["只规定上限，不规定下限", "只规定下限，不规定上限", "出厂水限值 2 mg/L，管网末梢余量不低于 0.05 mg/L", "出厂水余量不低于 0.5 mg/L，末梢不低于 0.3 mg/L"], "a": 2, "e": "<p>游离氯既要控制上限（出厂水 ≤2 mg/L，防止消毒副产物），又要保证下限（出厂水余量 ≥0.3 mg/L、管网末梢 ≥0.05 mg/L，防止管网二次污染）。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"ch": "06 饮用水卫生标准", "q": "下列指标中，在任何情况下都不得因战时条件而放宽的是", "o": ["色度", "浑浊度", "总大肠菌群", "耗氧量"], "a": 2, "e": "<p>战时标准可按供应时限适当放宽感官性状与一般化学指标，但<b>病原微生物指标与放射性指标不得放宽</b>，否则将直接导致介水传染病暴发。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"pt": "指标数量", "lv": "重点", "freq": "高频", "q": "GB 5749—2022 中常规指标的数量是", "o": ["43 项", "54 项", "97 项", "106 项"], "a": 0, "e": "共 97 项＝<b>常规 43 项</b>＋扩展 54 项；106 项为 2006 版总数。", "ch": "06 饮用水卫生标准", "src": "ext"}, {"pt": "微生物指标", "lv": "重点", "freq": "高频", "q": "按 GB 5749—2022，生活饮用水菌落总数的限值是", "o": ["≤10 CFU/mL", "≤100 CFU/mL", "≤500 CFU/mL", "不得检出"], "a": 1, "e": "菌落总数 <b>≤100 CFU/mL</b>；总大肠菌群与大肠埃希氏菌则要求不得检出，属一票否决指标。", "ch": "06 饮用水卫生标准", "src": "ext"}, {"pt": "感官指标", "lv": "基础", "freq": "中频", "q": "生活饮用水色度的限值是", "o": ["≤5 度", "≤15 度", "≤20 度", "≤30 度"], "a": 1, "e": "色度 <b>≤15 度</b>；浑浊度 ≤1 NTU，两者常被混考。", "ch": "06 饮用水卫生标准", "src": "ext"}, {"pt": "毒理指标", "lv": "难点", "freq": "中频", "q": "按 GB 5749—2022，硝酸盐（以 N 计）的限值是", "o": ["≤1 mg/L", "≤10 mg/L", "≤20 mg/L", "≤50 mg/L"], "a": 1, "e": "硝酸盐（以 N 计）≤<b>10 mg/L</b>，地下水源限制时为 20 mg/L；硝酸盐过高可致婴儿高铁血红蛋白血症。", "ch": "06 饮用水卫生标准", "src": "ext"}, {"ch": "07 水质改善", "q": "常规净水工艺中，起\"持续杀菌、防止管网二次污染\"作用的是", "o": ["混凝", "沉淀", "过滤", "消毒后维持的余氯"], "a": 3, "e": "<p>混凝、沉淀、过滤主要去除悬浮物与胶体，本身不具备持续杀菌能力；<b>消毒后保留的余氯</b>才能在管网输配过程中持续抑制微生物再生长。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"ch": "07 水质改善", "q": "关于臭氧消毒，下列说法错误的是", "o": ["氧化能力强，杀灭病毒效果好", "不产生卤代消毒副产物", "具有持久的持续杀菌能力", "成本较高"], "a": 2, "e": "<p>臭氧在水中不稳定、分解快，<b>无持续杀菌能力</b>，因此臭氧消毒后通常仍需投加少量氯以维持管网余氯。其余三项均正确。</p>", "src": "file", "lv": "难点", "freq": "中频", "pt": ""}, {"ch": "07 水质改善", "q": "原水氟含量超标时，宜采用的处理方法是", "o": ["曝气氧化 + 锰砂过滤", "活性氧化铝吸附", "石灰软化", "紫外消毒"], "a": 1, "e": "<p>除氟常用<b>活性氧化铝吸附</b>、反渗透、电渗析。曝气+锰砂过滤用于除铁锰；石灰软化用于降低硬度；紫外消毒只杀菌不除氟。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"ch": "07 水质改善", "q": "氯化消毒效果受多种因素影响，下列会明显降低消毒效果的是", "o": ["提高水温", "降低浑浊度", "水中存在较多氨", "延长接触时间"], "a": 2, "e": "<p>氨与氯结合生成氯胺，其杀菌效力远低于游离氯，故<b>水中氨氮高会显著降低氯化消毒效果</b>。提高水温、降低浑浊度、延长接触时间均有利于消毒。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"pt": "混凝", "lv": "重点", "freq": "中频", "q": "饮用水常规处理中常用的混凝剂是", "o": ["铝盐和铁盐", "活性炭", "石英砂", "次氯酸钠"], "a": 0, "e": "常用<b>铝盐（硫酸铝、聚合氯化铝）和铁盐</b>；活性炭用于吸附，石英砂用于过滤，次氯酸钠用于消毒。", "ch": "07 水质改善", "src": "ext"}, {"pt": "活性炭", "lv": "基础", "freq": "中频", "q": "净水工艺中投加活性炭的主要作用是", "o": ["杀灭病原微生物", "吸附有机物和异味", "降低水的硬度", "去除铁锰"], "a": 1, "e": "活性炭比表面积大，主要<b>吸附溶解性有机物、色嗅味物质</b>，常与臭氧联用形成生物活性炭工艺。", "ch": "07 水质改善", "src": "ext"}, {"pt": "紫外线消毒", "lv": "难点", "freq": "中频", "q": "影响紫外线消毒效果最明显的因素是", "o": ["水的浊度", "水的硬度", "水的碱度", "水的温度"], "a": 0, "e": "紫外线穿透力弱，<b>浊度高时微生物被颗粒遮蔽</b>，消毒效果明显下降；此外紫外无持续杀菌能力。", "ch": "07 水质改善", "src": "ext"}, {"pt": "除铁锰", "lv": "基础", "freq": "低频", "q": "地下水铁、锰超标时，常用的处理方法是", "o": ["曝气氧化＋锰砂过滤", "活性氧化铝吸附", "石灰软化", "反渗透"], "a": 0, "e": "曝气使二价铁锰氧化为高价态，再由<b>锰砂过滤</b>截留；活性氧化铝用于除氟，反渗透用于除盐。", "ch": "07 水质改善", "src": "ext"}, {"ch": "08 土壤卫生", "q": "碱性土壤中的重金属", "o": ["容易被氧化而降低毒性", "容易被还原而降低毒性", "容易被作物吸收", "不容易被作物吸收", "容易被降解而降低危害"], "a": 3, "e": "<p>碱性条件下重金属易形成难溶的氢氧化物/碳酸盐沉淀，<b>溶解度低，不易被作物吸收</b>，毒性相对较弱；酸性土壤则相反。注意重金属不能被降解，E 错。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"ch": "08 土壤卫生", "q": "含氮有机物在土壤微生物作用下，首先", "o": ["氨化，再进一步硝化", "腐殖质化，再硝化", "腐殖质化，再无机化", "无机化，再腐殖质化", "硝化，再氨化"], "a": 0, "e": "<p>含氮有机物先经<b>氨化作用</b>分解为氨（铵），再在硝化细菌作用下经亚硝化、硝化转为亚硝酸盐与硝酸盐。顺序不能颠倒。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"ch": "08 土壤卫生", "q": "关于土壤污染的特点，下列不正确的是", "o": ["隐蔽性", "累积性", "不可逆性", "易被微生物快速降解"], "a": 3, "e": "<p>土壤污染具有隐蔽性、累积性、长期性与不可逆性。重金属等污染物<b>难以被微生物降解</b>，D 描述与其相反。</p>", "src": "file", "lv": "难点", "freq": "高频", "pt": ""}, {"ch": "08 土壤卫生", "q": "某地稻田土壤 pH 为 5.2，镉含量偏高。与中性土壤相比，该土壤中镉对水稻的危害", "o": ["更小，因为酸性条件下镉被固定", "更大，因为酸性条件下镉溶解度升高", "不变", "无法判断"], "a": 1, "e": "<p>酸性土壤中重金属盐溶解度升高、活性增强，<b>更容易被作物吸收</b>，危害更大。这也是酸性稻田常通过施石灰调 pH 来降低镉活性的原因。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"pt": "三格化粪池", "lv": "重点", "freq": "高频", "q": "三格化粪池中第二池的主要作用是", "o": ["沉渣", "沉卵", "储存粪液", "发酵产气"], "a": 1, "e": "第一池沉渣、<b>第二池沉卵</b>（虫卵比重较粪液大，流速缓慢时沉底）、第三池储存粪液。", "ch": "08 土壤卫生", "src": "ext"}, {"pt": "沼气发酵", "lv": "重点", "freq": "中频", "q": "沼气发酵法杀灭粪便中寄生虫卵的主要机制是", "o": ["产生氨杀灭虫卵", "甲烷细菌发酵放热，高温杀死虫卵", "厌氧环境使虫卵窒息", "pH 下降使虫卵死亡"], "a": 1, "e": "含碳有机物经甲烷细菌厌氧发酵产甲烷并<b>释放热量</b>，通过高温杀死虫卵；产生氨杀灭虫卵是三格化粪池的机制。", "ch": "08 土壤卫生", "src": "ext"}, {"pt": "无害化标准", "lv": "重点", "freq": "高频", "q": "按 GB 7959—2012，粪便无害化处理后蛔虫卵死亡率应达到", "o": ["≥85%", "≥90%", "≥95%", "100%"], "a": 2, "e": "蛔虫卵死亡率 <b>≥95%</b>，同时血吸虫卵和钩虫卵不得检出活卵、沙门氏菌不得检出。", "ch": "08 土壤卫生", "src": "ext"}, {"pt": "重金属形态", "lv": "难点", "freq": "中频", "q": "土壤处于还原状态时，砷的价态与毒性变化是", "o": ["由三价转为五价，毒性减弱", "由五价转为三价，毒性增强", "价态不变", "转为单质砷，毒性消失"], "a": 1, "e": "还原条件下砷由<b>五价转为三价，毒性增强</b>；这与多数重金属\"还原态毒性减弱\"的规律相反，是常考例外。", "ch": "08 土壤卫生", "src": "ext"}, {"pt": "土源性寄生虫", "lv": "基础", "freq": "中频", "q": "钩虫感染人体的主要途径是", "o": ["经口食入虫卵", "丝状蚴经皮肤钻入", "吸入含虫卵的尘埃", "蚊虫叮咬"], "a": 1, "e": "钩虫丝状蚴<b>经皮肤（赤足）钻入</b>，故灾区防钩虫重点是穿鞋、避免赤足接触土壤。", "ch": "08 土壤卫生", "src": "ext"}, {"ch": "09 公共场所卫生", "q": "下列场所中，不属于《公共场所卫生管理条例》规定的法定公共场所的是", "o": ["宾馆", "游泳馆", "餐馆", "候车室"], "a": 2, "e": "<p><b>餐饮场所</b>不属于法定公共场所，其风险主线为食品安全，由市场监督管理部门依《食品安全法》监管。宾馆、游泳馆、候车室分别属住宿交际、体育游乐、就诊交通场所。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"ch": "09 公共场所卫生", "q": "公共场所卫生学特点不包括", "o": ["种类繁多，涉及面广", "人群密集，流动性大", "物品公用，易被污染", "污染物降解缓慢，具有不可逆性"], "a": 3, "e": "<p>D 描述的是<b>土壤污染</b>的特点。公共场所的四个卫生学特点是：种类繁多涉及面广、人群密集流动性大、从业者多素质不齐、物品公用易被污染。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"ch": "09 公共场所卫生", "q": "按 GB 37488-2019，人工游泳池水的游离性余氯限值为", "o": ["0.05–0.3 mg/L", "0.3–1.0 mg/L", "1.0–2.0 mg/L", "≥2.0 mg/L"], "a": 1, "e": "<p>泳池水游离性余氯为 <b>0.3–1.0 mg/L</b>，尿素 ≤3.5 mg/L。余氯过低无法灭活病原体（如腺病毒），过高则刺激眼结膜与呼吸道。0.05 mg/L 是生活饮用水管网末梢的余量要求。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"ch": "09 公共场所卫生", "q": "公共场所卫生调查结果判定实行\"一票否决制\"，其含义是", "o": ["任一定量指标超标即判场所不合格", "所有项目全部合格才判该场所合格，任一项目不合格即不合格", "只对关键项实行否决", "由经营者自行判定"], "a": 1, "e": "<p>判定分三层：单个样品按限值判合格；<b>所有采样点全部合格</b>才判该项目合格；<b>所有项目合格</b>才判该场所合格。任一层不满足即否决。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"ch": "09 公共场所卫生", "q": "某宾馆卫生监督量化分级标化得分为 82 分，其信誉度等级与监督频次应为", "o": ["A 级，1 次/2 年", "B 级，1 次/年", "C 级，2 次/年", "不合格，限期整改"], "a": 1, "e": "<p>≥90 分为 A 级（1 次/2 年）；<b>70–89 分为 B 级（1 次/年，常规监督）</b>；60–69 分为 C 级（2 次/年）；&lt;60 分限期整改。82 分落在 B 级。</p>", "src": "file", "lv": "重点", "freq": "高频", "pt": ""}, {"pt": "公共场所分类", "lv": "基础", "freq": "中频", "q": "按《公共场所卫生管理条例》，游泳馆属于", "o": ["住宿交际场所", "洗浴美容场所", "体育游乐场所", "文化交流场所"], "a": 2, "e": "7 类 28 种中，<b>游泳场（馆）</b>与体育场（馆）、公园同属体育游乐场所。", "ch": "09 公共场所卫生", "src": "ext"}, {"pt": "卫生许可", "lv": "重点", "freq": "中频", "q": "公共场所卫生许可证的有效期和复核周期分别是", "o": ["2 年、每年复核", "3 年、每年复核", "4 年、每 2 年复核", "5 年、每 3 年复核"], "a": 2, "e": "有效期 <b>4 年</b>，每 <b>2 年</b>复核一次；变更场所或项目须重新申请。", "ch": "09 公共场所卫生", "src": "ext"}, {"pt": "室内空气", "lv": "重点", "freq": "高频", "q": "按 GB 37488—2019，公共场所室内空气中一氧化碳的限值是", "o": ["≤5 mg/m³", "≤10 mg/m³", "≤0.10 mg/m³", "≤0.15 mg/m³"], "a": 1, "e": "CO <b>≤10 mg/m³</b>；0.10 mg/m³ 是甲醛限值，0.15 mg/m³ 是 PM10 限值。", "ch": "09 公共场所卫生", "src": "ext"}, {"pt": "泳池水质", "lv": "重点", "freq": "高频", "q": "人工游泳池水尿素的限值是", "o": ["≤1.0 mg/L", "≤3.5 mg/L", "≤5.0 mg/L", "≤10 mg/L"], "a": 1, "e": "尿素 <b>≤3.5 mg/L</b>，游离性余氯 0.3～1.0 mg/L；尿素累积会消耗游离氯、降低消毒能力。", "ch": "09 公共场所卫生", "src": "ext"}, {"pt": "新风量", "lv": "基础", "freq": "中频", "q": "公共场所集中空调通风系统的新风量要求是", "o": ["≥10 m³/(h·人)", "≥20 m³/(h·人)", "≥30 m³/(h·人)", "≥50 m³/(h·人)"], "a": 2, "e": "新风量 <b>≥30 m³/(h·人)</b>，是评价集中通风是否达标的核心指标之一。", "ch": "09 公共场所卫生", "src": "ext"}, {"ch": "10 环境质量评价", "q": "某污染源 SO₂ 排放量为 10.25 kg/d，排放标准为 700 mg/m³，其等标污染负荷约为", "o": ["14642.86 m³/d", "1025 m³/d", "14.64 m³/d", "1464.29 m³/d"], "a": 0, "e": "<p>10.25 kg/d = 10.25×10⁶ mg/d；P = M/C = 10.25×10⁶ ÷ 700 ≈ <b>14642.86 m³/d</b>。等标污染负荷的物理意义是把该排放量稀释到标准浓度所需的空气体积。</p>", "src": "file", "lv": "难点", "freq": "高频", "pt": ""}, {"ch": "10 环境质量评价", "q": "判断某区域内哪种污染物是\"主要污染物\"，应比较", "o": ["各污染物的绝对排放量", "各污染物的等标污染负荷比", "各污染源的总等标污染负荷", "各污染物的超标倍数"], "a": 1, "e": "<p><b>主要污染物</b>由等标污染负荷比 K<sub>i</sub> 判定（某污染物负荷占区域总负荷的百分比，最大者为主要污染物）；<b>主要污染源</b>由总等标污染负荷 P<sub>总</sub> 判定。</p>", "src": "file", "lv": "难点", "freq": "高频", "pt": ""}, {"ch": "10 环境质量评价", "q": "比值算术均数型大气质量指数的主要缺点是", "o": ["计算过于复杂", "平均值可能掩盖高浓度参数的影响", "不能反映污染物浓度", "无法分级"], "a": 1, "e": "<p>该指数对各项 C<sub>i</sub>/S<sub>i</sub> 取算术平均，若某项严重超标而其余很低，平均值会被\"拉平\"，<b>掩盖高浓度参数的危害</b>。这正是引入兼顾最高分指数的大气质量指数 I₁ 的原因。</p>", "src": "file", "lv": "难点", "freq": "高频", "pt": ""}, {"ch": "10 环境质量评价", "q": "某区域各污染物 IAQI 分别为 SO₂ 68.7、NO₂ 157.1、PM2.5 30，则 AQI 与首要污染物是", "o": ["30，PM2.5", "68.7，SO₂", "157.1，NO₂", "255.8，三者均为首要污染物"], "a": 2, "e": "<p>AQI 取各分指数中的<b>最大值</b>，即 157.1，对应污染物 NO₂ 即为首要污染物。AQI 不做求和，D 错。157.1 属四级中度污染。</p>", "src": "file", "lv": "难点", "freq": "高频", "pt": ""}, {"ch": "10 环境质量评价", "q": "环境质量评价的五个基本要素不包括", "o": ["监测数据", "评价参数", "评价标准", "污染源数量"], "a": 3, "e": "<p>五个基本要素是监测数据、评价参数、评价标准、评价权重、评价模型。污染源数量属于<b>污染源调查</b>的内容，不是质量评价的基本要素。</p>", "src": "file", "lv": "难点", "freq": "高频", "pt": ""}, {"pt": "等标污染负荷", "lv": "难点", "freq": "高频", "q": "等标污染负荷 Pi＝Mi/Ci 的量纲是", "o": ["kg/d", "mg/m³", "m³/d", "无量纲"], "a": 2, "e": "排放量 kg/d 除以标准浓度 mg/m³，量纲为 <b>m³/d</b>，即把排放量稀释到标准所需的介质量。", "ch": "10 环境质量评价", "src": "ext"}, {"pt": "主要污染源", "lv": "重点", "freq": "高频", "q": "判断某区域的主要污染源，应比较各源的", "o": ["污染物排放总量", "总等标污染负荷", "超标倍数", "污染物种类数"], "a": 1, "e": "<b>总等标污染负荷 ΣPi</b> 最大者为主要污染源；等标污染负荷比 Ki 最大者为主要污染物。", "ch": "10 环境质量评价", "src": "ext"}, {"pt": "AQI", "lv": "重点", "freq": "高频", "q": "环境空气质量指数 AQI 与首要污染物的确定方法是", "o": ["取各分指数平均值，对应污染物为首要污染物", "取各分指数最大值，对应污染物为首要污染物", "取各分指数之和", "取超标最严重的污染物"], "a": 1, "e": "AQI 取各污染物 IAQI 的<b>最大值</b>，该污染物即为首要污染物，不做求和。", "ch": "10 环境质量评价", "src": "ext"}, {"pt": "大气质量分级", "lv": "基础", "freq": "中频", "q": "大气质量指数 I₁ ≥2.00 对应的质量等级是", "o": ["清洁", "尚清洁", "轻污染", "重污染"], "a": 3, "e": "I₁ 分级：≤0.49 清洁、0.50～0.99 尚清洁、1.00～1.49 轻污染、1.50～1.99 中污染、<b>≥2.00 重污染</b>。", "ch": "10 环境质量评价", "src": "ext"}, {"pt": "评价要素", "lv": "重点", "freq": "中频", "q": "环境质量评价的五个基本要素不包括", "o": ["监测数据", "评价标准", "评价权重", "污染源数量"], "a": 3, "e": "五要素为监测数据、评价参数、评价标准、评价权重、评价模型；污染源数量属污染源调查内容。", "ch": "10 环境质量评价", "src": "ext"}, {"ch": "11 家用化学品卫生", "q": "化妆品刺激性接触性皮炎（ICD）与变应性接触性皮炎（ACD）的关键区别是", "o": ["ICD 有 T 细胞参与，ACD 无", "ICD 无免疫参与、边界清，ACD 为 T 细胞介导、边界不清", "两者皮损完全相同", "ACD 首次接触即发病"], "a": 1, "e": "<p>ICD 是理化刺激直接造成，<b>无免疫机制参与</b>，皮疹边界清、局限于接触部位、有烧灼痛感；ACD 是 <b>T 细胞介导的迟发型变态反应</b>，需再次接触才发病，皮疹边界不清、可超出接触部位、以瘙痒为主。</p>", "src": "file", "lv": "难点", "freq": "中频", "pt": ""}, {"ch": "11 家用化学品卫生", "q": "下列化妆品皮肤病中，\"人人均可发生、与免疫反应无关\"的是", "o": ["变应性接触性皮炎", "光变应性接触性皮炎", "光毒性皮炎", "化妆品痤疮"], "a": 2, "e": "<p><b>光毒性皮炎</b>只要接触足量光敏物质并受到一定波长紫外线照射即可发生，与免疫无关；光变应性皮炎则需过敏体质且由 T 细胞介导。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"ch": "11 家用化学品卫生", "q": "按现行《化妆品安全技术规范》，化妆品中铅的限量为", "o": ["40 mg/kg", "10 mg/kg", "2 mg/kg", "1 mg/kg"], "a": 1, "e": "<p>现行限量为汞 ≤1、<b>铅 ≤10</b>、砷 ≤2、镉 ≤5 mg/kg，甲醇 ≤2000 mg/kg。40 mg/kg 是 2007 版《化妆品卫生规范》的旧值，课件仍沿用旧值。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"ch": "11 家用化学品卫生", "q": "84 消毒液与洁厕灵混合使用产生的主要有害气体是", "o": ["硫化氢", "一氧化碳", "氯气", "氨气"], "a": 2, "e": "<p>84 消毒液主要成分为次氯酸钠（碱性），洁厕灵为盐酸，反应式 NaClO + 2HCl = NaCl + H₂O + <b>Cl₂↑</b>。氯气刺激眼与呼吸道，密闭空间可致肺水肿、窒息甚至死亡。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"ch": "11 家用化学品卫生", "q": "下列消毒剂中，属于高效消毒剂且能杀灭细菌芽孢的是", "o": ["乙醇", "碘伏", "氯己定", "过氧乙酸"], "a": 3, "e": "<p>高效消毒剂包括<b>过氧乙酸、戊二醛、含氯消毒剂</b>，可杀灭包括芽孢在内的一切微生物。乙醇、碘伏为中效；氯己定（洗必泰）为低效。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"pt": "化妆品种类", "lv": "重点", "freq": "高频", "q": "下列不属于特殊用途化妆品的是", "o": ["染发类", "烫发类", "防晒类", "护肤类"], "a": 3, "e": "特殊用途化妆品共 9 类：育发、染发、烫发、脱毛、美乳、健美、除臭、祛斑、防晒；<b>护肤类属一般用途</b>。", "ch": "11 家用化学品卫生", "src": "ext"}, {"pt": "有毒物质限量", "lv": "重点", "freq": "高频", "q": "按现行《化妆品安全技术规范》，化妆品中汞的限值是", "o": ["≤1 mg/kg", "≤10 mg/kg", "≤40 mg/kg", "不得检出"], "a": 0, "e": "汞 <b>≤1 mg/kg</b>，铅 ≤10、砷 ≤2、镉 ≤5 mg/kg；铅 40、砷 10 是 2007 版旧值。", "ch": "11 家用化学品卫生", "src": "ext"}, {"pt": "微生物污染", "lv": "重点", "freq": "中频", "q": "化妆品二级污染主要发生在", "o": ["原料生产环节", "生产设备与工人", "启封后使用存放过程", "出厂检验环节"], "a": 2, "e": "一级污染在生产过程中（原料、环境、工人）；<b>二级污染</b>发生在启封后使用存放，主要责任在消费者。", "ch": "11 家用化学品卫生", "src": "ext"}, {"pt": "消毒剂分级", "lv": "重点", "freq": "高频", "q": "下列属于高效消毒剂的是", "o": ["乙醇", "碘伏", "氯己定", "过氧乙酸"], "a": 3, "e": "高效消毒剂可杀灭包括芽孢在内的一切微生物，代表为<b>过氧乙酸、戊二醛、含氯消毒剂</b>；乙醇、碘伏为中效，氯己定为低效。", "ch": "11 家用化学品卫生", "src": "ext"}, {"pt": "禁用原料", "lv": "基础", "freq": "低频", "q": "《化妆品卫生规范》规定禁用的化学物质共有", "o": ["313 种", "494 种", "1286 种", "2002 种"], "a": 2, "e": "禁用化学物质 <b>1286 种</b>，限用原料 313 种；数字常与限用、防腐剂、防晒剂种类混考。", "ch": "11 家用化学品卫生", "src": "ext"}, {"ch": "12 突发环境污染事件及其应急处理", "q": "依照《国家突发环境事件应急预案》，负责协调国家突发环境事件应对工作的机构是", "o": ["全国环境保护部际联席会议", "生态环境部", "国务院环境保护委员会", "国务院突发事件应对办公室"], "a": 1, "e": "<p>2014 年修订后的预案确立<b>国家环境应急指挥部</b>为最高指挥机构，日常协调由生态环境部承担。全国环境保护部际联席会议是 2005 年版的表述，属干扰项。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"ch": "12 突发环境污染事件及其应急处理", "q": "按突发事件严重性和紧急程度，突发环境事件分为四级，Ⅱ级是", "o": ["特别重大环境事件", "较大环境事件", "重大环境事件", "一般环境事件"], "a": 2, "e": "<p>四级依次为：Ⅰ级特别重大、<b>Ⅱ级重大</b>、Ⅲ级较大、Ⅳ级一般。记忆时按\"特别重大—重大—较大—一般\"的顺序对应 Ⅰ—Ⅳ。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"ch": "12 突发环境污染事件及其应急处理", "q": "以下属于突发环境事件\"特别重大\"级别情形的是", "o": ["因环境污染直接导致 30 人以上死亡或 100 人以上中毒或重伤", "因环境污染疏散、转移人员 5000 人以上", "因环境污染造成直接经济损失 5000 万元以上", "因环境污染造成区域生态系统入侵"], "a": 0, "e": "<p>特别重大的判定线是<b>死亡 ≥30 人、中毒（重伤）≥100 人、直接经济损失 &gt;1 亿元</b>。B（5000 人）与 C（5000 万元）未达特别重大门槛；D 表述不成立。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"ch": "12 突发环境污染事件及其应急处理", "q": "下列不属于突发环境污染事件的是", "o": ["废弃化学品污染事件", "海上石油勘探开发溢油事件", "危险化学品运输车辆发生交通事故", "城市光化学烟雾事件"], "a": 3, "e": "<p>光化学烟雾属<b>大气污染事件</b>，由污染物在特定气象条件下经光化学反应生成，不是化学品爆炸、泄漏所致的突发事故。其余三项均属典型突发环境污染事件。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"ch": "12 突发环境污染事件及其应急处理", "q": "某化工园区发生泄漏，为防止事故污水进入园区外重要水体，应在哪一级防控中解决", "o": ["一级防控（厂区内）", "二级防控（园区河道）", "三级防控（园区外水体）", "无需分级"], "a": 2, "e": "<p>三级防控体系：一级把污水控制在<b>厂区内部</b>；二级防止污水进入<b>园区河道</b>；三级确保不对<b>园区外重要水体</b>造成影响。题目问的是\"园区外\"，故为三级。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"pt": "事件分级", "lv": "重点", "freq": "高频", "q": "特别重大突发环境事件的直接经济损失标准是", "o": ["500 万元以上", "2000 万元以上", "5000 万元以上", "1 亿元以上"], "a": 3, "e": "Ⅰ级特别重大：死亡 ≥30 人、中毒（重伤）≥100 人或直接经济损失 <b>&gt;1 亿元</b>，满足其一即可定级。", "ch": "12 突发环境污染事件及其应急处理", "src": "ext"}, {"pt": "信息报告", "lv": "难点", "freq": "高频", "q": "突发环境事件信息报告的时限要求是", "o": ["接报后 1 小时内上报，核实后 2 小时报部", "接报后 2 小时内上报，核实后 1 小时报生态环境部", "接报后 4 小时内上报，核实后 2 小时报部", "接报后 24 小时内上报"], "a": 1, "e": "地方部门接报后 <b>2 小时</b>内向本级政府和上一级生态环境部门报告，核实后 <b>1 小时</b>内报生态环境部。", "ch": "12 突发环境污染事件及其应急处理", "src": "ext"}, {"pt": "应急监测", "lv": "重点", "freq": "中频", "q": "突发大气污染事件应急监测的布点原则是", "o": ["只在下风向布点", "以事故点为中心，上风向和下风向均布点并按风向调整", "按网格均匀布点", "只在居民区布点"], "a": 1, "e": "以事故点为中心<b>上、下风向均设点</b>并按风向调整，可能受污染的居民区必须设点，用于判断污染带走向。", "ch": "12 突发环境污染事件及其应急处理", "src": "ext"}, {"pt": "检伤分类", "lv": "基础", "freq": "低频", "q": "现场检伤分类 START 中，第一优先处理的是", "o": ["轻症患者", "可延迟处理的重症", "必须紧急处理的危重症", "濒死或死亡者"], "a": 2, "e": "START 第一优先为<b>危重</b>（须紧急处理），第二优先为重（可延迟），第三优先为轻，死亡者最后处理。", "ch": "12 突发环境污染事件及其应急处理", "src": "ext"}, {"ch": "13 自然灾害环境卫生", "q": "根据《全国自然灾害卫生应急预案》，自然灾害共分为七大类，下列组合正确的是", "o": ["气象、海洋、水旱、泥石流、地震、生物、森林草原火灾", "冻雨、海啸、土地荒漠化、地质、地震、生物、森林草原火灾", "气象、海洋、水旱、地质、地震、生物、森林草原火灾", "气象、海洋、洪水、干旱、地质、地震、森林草原火灾"], "a": 2, "e": "<p>七大类为<b>气象灾害、海洋灾害、水旱灾害、地质灾害、地震灾害、生物灾害、森林草原火灾</b>。泥石流属地质灾害；冻雨属气象灾害；洪水与干旱合称水旱灾害。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"ch": "13 自然灾害环境卫生", "q": "不属于城市生命线系统的是", "o": ["供水、排水系统", "燃料、热力系统", "粮油、供电系统", "文化、娱乐系统"], "a": 3, "e": "<p>生命线系统指维持城市基本运转的基础设施：供排水、供电、燃料热力、通信、交通等。<b>文化娱乐系统</b>不属于生命线系统。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"ch": "13 自然灾害环境卫生", "q": "地震中被埋压 6 小时的伤员救出后出现肢体肿胀、酱油色尿、血钾升高、少尿，最可能的诊断是", "o": ["创伤性休克", "挤压综合征", "急性肾小球肾炎", "中暑"], "a": 1, "e": "<p>长时间挤压后解压，出现<b>高钾血症、肌红蛋白尿（酱油色尿）与急性肾功能衰竭</b>，是挤压综合征的典型三联征。处理要点是尽早补液、碱化尿液、必要时透析。</p>", "src": "file", "lv": "难点", "freq": "中频", "pt": ""}, {"ch": "13 自然灾害环境卫生", "q": "灾区灭鼠时首选的药物及其中毒特效解毒剂是", "o": ["磷化锌；二巯基丙醇", "溴敌隆；维生素 K₁", "敌鼠钠；维生素 C", "有机磷类；阿托品"], "a": 1, "e": "<p>灾区灭鼠首选<b>慢性抗凝血灭鼠药</b>（溴敌隆、溴鼠灵），其作用机制是抑制维生素 K 依赖的凝血因子合成，故特效解毒剂为<b>维生素 K₁</b>。磷化锌为急性药，人多时一般不推荐。</p>", "src": "file", "lv": "重点", "freq": "中频", "pt": ""}, {"ch": "13 自然灾害环境卫生", "q": "关于灾害后介水传染病的预防，下列做法错误的是", "o": ["被洪水淹没的水井彻底清掏、超氯消毒后恢复供水", "分散式供水消毒后维持井水游离余氯 ≥0.5 mg/L", "优先选择地下水、流动的水和大水体作为水源", "为图方便，将临时厕所设在取水点上游"], "a": 3, "e": "<p>临时厕所必须设在<b>取水点下游</b>并保持足够距离，否则粪便可直接污染水源。A、B、C 均为正确做法。</p>", "src": "file", "lv": "难点", "freq": "中频", "pt": ""}, {"pt": "灾害分类", "lv": "重点", "freq": "高频", "q": "按《全国自然灾害卫生应急预案》，下列不属于七大类自然灾害的是", "o": ["气象灾害", "海洋灾害", "泥石流灾害", "生物灾害"], "a": 2, "e": "七大类为气象、海洋、水旱、地质、地震、生物、森林草原火灾；<b>泥石流属地质灾害</b>，不单列。", "ch": "13 自然灾害环境卫生", "src": "ext"}, {"pt": "灾度分级", "lv": "重点", "freq": "中频", "q": "自然灾害灾度分级的主要依据是", "o": ["受灾面积", "死亡人数或直接经济损失", "倒塌房屋数", "受灾人口数"], "a": 1, "e": "按马宗晋等提出的灾度标准，以<b>死亡人数或直接经济损失</b>为依据分为巨灾至微灾五级，满足其一即可定级。", "ch": "13 自然灾害环境卫生", "src": "ext"}, {"pt": "饮水消毒", "lv": "重点", "freq": "高频", "q": "灾区分散式供水消毒后，井水中游离余氯应维持在", "o": ["0.05 mg/L 以上", "0.3 mg/L 以上", "0.5 mg/L 以上", "2 mg/L 以上"], "a": 2, "e": "分散式供水按有效氯 3～4 mg/L 投加，维持井水游离余氯 <b>≥0.5 mg/L</b>；0.05 mg/L 是正常管网末梢要求。", "ch": "13 自然灾害环境卫生", "src": "ext"}, {"pt": "血吸虫", "lv": "基础", "freq": "中频", "q": "日本血吸虫的唯一中间宿主是", "o": ["钉螺", "蚊虫", "蝇类", "鼠类"], "a": 0, "e": "<b>钉螺</b>是日本血吸虫唯一中间宿主，洪灾后钉螺扩散是疫情回升的重要原因，灭螺是防控关键。", "ch": "13 自然灾害环境卫生", "src": "ext"}, {"pt": "PTSD", "lv": "重点", "freq": "中频", "q": "创伤后应激障碍（PTSD）的核心特征是", "o": ["持续的情绪低落与自责", "以再度体验创伤为特征，伴情绪易激惹和回避行为", "进行性记忆减退", "反复出现的躯体疼痛"], "a": 1, "e": "PTSD 以<b>再度体验创伤</b>（闪回、噩梦）为核心，伴易激惹与回避，属延迟出现并长期持续的精神障碍。", "ch": "13 自然灾害环境卫生", "src": "ext"}];
+const KEY = 'env-hygiene-quiz-v2';
+const $ = s => document.querySelector(s);
+const el = (t,c,h) => { const n=document.createElement(t); if(c)n.className=c; if(h!=null)n.innerHTML=h; return n; };
+
+let state = {
+  order: DATA.map((_,i)=>i),
+  cur: 0,
+  mode: 'seq',
+  onlyWrong: false,
+  filterCh: null,
+  answers: {},      // qid -> {pick, ok}
+  wrong: new Set(),
+  done: false
+};
+
+function load(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    const o = JSON.parse(raw);
+    if(o && o.wrong) state.wrong = new Set(o.wrong);
+    if(o && o.answers) state.answers = o.answers;
+  }catch(e){}
+}
+function save(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify({wrong:[...state.wrong], answers:state.answers}));
+  }catch(e){}
+}
+
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+function baseOrder(){
+  let base = DATA.map((_,i)=>i);
+  if(state.filterCh) base = base.filter(i => DATA[i].ch === state.filterCh);
+  if(state.onlyWrong) base = base.filter(i => state.wrong.has(i));
+  if(state.mode === 'shuffle') base = shuffle(base);
+  return base;
+}
+
+function rebuild(){
+  const base = baseOrder();
+  state.order = base;
+  state.cur = 0;
+  state.done = base.length === 0;
+  render();
+}
+
+function current(){ return state.order[state.cur]; }
+
+function render(){
+  const stage = $('#stage');
+  stage.innerHTML = '';
+
+  if(state.done && state.order.length === 0){
+    const box = el('div','done', `
+      <h2>这里没有题 ✦</h2>
+      <p>当前范围（${state.filterCh || '全部讲次'}${state.onlyWrong ? ' · 仅错题' : ''}）还没有可练的题。</p>
+      <button class="btn btn-ocean" id="again">回到全部题目</button>`);
+    stage.appendChild(box);
+    box.querySelector('#again').onclick = ()=>{
+      state.onlyWrong = false; state.filterCh = null;
+      $('#onlyWrong').classList.remove('on');
+      rebuild();
+    };
+    updateBar();
+    return;
+  }
+
+  if(state.done){
+    const answered = Object.keys(state.answers).length;
+    const right = Object.values(state.answers).filter(a=>a.ok).length;
+    const rate = answered ? Math.round(right/answered*100) : 0;
+    const box = el('div','done', `
+      <h2>本轮结束 ✦</h2>
+      <div class="big">${rate}%</div>
+      <p>作答 ${answered} 题 · 正确 ${right} · 错题 ${state.wrong.size}</p>
+      <button class="btn btn-ocean" id="again">再来一轮</button>`);
+    stage.appendChild(box);
+    box.querySelector('#again').onclick = ()=>{ state.done=false; state.onlyWrong=false; state.filterCh=null; state.cur=0; rebuild(); };
+    updateBar();
+    return;
+  }
+
+  const qid = current();
+  const q = DATA[qid];
+  const rec = state.answers[qid];
+
+  const card = el('div','card');
+  const stars = q.freq === '高频' ? '★★★' : (q.freq === '中频' ? '★★' : '★');
+  card.innerHTML = `
+    <div class="chips">
+      <span class="chip">${q.ch}</span>
+      <span class="chip ghost">第 ${state.cur+1} / ${state.order.length} 题</span>
+      ${q.pt ? `<span class="chip ghost">考点：${q.pt}</span>` : ''}
+      ${rec ? `<span class="chip ghost">${rec.ok?'已答对':'已答错'}</span>` : ''}
+    </div>
+    <div class="tags">
+      <span class="tag ${q.src==='file'?'src-file':'src-ext'}"><i>${q.src==='file'?'文件原题':'扩展题'}</i></span>
+      <span class="tag lv-${q.lv}"><i>${q.lv}</i></span>
+      <span class="tag fq-${q.freq}"><i>${stars} ${q.freq}</i></span>
+    </div>
+    <h1 class="stem">${q.q}</h1>
+    <div class="opts" id="opts"></div>`;
+  stage.appendChild(card);
+
+  const opts = card.querySelector('#opts');
+  q.o.forEach((text, i)=>{
+    const b = el('button','opt');
+    b.type = 'button';
+    b.innerHTML = `<span class="k">${'ABCDE'[i]}</span><span class="t">${text}</span>`;
+    if(rec){
+      b.classList.add('locked');
+      if(i === q.a) b.classList.add('correct');
+      else if(i === rec.pick) b.classList.add('wrong');
+      else b.classList.add('dim');
+      if(i === q.a) b.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');
+      if(i === rec.pick && !rec.ok) b.insertAdjacentHTML('beforeend','<span class="mark">✕</span>');
+    }else{
+      b.onclick = ()=> answer(i);
+    }
+    opts.appendChild(b);
+  });
+
+  if(rec) stage.appendChild(explainNode(q, rec));
+  updateBar();
+}
+
+function explainNode(q, rec){
+  const wrap = el('div','explain');
+  const bubble = el('div','bubble');
+  bubble.innerHTML = `
+    <div class="verdict">
+      <span class="tag ${rec.ok?'':'bad'}">${rec.ok?'答对了':'答错了'}</span>
+      <span style="color:#F2FFC2">正确答案：${'ABCDE'[q.a]}</span>
+    </div>
+    <h4>解析</h4>
+    ${q.e || '<p>本题暂无解析。</p>'}`;
+  wrap.appendChild(bubble);
+  return wrap;
+}
+
+function answer(pick){
+  const qid = current();
+  if(state.answers[qid]) return;
+  const q = DATA[qid];
+  const ok = pick === q.a;
+  state.answers[qid] = {pick, ok};
+  if(!ok) state.wrong.add(qid); else state.wrong.delete(qid);
+  save();
+  render();
+  const card = $('.card');
+  if(card) card.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function go(step){
+  if(state.done) return;
+  const next = state.cur + step;
+  if(next < 0) return;
+  if(next >= state.order.length){ state.done = true; render(); return; }
+  state.cur = next;
+  render();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function updateBar(){
+  const total = state.order.length;
+  const pos = total === 0 ? 0 : (state.done ? total : state.cur+1);
+  $('#pos').textContent = `${String(pos).padStart(2,'0')} / ${String(total).padStart(2,'0')}`;
+  const scoped = state.order.filter(qid=>state.answers[qid]).length;
+  const right = Object.values(state.answers).filter(a=>a.ok).length;
+  $('#score').textContent = `✓ ${right}　✕ ${state.wrong.size}`;
+  $('#bar').style.width = (total ? (state.done ? 100 : scoped/total*100) : 0) + '%';
+  $('#wrongCount').textContent = state.wrong.size;
+  $('#progressText').textContent = '已答 ' + scoped + ' / ' + total + ' · ' + (state.filterCh || '全部讲次');
+  $('#prev').disabled = state.cur === 0 || state.done;
+  $('#next').disabled = state.done;
+  $('#next').textContent = state.cur === state.order.length-1 ? '完成本轮 →' : '下一题 →';
+}
+
+function openDrawer(){
+  const list = $('#wlist');
+  list.innerHTML = '';
+  const ids = [...state.wrong].sort((a,b)=>a-b);
+  if(!ids.length){
+    list.innerHTML = '<div class="empty">还没有错题。<br>答错的题会自动收进来，随时可以回来重做。</div>';
+  }else{
+    ids.forEach(id=>{
+      const q = DATA[id];
+      const b = el('button','wrong-item', `<em>${q.ch} · 原题 ${String(id+1).padStart(2,'0')}</em>${q.q.replace(/<[^>]+>/g,'')}`);
+      b.type='button';
+      b.onclick = ()=> jumpToQid(id);
+      list.appendChild(b);
+    });
+  }
+  $('#drawer').classList.add('open');
+}
+
+function shortCh(ch){ return ch.length > 11 ? ch.slice(0, 10) + '…' : ch; }
+
+function renderChips(){
+  const box = $('#chChips');
+  box.innerHTML = '';
+  const all = el('button','chchip', '全部 ' + DATA.length);
+  all.type = 'button';
+  if(!state.filterCh) all.classList.add('on');
+  all.onclick = ()=>{ state.filterCh = null; state.done = false; rebuild(); renderChips(); renderGrid(); };
+  box.appendChild(all);
+
+  const seen = [];
+  DATA.forEach(q=>{ if(!seen.includes(q.ch)) seen.push(q.ch); });
+  seen.forEach(ch=>{
+    const n = DATA.filter(q=>q.ch === ch).length;
+    const b = el('button','chchip', shortCh(ch));
+    b.type = 'button';
+    b.title = ch + '（' + n + ' 题）';
+    if(state.filterCh === ch) b.classList.add('on');
+    b.onclick = ()=>{ state.filterCh = ch; state.done = false; rebuild(); renderChips(); renderGrid(); };
+    box.appendChild(b);
+  });
+}
+
+function jumpToQid(qid){
+  let pos = state.order.indexOf(qid);
+  if(pos < 0){
+    if(state.onlyWrong && !state.wrong.has(qid)){ state.onlyWrong = false; $('#onlyWrong').classList.remove('on'); }
+    if(state.filterCh && DATA[qid].ch !== state.filterCh) state.filterCh = DATA[qid].ch;
+    state.order = baseOrder();
+    pos = state.order.indexOf(qid);
+    if(pos < 0){
+      state.onlyWrong = false; $('#onlyWrong').classList.remove('on');
+      state.filterCh = null; state.order = baseOrder();
+      pos = state.order.indexOf(qid);
+    }
+  }
+  if(pos < 0) return;
+  state.done = false;
+  state.cur = pos;
+  $('#jumpDrawer').classList.remove('open');
+  render();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function renderGrid(){
+  const grid = $('#qgrid');
+  grid.innerHTML = '';
+  const seen = [];
+  DATA.forEach(q=>{ if(!seen.includes(q.ch)) seen.push(q.ch); });
+  const list = state.filterCh ? seen.filter(ch=>ch === state.filterCh) : seen;
+
+  list.forEach(ch=>{
+    const ids = DATA.map((q,i)=>i).filter(i=>DATA[i].ch === ch);
+    const done = ids.filter(i=>state.answers[i]).length;
+    const g = el('div','qgroup');
+    g.innerHTML = '<h5>' + shortCh(ch) + '<span>' + done + '/' + ids.length + '</span></h5>';
+    const cells = el('div','qgrid');
+    ids.forEach(i=>{
+      const rec = state.answers[i];
+      const b = el('button','qcell', String(i+1).padStart(2,'0'));
+      b.type = 'button';
+      b.title = DATA[i].q.replace(/<[^>]+>/g,'').slice(0, 26);
+      if(rec) b.classList.add(rec.ok ? 'ok' : 'bad');
+      if(!state.done && state.order[state.cur] === i) b.classList.add('on');
+      b.onclick = ()=> jumpToQid(i);
+      cells.appendChild(b);
+    });
+    g.appendChild(cells);
+    grid.appendChild(g);
+  });
+
+  const answered = state.order.filter(qid=>state.answers[qid]).length;
+  const nFile = DATA.filter(x=>x.src === 'file').length;
+  const nExt = DATA.length - nFile;
+  $('#jumpSub').textContent = (state.filterCh ? shortCh(state.filterCh) : '全部讲次')
+    + (state.onlyWrong ? ' · 仅错题' : '')
+    + ' · ' + state.order.length + ' 题'
+    + (state.filterCh ? '' : '（原题 ' + nFile + ' · 扩展 ' + nExt + '）')
+    + ' · 已答 ' + answered;
+}
+
+function openJump(){
+  renderChips();
+  renderGrid();
+  $('#jumpDrawer').classList.add('open');
+  const on = $('#qgrid .qcell.on');
+  if(on) on.scrollIntoView({block:'center'});
+}
+
+function init(){
+  load();
+  $('#mode').onclick = ()=>{
+    state.mode = state.mode === 'seq' ? 'shuffle' : 'seq';
+    $('#mode').classList.toggle('on', state.mode === 'shuffle');
+    $('#mode').firstChild.textContent = state.mode === 'seq' ? '顺序出题' : '乱序出题';
+    state.done = false;
+    rebuild();
+  };
+  $('#onlyWrong').onclick = ()=>{
+    state.onlyWrong = !state.onlyWrong;
+    $('#onlyWrong').classList.toggle('on', state.onlyWrong);
+    state.done = false;
+    rebuild();
+  };
+  $('#wrongBtn').onclick = openDrawer;
+  $('#jumpBtn').onclick = openJump;
+  $('#closeJump').onclick = ()=> $('#jumpDrawer').classList.remove('open');
+  $('#jumpDrawer').onclick = e=>{ if(e.target.id === 'jumpDrawer') $('#jumpDrawer').classList.remove('open'); };
+  $('#drawer').onclick = e=>{ if(e.target.id === 'drawer') $('#drawer').classList.remove('open'); };
+  $('#closeDrawer').onclick = ()=> $('#drawer').classList.remove('open');
+  $('#prev').onclick = ()=> go(-1);
+  $('#next').onclick = ()=> go(1);
+  $('#reset').onclick = ()=>{
+    if(!confirm('清空作答记录和错题集？')) return;
+    state.answers = {}; state.wrong = new Set(); state.done = false; state.cur = 0;
+    save(); rebuild();
+  };
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'ArrowRight'){ go(1); }
+    else if(e.key === 'ArrowLeft'){ go(-1); }
+    else if(e.key === 'Escape'){ $('#drawer').classList.remove('open'); $('#jumpDrawer').classList.remove('open'); }
+    else if(/^[1-5]$/.test(e.key)){
+      const idx = Number(e.key)-1;
+      if(!state.answers[current()] && DATA[current()].o[idx] !== undefined) answer(idx);
+    }
+  });
+  render();
+}
+init();
+</script>
+</body>
+</html>

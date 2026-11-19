@@ -150,6 +150,7 @@
             : '<span class="chip chip-teal">资料型</span>' +
               '<span><b>' + (s.matCount || 0) + '</b> 份资料</span>') +
         '</div><div class="spacer"></div>' +
+        (s.extAlt ? '<span class="chip chip-quiz" role="link" tabindex="0" data-alt="' + s.extAlt + '" aria-label="' + WB.esc(s.name) + ' 刷题">刷题</span>' : '') +
         '<span class="chip chip-line">' + (s.ext ? '打开 →' : '进入 →') + '</span>' +
       '</div></a>';
   }
@@ -178,6 +179,22 @@
     curCat = b.getAttribute('data-cat');
     renderTabs();
     render();
+  });
+
+  /* 卡片内的次入口（刷题）：卡片本身是 <a>，不能嵌套链接，
+     所以用带 data-alt 的 span 承载，这里拦下默认跳转。 */
+  var gridEl = document.getElementById('grid');
+  function goAlt(e) {
+    var el = e.target.closest('[data-alt]');
+    if (!el) return;
+    e.preventDefault();
+    e.stopPropagation();
+    location.href = el.getAttribute('data-alt');
+  }
+  gridEl.addEventListener('click', goAlt);
+  gridEl.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+    goAlt(e);
   });
 
   renderTabs();

@@ -220,6 +220,11 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 28px 0; }
 .chip-ok { background: var(--ok-soft); color: var(--ok); }
 .chip-bad { background: var(--bad-soft); color: var(--bad); }
 .chip-line { background: transparent; border-color: var(--border-2); color: var(--text-3); }
+/* 卡片内的次入口（如「刷题」）：可点击，视觉上比主按钮轻 */
+.chip-quiz { background: var(--teal-soft); color: var(--teal); cursor: pointer; user-select: none; }
+.chip-quiz:hover { background: var(--teal); color: #fff; }
+.chip-quiz:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.subj-foot .chip + .chip { margin-left: -5px; }
 /* 考频 / 重难点标记 */
 .chip-hot { background: var(--bad-soft); color: var(--bad); border-color: color-mix(in srgb, var(--bad) 26%, transparent); }
 .chip-mid { background: var(--amber-soft); color: var(--amber); }

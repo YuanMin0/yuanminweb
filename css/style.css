@@ -177,27 +177,8 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 28px 0; }
 .nav a:hover { background: var(--surface-3); color: var(--text); text-decoration: none; }
 .nav a.on { background: var(--brand-soft); color: var(--brand-ink); font-weight: 650; }
 /* 导航里的「刷题」：漫画贴纸风，固定配色以在深浅主题下都醒目 */
-.nav a.nav-drill {
-  margin: 0 7px; padding: 5px 13px;
-  background: linear-gradient(135deg, #F0FF0A, #DBF007);
-  color: #0B1220; border: 2px solid #0B1220; border-radius: 999px;
-  box-shadow: 3px 3px 0 rgba(11, 18, 32, .82);
-  font-weight: 900; font-size: 13.5px;
-  transform: rotate(-2.5deg);
-  transition: transform .18s var(--spring-fast), box-shadow .18s ease;
-}
-.nav a.nav-drill:hover {
-  background: linear-gradient(135deg, #F0FF0A, #DBF007);
-  color: #0B1220;
-  transform: rotate(-2.5deg) translate(-2px, -2px);
-  box-shadow: 5px 5px 0 rgba(11, 18, 32, .82);
-}
-.nav a.nav-drill:active { transform: rotate(-2.5deg) translate(1px, 1px); box-shadow: 2px 2px 0 rgba(11, 18, 32, .82); }
-.nav a.nav-drill.on {
-  background: linear-gradient(135deg, #F0FF0A, #DBF007);
-  color: #0B1220;
-  box-shadow: 3px 3px 0 rgba(11, 18, 32, .82), 0 0 0 3px rgba(240, 255, 10, .3);
-}
+/* 导航中的刷题与其它项保持一致，不再使用贴纸样式 */
+.nav a.nav-drill { margin: 0; }
 /* ── Hero 主行动按钮：点击刷题 ── */
 .gbtn.gbtn-drill {
   position: relative;
@@ -1064,6 +1045,9 @@ html[data-theme="dark"] .dock .gbtn:hover { background: rgba(255, 255, 255, .1);
 .hero-fx .orb.o2 { width: 86px; height: 86px; right: 22%; bottom: 12%; background: radial-gradient(circle at 32% 30%, color-mix(in srgb, var(--teal) 44%, transparent), transparent 68%); animation-delay: 1.4s; }
 .hero-fx .orb.o3 { width: 58px; height: 58px; right: 36%; top: 22%; background: radial-gradient(circle at 32% 30%, color-mix(in srgb, var(--violet) 42%, transparent), transparent 68%); animation-delay: 2.6s; }
 @keyframes fxFloat { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-18px) } }
+
+/* 顶部标签内的红点保持静态，避免视觉跳动 */
+.hero-tag .badge-dot::after { animation: none; }
 
 .hero-tag {
   display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: var(--r-full);

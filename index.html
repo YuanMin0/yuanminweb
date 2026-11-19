@@ -207,8 +207,7 @@
 
   /* ---------- 启动特效 ---------- */
   WB.fx.init();
-  WB.fx.typewriter(document.querySelector('[data-tw]'),
-    ['期末复习 · 全站离线可用 · 私人空间', '知识点 · 刷题 · 错题本 · 讲义下载'], { speed: 46, pause: 2400 });
+  /* 顶部标签保持静态，不做打字机循环 */
 })();
 </script>
 <script src="data/changelog.js"></script>

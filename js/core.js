@@ -139,6 +139,8 @@
   WB.drillHref = function (s) {
     if (!s) return '';
     if (s.extAlt) return s.extAlt;
+    /* 有独立题库的文档页科目（如劳动卫生学）：仍可刷题，同时保留「打开 →」看知识点 */
+    if (s.drill) return WB.link('drill.html', { s: s.id });
     if (s.ext) return '';
     return (s._count && s._count.quiz > 0) ? WB.link('drill.html', { s: s.id }) : '';
   };

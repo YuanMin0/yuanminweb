@@ -131,14 +131,7 @@ WB.register({
    该科目以完整的自包含 HTML 页面呈现（知识点 + 题库 + 答案解析），
    不走 subject.html 动态渲染，通过 ext 字段直接跳转。
    ========================================================================== */
-WB.register({
-  id: 'laoweisheng', name: '劳动卫生学', en: 'Occupational Hygiene', icon: '🦺',
-  accent: 'var(--teal)', accentSoft: 'var(--teal-soft)', sem: 'dasan1', order: 15.5,
-  tag: '预防医学',
-  desc: '职业有害因素识别、粉尘与尘肺、毒物中毒、物理因素危害与职业卫生监测，10 讲 223 个知识点与 26 题解析。',
-  ext: 'laoweisheng.html',
-  chapters: [], _count: { chapters: 10, knowledge: 223, quiz: 26 }
-});
+
 
 /* ==========================================================================
    环境卫生学 — 知识点页 + 刷题页（双入口）

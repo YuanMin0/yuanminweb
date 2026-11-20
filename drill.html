@@ -993,6 +993,7 @@ body.mode-pick .wrap{padding-bottom:40px}
     } else if (WB.store.wrong()[q.uid]) {
       /* 原本做错、这次做对 → 自动移出错题本，避免「已掌握」的题一直占位 */
       WB.store.removeWrong(q.uid);
+      if (WB.toast) WB.toast('已掌握，移出错题本');
     }
     /* 写入答题日志：drill 此前不记录，导致连续天数与周报统计缺失 */
     WB.store.addLog({ uid: q.uid, subjectId: q.subjectId, kid: q.kid, ok: WB.isCorrect(q, my) });

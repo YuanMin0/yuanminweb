@@ -236,7 +236,11 @@
       var ds = read(K.days, []);
       var set = {};
       ds.forEach(function (x) { set[x] = 1; });
-      var n = 0, d = new Date();
+      var d = new Date();
+      /* 今天尚未学习不算断档：从昨天往回数。连续两天没学才归零，
+         避免用户早上打开页面看到「连续 0 天」而误以为记录丢失。 */
+      if (!set[d.toDateString()]) d.setDate(d.getDate() - 1);
+      var n = 0;
       while (set[d.toDateString()]) { n++; d.setDate(d.getDate() - 1); }
       return n;
     },

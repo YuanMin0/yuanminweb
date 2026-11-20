@@ -36,6 +36,7 @@
 
 <script src="js/core.js"></script>
 <script src="data/_meta.js"></script>
+<script src="mn/list.js"></script>
 <script src="data/xssx.js"></script>
 <script src="data/exam-xssx.js"></script>
 <script src="data/ethics.js"></script>
@@ -154,6 +155,9 @@
           ? '<a class="gbtn gbtn-primary" href="' + WB.link('quiz.html', { s: s.id }) + '"><span class="gbtn-ico">◉</span> 开始全科练习</a>' +
             '<button class="gbtn" id="dlBtn"><span class="gbtn-ico">⇩</span> 下载全册讲义</button>' +
             '<a class="gbtn" href="' + WB.link('quiz.html', { s: s.id, mode: 'random' }) + '"><span class="gbtn-ico">⚡</span> 随机抽题</a>'
+          : '') +
+        (window.WB_MN && WB_MN[s.id]
+          ? '<a class="gbtn" href="' + WB_MN[s.id] + '"><span class="gbtn-ico">✦</span> 考前速记</a>'
           : '') +
         (function () {
           var mg = (window.MATERIALS || []).filter(function (g) { return g.id === s.id; })[0];

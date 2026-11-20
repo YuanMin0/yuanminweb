@@ -1,0 +1,1398 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>病理学 | 考前速记</title><script src="../js/auth.js"></script><script>if(window.WB&&WB.auth)WB.auth.guard();</script><style>
+    :root {
+      --navy:#5C7A10; --navy-deep:#3D4F08; --blue:#E91379; --blue-soft:#FDE9F2;
+      --gray-050:#FBF7E4; --gray-100:#F5EFD2; --gray-200:#E4DDB6; --gray-500:#5E6440;
+      --ink:#232A16; --paper:#FFFDF2; --gold:#88AE1B; --shadow:0 18px 54px rgba(92,122,16,.10);
+      --font-title:"方正小标宋简体","FZXiaoBiaoSong-B05S","STZhongsong","SimSun",serif;
+      --font-heading:"黑体","SimHei","Microsoft YaHei",sans-serif;
+      --font-body:"仿宋_GB2312","FangSong_GB2312","仿宋","FangSong","Microsoft YaHei",serif;
+      --font-kai:"楷体_GB2312","KaiTi","STKaiti",serif;
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:112px; }
+    body { margin:0; overflow-x:hidden; color:var(--ink); background:linear-gradient(180deg,var(--navy-deep) 0 330px,var(--gray-050) 330px); font:17px/1.75 var(--font-body); }
+    a { color:var(--blue); text-underline-offset:3px; }
+    h1,h2 { font-family:var(--font-title); font-weight:400; }
+    h3,h4 { font-family:var(--font-heading); }
+    strong { font-family:var(--font-heading); }
+    code { font-family:Consolas,monospace; }
+    a:focus-visible, summary:focus-visible { outline:3px solid #E91379; outline-offset:3px; }
+    .hero { padding:46px 30px 38px; color:#fff; background:linear-gradient(135deg,rgba(61,79,8,.98),rgba(122,156,22,.95)); border-bottom:1px solid rgba(255,255,255,.12); }
+    .hero-inner { width:min(1380px,100%); margin:0 auto; }
+    .hero h1 { margin:0; font-size:clamp(2.2rem,4vw,4rem); }
+    .hero p { max-width:850px; margin:16px 0 0; color:#F2F8E0; }
+    .hero-meta { display:flex; flex-wrap:wrap; gap:12px 26px; margin-top:22px; color:#D6E7B4; font:16px var(--font-kai); }
+    .mobile-nav { display:none; }
+    .layout { display:grid; grid-template-columns:minmax(250px,290px) minmax(0,1fr); gap:28px; width:min(1440px,calc(100% - 40px)); margin:28px auto 70px; align-items:start; }
+    .sidebar { position:sticky; top:18px; max-height:calc(100vh - 36px); overflow:auto; padding:18px 14px; background:rgba(255,255,255,.88); border:1px solid rgba(220,229,225,.9); border-radius:10px; box-shadow:var(--shadow); backdrop-filter:blur(22px); }
+    .sidebar-title { margin:0 0 12px; padding:0 8px 11px; border-bottom:1px solid var(--gray-200); font:700 16px var(--font-heading); }
+    .nav-group { margin-bottom:12px; }
+    .nav-chapter { display:block; padding:8px 7px; color:var(--navy); font:700 15px var(--font-heading); text-decoration:none; }
+    .nav-section { display:block; padding:5px 7px 5px 17px; color:var(--gray-500); font-size:14px; text-decoration:none; border-radius:5px; }
+    .nav-section:hover { background:var(--blue-soft); color:var(--navy); }
+    .nav-question-bank { margin-top:16px; padding-top:14px; border-top:1px solid var(--gray-200); }
+    .nav-question-bank .nav-chapter { color:#B01060; }
+    main { min-width:0; max-width:100%; padding:clamp(24px,4vw,54px); background:rgba(255,255,255,.94); border:1px solid var(--gray-200); border-radius:10px; box-shadow:var(--shadow); backdrop-filter:blur(16px); }
+    .intro { margin-bottom:42px; padding-bottom:28px; border-bottom:2px solid var(--navy); }
+    .intro h2 { margin:0 0 12px; font-size:2rem; }
+    .intro p { margin:8px 0; color:var(--gray-500); }
+    .chapter { margin-top:58px; scroll-margin-top:96px; }
+    .chapter-header { display:flex; gap:20px; align-items:center; margin-bottom:26px; padding:22px 24px; color:#fff; background:linear-gradient(135deg,var(--navy-deep),var(--blue)); border-radius:10px; box-shadow:0 16px 42px rgba(61,79,8,.18); }
+    .chapter-number { font:700 2.25rem var(--font-heading); color:#FFF3C4; }
+    .chapter-header p { margin:0 0 3px; color:#D9E8BC; font:15px var(--font-kai); }
+    .chapter-header h2 { margin:0; color:#fff; font-size:2rem; }
+    .frequency-summary { margin:22px 0 0; padding:18px; background:rgba(255,255,255,.72); border:1px solid var(--gray-200); border-radius:9px; box-shadow:0 12px 34px rgba(92,122,16,.06); backdrop-filter:blur(16px); }
+    .frequency-summary h3 { margin:0 0 10px; color:var(--navy); }
+    .frequency-summary table { min-width:620px; }
+    .frequency-summary td:nth-child(2) { color:#E91379; font-weight:700; white-space:nowrap; }
+    .knowledge-block { margin-top:34px; scroll-margin-top:110px; }
+    .knowledge-block > h3 { margin:0 0 12px; padding-bottom:8px; color:var(--navy); border-bottom:1px solid var(--gray-200); font-size:1.28rem; }
+    .exam-badge { display:inline-block; margin-left:10px; padding:2px 8px; color:#B01060; background:#FDE8F1; border:1px solid #F3BBD6; border-radius:999px; font:700 13px var(--font-heading); vertical-align:middle; white-space:nowrap; }
+    .exam-hot { color:#E91379; background:linear-gradient(transparent 58%,rgba(216,184,154,.34) 58%); font-family:var(--font-heading); font-weight:700; }
+    .knowledge-content { color:#2C3418; }
+    .knowledge-content p { margin:10px 0; }
+    .knowledge-content ul,.knowledge-content ol { margin:10px 0 15px; padding-left:1.35rem; }
+    .knowledge-content li { margin:6px 0; }
+    .knowledge-content blockquote { margin:16px 0; padding:14px 18px; background:var(--blue-soft); border-radius:8px; }
+    .table-wrap { width:100%; min-width:0; max-width:100%; margin:16px 0; overflow:auto; border:1px solid var(--gray-200); border-radius:8px; background:#FFFDF4; padding:7px; }
+    table { width:100%; min-width:720px; border-collapse:collapse; font-size:15px; line-height:1.5; }
+    th,td { padding:10px 12px; border-bottom:1px solid var(--gray-200); text-align:left; vertical-align:top; }
+    th { color:var(--navy); background:var(--gray-100); font-family:var(--font-heading); }
+    tr:last-child td { border-bottom:0; }
+    .question-bank { margin-top:70px; padding-top:34px; scroll-margin-top:110px; }
+    .question-bank > h2 { margin:0 0 12px; font-size:2rem; }
+    .qa-card { margin:14px 0; background:rgba(255,255,255,.86); border:1px solid var(--gray-200); border-radius:9px; box-shadow:0 12px 34px rgba(92,122,16,.07); backdrop-filter:blur(14px); }
+    .question-toolbar { margin:18px 0 22px; }
+    .question-filter-panel { padding:14px 16px; background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(251,247,228,.82)); border:1px solid var(--gray-200); border-radius:12px; box-shadow:0 14px 36px rgba(92,122,16,.07); backdrop-filter:blur(14px); }
+    .filter-row { display:flex; gap:14px; align-items:flex-start; }
+    .filter-row + .filter-row { margin-top:12px; padding-top:12px; border-top:1px solid var(--gray-200); }
+    .filter-label { flex:0 0 52px; padding-top:9px; color:var(--navy); font:700 14px var(--font-heading); }
+    .filter-buttons { display:flex; flex:1; flex-wrap:wrap; gap:8px; min-width:0; }
+    .source-filter-row .filter-buttons { padding:8px 10px; background:rgba(253,233,242,.72); border-radius:10px; }
+    .filter-button { min-height:40px; padding:7px 13px; color:var(--navy); background:rgba(255,255,255,.82); border:1px solid var(--gray-200); border-radius:999px; font:700 14px var(--font-heading); cursor:pointer; transition:background .25s ease,border-color .25s ease,color .25s ease; }
+    .filter-button span { color:#E91379; }
+    .filter-button.active,.filter-button:hover { color:#fff; background:var(--navy); border-color:var(--navy); }
+    .filter-button.active span,.filter-button:hover span { color:#FFF0B8; }
+    .qa-card { padding:18px; }
+    .question-label { margin-bottom:7px; color:#E91379; font:700 13px var(--font-heading); }
+    .question-badge { display:inline-block; margin-left:7px; padding:1px 7px; border-radius:999px; font:700 12px var(--font-heading); vertical-align:middle; }
+    .question-badge.past { color:#B01060; background:#FDE8F1; border:1px solid #F3BBD6; }
+    .question-badge.bank { color:#E91379; background:#FDE9F2; border:1px solid #E8D8F2; }
+    .question-badge.predicted { color:#8A0F4C; background:#f7efdc; border:1px solid #DCE8A8; }
+    .qa-card h3 { margin:0; color:var(--navy); font-size:17px; line-height:1.65; }
+    .option-list { margin:12px 0 2px; color:#3A4324; font-size:16px; }
+    .option-list div { margin:5px 0; }
+    .answer-toggle { margin-top:13px; padding:0; color:#E91379; background:none; border:0; font:700 16px var(--font-heading); cursor:pointer; text-decoration:underline; text-underline-offset:4px; }
+    .answer-toggle:hover { color:#690DAD; }
+    .prediction-bank { background:linear-gradient(180deg,rgba(250,244,229,.34),transparent 220px); }
+    .answer-panel { margin-top:13px; padding:15px 16px; color:#3A4324; background:rgba(250,249,244,.88); border:1px solid var(--gray-200); border-radius:8px; opacity:0; animation:answerFadeIn .38s ease forwards; }
+    .answer-panel.closing { animation:answerFadeOut .26s ease forwards; }
+    .answer-panel[hidden] { display:none; }
+    .answer-panel p { margin:7px 0; }
+    @keyframes answerFadeIn { from { opacity:0; transform:translateY(-3px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes answerFadeOut { from { opacity:1; transform:translateY(0); } to { opacity:0; transform:translateY(-3px); } }
+    .references { margin-top:66px; padding-top:30px; scroll-margin-top:110px; }
+    .reference-list { columns:2; column-gap:34px; padding-left:1.2rem; color:var(--gray-500); font-size:15px; }
+    .reveal { opacity:0; transform:translateY(18px); transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1); }
+    .reveal.visible { opacity:1; transform:none; }
+    .footer { width:min(1440px,calc(100% - 40px)); margin:0 auto 42px; color:var(--gray-500); text-align:center; font-size:14px; }
+    .scroll-progress { position:fixed; inset:0 0 auto; z-index:50; height:4px; background:rgba(122,156,22,.10); }
+    .scroll-progress i { display:block; width:100%; height:100%; transform:scaleX(0); transform-origin:left center; background:linear-gradient(90deg,#E91379,#E91379); transition:transform .18s ease-out; }
+    @media (max-width:980px) {
+      body { background:linear-gradient(180deg,var(--navy-deep) 0 270px,var(--gray-050) 270px); font-size:16px; }
+      .hero { padding:32px 20px 28px; }
+      .mobile-nav { position:sticky; top:0; z-index:20; display:block; padding:8px 10px; overflow-x:auto; white-space:nowrap; background:rgba(255,255,255,.94); border-bottom:1px solid var(--gray-200); backdrop-filter:blur(18px); }
+      .mobile-nav a { display:inline-block; margin-right:6px; padding:7px 11px; color:var(--navy); background:var(--gray-100); border-radius:999px; font-size:13px; text-decoration:none; }
+      .layout { display:block; width:min(100% - 20px,980px); margin-top:16px; }
+      .sidebar { display:none; }
+      main { padding:24px 16px; }
+      .chapter-header { padding:18px; }
+      .chapter-header h2 { font-size:1.5rem; }
+      .filter-row { flex-direction:column; gap:7px; }
+      .filter-label { flex-basis:auto; padding-top:0; }
+      .source-filter-row .filter-buttons { width:100%; }
+      .reference-list { columns:1; }
+      table { min-width:620px; }
+    }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; } }
+    @media print { body { background:#fff; color:#000; font-size:11pt; } .mobile-nav,.sidebar,.footer { display:none!important; } .layout,main { display:block; width:100%; margin:0; padding:0; border:0; box-shadow:none; background:#fff; } .qa-card .answer { display:block!important; } .table-wrap,table,.qa-card,.chapter { break-inside:avoid; } }
+  
+/* ==================================================================
+   视觉增强层 v3 — 注入式，不覆盖原内容
+   方向：学术资料的克制气质；高级感来自「深度 + 发丝线 + 玻璃 + 高光」
+   已移除：光标跟随光晕、卡片 3D 倾斜
+   ================================================================== */
+:root{
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-spring:cubic-bezier(.34,1.56,.64,1);
+
+  /* ---- 苹果曲线（v8）----
+     present：iOS 面板「进场」，快速减速、无过冲
+     dismiss：iOS 面板「退场」，缓慢起步、加速离场
+     spring ：阻尼弹簧 ζ=0.82 / response=0.40s，1.1% 过冲、0.20s 到 90%、0.58s 收稳。
+              苹果的弹簧靠「快到位 + 长收敛」的节奏体现，而不是看得见的来回弹。 */
+  --ease-apple:cubic-bezier(.32,.72,0,1);
+  --ease-apple-out:cubic-bezier(.32,0,.67,0);
+  /* iris：遮罩光圈「揭开」用的曲线。
+     不能用 dismiss（y=u³ 太后置）：实测光圈要到过渡的 83% 才让出角落，
+     而入场内容 440ms 就淡完了，中间会留出约 160ms 的纯色空档。
+     改用缓入缓出的中置曲线，让揭开窗口与正文落位（360→640ms）重叠。 */
+  --ease-iris:cubic-bezier(.5,.05,.3,1);
+  --spring-apple:linear(0,.0094,.0347,.0721,.1185,.1711,.2278,.2865,.3459,.4048,.4621,.5172,.5695,.6187,.6646,.7069,.7458,.7811,.813,.8416,.8672,.8898,.9097,.9271,.9422,.9551,.9662,.9756,.9835,.99,.9954,.9997,1.0031,1.0058,1.0078,1.0092,1.0102,1.0108,1.0111,1.0111,1.0109,1.0105,1.0101,1.0095,1.0089,1.0083,1.0076,1.007,1.0063,1.0057,1.0051,1.0045,1.004,1.0035,1.0031,1.0026,1.0023,1.0019,1.0016,1.0014,1.0011,1.0009,1.0007,1.0006,1);
+  --gold-2:#B7CF6A;
+  --line:rgba(233,19,121,.28);
+  --hair:rgba(255,255,255,.9);
+  --ambient:0 36px 84px -42px rgba(92,122,16,.46);
+  --lift:0 32px 66px -30px rgba(92,122,16,.54);
+
+  /* ---- v4 高级色系：深墨蓝 · 古铜金 · 冰蓝 · 氧化红 · 暖骨白 ---- */
+  --navy:#5C7A10; --navy-deep:#3D4F08;
+  --blue:#E91379; --blue-soft:#FDE9F2;
+  --gray-050:#FBF7E4; --gray-100:#F5EFD2; --gray-200:#E4DDB6; --gray-500:#5E6440;
+  --ink:#232A16; --gold:#88AE1B; --paper:#FFFDF2;
+  --brass:#88AE1B; --brass-lt:#B7CF6A; --brass-dk:#6E8C1A;
+  --ice:#E91379; --oxblood:#E91379;
+  --sheen:rgba(255,255,255,.62);
+}
+
+/* ---------- 无障碍：跳转链接 ---------- */
+.skip-link{
+  position:absolute; left:-9999px; top:0; z-index:999;
+  padding:10px 18px; background:var(--navy); color:#fff;
+  border-radius:0 0 10px 0; font:700 15px var(--font-heading); text-decoration:none;
+}
+.skip-link:focus{ left:0; }
+
+/* ---------- 高级感细节：选区 / 滚动条 / 聚焦环 ---------- */
+::selection{ background:rgba(136,174,27,.26); color:var(--navy-deep); }
+::-webkit-scrollbar{ width:11px; height:11px; }
+::-webkit-scrollbar-track{ background:transparent; }
+::-webkit-scrollbar-thumb{
+  background:rgba(233,19,121,.34); border:3px solid transparent; background-clip:content-box;
+  border-radius:99px;
+}
+::-webkit-scrollbar-thumb:hover{ background:rgba(233,19,121,.6); background-clip:content-box; }
+/* 侧栏滚动条：细、低干扰，只在悬浮时明显 */
+.sidebar{ scrollbar-width:thin; scrollbar-color:rgba(233,19,121,.28) transparent; }
+.sidebar::-webkit-scrollbar{ width:7px; }
+.sidebar::-webkit-scrollbar-track{ background:transparent; }
+.sidebar::-webkit-scrollbar-thumb{
+  background:rgba(233,19,121,.18); border:0; border-radius:99px;
+}
+.sidebar:hover::-webkit-scrollbar-thumb{ background:rgba(233,19,121,.4); }
+a:focus-visible, summary:focus-visible, button:focus-visible{
+  outline:2px solid var(--blue); outline-offset:3px; border-radius:4px;
+}
+
+/* ---------- 页面级极光（固定，极淡，只在留白处可见） ---------- */
+body::before{
+  content:""; position:fixed; inset:-22% -12%; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(30% 40% at 12% 16%, rgba(233,19,121,.12), transparent 70%),
+    radial-gradient(26% 34% at 88% 64%, rgba(136,174,27,.10), transparent 72%);
+  animation:pageAurora 36s ease-in-out infinite alternate;
+}
+@keyframes pageAurora{
+  0%{ transform:translate3d(-2%,0,0) scale(1); }
+  50%{ transform:translate3d(2%,-1.5%,0) scale(1.06); }
+  100%{ transform:translate3d(-1%,2%,0) scale(1.02); }
+}
+
+/* ---------- 细颗粒质感（极低不透明度，消除数码感的"死平"） ----------
+   性能：原来是 position:fixed 的全屏图层 + mix-blend-mode:multiply。
+   混合模式会让浏览器为整个视口建一个混合组，滚动时背景每帧都变，
+   等于每帧对 1440×900 ≈ 130 万像素重做一次 multiply —— 这是滚动掉帧的大头。
+   去掉混合模式后，必须把噪点本身做成「黑色 + 噪声 alpha」（feColorMatrix），
+   否则原噪点是亮的，改用普通 alpha 会把整页洗白。
+   不透明度按像素实测定标：无颗粒基准 245.98，原 multiply 版压暗 1.05，
+   黑色斑点版在 .05 时压暗 4.99 —— 取 .015 与原版基本齐平。 */
+.grain{
+  position:fixed; inset:0; z-index:5; pointer-events:none; opacity:.015;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,.8,0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ================= 1. 英雄区 ================= */
+.hero{ position:relative; overflow:hidden; isolation:isolate; }
+.hero::before{
+  content:""; position:absolute; inset:-45% -25% auto; height:190%; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(38% 52% at 16% 32%, rgba(233,19,121,.62), transparent 70%),
+    radial-gradient(30% 44% at 70% 16%, rgba(136,174,27,.34), transparent 72%),
+    radial-gradient(44% 58% at 90% 76%, rgba(154,90,44,.24), transparent 74%);
+  animation:auroraFloat 24s ease-in-out infinite alternate;
+}
+@keyframes auroraFloat{
+  0%{ transform:translate3d(-3%,0,0) scale(1); }
+  50%{ transform:translate3d(3%,-2%,0) scale(1.10); }
+  100%{ transform:translate3d(-1%,3%,0) scale(1.04); }
+}
+.hero::after{ /* 底部发丝高光，衔接正文 */
+  content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,231,111,.55),transparent);
+}
+.hero-canvas{ position:absolute; inset:0; z-index:-1; width:100%; height:100%; pointer-events:none; opacity:.65; }
+.hero-inner{ will-change:transform,opacity; }
+.hero h1{ animation:heroRise .95s var(--ease-out) .05s both; }
+.hero p{ animation:heroRise .95s var(--ease-out) .18s both; }
+.hero-meta{ animation:heroRise .95s var(--ease-out) .30s both; }
+.hero-stats{ animation:heroRise .95s var(--ease-out) .44s both; }
+@keyframes heroRise{ from{ opacity:0; transform:translateY(26px); } to{ opacity:1; transform:none; } }
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .hero h1{
+    background-image:linear-gradient(100deg,#fff 0%,#fff 34%,var(--gold-2) 50%,#fff 66%,#fff 100%);
+    background-size:260% 100%;
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent; color:transparent;
+    animation:heroRise .95s var(--ease-out) .05s both, titleShine 9s linear 1.2s infinite;
+  }
+  @keyframes titleShine{ from{ background-position:130% 0; } to{ background-position:-130% 0; } }
+}
+
+/* 英雄区统计卡：玻璃 + 内高光 + 镜面扫过 */
+.hero-stats{ display:flex; flex-wrap:wrap; gap:14px; margin-top:26px; }
+.hero-stat{
+  position:relative; overflow:hidden; min-width:142px; padding:13px 18px; border-radius:14px;
+  background:linear-gradient(150deg,rgba(255,255,255,.18),rgba(255,255,255,.045));
+  border:1px solid rgba(255,255,255,.20);
+  -webkit-backdrop-filter:blur(12px) saturate(170%);
+  backdrop-filter:blur(12px) saturate(170%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28), 0 18px 40px -24px rgba(0,0,0,.6);
+  transition:transform .5s var(--ease-apple),border-color .4s ease,box-shadow .5s ease;
+}
+.hero-stat::after{
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:0;
+  background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.42) 50%,transparent 62%);
+  background-size:230% 100%; background-position:130% 0;
+}
+.hero-stat:hover{
+  transform:translateY(-5px); border-color:rgba(255,231,111,.6);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4), 0 26px 54px -26px rgba(0,0,0,.72);
+}
+.hero-stat:hover::after{ animation:specular 1.1s var(--ease-out) forwards; }
+@keyframes specular{ from{ opacity:1; background-position:130% 0; } to{ opacity:0; background-position:-70% 0; } }
+.hero-stat b{ display:block; color:#FFF0B8; font:700 1.9rem/1.15 var(--font-heading); font-variant-numeric:tabular-nums; }
+.hero-stat span{ color:#D9E8BC; font:14px var(--font-kai); }
+
+/* ================= 2. 顶部阅读进度条 ================= */
+.scroll-progress{ height:3px; background:rgba(122,156,22,.08); }
+.scroll-progress i{
+  background:linear-gradient(90deg,#E91379,#88AE1B,#E91379,#E91379);
+  background-size:300% 100%; box-shadow:0 0 14px rgba(233,19,121,.55);
+  animation:barFlow 7s linear infinite;
+}
+@keyframes barFlow{ from{ background-position:0 0; } to{ background-position:-300% 0; } }
+
+/* ================= 3. 侧栏与正文容器：玻璃面板 =================
+   性能：sidebar 是 position:sticky，滚动全程都在屏幕上。
+   它自带 78~94% 不透明的白底，blur 基本看不出来，
+   却要求浏览器每帧对整块侧栏区域重新采样 + 模糊。
+   去掉 blur，并把底色补到 92~97%，观感一致、开销归零。 */
+.sidebar{
+  background:linear-gradient(160deg,rgba(255,255,255,.965),rgba(247,251,254,.93));
+  border:1px solid rgba(255,255,255,.92);
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  box-shadow:inset 0 1px 0 var(--hair), 0 26px 64px -30px rgba(92,122,16,.46);
+  transition:box-shadow .5s ease;
+}
+.sidebar:hover{ box-shadow:inset 0 1px 0 var(--hair), 0 34px 78px -32px rgba(92,122,16,.55); }
+/* 性能：原稿给 main 挂了 backdrop-filter:blur(16px)，而 main 高约 79,000px。
+   这等于要求浏览器对一整片巨型区域做背景采样 + 模糊 —— 滚动时是最贵的一项。
+   而 main 的底色是 90~97% 不透明的白，模糊完全看不出来。
+   去掉后视觉零变化，滚动开销大幅下降。 */
+main{
+  background:linear-gradient(172deg,rgba(255,255,255,.975),rgba(250,252,254,.94));
+  border:1px solid rgba(255,255,255,.92);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.98), var(--ambient);
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+}
+
+/* 目录：滚动高亮 + 发丝指示 */
+.sidebar-title{ position:relative; }
+.sidebar-title::after{
+  content:""; position:absolute; left:8px; bottom:0; height:2px; width:0; border-radius:2px;
+  background:linear-gradient(90deg,var(--gold),var(--blue) 58%,rgba(233,19,121,0));
+  animation:growInset 1.1s var(--ease-out) .25s forwards;
+}
+.nav-chapter{ position:relative; transition:color .25s ease,transform .34s var(--ease-apple); }
+.nav-chapter:hover{ transform:translateX(3px); }
+.nav-chapter.active{ color:var(--blue); }
+.nav-chapter.active::after{
+  content:""; position:absolute; left:7px; right:7px; bottom:2px; height:2px; border-radius:2px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+  animation:growFull .55s var(--ease-out) both;
+}
+.nav-section{ position:relative; transition:color .25s ease,background .25s ease,transform .34s var(--ease-apple); }
+.nav-section::before{
+  content:""; position:absolute; left:6px; top:50%; width:5px; height:5px; margin-top:-2.5px;
+  border-radius:50%; background:var(--gold); opacity:0; transform:scale(0);
+  transition:transform .35s var(--ease-spring),opacity .25s ease;
+}
+.nav-section.active{ color:var(--navy); background:var(--blue-soft); font-weight:700; }
+.nav-section.active::before{ opacity:1; transform:scale(1.5); }
+.nav-section:hover{ transform:translateX(2px); }
+@keyframes growFull{ from{ width:0; } to{ width:100%; } }
+@keyframes growInset{ from{ width:0; } to{ width:calc(100% - 16px); } }
+
+/* ================= 4. 章节：发丝分隔 + 扫光 + 幽灵编号 ================= */
+.chapter{ position:relative; }
+.chapter::before{
+  content:""; display:block; height:1px; margin:0 0 30px;
+  background:linear-gradient(90deg,transparent,var(--line),rgba(136,174,27,.55),var(--line),transparent);
+  transform:scaleX(0); transform-origin:center; transition:transform 1.1s var(--ease-out);
+}
+.chapter.visible::before{ transform:scaleX(1); }
+.chapter-header{
+  position:relative; overflow:hidden;
+  box-shadow:0 18px 46px -18px rgba(61,79,8,.55), inset 0 1px 0 rgba(255,255,255,.18);
+}
+.chapter-header::before{ /* 幽灵大编号 */
+  content:var(--wm,""); position:absolute; right:16px; top:50%; transform:translateY(-50%);
+  font:700 clamp(3.6rem,8.5vw,6.6rem)/1 var(--font-heading);
+  color:rgba(255,255,255,.075); letter-spacing:-.04em;
+  pointer-events:none; user-select:none;
+}
+.chapter-header::after{ /* 扫光 —— 用 transform 代替 left：
+   left 每帧都会让浏览器重新布局，9 个章节题头同时跑 = 每帧 9 次布局。 */
+  content:""; position:absolute; top:0; left:-65%; width:42%; height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.30),transparent);
+  transform:translate3d(0,0,0) skewX(-18deg);
+  animation:sheen 7.5s ease-in-out infinite;
+}
+/* 行程 190% 容器宽 ÷ 自身 42% 宽 = 452% 自身宽 */
+@keyframes sheen{
+  0%{ transform:translate3d(0,0,0) skewX(-18deg); }
+  42%,100%{ transform:translate3d(452%,0,0) skewX(-18deg); }
+}
+.chapter-number{
+  display:inline-block; text-shadow:0 0 26px rgba(241,217,157,.6);
+  animation:numFloat 6s ease-in-out infinite;
+}
+@keyframes numFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-7px); } }
+.chapter-header h2{ position:relative; }
+
+/* ================= 5. 标题装饰 ================= */
+.intro h2,.question-bank > h2,.references h2{ position:relative; display:inline-block; }
+.intro h2::after,.question-bank > h2::after,.references h2::after{
+  content:""; position:absolute; left:0; bottom:-7px; height:3px; width:0; border-radius:3px;
+  background:linear-gradient(90deg,var(--gold),rgba(136,174,27,0));
+  animation:growFull 1s var(--ease-out) .35s forwards;
+}
+.knowledge-block{ position:relative; }
+.knowledge-block > h3{ position:relative; transition:color .35s ease; }
+.knowledge-block > h3::before{
+  content:""; position:absolute; left:-19px; top:.5em; width:8px; height:8px; border-radius:2px;
+  background:linear-gradient(135deg,var(--blue),var(--gold));
+  transform:rotate(45deg) scale(0);
+  transition:transform .5s var(--ease-spring),box-shadow .4s ease;
+  box-shadow:0 0 0 0 rgba(136,174,27,0);
+}
+.knowledge-block.visible > h3::before{ transform:rotate(45deg) scale(1); }
+.knowledge-block:hover > h3::before{ box-shadow:0 0 14px 2px rgba(136,174,27,.45); }
+.knowledge-block:hover > h3{ color:var(--blue); }
+
+/* ================= 6. 题库卡片：玻璃 + 发丝描边 + 镜面扫过（无倾斜/无跟随光晕） =================
+   性能：全页 162 张 .qa-card 每张都挂了 backdrop-filter。
+   卡片底色 86~94% 不透明，且背后就是 main 的近白底 —— 模糊不可见，
+   但浏览器要为 162 块区域各建一次采样 + 模糊。去掉，并把底色补到 92~96%。 */
+.qa-card{
+  position:relative; overflow:hidden;
+  background:linear-gradient(160deg,rgba(255,255,255,.955),rgba(248,251,253,.925));
+  border:1px solid rgba(228,238,234,.95);
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95), 0 14px 34px -22px rgba(92,122,16,.34);
+  transition:transform .5s var(--ease-apple),box-shadow .5s var(--ease-apple),border-color .4s ease;
+}
+.qa-card::after{ /* 镜面高光扫过 */
+  content:""; position:absolute; inset:0; z-index:2; border-radius:inherit; pointer-events:none;
+  background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.62) 50%,transparent 62%);
+  background-size:230% 100%; background-position:130% 0; opacity:0;
+}
+.qa-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(233,19,121,.24);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.98),
+             0 0 0 1px rgba(233,19,121,.10),
+             var(--lift);
+}
+.qa-card:hover::after{ animation:specular 1.1s var(--ease-out) forwards; }
+
+/* ================= 7. 答案面板：玻璃拟态 ================= */
+/* 展开时卡片底部浮起一层极柔的彩色折射光，供玻璃面板 backdrop-filter 取样 */
+.qa-card.answer-open{
+  background:
+    radial-gradient(58% 66% at 10% 92%, rgba(233,19,121,.26), transparent 70%),
+    radial-gradient(52% 60% at 52% 100%, rgba(136,174,27,.24), transparent 72%),
+    radial-gradient(48% 56% at 94% 88%, rgba(154,90,44,.20), transparent 74%),
+    linear-gradient(160deg,rgba(255,255,255,.95),rgba(246,250,253,.88));
+}
+.answer-panel{
+  position:relative; z-index:1;
+  margin-top:15px; padding:16px 20px 16px 22px;
+  color:#2C3418;
+  background:linear-gradient(135deg,rgba(255,255,255,.74),rgba(236,244,251,.52));
+  -webkit-backdrop-filter:blur(20px) saturate(200%);
+  backdrop-filter:blur(20px) saturate(200%);
+  border:1px solid rgba(255,255,255,.88);
+  border-radius:14px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.95),
+    inset 0 -1px 0 rgba(233,19,121,.06),
+    0 22px 48px -26px rgba(92,122,16,.5);
+  overflow:hidden;
+}
+.answer-panel::before{ /* 开合时的玻璃反光扫过 */
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:0;
+  background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.8) 50%,transparent 64%);
+  background-size:220% 100%; background-position:-110% 0;
+}
+.answer-panel.sweep::before{ animation:glassSweep 1.15s var(--ease-out) forwards; }
+@keyframes glassSweep{
+  0%{ opacity:0; background-position:-110% 0; }
+  18%{ opacity:1; }
+  100%{ opacity:0; background-position:120% 0; }
+}
+.answer-panel::after{ /* 左侧金色发丝 */
+  content:""; position:absolute; left:0; top:14%; bottom:14%; width:2px; border-radius:2px;
+  background:linear-gradient(180deg,transparent,rgba(136,174,27,.85),transparent);
+}
+.answer-panel p{ position:relative; }
+@keyframes answerFadeIn{
+  from{ opacity:0; transform:translateY(-10px) scale(.985); filter:blur(10px); }
+  60%{ opacity:1; filter:blur(2px); }
+  to{ opacity:1; transform:none; filter:blur(0); }
+}
+@keyframes answerFadeOut{
+  from{ opacity:1; transform:none; filter:blur(0); }
+  to{ opacity:0; transform:translateY(-6px) scale(.99); filter:blur(6px); }
+}
+.answer-toggle{
+  display:inline-flex; align-items:center; gap:7px;
+  text-decoration:none; border-bottom:2px solid rgba(154,90,44,.28); padding-bottom:1px;
+}
+.answer-toggle:hover{ border-bottom-color:#E91379; }
+.answer-toggle::after{
+  content:""; width:8px; height:8px;
+  border-right:2px solid currentColor; border-bottom:2px solid currentColor;
+  transform:rotate(45deg) translateY(-1px);
+  transition:transform .35s var(--ease-out);
+}
+.answer-toggle[aria-expanded="true"]::after{ transform:rotate(-135deg) translateY(-2px); }
+
+/* ================= 8. 入场动效（交错延迟） ================= */
+.reveal{
+  opacity:0; transform:translateY(22px) scale(.985);
+  transition:opacity .58s var(--ease-apple) var(--d,0s), transform .58s var(--ease-apple) var(--d,0s);
+}
+.reveal.visible{ opacity:1; transform:none; }
+.qa-card.reveal{
+  transition:opacity .58s var(--ease-apple) var(--d,0s), transform .58s var(--ease-apple) var(--d,0s),
+             box-shadow .5s var(--ease-apple), border-color .4s ease;
+}
+/* 入场交错跑完后切到更跟手的过渡：0.7s 是给「入场」的，用来做悬浮反馈太拖沓。
+   .revealed 由 JS 在 transitionend 之后补上，不参与交错延迟。 */
+.reveal.revealed{ transition-duration:.42s; transition-timing-function:var(--ease-apple); }
+
+/* ================= 9. 表格：玻璃容器 + 发丝分隔 + 考频条 ================= */
+.table-wrap{
+  background:linear-gradient(180deg,#ffffff,#FFFDF5);
+  border:1px solid rgba(228,238,234,.95);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95), 0 16px 38px -26px rgba(92,122,16,.36);
+  transition:box-shadow .5s ease;
+}
+.table-wrap:hover{ box-shadow:inset 0 1px 0 rgba(255,255,255,.95), 0 24px 52px -28px rgba(92,122,16,.46); }
+th{
+  background:linear-gradient(180deg,#FBF8E6,#F7F2DC);
+  border-bottom:1px solid rgba(200,213,224,.9);
+}
+.table-wrap table tbody tr{ transition:background .25s ease, box-shadow .25s ease; }
+.table-wrap table tbody tr:hover{
+  background:rgba(233,19,121,.065);
+  box-shadow:inset 3px 0 0 0 rgba(136,174,27,.7);
+}
+.table-wrap.tbl-in tbody tr{
+  animation:rowIn .55s var(--ease-out) both;
+  animation-delay:calc(var(--ri,0) * 45ms);
+}
+@keyframes rowIn{ from{ opacity:0; transform:translateY(9px); } to{ opacity:1; transform:none; } }
+.frequency-summary td:nth-child(2){ white-space:normal; }
+.freq-cell{ display:flex; flex-direction:column; gap:6px; min-width:124px; }
+.freq-num{ font:700 1rem var(--font-heading); color:#E91379; font-variant-numeric:tabular-nums; }
+.freq-bar{
+  display:block; width:100%; height:6px; border-radius:999px; overflow:hidden;
+  background:rgba(154,90,44,.10);
+  box-shadow:inset 0 1px 2px rgba(154,90,44,.14);
+}
+.freq-bar i{
+  display:block; height:100%; width:0; border-radius:999px;
+  background:linear-gradient(90deg,#E91379,#9D00FF 70%,#EBC0DA);
+  box-shadow:0 0 10px -2px rgba(154,90,44,.55);
+  transition:width 1.2s var(--ease-out) .2s;
+}
+.tbl-in .freq-bar i{ width:var(--w,0%); }
+
+/* ================= 10. 筛选按钮：玻璃胶囊 ================= */
+.filter-button{
+  position:relative; overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(243,248,252,.85));
+  border:1px solid rgba(222,231,239,.95);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95), 0 6px 16px -12px rgba(92,122,16,.4);
+  transition:background .25s ease,border-color .25s ease,color .25s ease,
+             transform .34s var(--ease-apple),box-shadow .3s ease;
+}
+.filter-button:hover{ transform:translateY(-2px); box-shadow:inset 0 1px 0 rgba(255,255,255,.6), 0 14px 26px -14px rgba(122,156,22,.5); }
+.filter-button.active{
+  background:linear-gradient(180deg,var(--navy),var(--blue));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.24), 0 16px 30px -16px rgba(61,79,8,.75);
+}
+.ripple{
+  position:absolute; border-radius:50%; background:rgba(255,255,255,.5);
+  transform:scale(0); animation:rippleOut .62s ease-out forwards; pointer-events:none;
+}
+@keyframes rippleOut{ to{ transform:scale(3.4); opacity:0; } }
+
+/* ================= 11. 徽章 =================
+   性能：原来用 animation 直接跑 box-shadow（badgePulse）与 background-position（badgeFlow），
+   全页 21 个徽章 × 每帧重绘 = 长期占用渲染线程，是滚动卡顿的主要来源之一。
+   改为「静态底 + 伪元素只动 opacity」，全部交给合成器，主线程零负担。 */
+.exam-badge{
+  position:relative;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.85), 0 4px 12px -8px rgba(154,90,44,.6);
+}
+.exam-badge::after{ /* 呼吸外环：环本身是静态的，只让 opacity 动 */
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  box-shadow:0 0 0 5px rgba(154,90,44,.10);
+  opacity:0; animation:badgePulseX 3.4s ease-in-out infinite;
+}
+@keyframes badgePulseX{
+  0%,100%{ opacity:0; }
+  50%{ opacity:1; }
+}
+
+/* ================= 12. 回到顶部（玻璃 + 进度环） ================= */
+.to-top{
+  position:fixed; right:22px; bottom:22px; z-index:70; width:54px; height:54px;
+  display:grid; place-items:center; padding:0; border:1px solid rgba(255,255,255,.22); border-radius:50%;
+  cursor:pointer; color:#fff;
+  background:linear-gradient(150deg,rgba(122,156,22,.92),rgba(233,19,121,.86));
+  -webkit-backdrop-filter:blur(14px) saturate(180%);
+  backdrop-filter:blur(14px) saturate(180%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28), 0 18px 40px -16px rgba(61,79,8,.7);
+  opacity:0; transform:translateY(18px) scale(.88); pointer-events:none;
+  transition:opacity .45s ease,transform .5s var(--ease-apple),box-shadow .35s ease;
+}
+.to-top.show{ opacity:1; transform:none; pointer-events:auto; }
+.to-top:hover{ transform:translateY(-4px) scale(1.06); box-shadow:inset 0 1px 0 rgba(255,255,255,.4), 0 26px 52px -18px rgba(61,79,8,.85); }
+.to-top svg{ position:absolute; inset:0; width:100%; height:100%; transform:rotate(-90deg); }
+.to-top circle{ fill:none; stroke-width:3; }
+.to-top .ring-bg{ stroke:rgba(255,255,255,.20); }
+.to-top .ring-fg{ stroke:var(--gold-2); stroke-linecap:round; }
+.to-top .arrow{ position:relative; font:700 19px/1 var(--font-heading); }
+
+/* ================= 13. 窄屏 ================= */
+@media (max-width:980px){
+  .to-top{ right:14px; bottom:14px; width:48px; height:48px; }
+  .hero-stats{ gap:10px; }
+  .hero-stat{ min-width:0; flex:1 1 28%; padding:10px 14px; }
+  .hero-stat b{ font-size:1.5rem; }
+  .knowledge-block > h3::before{ left:-13px; }
+  .chapter-header::before{ right:10px; }
+}
+
+/* ==================================================================
+   v4：整体色调升级 + 追加特效
+   ================================================================== */
+
+/* ---- 暖骨白纸面（替换原来的冷灰），页面更温润 ---- */
+body{ background:linear-gradient(180deg,var(--navy-deep) 0 330px,#FBF7E4 330px); }
+main{ background:linear-gradient(172deg,rgba(255,254,251,.972),rgba(250,249,244,.92)); }
+.sidebar{ background:linear-gradient(160deg,rgba(255,254,251,.95),rgba(251,247,228,.82)); }
+.table-wrap{ background:linear-gradient(180deg,#FFFDF2,#FFFCF0); }
+th{ background:linear-gradient(180deg,#F7F2DA,#E9E2BE); border-bottom:1px solid rgba(200,196,187,.9); }
+
+/* ---- 页面暗角：制造纵深 ---- */
+body::after{
+  content:""; position:fixed; inset:0; z-index:4; pointer-events:none;
+  background:radial-gradient(130% 95% at 50% 38%,transparent 52%,rgba(122,156,22,.065) 100%);
+}
+
+/* ---- 正文容器顶部流光条 ---- */
+main{ position:relative; }
+main::before{
+  content:""; position:absolute; left:0; right:0; top:0; height:3px; z-index:2;
+  border-radius:10px 10px 0 0;
+  background:linear-gradient(90deg,var(--brass),var(--ice),var(--brass-lt),var(--brass));
+  background-size:250% 100%;
+  animation:edgeFlow 11s linear infinite;
+}
+@keyframes edgeFlow{ to{ background-position:-250% 0; } }
+
+/* ---- 英雄区：点阵底纹 + 增强极光 + 斜向光扫 ----
+   点阵原来是 46s 漂移 22px 的 background-position 动画：
+   整个英雄区（约 1400×420 ≈ 59 万像素）每帧重绘，而 22px/46s 的位移肉眼不可辨。
+   改为静态点阵，视觉无差，开销归零。 ---- */
+.hero{
+  background-image:
+    radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
+    linear-gradient(135deg,rgba(61,79,8,.985),rgba(122,156,22,.95) 55%,rgba(21,60,87,.92));
+  background-size:22px 22px,100% 100%;
+}
+.hero::before{
+  background:
+    radial-gradient(36% 50% at 14% 30%, rgba(233,19,121,.66), transparent 70%),
+    radial-gradient(28% 42% at 68% 14%, rgba(136,174,27,.34), transparent 72%),
+    radial-gradient(42% 56% at 92% 74%, rgba(154,90,44,.26), transparent 74%),
+    radial-gradient(30% 44% at 44% 92%, rgba(158,215,208,.24), transparent 72%);
+}
+.hero-sheen{
+  position:absolute; top:-30%; bottom:-30%; left:-45%; width:34%; z-index:0;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.11),transparent);
+  transform:translate3d(0,0,0) skewX(-16deg); pointer-events:none;
+  animation:heroSheen 13s ease-in-out infinite;
+}
+/* 行程 170% 容器宽 ÷ 自身 34% 宽 = 500% 自身宽 */
+@keyframes heroSheen{
+  0%{ transform:translate3d(0,0,0) skewX(-16deg); }
+  55%,100%{ transform:translate3d(500%,0,0) skewX(-16deg); }
+}
+.hero-inner{ position:relative; z-index:1; }
+
+/* ---- 统计卡：古铜金渐变数字 ---- */
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .hero-stat b{
+    background-image:linear-gradient(160deg,#FFFAE0,var(--brass-lt) 44%,#C3D685 76%,#FFF8D6);
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent; color:transparent;
+    filter:drop-shadow(0 2px 12px rgba(136,174,27,.4));
+  }
+}
+
+/* ---- 章节标题：证书式角标 + 古铜发丝 ---- */
+.chapter-header{
+  box-shadow:0 22px 52px -20px rgba(61,79,8,.62), inset 0 1px 0 rgba(255,231,111,.30);
+}
+.ch-corners{
+  position:absolute; inset:9px; z-index:1; pointer-events:none; opacity:.4;
+  background:
+    linear-gradient(var(--brass-lt),var(--brass-lt)) left top/15px 1px no-repeat,
+    linear-gradient(var(--brass-lt),var(--brass-lt)) left top/1px 15px no-repeat,
+    linear-gradient(var(--brass-lt),var(--brass-lt)) right top/15px 1px no-repeat,
+    linear-gradient(var(--brass-lt),var(--brass-lt)) right top/1px 15px no-repeat,
+    linear-gradient(var(--brass-lt),var(--brass-lt)) left bottom/15px 1px no-repeat,
+    linear-gradient(var(--brass-lt),var(--brass-lt)) left bottom/1px 15px no-repeat,
+    linear-gradient(var(--brass-lt),var(--brass-lt)) right bottom/15px 1px no-repeat,
+    linear-gradient(var(--brass-lt),var(--brass-lt)) right bottom/1px 15px no-repeat;
+}
+.chapter-header::before{ transform:translateY(calc(-50% + var(--py,0px))); }
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .chapter-number{
+    background-image:linear-gradient(160deg,#FFFAE0,var(--brass-lt) 42%,#9CBB3A 72%,#FFF7D2);
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent; color:transparent;
+    text-shadow:none;
+    filter:drop-shadow(0 0 18px rgba(255,231,111,.55));
+  }
+}
+
+/* ---- 知识块标题：入场扫光 ---- */
+.knowledge-block > h3{ position:relative; }
+.knowledge-block.visible > h3::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(100deg,transparent 42%,rgba(136,174,27,.22) 50%,transparent 58%);
+  background-size:300% 100%;
+  animation:h3Shimmer 1.5s var(--ease-out) .25s both;
+}
+@keyframes h3Shimmer{
+  from{ background-position:160% 0; opacity:1; }
+  to{ background-position:-160% 0; opacity:0; }
+}
+
+/* ---- 卡片悬浮：古铜 + 冰蓝双色描边环 ---- */
+.qa-card:hover{
+  border-color:rgba(136,174,27,.34);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.98),
+             0 0 0 1px rgba(136,174,27,.26),
+             0 0 0 5px rgba(233,19,121,.07),
+             var(--lift);
+}
+
+/* ---- 表格行悬浮微移 + 古铜内嵌线 ---- */
+.table-wrap table tbody tr{ transition:background .25s ease, box-shadow .25s ease, transform .25s ease; }
+.table-wrap table tbody tr:hover{ transform:translateX(2px); }
+
+/* ---- 徽章：静态三段渐变（原来跑 background-position 流动，改静）
+   原效果是 220% 宽渐变在 6.5s 内漂移 20% —— 在一个 60px 药丸上肉眼不可辨，
+   却要每帧重绘。改为静态三段渐变，视觉几乎无差，开销归零。 ---- */
+.exam-badge{
+  background-image:linear-gradient(100deg,#FDE8F1,#FFFCF2 46%,#FDE8F1);
+  background-size:100% 100%;
+}
+
+/* ---- 答案玻璃：内部双色光（冰蓝 + 古铜） ---- */
+.answer-panel{
+  background-image:
+    radial-gradient(70% 130% at 6% 0%, rgba(158,215,208,.28), transparent 62%),
+    radial-gradient(60% 110% at 100% 100%, rgba(136,174,27,.20), transparent 64%),
+    linear-gradient(135deg,rgba(255,255,255,.72),rgba(235,243,250,.50));
+}
+
+/* ---- 进度条发光 ---- */
+.scroll-progress i{ filter:drop-shadow(0 0 7px rgba(158,215,208,.75)); }
+
+/* ---- 目录激活态：古铜 ---- */
+.nav-section.active{ background:linear-gradient(90deg,rgba(136,174,27,.18),rgba(253,233,242,.92)); }
+.nav-chapter.active::after{ background:linear-gradient(90deg,var(--brass),transparent); }
+
+/* ---- 筛选按钮激活态：墨蓝→深青，古铜内高光 ---- */
+.filter-button.active{
+  background:linear-gradient(135deg,var(--navy),#4E6A0C 58%,#6B8E0F);
+  box-shadow:inset 0 1px 0 rgba(255,231,111,.32), 0 16px 32px -16px rgba(61,79,8,.8);
+}
+.filter-button.active span{ color:var(--brass-lt); }
+
+/* ---- 回到顶部：墨蓝玻璃 + 古铜环 ---- */
+.to-top{
+  background:linear-gradient(150deg,rgba(122,156,22,.94),rgba(233,19,121,.88));
+  border-color:rgba(255,231,111,.28);
+}
+
+/* ---- 15.2 目录：悬浮 3D 前浮 ---- */
+.nav-chapter:hover{ transform:perspective(760px) translate3d(4px,0,20px); }
+.nav-section:hover{ transform:perspective(760px) translate3d(5px,0,20px); }
+.nav-section:hover::before{ opacity:1; transform:scale(1.4); }
+
+/* ---- 15.3 英雄区统计卡：3D 抬起 + 微俯仰 ---- */
+.hero-stat:hover{
+  transform:perspective(900px) translate3d(0,-6px,28px) rotateX(3.5deg);
+}
+
+/* ---- 15.4 章节题头：整条抬起（题头是短标题，俯仰不影响阅读） ---- */
+.chapter-header{ transition:transform .5s var(--ease-apple), box-shadow .5s ease; }
+.chapter-header:hover{
+  transform:perspective(1200px) translate3d(0,-3px,22px) rotateX(1.6deg);
+  box-shadow:0 28px 62px -22px rgba(61,79,8,.62), inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+/* ---- 15.5 知识块标题：只动短标题，下方正文纹丝不动 ---- */
+.knowledge-block > h3{
+  transition:color .35s ease, transform .45s var(--ease-apple), text-shadow .45s ease;
+}
+.knowledge-block:hover > h3{
+  transform:perspective(760px) translate3d(3px,0,16px);
+  text-shadow:0 8px 20px -12px rgba(92,122,16,.55);
+}
+
+/* ---- 15.6 按钮与胶囊 ---- */
+.filter-button:hover{ transform:perspective(620px) translate3d(0,-3px,16px); }
+.to-top:hover{
+  transform:perspective(720px) translate3d(0,-5px,22px) scale(1.05);
+}
+
+/* ---- 15.7 表格：只做「纸面抬起」的光影，绝不旋转 / 缩放 ----
+   数据表一旦倾斜或缩放，单元格会错位、文字会发虚，这里刻意只给阴影与描边。 */
+.table-wrap{ transition:box-shadow .5s ease, border-color .4s ease; }
+.table-wrap:hover{
+  border-color:rgba(136,174,27,.34);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),
+             0 30px 64px -30px rgba(92,122,16,.5),
+             0 2px 0 rgba(136,174,27,.16);
+}
+
+/* ---- 15.8 题库卡片：仅「未展开」时前浮；展开阅读后彻底静止 ---- */
+.qa-card:not(.answer-open):hover{
+  transform:perspective(1300px) translate3d(0,-5px,20px);
+}
+.qa-card.answer-open,
+.qa-card.answer-open:hover{ transform:none!important; }
+
+/* ---- 15.9 阅读安全网：正文文本层永不参与任何 transform ---- */
+main p, main li, main td, main th, main dd, main dt,
+.answer-panel, .answer-panel p, .answer-panel li,
+.hero p, .hero-meta{ transform:none!important; }
+
+/* 减少动效：静态呈现，点击即进 */
+@media (prefers-reduced-motion: reduce){
+  .seal-arc,.seal-arc2{ stroke-dashoffset:0!important; }
+  html.entered .hero,html.entered .sidebar,html.entered main{ animation:none!important; transform:none!important; opacity:1!important; }
+  .nav-chapter:hover,.nav-section:hover,.hero-stat:hover,.chapter-header:hover,
+  .knowledge-block:hover > h3,.filter-button:hover,.to-top:hover,
+  .qa-card:not(.answer-open):hover{ transform:none!important; }
+}
+
+/* 触屏 / 无 hover 设备：:hover 会「粘住」，一律关掉位移效果 */
+@media (hover:none){
+  .nav-chapter:hover,.nav-section:hover,.hero-stat:hover,.chapter-header:hover,
+  .knowledge-block:hover > h3,.filter-button:hover,.to-top:hover,
+  .qa-card:not(.answer-open):hover{ transform:none!important; }
+}
+
+/* ================= 16. 离屏暂停 =================
+   合成器动画滚出视口后本来就很便宜（浏览器会跳过不可见层的栅格化），
+   但 titleShine 是 background-position —— 非合成属性，每帧都要重绘。
+   宿主 .hero h1 实测盒尺寸 1339x99 ≈ 13.2 万像素（1440x900 视口），
+   且它是 infinite —— 页面永不进入空闲状态。
+   徽章呼吸环 / 章节扫光 / 幽灵编号浮动虽然已全落在合成器，但滚到正文后
+   继续跑只会白白唤醒合成器，一并停掉。
+   JS 用 IntersectionObserver 给滚出视口的宿主加 .fx-idle，这里统一暂停。 */
+/* 注意：这里刻意不写裸的 .fx-idle —— 那会把 .hero 自身的 appleRise
+   一并暂停。只精确命中那几个「装饰性无限动画」。 */
+.fx-idle::before,
+.fx-idle::after,
+.fx-idle h1,
+.fx-idle h2,
+.fx-idle .hero-sheen,
+.fx-idle .chapter-number{
+  animation-play-state:paused !important;
+}
+
+/* ================= 17. 打印 ================= */
+@media print{
+  .answer-panel[hidden]{ display:block!important; }
+  .answer-panel{ background:#fff!important; border:1px solid #D8D3AE!important; box-shadow:none!important; backdrop-filter:none!important; }
+  .qa-card.answer-open{ background:#fff!important; }
+  .reveal{ opacity:1!important; transform:none!important; }
+}
+
+  
+/* ── 编辑式阅读主题：中性纸面、晶石紫结构、四色卡局部强调 ── */
+@media screen {
+  :root {
+    --ref-violet:#690DAD; --ref-electric:#9D00FF;
+    --ref-cyan:#00F0FF; --ref-ocean:#1E9BFF;
+    --ref-fluoro:#FAFF2E; --ref-lemon:#F0FF0A;
+    --ref-citron:#DBF007; --ref-rose:#E91379;
+    --navy-deep:#211336; --navy:#3B1E56;
+    --blue:#61248F; --blue-soft:#F0E7F8; --ink:#271D34;
+    --gray-050:#F3EFF7; --gray-100:#EDE6F4; --gray-200:#E1D8EA; --gray-500:#62566E;
+    --paper:#FFFEFC; --violet-wash:#FAF7FD;
+    --rose-ink:#9D1C5A; --rose-wash:#F9EAF1; --water-ink:#175B89; --water-wash:#ECF6FD;
+    --gold:var(--ref-fluoro); --gold-2:var(--ref-fluoro); --brass:var(--ref-citron);
+    --brass-lt:#EEE7FF; --brass-dk:#725098; --ice:var(--ref-cyan); --oxblood:var(--rose-ink);
+    --line:#DBCCE8; --hair:#FFFFFF; --sheen:rgba(255,255,255,.42);
+    --shadow:0 12px 34px rgba(41,19,64,.08);
+    --ambient:var(--shadow); --lift:0 12px 28px rgba(41,19,64,.12);
+    --measure:45em;
+    --gutter:clamp(20px,4vw,60px);
+  }
+  html { scroll-padding-top:12px; }
+  body { background:var(--gray-050); color:var(--ink); font-size:17px; line-height:1.82; }
+  body::before { background:none; }
+  body::after { background:none; }
+  a:focus-visible, summary:focus-visible, button:focus-visible { outline:2px solid var(--ref-violet); outline-offset:3px; }
+  ::selection { background:var(--ref-fluoro); color:var(--navy-deep); }
+  .skip-link { background:var(--navy-deep); }
+
+  /* 封面：标题及摘要在左，数据卡在右；同一网格边界接入正文。 */
+  .hero {
+    padding:clamp(48px,6.5vw,94px) var(--gutter) clamp(36px,5.2vw,72px);
+    background:linear-gradient(118deg,#211336 16%,#2B1746 62%,#411B61 100%);
+    border-bottom:0; color:#FFFFFF;
+  }
+  .hero::before {
+    inset:0; height:auto;
+    background:radial-gradient(circle at 89% 26%,rgba(157,0,255,.19),transparent 36%),
+               radial-gradient(circle at 88% 116%,rgba(30,155,255,.13),transparent 41%),
+               radial-gradient(circle,rgba(238,231,255,.18) 1px,transparent 1px) 0 0/21px 21px;
+    mask-image:linear-gradient(90deg,transparent 32%,#000 88%);
+  }
+  .hero::after {
+    height:3px;
+    background:linear-gradient(90deg,var(--ref-violet) 0 60%,var(--ref-ocean) 60% 84%,var(--ref-cyan) 84% 90%,var(--ref-fluoro) 90% 93%,var(--ref-lemon) 93% 95%,var(--ref-citron) 95% 97%,var(--ref-rose) 97% 100%);
+  }
+  .hero-inner {
+    width:min(1332px,100%);
+    display:grid; grid-template-columns:minmax(0,1fr) minmax(240px,350px);
+    align-items:end; column-gap:clamp(28px,6.2vw,92px); row-gap:18px;
+  }
+  .hero h1 {
+    grid-column:1; grid-row:1; margin:0;
+    font-size:clamp(2.55rem,5.5vw,5.1rem); line-height:1.1; letter-spacing:.045em;
+    color:#FAF5FF; background-image:none; -webkit-text-fill-color:currentColor;
+    animation:none;
+  }
+  .hero p {
+    grid-column:1; grid-row:2; margin:0; max-width:35em;
+    color:#EEE5F7; font-size:clamp(1rem,1.5vw,1.13rem); line-height:1.75; animation:none;
+  }
+  .hero-meta {
+    grid-column:1; grid-row:3; margin:0; padding-top:15px; gap:5px 16px;
+    color:#E2D3EF; border-top:1px solid rgba(238,231,255,.25); font-size:.86rem; animation:none;
+  }
+  .hero-stats {
+    grid-column:2; grid-row:1 / span 3; align-self:end; margin:0;
+    display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; animation:none;
+  }
+  .hero-stat, .hero-stat:hover {
+    min-width:0; padding:clamp(9px,1.2vw,17px); border-radius:12px;
+    background:#3B2254; border-color:#674D7B; box-shadow:none;
+  }
+  .hero-stat:nth-child(2) { background:#3F235E; }
+  .hero-stat:nth-child(3) { background:#462451; }
+  .hero-stat b, .hero-stat b span {
+    color:var(--ref-fluoro); background-image:none; -webkit-text-fill-color:currentColor;
+    font:700 clamp(1.45rem,2.7vw,2.45rem)/1.15 var(--font-heading); filter:none;
+  }
+  .hero-stat:nth-child(2) b, .hero-stat:nth-child(2) b span { color:var(--ref-cyan); }
+  .hero-stat:nth-child(3) b, .hero-stat:nth-child(3) b span { color:#FFA7D0; }
+  .hero-stat > span { display:block; color:#F2E8FA; margin-top:6px; line-height:1.35; font-size:.79rem; }
+  .hero-canvas { opacity:.16; }
+  .hero-sheen { background:linear-gradient(100deg,transparent,rgba(237,226,255,.05),transparent); }
+
+  .layout {
+    width:min(1332px,calc(100% - 2 * var(--gutter)));
+    grid-template-columns:minmax(220px,256px) minmax(0,1fr);
+    gap:clamp(20px,3.2vw,48px); margin:clamp(22px,3.9vw,52px) auto 64px;
+  }
+  .sidebar, .sidebar:hover {
+    top:22px; max-height:calc(100vh - 44px); padding:16px 13px;
+    background:#FAF7FD; border-color:var(--gray-200); border-radius:14px; box-shadow:var(--shadow);
+    scrollbar-color:#A99AB9 transparent;
+  }
+  .sidebar-title { color:var(--navy); margin-bottom:10px; padding:4px 8px 12px; letter-spacing:.11em; }
+  .sidebar-title::after { background:linear-gradient(90deg,var(--ref-violet),transparent); }
+  .sidebar::-webkit-scrollbar-thumb, .sidebar:hover::-webkit-scrollbar-thumb { background:#B0A0BE; }
+  .nav-group { margin-bottom:9px; padding-bottom:9px; border-bottom:1px solid var(--gray-200); }
+  .nav-chapter { padding:8px 10px; line-height:1.48; border-radius:7px; }
+  .nav-chapter.active { color:var(--ref-violet); background:#F0E7F8; }
+  .nav-chapter.active::after { background:linear-gradient(90deg,var(--ref-violet),transparent); }
+  .nav-section { padding:5px 8px 5px 20px; color:#5F526D; line-height:1.5; }
+  .nav-section.active, .nav-section:hover { color:var(--blue); background:#EDE4F6; }
+  .nav-section::before { background:var(--ref-violet); }
+  .nav-question-bank { margin-top:11px; padding-top:0; border:0; }
+  .nav-question-bank .nav-chapter { color:var(--rose-ink); background:var(--rose-wash); }
+
+  main {
+    padding:clamp(28px,4.1vw,56px); background:var(--paper); color:var(--ink);
+    border-color:var(--gray-200); border-radius:17px; box-shadow:var(--shadow);
+    overflow-wrap:anywhere;
+  }
+  main::before { border-radius:17px 17px 0 0; background:linear-gradient(90deg,var(--ref-violet),var(--ref-ocean),var(--ref-cyan)); }
+  .intro { margin:0; padding-bottom:25px; border-bottom:1px solid var(--line); }
+  .intro h2, .question-bank > h2 { color:var(--navy); margin-bottom:17px; font-size:clamp(1.65rem,3vw,2.35rem); line-height:1.25; }
+  .intro h2::after, .question-bank > h2::after { background:linear-gradient(90deg,var(--ref-violet),rgba(105,13,173,.1)); }
+  .intro p, .question-bank > p { max-width:var(--measure); color:#50455C; }
+  .chapter { margin-top:clamp(46px,6vw,82px); scroll-margin-top:22px; }
+  .chapter::before { margin-bottom:23px; background:linear-gradient(90deg,#CDB9DE,transparent 78%); }
+  .chapter-header, .chapter-header:hover {
+    gap:clamp(14px,2.35vw,28px); align-items:center;
+    margin-bottom:29px; padding:clamp(17px,3vw,32px);
+    background:linear-gradient(110deg,#2F1746,#492165 65%,#552776);
+    border-radius:13px; border-inline-start:4px solid var(--ref-electric);
+    box-shadow:0 9px 20px rgba(51,22,75,.12);
+  }
+  .chapter-header::before { color:rgba(236,218,255,.085); }
+  .chapter-header::after { background:linear-gradient(100deg,transparent,rgba(157,0,255,.11),transparent); pointer-events:none; }
+  .chapter-header > div:not(.ch-corners) { position:relative; min-width:0; }
+  .chapter-header h2 { color:#FFFFFF; font-size:clamp(1.45rem,2.65vw,2.25rem); line-height:1.24; }
+  .chapter-header p { color:#EFE4F8; font-size:.9rem; }
+  .chapter-number {
+    color:var(--ref-fluoro); background-image:none; -webkit-text-fill-color:currentColor;
+    font-size:clamp(1.85rem,3.75vw,3.2rem); text-shadow:none; filter:none; flex:none;
+  }
+  .knowledge-block { margin:0; scroll-margin-top:24px; }
+  .knowledge-block + .knowledge-block { margin-top:32px; }
+  .knowledge-block > h3 { margin:0 0 14px; padding:0 0 10px 16px; color:var(--navy); font-size:1.27rem; line-height:1.45; }
+  .knowledge-block > h3::before { left:2px; top:.52em; width:6px; height:6px; box-shadow:none; background:var(--ref-violet); }
+  .knowledge-block:hover > h3::before { box-shadow:0 0 0 3px rgba(105,13,173,.1); }
+  .knowledge-block.visible > h3::after { background:linear-gradient(100deg,transparent 42%,rgba(157,0,255,.09) 50%,transparent 58%); }
+  .knowledge-content { color:var(--ink); }
+  .knowledge-content > p, .knowledge-content > ul, .knowledge-content > ol { max-width:var(--measure); }
+  .knowledge-content > :last-child { margin-bottom:0; }
+  .knowledge-content blockquote {
+    margin:17px 0; padding:13px clamp(13px,2.25vw,22px);
+    color:#3F2359; background:#F3EDF9;
+    border:1px solid #E9DEF2; border-inline-start:3px solid var(--ref-violet); border-radius:8px;
+    box-shadow:none;
+  }
+  .knowledge-content blockquote strong { color:var(--ref-violet); }
+  .exam-badge { color:var(--rose-ink); background:var(--rose-wash); border-color:#ECCAD9; }
+  mark.exam-hot, .exam-hot {
+    color:#36214C; background:linear-gradient(transparent 54%,#F5F6A2 54%);
+  }
+  .knowledge-content > div:has(> table), .table-wrap, .table-wrap:hover {
+    width:100%; max-width:100%; padding:0;
+    overflow-x:auto; overscroll-behavior-inline:contain;
+    background:#FFFEFC; border:1px solid var(--gray-200); border-radius:9px; box-shadow:none;
+  }
+  .knowledge-content > div:has(> table) { margin:16px 0!important; }
+  table { min-width:0; width:100%; font-size:.94rem; line-height:1.6; }
+  td, th { padding:10px 13px; border-color:#E8E0EE; }
+  td { color:var(--ink); }
+  th { color:#3B1E56; background:#EDE4F6; }
+  tbody tr:nth-child(even) { background:#FAF7FD; }
+  tbody tr:hover { background:#F1E9F8; }
+
+  /* SVG 只在样式层映射原有图形的颜色，不修改图形数据或标注。 */
+  .knowledge-content > div:has(> svg) {
+    max-width:100%; margin:18px 0!important; padding:14px!important;
+    overflow-x:auto; overscroll-behavior-inline:contain;
+    background:var(--violet-wash)!important; border-color:var(--gray-200)!important;
+  }
+  .knowledge-content svg { display:block; width:100%; max-width:760px; height:auto; margin-inline:auto; font-family:var(--font-heading); }
+  .knowledge-content svg [stroke='#0E61AC' i] { stroke:var(--ref-violet); }
+  .knowledge-content svg [fill='#0E61AC' i] { fill:var(--ref-violet); }
+  .knowledge-content svg [stop-color='#0E61AC' i] { stop-color:var(--ref-violet); }
+  .knowledge-content svg [stroke='#E72D48' i] { stroke:var(--ref-rose); }
+  .knowledge-content svg [fill='#E72D48' i], .knowledge-content svg [fill='#8A4A54' i] { fill:var(--rose-ink); }
+  .knowledge-content svg [fill='#7C8894' i], .knowledge-content svg [fill='#5C6672' i] { fill:#594B66; }
+  .knowledge-content svg [fill='#3B4652' i], .knowledge-content svg [fill='#1E2832' i] { fill:var(--ink); }
+  .knowledge-content svg [fill='#E8F0F9' i], .knowledge-content svg [fill='#EAF2FA' i] { fill:#EAE1F5; }
+  .knowledge-content svg [fill='#EAF7F8' i], .knowledge-content svg [fill='#F3F8FD' i] { fill:#E1F2FC; }
+  .knowledge-content svg [fill='#FCEAEC' i] { fill:#F8E6F0; }
+  .knowledge-content svg [fill='#8A6508' i], .knowledge-content svg [fill='#6B5A38' i] { fill:#5D4B10; }
+
+  .question-bank { margin-top:clamp(58px,7vw,95px); padding-top:26px; border-top:1px solid var(--line); scroll-margin-top:24px; }
+  .question-filter-panel { margin:22px 0; padding:15px clamp(12px,2.3vw,21px); background:#F7F2FC; border-color:var(--gray-200); box-shadow:none; backdrop-filter:none; }
+  .filter-row { gap:12px; }
+  .source-filter-row .filter-buttons { padding:0; background:none; }
+  .filter-button { min-height:37px; padding:6px 11px; font-size:.88rem; color:var(--navy); background:#FFFEFC; border-color:#D9CBE7; box-shadow:none; }
+  .filter-button span { color:var(--blue); }
+  .filter-button.active, .filter-button:hover { color:#FFFFFF; background:var(--ref-violet); border-color:var(--ref-violet); box-shadow:none; }
+  .filter-button.active span, .filter-button:hover span { color:#F8FCA3; }
+  .qa-card, .qa-card:hover, .qa-card.answer-open {
+    padding:clamp(14px,2.6vw,24px); margin:13px 0; color:var(--ink); background:#FFFEFC;
+    border-color:var(--gray-200); border-radius:11px; box-shadow:none;
+  }
+  .qa-card:hover, .qa-card.answer-open { border-color:#AE8DCF; box-shadow:0 7px 16px rgba(64,29,92,.07); }
+  .qa-card h3 { color:var(--navy); line-height:1.57; }
+  .question-label { color:var(--rose-ink); display:flex; align-items:baseline; flex-wrap:wrap; gap:5px 8px; margin-bottom:8px; }
+  .question-badge.bank { color:#62327F; background:#F0E7F8; border-color:#E2D3ED; margin-left:0; white-space:normal; }
+  .option-list { display:grid; gap:2px; margin:11px 0 3px; color:#4A3A55; }
+  .option-list div { margin:0; padding:3px 8px; border-inline-start:2px solid #EDE5F4; }
+  .answer-toggle { margin-top:12px; padding:7px 10px; color:var(--ref-violet); background:#F1E8F8; border:1px solid #E3D4ED; border-radius:7px; font-size:.87rem; }
+  .answer-toggle:hover { color:var(--navy); background:#EAE0F5; }
+  .answer-panel { margin-top:12px; padding:13px clamp(12px,2vw,19px); color:var(--ink); background:var(--water-wash); border-color:#C8DFF0; box-shadow:none; }
+  .answer-panel::after { background:linear-gradient(var(--ref-ocean),var(--ref-cyan)); }
+  .answer-panel strong { color:var(--water-ink); }
+  .scroll-progress { background:rgba(105,13,173,.14); }
+  .scroll-progress i { background:linear-gradient(90deg,var(--ref-violet),var(--ref-ocean),var(--ref-cyan)); box-shadow:none; filter:none; }
+  .to-top, .to-top:hover { color:#FFFFFF; background:var(--navy-deep); border-color:#B093C5; box-shadow:var(--shadow); }
+  .to-top .ring-fg { stroke:var(--ref-cyan); }
+  .footer { width:min(1332px,calc(100% - 2 * var(--gutter))); margin:0 auto 36px; padding-top:14px; color:var(--gray-500); border-top:1px solid var(--line); }
+
+  @media (max-width:980px) {
+    :root { --gutter:clamp(14px,3.2vw,30px); }
+    html { scroll-padding-top:49px; }
+    .hero-inner { max-width:820px; grid-template-columns:minmax(0,1fr); row-gap:13px; }
+    .hero-stats { grid-column:1; grid-row:4; width:min(100%,430px); margin-top:5px; }
+    .hero-meta { padding-top:12px; }
+    .mobile-nav { padding:7px var(--gutter); background:#F9F5FC; border-color:#DCD0E8; backdrop-filter:none; }
+    .mobile-nav a { color:var(--navy); background:#EEE6F6; }
+    .mobile-nav a:hover, .mobile-nav a:focus-visible { color:#FFFFFF; background:var(--ref-violet); }
+    .layout { max-width:860px; margin-top:20px; }
+    main { padding:clamp(17px,4vw,38px); border-radius:13px; }
+    main::before { border-radius:13px 13px 0 0; }
+  }
+  @media (max-width:600px) {
+    body { font-size:16px; line-height:1.76; }
+    .hero { padding-top:40px; padding-bottom:28px; }
+    .hero::before { mask-image:linear-gradient(90deg,transparent 14%,#000 100%); }
+    .hero-meta { gap:3px 12px; }
+    .hero-stat { padding:10px 8px; }
+    .hero-stat > span { font-size:.73rem; }
+    .chapter { margin-top:45px; }
+    .chapter-header p { font-size:.8rem; }
+    .chapter-header { margin-bottom:22px; }
+    .knowledge-block + .knowledge-block { margin-top:25px; }
+    .filter-row { gap:6px; }
+    .filter-buttons { gap:6px; }
+    th, td { padding:8px 10px; }
+    .knowledge-content table { min-width:410px; }
+    .knowledge-content svg { min-width:540px; }
+    .knowledge-content > div:has(> svg) > p { text-align:left!important; }
+  }
+}
+
+@media screen {
+  /* 参考色卡 #FAFF2E / #690DAD：章节标题改为荧光黄底 + 晶石紫字 */
+  .chapter-header, .chapter-header:hover {
+    background:#FAFF2E;
+    border-inline-start:6px solid #690DAD;
+    box-shadow:0 10px 26px rgba(105,13,173,.16);
+  }
+  .chapter-header::before { color:rgba(105,13,173,.15); }
+  .chapter-header::after { background:none; animation:none; }
+  .ch-corners { display:none; }
+  .chapter-header h2 { color:#3A0A63; }
+  .chapter-header p { color:#5C2E86; }
+  .chapter-number {
+    color:#690DAD; background-image:none; -webkit-text-fill-color:currentColor;
+    text-shadow:none; filter:none;
+  }
+  @supports (-webkit-text-stroke:1px #000) {
+    .chapter-number { color:transparent; -webkit-text-stroke:2.4px #690DAD; }
+  }
+  /* 小节标题：荧光笔划线 */
+  .knowledge-block > h3 {
+    display:inline-block; border-bottom:0; padding-right:8px;
+    background:linear-gradient(transparent 58%,#FAFF2E 58%);
+  }
+  /* 重点内容加粗标红 */
+  main .knowledge-content b, main .knowledge-content strong,
+  main .answer-panel b, main .answer-panel strong,
+  main td b, main .qa-card h3 b { color:#B3123F; }
+  mark.exam-hot { background:#FAFF2E; color:#8A0F3F; }
+  /* 新题型：左侧色条区分 */
+  .qa-card[data-type="term"]  { border-inline-start:3px solid #690DAD; }
+  .qa-card[data-type="short"] { border-inline-start:3px solid #1E9BFF; }
+  .qa-card[data-type="essay"] { border-inline-start:3px solid #E91379; }
+  .answer-panel ol { margin:9px 0 11px; padding-left:1.55em; }
+  .answer-panel ol li { margin:6px 0; padding-left:2px; }
+  .answer-panel ol li::marker { color:#690DAD; font-weight:700; }
+  .answer-panel > .knowledge-content > p:first-child strong { color:#690DAD; }
+}
+
+@media screen {
+  /* 封面作者名片：与英雄区同色系，发丝分隔，不抢标题 */
+  .hero-author {
+    grid-column:1 / -1; grid-row:4;
+    display:flex; align-items:center; gap:15px; flex-wrap:wrap;
+    margin-top:6px; padding-top:18px;
+    border-top:1px solid rgba(238,231,255,.22);
+  }
+  .hero-qr {
+    width:132px; height:132px; flex:0 0 auto; display:block;
+    padding:6px; border-radius:12px; background:#FFFFFF;
+    box-shadow:0 8px 22px rgba(20,8,36,.34);
+  }
+  .hero-author-main { display:flex; flex-direction:column; gap:3px; min-width:0; }
+  .hero-author-main b { color:#FAFF2E; font:700 1.15rem/1.3 var(--font-heading); letter-spacing:.04em; }
+  .hero-author-main span { color:#EFE4F8; font-size:.86rem; letter-spacing:.06em; }
+  .hero-author-note {
+    margin:0 0 0 18px; max-width:40em;
+    color:#DCCBEC; font-size:.84rem; line-height:1.7;
+  }
+  @media (max-width:980px) {
+    .hero-author { grid-row:auto; gap:12px; padding-top:15px; }
+    .hero-stats { grid-row:auto; }
+    .hero-qr { width:88px; height:88px; }
+    .hero-author-note { margin:2px 0 0; flex:1 1 100%; max-width:none; }
+  }
+}
+
+@media screen {
+  .hero-qr {
+    width:176px; height:176px; padding:8px; border-radius:16px; cursor:zoom-in;
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .hero-qr:hover { transform:translateY(-2px) scale(1.02); box-shadow:0 14px 30px rgba(20,8,36,.42); }
+  .qr-hint { color:#C7B3DC !important; font-size:.74rem !important; letter-spacing:.04em; }
+  .qr-zoom {
+    position:fixed; inset:0; z-index:200; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:14px; padding:24px;
+    background:rgba(18,8,30,.86); backdrop-filter:blur(6px); cursor:zoom-in;
+  }
+  .qr-zoom[hidden] { display:none; }
+  .qr-zoom img {
+    width:min(78vw,78vh,520px); height:auto; padding:14px; border-radius:20px;
+    background:#fff; box-shadow:0 24px 70px rgba(0,0,0,.55);
+  }
+  .qr-zoom p { margin:0; color:#D9C9E8; font-size:.85rem; letter-spacing:.05em; }
+  @media (max-width:980px) {
+    .hero-qr { width:140px; height:140px; }
+  }
+}
+
+  /* 答案面板兜底：动画不执行时也要可见（opacity 基线设为 1） */
+  .answer-panel { opacity:1; animation:answerFadeIn .38s ease; }
+  .answer-panel[hidden] { display:none; }
+
+.hero h1, .hero p, .hero-meta, .hero-stats, .hero-stat { animation:none !important; opacity:1 !important; transform:none !important; }
+.hero h1 { background-position:0 0 !important; }
+
+@media screen {
+  :root{
+    --monet-cream:#FAF6EC; --monet-paper:#FFFDF8; --monet-mist:#F1F5F7;
+    --monet-blue:#5B84A8; --monet-deep:#3E5F7D; --monet-sky:#8FB3CC;
+    --monet-lav:#8E7BA8; --monet-lav-soft:#EFE9F4; --monet-rose:#C9666F;
+    --monet-poppy:#C0554A; --monet-gold:#D9A75E; --monet-sage:#8FA96B;
+    --monet-ink:#2F3542; --monet-line:#E6DDCF;
+  }
+  body{
+    background:
+      radial-gradient(38% 32% at 12% 6%, rgba(143,179,204,.30), transparent 70%),
+      radial-gradient(32% 28% at 88% 12%, rgba(201,102,111,.18), transparent 72%),
+      radial-gradient(36% 30% at 72% 78%, rgba(143,169,107,.18), transparent 74%),
+      linear-gradient(180deg,#F6F2E6,#FAF6EC 42%,#F7F3EA);
+    color:var(--monet-ink);
+  }
+  body::before{ background:none; }
+  body::after{ background:none; }
+  ::selection{ background:#F3D9A6; color:#3E5F7D; }
+
+  /* 封面：睡莲蓝 → 鸢尾紫 */
+  .hero{
+    background:linear-gradient(118deg,#3E5F7D 8%,#5B84A8 48%,#8E7BA8 100%);
+  }
+  .hero::before{
+    background:
+      radial-gradient(36% 50% at 16% 30%, rgba(201,102,111,.34), transparent 70%),
+      radial-gradient(30% 44% at 66% 16%, rgba(217,167,94,.30), transparent 72%),
+      radial-gradient(44% 56% at 92% 74%, rgba(143,169,107,.30), transparent 74%),
+      radial-gradient(28% 40% at 44% 92%, rgba(143,179,204,.28), transparent 72%);
+  }
+  .hero::after{
+    height:3px;
+    background:linear-gradient(90deg,#8FB3CC 0 30%,#C9666F 30% 52%,#D9A75E 52% 68%,#8FA96B 68% 84%,#8E7BA8 84% 100%);
+  }
+  .hero h1{
+    color:#FFF9F0; background-image:none; -webkit-text-fill-color:currentColor;
+    font-size:clamp(1.7rem,2.85vw,2.55rem); line-height:1.34; letter-spacing:.04em;
+  }
+  .hero p{ color:#ECF2F7; }
+  .hero-meta{ color:#D9E5EE; border-top-color:rgba(255,255,255,.26); }
+  .hero-stat, .hero-stat:hover{
+    background:rgba(255,255,255,.13); border-color:rgba(255,255,255,.30); box-shadow:none;
+  }
+  .hero-stat:nth-child(2){ background:rgba(255,255,255,.09); }
+  .hero-stat:nth-child(3){ background:rgba(255,255,255,.07); }
+  .hero-stat b, .hero-stat b span{ color:#F6DFAE; }
+  .hero-stat:nth-child(2) b, .hero-stat:nth-child(2) b span{ color:#CFE4F1; }
+  .hero-stat:nth-child(3) b, .hero-stat:nth-child(3) b span{ color:#F0C3C8; }
+  .hero-stat > span{ color:#E8EFF5; }
+
+  /* 章节头：四种莫奈色组轮换 */
+  .chapter-header, .chapter-header:hover{
+    background:linear-gradient(115deg,#40607E,#5B84A8 52%,#8E7BA8);
+    border-inline-start:6px solid #D9A75E;
+    box-shadow:0 10px 26px rgba(62,95,125,.20);
+  }
+  .chapter:nth-of-type(4n+2) .chapter-header,
+  .chapter:nth-of-type(4n+2) .chapter-header:hover{
+    background:linear-gradient(115deg,#8A6270,#C9666F 54%,#D9A75E);
+    border-inline-start-color:#8FA96B;
+  }
+  .chapter:nth-of-type(4n+3) .chapter-header,
+  .chapter:nth-of-type(4n+3) .chapter-header:hover{
+    background:linear-gradient(115deg,#4E7360,#8FA96B 52%,#8FB3CC);
+    border-inline-start-color:#C9666F;
+  }
+  .chapter:nth-of-type(4n) .chapter-header,
+  .chapter:nth-of-type(4n) .chapter-header:hover{
+    background:linear-gradient(115deg,#6B5B86,#8E7BA8 52%,#C0A9C8);
+    border-inline-start-color:#D9A75E;
+  }
+  .chapter-header::before{ color:rgba(255,255,255,.12); }
+  .chapter-header::after{ background:none; }
+  .chapter-header h2{ color:#FFFCF4; }
+  .chapter-header p{ color:#F0E7F2; }
+  .chapter-number{
+    color:#F6DFAE !important; -webkit-text-fill-color:currentColor !important;
+    -webkit-text-stroke:0 !important; text-shadow:0 2px 10px rgba(0,0,0,.18);
+  }
+
+  /* 小节标题：睡莲蓝文字＋淡蓝荧光笔 */
+  .knowledge-block > h3{
+    color:var(--monet-deep);
+    background:linear-gradient(transparent 60%, #DCE9F2 60%);
+    display:block; width:fit-content; max-width:100%; padding-right:12px;
+  }
+  /* 滚动条改成莫奈蓝，避免出现刺眼的玫红竖条 */
+  ::-webkit-scrollbar-thumb{ background:rgba(91,132,168,.42); border:3px solid transparent; background-clip:content-box; }
+  ::-webkit-scrollbar-thumb:hover{ background:rgba(91,132,168,.66); background-clip:content-box; }
+  .sidebar{ scrollbar-color:rgba(91,132,168,.42) transparent; }
+  .sidebar::-webkit-scrollbar-thumb{ background:rgba(91,132,168,.35); }
+  .sidebar:hover::-webkit-scrollbar-thumb{ background:rgba(91,132,168,.55); }
+  .knowledge-block > h3::before{ background:var(--monet-blue); }
+  .knowledge-block:nth-of-type(3n+2) > h3{ background:linear-gradient(transparent 60%, #F4DFE0 60%); }
+  .knowledge-block:nth-of-type(3n+2) > h3::before{ background:var(--monet-rose); }
+  .knowledge-block:nth-of-type(3n) > h3{ background:linear-gradient(transparent 60%, #E6EFDA 60%); }
+  .knowledge-block:nth-of-type(3n) > h3::before{ background:var(--monet-sage); }
+
+  .knowledge-content{ color:var(--monet-ink); }
+  .knowledge-content blockquote{
+    background:#EEF4F0; border:1px solid #DCE8DE; border-inline-start:3px solid var(--monet-sage);
+    color:#2F3D34;
+  }
+  .knowledge-content blockquote strong{ color:#4E7360; }
+  /* 重点加粗：换黑体、加深红，避免仿宋细笔画在小字号下发虚 */
+  .knowledge-content b, .knowledge-content strong,
+  .answer-panel b, .answer-panel strong,
+  .qa-card h3 b, main td b, .option-list b{
+    font-family:var(--font-heading); font-weight:700; color:#8A2B26;
+    letter-spacing:.01em;
+  }
+  mark.exam-hot{ background:linear-gradient(transparent 54%,#F6E2B4 54%); color:#8A4A2A; }
+
+  th{ background:#E3EDF4; color:var(--monet-deep); }
+  tbody tr:nth-child(even){ background:#FBF7EF; }
+  tbody tr:hover{ background:#EFF4F7; }
+  .table-wrap, .knowledge-content > div:has(> table){
+    background:var(--monet-paper); border-color:var(--monet-line);
+  }
+
+  /* 目录 */
+  .sidebar{ background:#FBF7EF; border-color:var(--monet-line); }
+  .sidebar-title{ color:var(--monet-deep); }
+  .sidebar-title::after{ background:linear-gradient(90deg,var(--monet-blue),var(--monet-rose),transparent); }
+  .nav-chapter{ color:var(--monet-deep); }
+  .nav-chapter.active{ color:#8A4A2A; background:#F6EBD8; }
+  .nav-chapter.active::after{ background:linear-gradient(90deg,var(--monet-gold),transparent); }
+  .nav-section{ color:#6B6470; }
+  .nav-section:hover{ background:#EFF4F7; color:var(--monet-deep); }
+  .nav-section.active{ color:#6B5B86; background:var(--monet-lav-soft); }
+  .nav-section::before{ background:var(--monet-rose); }
+  .nav-question-bank .nav-chapter{ color:#8A4A2A; background:#F7EBDA; }
+
+  main{ background:var(--monet-paper); border-color:var(--monet-line); }
+  main::before{ background:linear-gradient(90deg,var(--monet-blue),var(--monet-rose),var(--monet-gold),var(--monet-sage)); }
+  .intro h2, .question-bank > h2{ color:var(--monet-deep); }
+  .intro h2::after, .question-bank > h2::after{ background:linear-gradient(90deg,var(--monet-rose),transparent); }
+
+  /* 题库 */
+  .question-filter-panel{ background:#F7F2E8; border-color:var(--monet-line); }
+  .filter-button{ background:var(--monet-paper); border-color:#DCCFBE; color:var(--monet-deep); }
+  .filter-button span{ color:var(--monet-poppy); }
+  .filter-button.active, .filter-button:hover{ background:var(--monet-blue); border-color:var(--monet-blue); color:#fff; }
+  .filter-button.active span, .filter-button:hover span{ color:#F6DFAE; }
+  .qa-card{ background:var(--monet-paper); border-color:var(--monet-line); }
+  .qa-card:hover, .qa-card.answer-open{ border-color:#B9CBD8; box-shadow:0 8px 18px rgba(62,95,125,.08); }
+  .qa-card h3{ color:var(--monet-deep); }
+  .question-label{ color:#A8423B; }
+  .question-badge.bank{ color:#6B5B86; background:var(--monet-lav-soft); border-color:#DDD2E6; }
+  .option-list{ color:#3A4150; }
+  .option-list div{ border-inline-start-color:#E7DED0; }
+  .answer-toggle{ color:var(--monet-blue); background:#EAF1F6; border-color:#CFDFEA; }
+  .answer-toggle:hover{ color:var(--monet-deep); background:#DFEAF2; }
+  .answer-panel{ background:#F2F7FA; border-color:#CFDFEA; }
+  /* 答案面板不做淡入：预览环境会冻结动画，导致内容透明看不见 */
+  .answer-panel{ animation:none !important; opacity:1 !important; }
+  /* 解析分段后需要更舒展的内边距与行距 */
+  .answer-panel{ padding:16px 20px 16px 26px !important; }
+  .answer-panel p{ margin:8px 0; line-height:1.85; }
+  .answer-panel ol{ margin:8px 0 12px; padding-left:1.7em; }
+  .answer-panel ol li{ margin:5px 0; line-height:1.8; }
+  .answer-panel::after{ background:linear-gradient(var(--monet-blue),var(--monet-sky)); }
+  .answer-panel strong{ color:var(--monet-deep); }
+  .scroll-progress{ background:rgba(91,132,168,.16); }
+  .scroll-progress i{ background:linear-gradient(90deg,var(--monet-blue),var(--monet-rose),var(--monet-gold)); }
+  .to-top, .to-top:hover{ background:var(--monet-deep); border-color:#B9CBD8; }
+  .to-top .ring-fg{ stroke:var(--monet-sky); }
+  .footer{ color:#6B6257; border-top-color:var(--monet-line); }
+  /* 解析来源：小字、低饱和，不抢正文 */
+  .qa-src{
+    margin-top:10px; padding-top:8px; border-top:1px dashed #DCD2C4;
+    color:#7A7166; font-size:.82rem; letter-spacing:.02em;
+  }
+  .qa-src::before{ content:"◈ "; color:var(--monet-blue); }
+  .mobile-nav{ background:#FBF7EF; border-color:var(--monet-line); }
+  .mobile-nav a{ background:#EFE9F4; color:var(--monet-deep); }
+}
+</style></head>
+<body>
+<header class="hero"><div class="hero-inner">
+<h1>病理学 · 考前速记</h1>
+<p>看形态说机制：从细胞损伤到炎症、肿瘤，再到各系统疾病的病理变化。</p>
+<div class="hero-meta"><span>大二下</span><span>共 8 讲 · 14 个知识点</span></div>
+</div></header>
+<div class="layout">
+<aside class="sidebar"><h2 class="sidebar-title">章节目录</h2><div class="nav-group"><a class="nav-chapter" href="#chapter-01">细胞和组织的适应与损伤</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-02">损伤的修复</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-03">局部血液循环障碍</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-04">炎症</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-05">肿瘤</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-06">心血管系统疾病</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-07">呼吸系统疾病</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-08">消化系统疾病</a></div></aside>
+<main><section class="chapter" id="chapter-01"><header class="chapter-header"><span class="chapter-number">01</span><div><p>病理学</p><h2>细胞和组织的适应与损伤</h2></div></header><article class="knowledge-block"><h3>适应：萎缩、肥大、增生、化生</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"><span class="chip ghost">掌握</span><span class="chip ghost">高频</span><span class="chip ghost">概念</span></div><div class="table-wrap"><table><thead><tr><th>类型</th><th>定义</th><th>举例</th></tr></thead><tbody><tr><td><b>萎缩</b></td><td>已发育正常的细胞、组织或器官<b>体积缩小</b></td><td>脑萎缩、肾萎缩、<b>废用性萎缩</b></td></tr><tr><td><b>肥大</b></td><td>细胞<b>体积增大</b>致器官体积增大</td><td><b>心肌肥大</b>（高血压）、骨骼肌肥大</td></tr><tr><td><b>增生</b></td><td>细胞<b>数目增多</b>致组织器官增大</td><td><b>前列腺增生</b>、乳腺增生</td></tr><tr><td><b>化生</b></td><td><b>一种分化成熟的组织被另一种分化成熟组织取代</b></td><td><b>支气管假复层纤毛柱状上皮 → 鳞状上皮</b>（吸烟）、宫颈柱状上皮 → 鳞状上皮</td></tr></tbody></table></div><blockquote><b>化生常发生在「不耐刺激」的上皮被「耐刺激」的上皮替代</b>，是一种适应性改变，但==化生的上皮可成为癌变的基础（如鳞癌）==。</blockquote></div></article><article class="knowledge-block"><h3>变性：可逆性损伤</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"><span class="chip ghost">掌握</span><span class="chip ghost">形态</span><span class="chip ghost">可逆</span></div><div class="table-wrap"><table><thead><tr><th>类型</th><th>本质</th><th>常见部位</th></tr></thead><tbody><tr><td><b>细胞水肿（水样变性）</b></td><td><b>Na⁺-K⁺ 泵失灵、细胞内水钠潴留</b></td><td><b>肝、心、肾</b>（缺氧、感染时最早出现）</td></tr><tr><td><b>脂肪变</b></td><td>细胞内<b>甘油三酯</b>蓄积</td><td><b>肝</b>（脂肪肝，「槟榔肝」切面油腻）</td></tr><tr><td><b>玻璃样变</b></td><td>细胞内或间质出现<b>均质红染</b>蛋白性物质</td><td><b>肾小球入球小动脉</b>（高血压）、<b>浆细胞 Russell 小体</b>、瘢痕组织</td></tr><tr><td><b>淀粉样变</b></td><td><b>淀粉样蛋白</b>沉积于细胞间质</td><td>脾、肾、心（HE 染呈淡红色均质）</td></tr><tr><td><b>黏液样变</b></td><td>间质内黏多糖蓄积</td><td>动脉粥样硬化斑块、甲状腺功能低下</td></tr></tbody></table></div><blockquote><b>变性是可逆性损伤</b>——去除病因后可恢复；<b>细胞死亡（坏死、凋亡）不可逆</b>。==判断分水岭是细胞膜与细胞核的改变==。</blockquote></div></article><article class="knowledge-block"><h3>坏死与凋亡</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"><span class="chip ghost">掌握</span><span class="chip ghost">高频</span><span class="chip ghost">鉴别</span></div><div class="table-wrap"><table><thead><tr><th>坏死类型</th><th>特点</th><th>好发</th></tr></thead><tbody><tr><td><b>凝固性坏死</b></td><td><b>蛋白质变性凝固</b>，结构轮廓保留，呈灰白/灰黄</td><td><b>心、肾、脾</b>（贫血性梗死）</td></tr><tr><td><b>液化性坏死</b></td><td>组织<b>迅速溶解液化</b></td><td><b>脑</b>（脑软化）、脓肿</td></tr><tr><td><b>纤维素样坏死</b></td><td><b>胶原纤维断裂、呈细丝状红染</b></td><td><b>风湿病、结节性多动脉炎、急进性高血压</b></td></tr><tr><td><b>干酪样坏死</b></td><td><b>彻底凝固性坏死</b>，镜下<b>无结构红染颗粒</b>，肉眼<b>豆腐渣样</b></td><td><b>结核病</b></td></tr></tbody></table></div><p>坏疽（坏死 + 腐败菌感染）</p><div class="table-wrap"><table><thead><tr><th>类型</th><th>部位</th><th>特点</th></tr></thead><tbody><tr><td><b>干性坏疽</b></td><td><b>四肢末端</b>（动脉阻塞、静脉通畅）</td><td><b>干燥皱缩、黑褐色、界限清楚</b></td></tr><tr><td><b>湿性坏疽</b></td><td><b>肠、子宫、肺</b>（动静脉均阻塞）</td><td><b>湿润肿胀、恶臭、界限不清</b>，易致中毒</td></tr><tr><td><b>气性坏疽</b></td><td><b>深部肌肉创伤</b>（产气荚膜梭菌）</td><td><b>捻发音、进展迅速</b>，最危险</td></tr></tbody></table></div><p><b>凋亡</b>：单个细胞主动的程序性死亡，<b>细胞膜完整、形成凋亡小体、无炎症反应</b>；与坏死（成片、膜破裂、引发炎症）相反。</p></div></article></section><section class="chapter" id="chapter-02"><header class="chapter-header"><span class="chapter-number">02</span><div><p>病理学</p><h2>损伤的修复</h2></div></header><article class="knowledge-block"><h3>再生、肉芽组织与创伤愈合</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"><span class="chip ghost">掌握</span><span class="chip ghost">高频</span><span class="chip ghost">形态</span></div><p><b>再生</b>分两类：<b>生理性再生</b>（表皮更替、血细胞更新）与<b>病理性再生</b>（损伤后修复）。按细胞再生能力分：</p><p><b>肉芽组织</b>由<b>新生毛细血管、成纤维细胞、炎细胞</b>组成，肉眼呈鲜红颗粒状、柔软湿润；最终<b>机化为瘢痕组织</b>。</p><div class="table-wrap"><table><thead><tr><th>愈合方式</th><th>条件</th><th>结果</th></tr></thead><tbody><tr><td><b>一期愈合</b></td><td><b>伤口小、对合整齐、无感染</b>（如手术切口）</td><td><b>瘢痕小</b>，愈合快</td></tr><tr><td><b>二期愈合</b></td><td><b>伤口大、对合不齐、有感染或异物</b></td><td><b>瘢痕大</b>，愈合慢，可致挛缩</td></tr></tbody></table></div></div></article></section><section class="chapter" id="chapter-03"><header class="chapter-header"><span class="chapter-number">03</span><div><p>病理学</p><h2>局部血液循环障碍</h2></div></header><article class="knowledge-block"><h3>血栓形成</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"><span class="chip ghost">掌握</span><span class="chip ghost">高频</span><span class="chip ghost">条件</span></div><p><b>血栓形成</b>是活体心血管内血液<b>凝固或血液中某些成分析出凝集</b>形成固体质块的过程。</p><p>三大条件</p><div class="table-wrap"><table><thead><tr><th>类型</th><th>形成条件</th><th>常见部位</th></tr></thead><tbody><tr><td><b>白色血栓</b></td><td>血流较快</td><td><b>心瓣膜、动脉</b>（血小板小梁 + 少量纤维蛋白）</td></tr><tr><td><b>混合血栓</b></td><td>血流变慢、涡流</td><td><b>静脉</b>（血栓头部白色、体部混合）</td></tr><tr><td><b>红色血栓</b></td><td>血流停止</td><td><b>静脉</b>（纤维蛋白网罗大量红细胞）</td></tr><tr><td><b>透明血栓（微血栓）</b></td><td>微循环内</td><td><b>DIC</b>（纤维蛋白性血栓）</td></tr></tbody></table></div><blockquote><b>溶解吸收、机化再通、钙化</b>；==血栓脱落则成为栓子==。</blockquote></div></article><article class="knowledge-block"><h3>栓塞与梗死</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"><span class="chip ghost">掌握</span><span class="chip ghost">高频</span><span class="chip ghost">鉴别</span></div><p><b>栓塞</b>：循环血液中出现<b>不溶于血液的异常物质</b>（栓子）随血流运行阻塞血管。<b>最常见的是血栓栓塞</b>。</p><div class="table-wrap"><table><thead><tr><th>栓子来源</th><th>运行途径</th><th>栓塞部位</th></tr></thead><tbody><tr><td><b>左心/体循环动脉</b></td><td>体循环动脉</td><td><b>脑、脾、肾、下肢</b></td></tr><tr><td><b>右心/体静脉</b></td><td>肺动脉</td><td><b>肺栓塞</b>（最常见、可猝死）</td></tr><tr><td><b>门静脉系统</b></td><td>门静脉</td><td><b>肝内门静脉分支</b></td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>梗死类型</th><th>形成条件</th><th>好发器官</th><th>肉眼</th></tr></thead><tbody><tr><td><b>贫血性（白色）梗死</b></td><td><b>动脉阻塞、组织致密、侧支少</b></td><td><b>心、肾、脾</b></td><td><b>灰白色、境界清楚、三角形</b></td></tr><tr><td><b>出血性（红色）梗死</b></td><td><b>动脉阻塞 + 静脉淤血 / 双重血供、组织疏松</b></td><td><b>肺、肠</b></td><td><b>暗红色、出血明显</b></td></tr></tbody></table></div><blockquote><b>肺、肠因为「双重血供 + 组织疏松」</b>，梗死后血液从侧支涌入坏死区，形成==出血性梗死==；而心、肾、脾组织致密，形成==贫血性梗死==。</blockquote></div></article></section><section class="chapter" id="chapter-04"><header class="chapter-header"><span class="chapter-number">04</span><div><p>病理学</p><h2>炎症</h2></div></header><article class="knowledge-block"><h3>炎症的基本病理变化</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"><span class="chip ghost">掌握</span><span class="chip ghost">高频</span><span class="chip ghost">机制</span></div><p>炎症的基本病理变化是<b>变质、渗出、增生</b>，其中<b>渗出是炎症最具特征性的改变</b>。</p><div class="table-wrap"><table><thead><tr><th>炎症类型</th><th>主要细胞</th><th>常见疾病</th></tr></thead><tbody><tr><td><b>浆液性炎</b></td><td>—（以浆液渗出为主）</td><td>感冒初期、烫伤水疱</td></tr><tr><td><b>纤维素性炎</b></td><td>—（纤维蛋白渗出）</td><td><b>大叶性肺炎、白喉、风湿性心包炎（绒毛心）</b></td></tr><tr><td><b>化脓性炎</b></td><td><b>中性粒细胞</b></td><td><b>脓肿、蜂窝织炎、阑尾炎</b></td></tr><tr><td><b>出血性炎</b></td><td>红细胞大量渗出</td><td>流行性出血热、炭疽</td></tr></tbody></table></div><blockquote><b>渗出液</b>：蛋白高、细胞多、比重＞1.018、易凝固（炎症）；<b>漏出液</b>：蛋白低、细胞少、比重＜1.018（心衰、低蛋白）。</blockquote></div></article><article class="knowledge-block"><h3>慢性炎症与肉芽肿性炎</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"><span class="chip ghost">掌握</span><span class="chip ghost">鉴别</span><span class="chip ghost">高频</span></div><p><b>肉芽肿性炎</b>是<b>巨噬细胞及其衍生细胞（上皮样细胞、多核巨细胞）局限性增生</b>形成的结节状病灶。</p><div class="table-wrap"><table><thead><tr><th>类型</th><th>代表疾病</th><th>特征</th></tr></thead><tbody><tr><td><b>感染性肉芽肿</b></td><td><b>结核病</b></td><td><b>结核结节</b>：中央干酪样坏死 + 上皮样细胞 + <b>朗汉斯巨细胞</b> + 外周淋巴细胞</td></tr><tr><td><b>异物性肉芽肿</b></td><td>缝线、滑石粉</td><td>异物周围巨噬细胞与多核异物巨细胞，<b>无干酪样坏死</b></td></tr><tr><td><b>风湿小结</b></td><td>风湿病</td><td><b>Aschoff 细胞</b>、中心纤维素样坏死</td></tr></tbody></table></div><blockquote><b>朗汉斯巨细胞</b>核呈马蹄形排列于周边（结核）；<b>异物巨细胞</b>核杂乱分布于胞质中（异物）。==看核的排列方式就能区分==。</blockquote></div></article></section><section class="chapter" id="chapter-05"><header class="chapter-header"><span class="chapter-number">05</span><div><p>病理学</p><h2>肿瘤</h2></div></header><article class="knowledge-block"><h3>肿瘤的异型性与生长方式</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"><span class="chip ghost">掌握</span><span class="chip ghost">高频</span><span class="chip ghost">鉴别</span></div><p><b>异型性</b>是肿瘤组织在<b>细胞形态和组织结构</b>上与其起源正常组织的差异，<b>是判断良恶性的关键依据</b>。</p><div class="table-wrap"><table><thead><tr><th></th><th>良性肿瘤</th><th>恶性肿瘤</th></tr></thead><tbody><tr><td><b>异型性</b></td><td><b>小</b></td><td><b>大</b>（核大深染、核仁明显、核分裂象多、可见病理性核分裂）</td></tr><tr><td><b>生长方式</b></td><td><b>膨胀性</b>，常有<b>包膜</b></td><td><b>浸润性</b>，<b>无包膜</b></td></tr><tr><td><b>生长速度</b></td><td>慢</td><td><b>快</b>，可伴坏死出血</td></tr><tr><td><b>复发转移</b></td><td><b>不转移</b>、少复发</td><td><b>易转移</b>、常复发</td></tr></tbody></table></div><blockquote><b>良性看「像不像」正常组织（异型性小），恶性看「跑到哪去」（浸润 + 转移）</b>。==病理性核分裂象是恶性的重要标志==。</blockquote></div></article><article class="knowledge-block"><h3>肿瘤的扩散与癌前病变</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"><span class="chip ghost">掌握</span><span class="chip ghost">高频</span><span class="chip ghost">扩散</span></div><div class="table-wrap"><table><thead><tr><th>转移途径</th><th>常见肿瘤</th></tr></thead><tbody><tr><td><b>淋巴道转移</b></td><td><b>癌最常见</b>（如乳腺癌 → 腋窝淋巴结）</td></tr><tr><td><b>血道转移</b></td><td><b>肉瘤多见</b>；癌晚期也可，<b>肝、肺最常见</b></td></tr><tr><td><b>种植性转移</b></td><td><b>胃癌 → 卵巢（Krukenberg 瘤）</b>、腹膜种植</td></tr></tbody></table></div><p>癌与肉瘤的区别</p><div class="table-wrap"><table><thead><tr><th></th><th>癌</th><th>肉瘤</th></tr></thead><tbody><tr><td>组织来源</td><td><b>上皮组织</b></td><td><b>间叶组织</b></td></tr><tr><td>发病率</td><td><b>多见</b></td><td>少见</td></tr><tr><td>转移</td><td><b>淋巴道为主</b></td><td><b>血道为主</b></td></tr><tr><td>镜下</td><td><b>癌巢</b>形成，与间质分界清</td><td>弥漫分布，与间质分界不清</td></tr></tbody></table></div><p><b>癌前病变</b>：本身不是癌，但具有癌变潜能的病变，如<b>黏膜白斑、慢性萎缩性胃炎伴肠上皮化生、结肠腺瘤性息肉、乳腺导管上皮不典型增生</b>。<b>原位癌</b>：上皮全层异型增生但<b>未突破基底膜</b>。</p></div></article></section><section class="chapter" id="chapter-06"><header class="chapter-header"><span class="chapter-number">06</span><div><p>病理学</p><h2>心血管系统疾病</h2></div></header><article class="knowledge-block"><h3>动脉粥样硬化与高血压</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"><span class="chip ghost">掌握</span><span class="chip ghost">高频</span><span class="chip ghost">病理</span></div><p><b>动脉粥样硬化（AS）</b> 的基本病变是<b>脂质沉积于动脉内膜</b>，形成<b>粥样斑块</b>。演进：<b>脂纹 → 纤维斑块 → 粥样斑块 → 复合病变（溃疡、钙化、血栓、动脉瘤）</b>。</p><p><b>高血压</b>的基本病理改变：</p><div class="table-wrap"><table><thead><tr><th>血管/器官</th><th>改变</th></tr></thead><tbody><tr><td><b>细动脉</b></td><td><b>玻璃样变（透明变性）</b>——血浆蛋白沉积，管壁增厚、管腔狭窄</td></tr><tr><td><b>小动脉</b></td><td><b>增生性小动脉硬化</b>（洋葱皮样），见于急进型高血压</td></tr><tr><td><b>心脏</b></td><td><b>左心室向心性肥大</b>，晚期离心性扩张</td></tr><tr><td><b>肾脏</b></td><td><b>原发性颗粒性固缩肾</b>（双侧对称、细颗粒）</td></tr><tr><td><b>脑</b></td><td>脑软化、脑出血（<b>基底节、内囊</b>最常见）</td></tr></tbody></table></div><blockquote><b>高血压肾</b>：双侧对称细颗粒；<b>慢性肾盂肾炎肾</b>：双侧不对称、凹陷性瘢痕 + 肾盂变形（见「器官系统基础IV」）。</blockquote></div></article><article class="knowledge-block"><h3>心肌梗死</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"><span class="chip ghost">掌握</span><span class="chip ghost">高频</span><span class="chip ghost">并发症</span></div><p><b>心肌梗死</b>多因<b>冠状动脉粥样硬化合并血栓形成</b>导致管腔闭塞，属<b>贫血性梗死</b>。好发部位依次为<b>左心室前壁、心尖部、室间隔前 2/3</b>（左前降支供血区）。</p><blockquote><b>心律失常</b>（最常见）、<b>心力衰竭</b>、<b>心源性休克</b>、<b>心脏破裂</b>（1～2 周）、<b>室壁瘤</b>、<b>附壁血栓</b>。</blockquote></div></article></section><section class="chapter" id="chapter-07"><header class="chapter-header"><span class="chapter-number">07</span><div><p>病理学</p><h2>呼吸系统疾病</h2></div></header><article class="knowledge-block"><h3>肺炎的类型与病理</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"><span class="chip ghost">掌握</span><span class="chip ghost">高频</span><span class="chip ghost">鉴别</span></div><div class="table-wrap"><table><thead><tr><th></th><th>大叶性肺炎</th><th>小叶性肺炎（支气管肺炎）</th></tr></thead><tbody><tr><td>病原</td><td><b>肺炎链球菌</b></td><td><b>多种细菌混合</b>（金葡、肺炎克雷伯等）</td></tr><tr><td>炎症类型</td><td><b>纤维素性炎</b></td><td><b>化脓性炎</b></td></tr><tr><td>范围</td><td><b>肺段或大叶</b></td><td><b>以细支气管为中心的小叶</b></td></tr><tr><td>好发人群</td><td><b>青壮年</b></td><td><b>小儿、老年、体弱者</b></td></tr><tr><td>并发症</td><td><b>肺肉质变、肺脓肿、脓胸</b></td><td><b>心衰、呼衰、脓肿</b></td></tr></tbody></table></div><p><b>大叶性肺炎四期</b>：<b>充血水肿期 → 红色肝样变期 → 灰色肝样变期 → 溶解消散期</b>。灰色肝样变期肺泡腔内充满纤维蛋白与中性粒细胞，肉眼呈灰白色、质实如肝。</p><p><b>慢阻肺</b>：<b>慢性支气管炎</b>（黏液腺增生、杯状细胞增多）与<b>肺气肿</b>（肺泡扩张、间隔断裂，<b>桶状胸</b>）。</p><blockquote><b>鳞状细胞癌</b>与吸烟最相关、<b>中央型</b>多见；<b>腺癌</b>女性多见、<b>周围型</b>；<b>小细胞癌</b>恶性度最高、早期转移。</blockquote></div></article></section><section class="chapter" id="chapter-08"><header class="chapter-header"><span class="chapter-number">08</span><div><p>病理学</p><h2>消化系统疾病</h2></div></header><article class="knowledge-block"><h3>消化性溃疡与肝硬化</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"><span class="chip ghost">掌握</span><span class="chip ghost">高频</span><span class="chip ghost">病理</span></div><p>一、消化性溃疡</p><p>好发于<b>胃小弯近幽门侧</b>与<b>十二指肠球部</b>。溃疡呈<b>圆形或椭圆形</b>，直径多＜2 cm，<b>边缘整齐、底部平坦、周围黏膜放射状皱襞</b>。</p><p>镜下底部<b>四层结构</b>：<b>渗出层（炎性渗出物）→ 坏死层 → 肉芽组织层 → 瘢痕层</b>。</p><p>并发症：<b>出血、穿孔、幽门梗阻、癌变</b>（<b>十二指肠溃疡几乎不癌变</b>，胃溃疡癌变率＜1%）。</p><p>二、肝硬化</p><p><b>肝硬化</b>是各种慢性肝病发展的晚期阶段，特征性病变是<b>假小叶</b>：<b>肝细胞结节状再生 + 纤维结缔组织增生</b>，分割包绕形成。</p><blockquote><b>胃溃疡可癌变（＜1%），十二指肠溃疡几乎不癌变</b>；<b>假小叶是肝硬化的特征性病变，也是诊断依据</b>。</blockquote></div></article></section>
+<footer class="footer"><p><a href="../subject.html?s=pathology">← 返回科目页</a> · <a href="../quiz.html?s=pathology">去刷题</a></p></footer>
+</main></div>
+</body></html>

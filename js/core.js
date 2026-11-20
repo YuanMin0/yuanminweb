@@ -319,7 +319,7 @@
     { href: 'drill.html', label: '刷题', key: 'drill' },
     { href: 'materials.html', label: '资料', key: 'materials' },
     { href: 'wrongbook.html', label: '我的', key: 'wrong' },
-    { href: 'mn/index.html', label: '速记', key: 'mn' }
+    { href: 'mn/index.html', label: '考前速记', key: 'mn' }
   ];
   WB.mountChrome = function (active) {
     /* doc/<科目>/ 这类子目录页要回退两级，否则导航链接会 404 */
@@ -333,6 +333,7 @@
         var cls = [];
         if (n.key === active) cls.push('on');
         if (n.key === 'drill') cls.push('nav-drill');
+        if (n.key === 'mn') cls.push('nav-mn');
         return '<a href="' + B + n.href + '"' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') + '>' + n.label + '</a>';
       }).join('');
       hdr.innerHTML =

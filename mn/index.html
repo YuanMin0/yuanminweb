@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>考前速记 | MediLearn</title>
+<script src="../js/auth.js"></script>
+<script>if(window.WB&&WB.auth)WB.auth.guard();</script>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .mn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(248px, 1fr)); gap: 14px; }
+  .mn-card {
+    display: flex; align-items: center; gap: 12px; padding: 16px 18px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md);
+    text-decoration: none; color: inherit; transition: .22s var(--ease);
+    box-shadow: var(--shadow-xs);
+  }
+  .mn-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--brand); text-decoration: none; }
+  .mn-card-ico {
+    flex: 0 0 40px; width: 40px; height: 40px; border-radius: 11px;
+    display: grid; place-items: center; font-size: 19px;
+    background: var(--brand-soft); color: var(--brand-ink);
+  }
+  .mn-card-b { min-width: 0; flex: 1; }
+  .mn-card-t { display: block; font-size: 14.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mn-card-d { display: block; margin-top: 3px; font-size: 12px; color: var(--text-3); }
+  .mn-cat { margin: 30px 0 12px; font-size: 13px; font-weight: 700; color: var(--text-3); letter-spacing: .06em; }
+  .mn-hero { padding: 34px 0 22px; }
+  .mn-hero h1 { margin: 0; font-size: clamp(24px, 3.4vw, 32px); }
+  .mn-hero p { margin: 10px 0 0; color: var(--text-2); font-size: 14.5px; }
+  .mn-search {
+    width: 100%; max-width: 420px; margin-top: 18px; padding: 11px 16px;
+    border-radius: var(--r-full); border: 1px solid var(--border);
+    background: var(--surface); color: var(--text); font-size: 14px; outline: none;
+  }
+  .mn-search:focus { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-soft); }
+  .mn-empty { padding: 40px 0; text-align: center; color: var(--text-3); }
+</style>
+</head>
+<body>
+<header class="hdr" data-hdr></header>
+<main class="page">
+  <div class="wrap">
+    <div class="mn-hero">
+      <h1>考前速记</h1>
+      <p>每个科目一页纯知识点，去掉题目与解析，适合考前快速过一遍。</p>
+      <input class="mn-search" id="q" type="search" placeholder="搜索科目…" autocomplete="off">
+    </div>
+    <div id="list"></div>
+  </div>
+</main>
+
+<script src="../js/core.js"></script>
+<script src="../data/_meta.js"></script>
+<script src="list.js"></script>
+<script>
+(function () {
+  var BASE = '../';
+  WB.mountChrome('mn');
+
+  var meta = (window.WB_META || []);
+  var MN = window.WB_MN || {};
+  var byId = {};
+  meta.forEach(function (m) { byId[m.id] = m; });
+
+  var items = Object.keys(MN).map(function (id) {
+    var m = byId[id] || {};
+    return {
+      id: id,
+      name: m.name || id,
+      icon: m.icon || '▤',
+      sem: m.sem || '',
+      chapters: (m._count && m._count.chapters) || 0,
+      knowledge: (m._count && m._count.knowledge) || 0,
+      /* mn/ 下的页面用相对路径；根目录页面（如环境卫生学）需要回退一级 */
+      href: MN[id].indexOf('mn/') === 0 ? MN[id].slice(3) : '../' + MN[id]
+    };
+  }).sort(function (a, b) { return a.name.localeCompare(b.name, 'zh'); });
+
+  var root = document.getElementById('list');
+  var input = document.getElementById('q');
+
+  function render(kw) {
+    var list = items.filter(function (x) {
+      return !kw || x.name.indexOf(kw) > -1 || x.id.indexOf(kw) > -1;
+    });
+    if (!list.length) {
+      root.innerHTML = '<div class="mn-empty">没有匹配的科目</div>';
+      return;
+    }
+    var groups = {}, order = [];
+    list.forEach(function (x) {
+      var k = x.sem || 'other';
+      if (!groups[k]) { groups[k] = []; order.push(k); }
+      groups[k].push(x);
+    });
+    var SEM = { dasan1:'大三上', dasan2:'大三下', daer1:'大二上', daer2:'大二下', dayi1:'大一下', other:'其他' };
+    var SEM_ORDER = ['dasan1', 'dasan2', 'daer1', 'daer2', 'dayi1', 'other'];
+    /* 按学期顺序输出，未在列表中的归到末尾 */
+    var sorted = SEM_ORDER.filter(function (k) { return groups[k]; })
+      .concat(order.filter(function (k) { return SEM_ORDER.indexOf(k) < 0; }));
+    root.innerHTML = sorted.map(function (k) {
+      return '<div class="mn-cat">' + (SEM[k] || k) + '</div>' +
+        '<div class="mn-grid">' + groups[k].map(function (x) {
+          return '<a class="mn-card" href="' + x.href + '">' +
+            '<span class="mn-card-ico">' + x.icon + '</span>' +
+            '<span class="mn-card-b">' +
+              '<span class="mn-card-t">' + WB.esc(x.name) + '</span>' +
+              '<span class="mn-card-d">' + x.chapters + ' 讲 · ' + x.knowledge + ' 个知识点</span>' +
+            '</span></a>';
+        }).join('') + '</div>';
+    }).join('');
+  }
+
+  render('');
+  input.addEventListener('input', function () { render(this.value.trim()); });
+})();
+</script>
+</body>
+</html>

@@ -318,11 +318,14 @@
     { href: 'subjects.html', label: '学习', key: 'subjects' },
     { href: 'drill.html', label: '刷题', key: 'drill' },
     { href: 'materials.html', label: '资料', key: 'materials' },
-    { href: 'wrongbook.html', label: '我的', key: 'wrong' }
+    { href: 'wrongbook.html', label: '我的', key: 'wrong' },
+    { href: 'mn/index.html', label: '速记', key: 'mn' }
   ];
   WB.mountChrome = function (active) {
     /* doc/<科目>/ 这类子目录页要回退两级，否则导航链接会 404 */
-    var B = /\/doc\/[^/]+\//.test(location.pathname) ? '../../' : '';
+    var B = /\/doc\/[^/]+\//.test(location.pathname) ? '../../'
+          : /\/mn\//.test(location.pathname) ? '../'
+          : '';
     WB.BASE = B;
     var hdr = document.querySelector('[data-hdr]');
     if (hdr) {

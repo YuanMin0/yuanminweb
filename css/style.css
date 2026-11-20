@@ -177,23 +177,28 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 28px 0; }
 }
 .nav a:hover { background: var(--surface-3); color: var(--text); text-decoration: none; }
 
-/* 「考前速记」在导航中的强调：品牌色底 + 星标 + 加粗 */
-.nav a.nav-mn {
-  margin-left: 4px;
-  color: var(--brand-ink); font-weight: 650;
-  background: var(--brand-soft);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 26%, transparent);
+/* 「考前速记」在导航中作为主行动按钮：实心品牌色 + 白字 + 星标 */
+.nav a.nav-mn,
+.nav a.nav-mn.on {
+  margin-left: 8px;
+  color: #fff; font-weight: 650;
+  background: color-mix(in srgb, var(--brand) 86%, #000);
+  box-shadow: 0 3px 12px -4px color-mix(in srgb, var(--brand) 65%, transparent);
 }
 .nav a.nav-mn::before {
   content: '✦';
   margin-right: 5px;
-  color: var(--brand);
+  color: #fff;
   font-size: 12px;
   vertical-align: 1px;
+  opacity: .92;
 }
-.nav a.nav-mn:hover {
-  background: color-mix(in srgb, var(--brand) 16%, var(--surface));
-  color: var(--brand-ink);
+.nav a.nav-mn:hover,
+.nav a.nav-mn.on:hover {
+  background: color-mix(in srgb, var(--brand) 70%, #000);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px -4px color-mix(in srgb, var(--brand) 70%, transparent);
 }
 .nav a.on {
   background: var(--brand-soft); color: var(--brand-ink); font-weight: 650;

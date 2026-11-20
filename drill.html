@@ -990,7 +990,12 @@ body.mode-pick .wrap{padding-bottom:40px}
         stem: q.stem, type: q.type, options: q.options || null,
         answer: q.answer, explain: q.explain || '', myAnswer: my
       });
+    } else if (WB.store.wrong()[q.uid]) {
+      /* 原本做错、这次做对 → 自动移出错题本，避免「已掌握」的题一直占位 */
+      WB.store.removeWrong(q.uid);
     }
+    /* 写入答题日志：drill 此前不记录，导致连续天数与周报统计缺失 */
+    WB.store.addLog({ uid: q.uid, subjectId: q.subjectId, kid: q.kid, ok: WB.isCorrect(q, my) });
     save(); render();
   }
 
@@ -1122,9 +1127,48 @@ body.mode-pick .wrap{padding-bottom:40px}
       if (e.key === 'Escape') closeDrawer();
       return;
     }
+
+    var cq = pool[st.i];
+    var answered = cq ? !!st.checked[cq.uid] : true;
+
+    /* 数字键 1–4 选答（单选题） */
+    if (cq && cq.type === 'single' && !answered && /^[1-9]$/.test(e.key)) {
+      var btn = document.querySelector('.opt[data-v="' + (parseInt(e.key, 10) - 1) + '"]');
+      if (btn) { e.preventDefault(); btn.click(); return; }
+    }
+
+    /* Enter：未作答则提交，已作答则进入下一题 */
+    if (e.key === 'Enter') {
+      if (!answered) {
+        var sb = document.getElementById('submitBtn');
+        if (sb) { e.preventDefault(); sb.click(); return; }
+      } else {
+        e.preventDefault(); go(1); return;
+      }
+    }
+
     if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
     else if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
   });
+
+  /* 移动端：左右滑动切题 */
+  (function () {
+    var sx = 0, sy = 0, tracking = false;
+    document.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1) { tracking = false; return; }
+      sx = e.touches[0].clientX; sy = e.touches[0].clientY; tracking = true;
+    }, { passive: true });
+    document.addEventListener('touchend', function (e) {
+      if (!tracking) return;
+      tracking = false;
+      var t = e.changedTouches[0];
+      var dx = t.clientX - sx, dy = t.clientY - sy;
+      /* 横向位移超过 60px 且明显大于纵向，才判定为切题，避免误触滚动 */
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        go(dx > 0 ? -1 : 1);
+      }
+    }, { passive: true });
+  })();
 
   function renderAll() { render(); }
 

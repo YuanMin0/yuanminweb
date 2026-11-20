@@ -126,10 +126,29 @@
                pct: Math.round(done / sj._count.knowledge * 100) };
     }).filter(Boolean).sort(function (a, b) { return b.pct - a.pct; }).slice(0, 6);
 
+    /* 遗忘曲线：错误次数越多间隔越长，到期即视为「今日该复习」 */
+    var DAY = 86400000, IV = [1, 2, 4, 7, 15], nowTs = Date.now();
+    var dueN = all.filter(function (w) {
+      var step = Math.min((w.times || 1) - 1, IV.length - 1);
+      return (w.ts || 0) + IV[step] * DAY <= nowTs;
+    }).length;
+
+    /* 本周学习：近 7 天答题量与正确率 */
+    var weekAgo = nowTs - 7 * DAY;
+    var wlogs = (WB.store.log() || []).filter(function (r) { return (r.ts || 0) >= weekAgo; });
+    var weekN = wlogs.length;
+    var weekOk = wlogs.filter(function (r) { return r.ok; }).length;
+    var weekRate = weekN ? Math.round(weekOk / weekN * 100) : 0;
+
     var dash = '<div class="stats mt-3 rv rv-d1">' +
         '<div class="stat"><div class="stat-n">' + streakN + '</div><div class="stat-l">连续学习（天）</div></div>' +
         '<div class="stat"><div class="stat-n">' + learnedN + '</div><div class="stat-l">已学知识点</div></div>' +
         '<div class="stat"><div class="stat-n">' + pendingN + '</div><div class="stat-l">待复习错题</div></div>' +
+      '</div>' +
+      '<div class="stats mt-3 rv rv-d2">' +
+        '<div class="stat"><div class="stat-n">' + dueN + '</div><div class="stat-l">今日待复习</div></div>' +
+        '<div class="stat"><div class="stat-n">' + weekN + '</div><div class="stat-l">本周答题</div></div>' +
+        '<div class="stat"><div class="stat-n">' + weekRate + '%</div><div class="stat-l">本周正确率</div></div>' +
       '</div>' +
       (progList.length
         ? '<div class="card card-pad mt-3 rv rv-d2"><h3 style="margin:0 0 12px;font-size:15px">各科进度</h3>' +

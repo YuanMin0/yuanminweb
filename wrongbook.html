@@ -98,21 +98,6 @@
   function render() {
     var all = WB.store.wrongList();
 
-    if (!all.length) {
-      root.innerHTML =
-        WB.crumb([{ text: '首页', href: 'index.html' }, { text: '我的' }]) +
-        WB.empty('🎯', '错题本还是空的', '做错的题会自动出现在这里。先去练习几道题吧！',
-          '<a class="gbtn gbtn-primary" href="subjects.html">去练习</a>' +
-          '<a class="gbtn" href="' + WB.link('quiz.html', { mode: 'random' }) + '">随机抽 20 题</a>', 'done');
-      WB.fx.init(); return;
-    }
-
-    /* 按科目统计 */
-    var bySub = {};
-    all.forEach(function (w) { bySub[w.subjectId] = (bySub[w.subjectId] || 0) + 1; });
-
-    var list = filter === 'all' ? all : all.filter(function (w) { return w.subjectId === filter; });
-
     /* ---------- 学习数据看板 ---------- */
     var streakN = WB.store.streak();
     var learnedN = WB.store.learnedTotal();
@@ -158,6 +143,23 @@
               '<span class="pg-pct">' + x.done + '/' + x.total + '</span></div>';
           }).join('') + '</div>'
         : '');
+
+    if (!all.length) {
+      root.innerHTML =
+        WB.crumb([{ text: '首页', href: 'index.html' }, { text: '我的' }]) +
+        dash +
+        WB.empty('🎯', '错题本还是空的', '做错的题会自动出现在这里。先去练习几道题吧！',
+          '<a class="gbtn gbtn-primary" href="subjects.html">去练习</a>' +
+          '<a class="gbtn" href="' + WB.link('quiz.html', { mode: 'random' }) + '">随机抽 20 题</a>', 'done');
+      WB.fx.init(); return;
+    }
+
+    /* 按科目统计 */
+    var bySub = {};
+    all.forEach(function (w) { bySub[w.subjectId] = (bySub[w.subjectId] || 0) + 1; });
+
+    var list = filter === 'all' ? all : all.filter(function (w) { return w.subjectId === filter; });
+
 
     root.innerHTML =
       WB.crumb([{ text: '首页', href: 'index.html' }, { text: '我的' }]) +

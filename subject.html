@@ -152,9 +152,9 @@
       '</div>' +
       '<div class="hero-actions mt-3">' +
         (s._count.chapters
-          ? '<a class="gbtn gbtn-primary" href="' + WB.link('quiz.html', { s: s.id }) + '"><span class="gbtn-ico">◉</span> 开始全科练习</a>' +
-            '<button class="gbtn" id="dlBtn"><span class="gbtn-ico">⇩</span> 下载全册讲义</button>' +
-            '<a class="gbtn" href="' + WB.link('quiz.html', { s: s.id, mode: 'random' }) + '"><span class="gbtn-ico">⚡</span> 随机抽题</a>'
+          ? '<a class="gbtn gbtn-primary" href="' + WB.link('drill.html', { s: s.id }) + '"><span class="gbtn-ico">✎</span> 开始刷题</a>' +
+            '<a class="gbtn" href="' + WB.link('quiz.html', { s: s.id }) + '"><span class="gbtn-ico">◉</span> 全科测验</a>' +
+            '<button class="gbtn" id="dlBtn"><span class="gbtn-ico">⇩</span> 下载讲义</button>'
           : '') +
         (window.WB_MN && WB_MN[s.id]
           ? '<a class="gbtn" href="' + WB_MN[s.id] + '"><span class="gbtn-ico">✦</span> 考前速记</a>'

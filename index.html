@@ -43,7 +43,6 @@
       <div class="hero-actions">
         <a class="gbtn gbtn-primary gbtn-lg" href="subjects.html"><span class="gbtn-ico">◈</span> 开始学习</a>
         <a class="gbtn gbtn-lg gbtn-drill" href="drill.html">点击刷题</a>
-        <a class="gbtn gbtn-lg" href="#subjects"><span class="gbtn-ico">⌘</span> 浏览科目</a>
         <a class="gbtn gbtn-lg" href="wrongbook.html"><span class="gbtn-ico">✦</span> 我的错题本</a>
       </div>
     </section>
@@ -134,8 +133,7 @@
     { ico: '◈', t: '继续上次学习', d: last ? (last.name + ' · ' + last.kTitle) : '从任一科目开始你的复习',
       href: last ? WB.link('knowledge.html', { s: last.s, k: last.k }) : 'subjects.html' },
     { ico: '✦', t: '错题本', d: '自动收录做错的题，支持重做与移除', href: 'wrongbook.html' },
-    { ico: '⚡', t: '随机练习', d: '从全部科目随机抽题，检验掌握程度', href: 'quiz.html?mode=random' },
-    { ico: '▤', t: '全部科目', d: '按科目查看章节与知识点，支持搜索', href: 'subjects.html' }
+    { ico: '⚡', t: '随机练习', d: '从全部科目随机抽题，检验掌握程度', href: 'quiz.html?mode=random' }
   ];
   document.getElementById('tiles').innerHTML = tiles.map(function (t, i) {
     return '<a class="tile spot rv rv-d' + (i + 1) + '" style="--accent:var(--teal)" href="' + t.href + '">' +

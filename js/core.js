@@ -283,15 +283,13 @@
   })();
 
   /* ---------------- 站点外壳（页头 / 页脚） ---------------- */
+  /* 四项主导航：学习 → 刷题 → 资料 → 我的。
+     题库/关于等次级入口分别收进「刷题」与页脚，避免首屏选择过载。 */
   var NAV = [
-    { href: 'index.html', label: '总览', key: 'home' },
-    { href: 'subjects.html', label: '全部科目', key: 'subjects' },
-    { href: 'materials.html', label: '资料汇总', key: 'materials' },
-    { href: 'bank.html', label: '题库', key: 'bank' },
-    { href: 'wrongbook.html', label: '错题本', key: 'wrong' },
-    { href: 'about.html', label: '关于', key: 'about' },
-    /* 刷题放在最右，作为主行动按钮 */
-    { href: 'drill.html', label: '点击刷题', key: 'drill' }
+    { href: 'subjects.html', label: '学习', key: 'subjects' },
+    { href: 'drill.html', label: '刷题', key: 'drill' },
+    { href: 'materials.html', label: '资料', key: 'materials' },
+    { href: 'wrongbook.html', label: '我的', key: 'wrong' }
   ];
   WB.mountChrome = function (active) {
     /* doc/<科目>/ 这类子目录页要回退两级，否则导航链接会 404 */
@@ -321,11 +319,11 @@
       if (!document.querySelector('.tabbar')) {
         var pageName = (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/, '') || 'index';
         var TABS = [
-          { href: 'index.html', label: '总览', ico: '⌂', match: ['index'] },
-          { href: 'subjects.html', label: '科目', ico: '▦', match: ['subjects', 'subject', 'knowledge'] },
-          { href: 'drill.html', label: '刷题', ico: '✎', match: ['drill'] },
-          { href: 'wrongbook.html', label: '错题', ico: '✦', match: ['wrongbook'] },
-          { href: 'materials.html', label: '资料', ico: '▤', match: ['materials'] }
+          { href: 'index.html', label: '首页', ico: '⌂', match: ['index'] },
+          { href: 'subjects.html', label: '学习', ico: '▦', match: ['subjects', 'subject', 'knowledge'] },
+          { href: 'drill.html', label: '刷题', ico: '✎', match: ['drill', 'bank', 'quiz'] },
+          { href: 'materials.html', label: '资料', ico: '▤', match: ['materials'] },
+          { href: 'wrongbook.html', label: '我的', ico: '✦', match: ['wrongbook'] }
         ];
         var wrongN = 0;
         try { wrongN = (WB.store.wrongList() || []).length; } catch (e) {}
@@ -402,6 +400,7 @@
             col('学习', [
               ['总览', 'index.html'],
               ['全部科目', 'subjects.html'],
+              ['题库总览', 'bank.html'],
               ['错题本', 'wrongbook.html']
             ]) +
             col('资料', [

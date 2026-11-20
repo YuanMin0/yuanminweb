@@ -156,9 +156,6 @@
             '<a class="gbtn" href="' + WB.link('quiz.html', { s: s.id }) + '"><span class="gbtn-ico">◉</span> 全科测验</a>' +
             '<button class="gbtn" id="dlBtn"><span class="gbtn-ico">⇩</span> 下载讲义</button>'
           : '') +
-        (window.WB_MN && WB_MN[s.id]
-          ? '<a class="gbtn" href="' + WB_MN[s.id] + '"><span class="gbtn-ico">✦</span> 考前速记</a>'
-          : '') +
         (function () {
           var mg = (window.MATERIALS || []).filter(function (g) { return g.id === s.id; })[0];
           return mg && mg.files.length
@@ -167,7 +164,19 @@
         })() +
       '</div>' +
     '</section>' +
-    '<div class="card card-pad mt-3 rv rv-d1 small muted"><b>素材来源</b>：' + WB.esc(s.source || '—') + '</div>';
+
+    (window.WB_MN && WB_MN[s.id]
+      ? '<a class="mn-banner mt-3 rv rv-d1" href="' + WB_MN[s.id] + '">' +
+          '<span class="mn-banner-ico">✦</span>' +
+          '<span class="mn-banner-body">' +
+            '<span class="mn-banner-t">考前速记<span class="mn-banner-tag">重点</span></span>' +
+            '<span class="mn-banner-d">全科知识点浓缩成一页，考前 10 分钟过一遍</span>' +
+          '</span>' +
+          '<span class="mn-banner-arrow">→</span>' +
+        '</a>'
+      : '') +
+
+    '<div class="card card-pad mt-3 rv rv-d2 small muted"><b>素材来源</b>：' + WB.esc(s.source || '—') + '</div>';
 
   /* ---------- 章节手风琴 ---------- */
   var acc = '<section class="mt-4">' +

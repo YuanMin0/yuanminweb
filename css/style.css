@@ -2218,3 +2218,24 @@ html[data-theme="dark"] .card {
   .qcard.no, .qans:not([hidden]) { animation: none !important; }
   .mrow::before, .ftr a::after { transition: none; }
 }
+
+
+/* ---------- 「我的」页：各科进度条 ---------- */
+.pg-row { display: flex; align-items: center; gap: 12px; padding: 7px 0; }
+.pg-name {
+  flex: 0 0 132px; font-size: 13px; color: var(--text-2);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.pg-bar { flex: 1; height: 6px; background: var(--border); border-radius: 999px; overflow: hidden; }
+.pg-fill {
+  display: block; height: 100%; background: var(--brand); border-radius: 999px;
+  transition: width .4s var(--ease);
+}
+.pg-pct {
+  flex: 0 0 54px; text-align: right; font-size: 12px;
+  color: var(--text-3); font-variant-numeric: tabular-nums;
+}
+@media (max-width: 520px) {
+  .pg-name { flex: 0 0 92px; font-size: 12px; }
+  .pg-pct { flex: 0 0 48px; }
+}

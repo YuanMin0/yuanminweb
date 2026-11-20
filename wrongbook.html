@@ -100,7 +100,7 @@
 
     if (!all.length) {
       root.innerHTML =
-        WB.crumb([{ text: '首页', href: 'index.html' }, { text: '错题本' }]) +
+        WB.crumb([{ text: '首页', href: 'index.html' }, { text: '我的' }]) +
         WB.empty('🎯', '错题本还是空的', '做错的题会自动出现在这里。先去练习几道题吧！',
           '<a class="gbtn gbtn-primary" href="subjects.html">去练习</a>' +
           '<a class="gbtn" href="' + WB.link('quiz.html', { mode: 'random' }) + '">随机抽 20 题</a>', 'done');
@@ -113,13 +113,40 @@
 
     var list = filter === 'all' ? all : all.filter(function (w) { return w.subjectId === filter; });
 
+    /* ---------- 学习数据看板 ---------- */
+    var streakN = WB.store.streak();
+    var learnedN = WB.store.learnedTotal();
+    var pendingN = WB.store.wrongCount();
+    var progMap = WB.store.progress() || {};
+    var progList = Object.keys(progMap).map(function (sid) {
+      var sj = WB.getSubject(sid);
+      if (!sj || !sj._count || !sj._count.knowledge) return null;
+      var done = Object.keys(progMap[sid] || {}).length;
+      return { name: sj.name, icon: sj.icon, done: done, total: sj._count.knowledge,
+               pct: Math.round(done / sj._count.knowledge * 100) };
+    }).filter(Boolean).sort(function (a, b) { return b.pct - a.pct; }).slice(0, 6);
+
+    var dash = '<div class="stats mt-3 rv rv-d1">' +
+        '<div class="stat"><div class="stat-n">' + streakN + '</div><div class="stat-l">连续学习（天）</div></div>' +
+        '<div class="stat"><div class="stat-n">' + learnedN + '</div><div class="stat-l">已学知识点</div></div>' +
+        '<div class="stat"><div class="stat-n">' + pendingN + '</div><div class="stat-l">待复习错题</div></div>' +
+      '</div>' +
+      (progList.length
+        ? '<div class="card card-pad mt-3 rv rv-d2"><h3 style="margin:0 0 12px;font-size:15px">各科进度</h3>' +
+          progList.map(function (x) {
+            return '<div class="pg-row"><span class="pg-name">' + x.icon + ' ' + WB.esc(x.name) + '</span>' +
+              '<span class="pg-bar"><span class="pg-fill" style="width:' + x.pct + '%"></span></span>' +
+              '<span class="pg-pct">' + x.done + '/' + x.total + '</span></div>';
+          }).join('') + '</div>'
+        : '');
+
     root.innerHTML =
-      WB.crumb([{ text: '首页', href: 'index.html' }, { text: '错题本' }]) +
+      WB.crumb([{ text: '首页', href: 'index.html' }, { text: '我的' }]) +
 
       '<section class="hero hero-fx rv" style="padding:30px 32px">' +
         '<span class="orb o1"></span><span class="orb o2"></span>' +
         '<div class="hero-tag"><span class="badge-dot"></span> 自动收录 · 本地保存</div>' +
-        '<h1 style="font-size:clamp(23px,3vw,31px)">错题本</h1>' +
+        '<h1 style="font-size:clamp(23px,3vw,31px)">我的学习</h1>' +
         '<p class="lead">共 <b data-count="' + all.length + '">0</b> 道错题，涉及 <b>' + Object.keys(bySub).length + '</b> 个科目。反复出错的知识点，就是你的提分点。</p>' +
         '<div class="hero-actions">' +
           '<a class="gbtn gbtn-primary gbtn-lg" href="' + WB.link('quiz.html', { mode: 'wrong' }) + '"><span class="gbtn-ico">↻</span> 重做全部错题</a>' +
@@ -127,6 +154,8 @@
           '<button class="gbtn gbtn-lg" id="clearBtn"><span class="gbtn-ico">✕</span> 清空</button>' +
         '</div>' +
       '</section>' +
+
+      dash +
 
       '<div class="tabs mt-3 rv rv-d1" id="tabs">' +
         tab('all', '全部', all.length) +
@@ -156,7 +185,7 @@
           '<span class="chip chip-line">' + WB.typeLabel(w.type) + '</span>' +
           '<span class="chip chip-line">' + WB.esc(w.chapterTitle || '') + '</span>' +
           WB.quizTags(w) +
-          '<span class="chip chip-bad">错 ' + w.times + ' 次</span>' +
+          '<span class="chip chip-bad">错 ' + (w.times || 1) + ' 次</span>' +
           '<div class="spacer"></div>' +
           '<span class="tiny dim">' + WB.fmtDate(w.ts) + '</span>' +
         '</div>' +
@@ -199,7 +228,7 @@
         lines.push('## ' + (i + 1) + '. ' + WB.plain(w.stem));
         lines.push('');
         lines.push('- 科目：' + (w.subjectName || '—') + '　章节：' + (w.chapterTitle || '—') + '　知识点：' + (w.kTitle || '—'));
-        lines.push('- 题型：' + WB.typeLabel(w.type) + '　错误次数：' + w.times);
+        lines.push('- 题型：' + WB.typeLabel(w.type) + '　错误次数：' + (w.times || 1));
         if (w.options) w.options.forEach(function (o, oi) { lines.push('  - ' + 'ABCDEF'[oi] + '. ' + WB.plain(o)); });
         lines.push('- 我的答案：' + WB.answerPlain(w, w.myAnswer));
         lines.push('- 正确答案：' + WB.answerPlain(w));

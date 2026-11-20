@@ -185,7 +185,7 @@
   };
 
   /* ---------------- 本地存储 ---------------- */
-  var K = { prog: 'medilearn.progress.v1', wrong: 'medilearn.wrong.v1', log: 'medilearn.quizlog.v1', theme: 'medilearn.theme' };
+  var K = { prog: 'medilearn.progress.v1', wrong: 'medilearn.wrong.v1', log: 'medilearn.quizlog.v1', theme: 'medilearn.theme', days: 'medilearn.days.v1' };
 
   function read(key, dft) {
     try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : dft; } catch (e) { return dft; }
@@ -221,8 +221,33 @@
       rec.ts = Date.now();
       l.unshift(rec);
       write(K.log, l.slice(0, 300));
+      /* 单独记录「有学习行为的日期」，用于连续天数统计。
+         quizlog 只保留最近 300 条，刷得多时几天就滚完，不能用来算连击。 */
+      var ds = read(K.days, []);
+      var today = new Date().toDateString();
+      if (ds[ds.length - 1] !== today) {
+        ds.push(today);
+        write(K.days, ds.slice(-400));
+      }
       return rec;
     },
+    /* 连续学习天数：从今天往回数，遇到断档即停 */
+    streak: function () {
+      var ds = read(K.days, []);
+      var set = {};
+      ds.forEach(function (x) { set[x] = 1; });
+      var n = 0, d = new Date();
+      while (set[d.toDateString()]) { n++; d.setDate(d.getDate() - 1); }
+      return n;
+    },
+    /* 累计已学知识点 */
+    learnedTotal: function () {
+      var p = read(K.prog, {}), n = 0;
+      Object.keys(p).forEach(function (sid) { n += Object.keys(p[sid] || {}).length; });
+      return n;
+    },
+    /* 待复习错题数 */
+    wrongCount: function () { return Object.keys(read(K.wrong, {})).length; },
     /* 错题本 */
     wrong: function () { return read(K.wrong, {}); },
     addWrong: function (q) {

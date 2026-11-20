@@ -1,5 +1,15 @@
 window.CHANGELOG = [
   {
+    v: 'v1.0.53',
+    date: '2026-11-21',
+    title: '修复：资料全部显示「仅本机」',
+    sub: '资料页漏加载 cdn-config.js，CDN 地址为空导致下载入口消失。',
+    items: [
+      { t: 'fix', text: '资料页补回 data/cdn-config.js：此前只加载了 materials.js，CDN_BASE 为空，所有文件被判为「仅本机」。' },
+      { t: 'opt', text: '修复后可在线预览或下载的资料由 95 份恢复到 404 份。' }
+    ]
+  },
+  {
     v: 'v1.0.52',
     date: '2026-11-21',
     title: '修复：错题本为空时看不到学习数据',

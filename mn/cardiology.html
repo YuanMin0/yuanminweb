@@ -1383,12 +1383,21 @@ main p, main li, main td, main th, main dd, main dt,
   .mobile-nav{ background:#FBF7EF; border-color:var(--monet-line); }
   .mobile-nav a{ background:#EFE9F4; color:var(--monet-deep); }
 }
-</style></head>
+</style><style>
+  /* 顶部「选择题刷题」入口：与莫奈封面配色统一（干草金） */
+  .hero-cta{grid-column:1;grid-row:4;justify-self:start;display:inline-flex;align-items:center;gap:9px;margin-top:16px;padding:10px 22px;color:#3A2A12;background:linear-gradient(180deg,#F4D79F,#D9A75E);border:1px solid #FFEBC8;border-radius:999px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55);font:700 15px var(--font-heading);text-decoration:none;letter-spacing:.02em;transition:filter .25s ease,transform .34s cubic-bezier(.16,1,.3,1);}
+  .hero-cta:hover{filter:brightness(1.06);transform:translateY(-2px);}
+  .hero-cta:focus-visible{outline:3px solid #FFEBC8;outline-offset:3px;}
+  .hero-cta em{font:400 13px var(--font-kai);font-style:normal;color:#6B4A1E;}
+  @media (max-width:600px){.hero-cta{margin-top:12px;padding:9px 16px;font-size:14px;}.hero-cta em{font-size:12px;}}
+  @media (prefers-reduced-motion:reduce){.hero-cta{transition:none;}}
+</style>
+</head>
 <body>
 <header class="hero"><div class="hero-inner">
 <h1>心血管系统 · 考前速记</h1>
 <p>心力衰竭、高血压、冠心病与心律失常：分级标准、药物选择与急救原则，案例题高频出处。</p>
-<div class="hero-meta"><span>大三下</span><span>共 4 讲 · 9 个知识点</span></div>
+<div class="hero-meta"><span>大三下</span><span>共 4 讲 · 9 个知识点</span></div><a class="hero-cta" href="../quiz.html?s=cardiology"><span class="hero-cta-ico" aria-hidden="true">✎</span>选择题刷题<em>37 题 · 即时判分</em></a>
 </div></header>
 <div class="layout">
 <aside class="sidebar"><h2 class="sidebar-title">章节目录</h2><div class="nav-group"><a class="nav-chapter" href="#chapter-01">心力衰竭</a><a class="nav-section" href="#section-01-01">慢性左心衰与右心衰的临床表现</a><a class="nav-section" href="#section-01-02">心衰的分期与分级</a><a class="nav-section" href="#section-01-03">心衰的药物治疗与急性左心衰抢救</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-02">高血压</a><a class="nav-section" href="#section-02-01">血压分级与危险分层</a><a class="nav-section" href="#section-02-02">降压药物的 ABCD 与选择</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-03">冠状动脉粥样硬化性心脏病</a><a class="nav-section" href="#section-03-01">稳定型心绞痛</a><a class="nav-section" href="#section-03-02">急性冠脉综合征：UA、NSTEMI 与 STEMI</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-04">心律失常</a><a class="nav-section" href="#section-04-01">心房颤动</a><a class="nav-section" href="#section-04-02">室性心律失常与房室传导阻滞</a></div></aside>

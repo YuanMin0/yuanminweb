@@ -1383,12 +1383,21 @@ main p, main li, main td, main th, main dd, main dt,
   .mobile-nav{ background:#FBF7EF; border-color:var(--monet-line); }
   .mobile-nav a{ background:#EFE9F4; color:var(--monet-deep); }
 }
-</style></head>
+</style><style>
+  /* 顶部「选择题刷题」入口：与莫奈封面配色统一（干草金） */
+  .hero-cta{grid-column:1;grid-row:4;justify-self:start;display:inline-flex;align-items:center;gap:9px;margin-top:16px;padding:10px 22px;color:#3A2A12;background:linear-gradient(180deg,#F4D79F,#D9A75E);border:1px solid #FFEBC8;border-radius:999px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55);font:700 15px var(--font-heading);text-decoration:none;letter-spacing:.02em;transition:filter .25s ease,transform .34s cubic-bezier(.16,1,.3,1);}
+  .hero-cta:hover{filter:brightness(1.06);transform:translateY(-2px);}
+  .hero-cta:focus-visible{outline:3px solid #FFEBC8;outline-offset:3px;}
+  .hero-cta em{font:400 13px var(--font-kai);font-style:normal;color:#6B4A1E;}
+  @media (max-width:600px){.hero-cta{margin-top:12px;padding:9px 16px;font-size:14px;}.hero-cta em{font-size:12px;}}
+  @media (prefers-reduced-motion:reduce){.hero-cta{transition:none;}}
+</style>
+</head>
 <body>
 <header class="hero"><div class="hero-inner">
 <h1>内科护理学 · 考前速记</h1>
 <p>按系统串：呼吸、循环、消化、泌尿、血液、内分泌六大系统，抓「典型症状 + 首选药 + 护理措施」。</p>
-<div class="hero-meta"><span>其他</span><span>共 6 讲 · 12 个知识点</span></div>
+<div class="hero-meta"><span>其他</span><span>共 6 讲 · 12 个知识点</span></div><a class="hero-cta" href="../quiz.html?s=internal-nursing"><span class="hero-cta-ico" aria-hidden="true">✎</span>选择题刷题<em>53 题 · 即时判分</em></a>
 </div></header>
 <div class="layout">
 <aside class="sidebar"><h2 class="sidebar-title">章节目录</h2><div class="nav-group"><a class="nav-chapter" href="#chapter-01">呼吸系统疾病护理</a><a class="nav-section" href="#section-01-01">常见症状与排痰、氧疗护理</a><a class="nav-section" href="#section-01-02">肺炎、肺脓肿与支气管扩张</a><a class="nav-section" href="#section-01-03">肺结核、哮喘与 COPD</a><a class="nav-section" href="#section-01-04">呼吸衰竭、气胸与机械通气</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-02">循环系统疾病护理</a><a class="nav-section" href="#section-02-01">心力衰竭</a><a class="nav-section" href="#section-02-02">高血压与冠心病</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-03">消化系统疾病护理</a><a class="nav-section" href="#section-03-01">消化性溃疡与上消化道出血</a><a class="nav-section" href="#section-03-02">肝硬化与肝性脑病</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-04">泌尿系统疾病护理</a><a class="nav-section" href="#section-04-01">尿路感染与慢性肾衰竭</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-05">血液系统疾病护理</a><a class="nav-section" href="#section-05-01">贫血与白血病</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-06">内分泌与代谢疾病护理</a><a class="nav-section" href="#section-06-01">甲状腺功能亢进</a><a class="nav-section" href="#section-06-02">糖尿病与低血糖</a></div></aside>

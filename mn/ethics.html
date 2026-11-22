@@ -1383,12 +1383,21 @@ main p, main li, main td, main th, main dd, main dt,
   .mobile-nav{ background:#FBF7EF; border-color:var(--monet-line); }
   .mobile-nav a{ background:#EFE9F4; color:var(--monet-deep); }
 }
-</style></head>
+</style><style>
+  /* 顶部「选择题刷题」入口：与莫奈封面配色统一（干草金） */
+  .hero-cta{grid-column:1;grid-row:4;justify-self:start;display:inline-flex;align-items:center;gap:9px;margin-top:16px;padding:10px 22px;color:#3A2A12;background:linear-gradient(180deg,#F4D79F,#D9A75E);border:1px solid #FFEBC8;border-radius:999px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55);font:700 15px var(--font-heading);text-decoration:none;letter-spacing:.02em;transition:filter .25s ease,transform .34s cubic-bezier(.16,1,.3,1);}
+  .hero-cta:hover{filter:brightness(1.06);transform:translateY(-2px);}
+  .hero-cta:focus-visible{outline:3px solid #FFEBC8;outline-offset:3px;}
+  .hero-cta em{font:400 13px var(--font-kai);font-style:normal;color:#6B4A1E;}
+  @media (max-width:600px){.hero-cta{margin-top:12px;padding:9px 16px;font-size:14px;}.hero-cta em{font-size:12px;}}
+  @media (prefers-reduced-motion:reduce){.hero-cta{transition:none;}}
+</style>
+</head>
 <body>
 <header class="hero"><div class="hero-inner">
 <h1>医学伦理学 · 考前速记</h1>
 <p>四大原则、四大范畴、医患与医际关系、临床与科研伦理，附口诀与案例分析。</p>
-<div class="hero-meta"><span>大三上</span><span>共 7 讲 · 19 个知识点</span></div>
+<div class="hero-meta"><span>大三上</span><span>共 7 讲 · 19 个知识点</span></div><a class="hero-cta" href="../quiz.html?s=ethics"><span class="hero-cta-ico" aria-hidden="true">✎</span>选择题刷题<em>97 题 · 即时判分</em></a>
 </div></header>
 <div class="layout">
 <aside class="sidebar"><h2 class="sidebar-title">章节目录</h2><div class="nav-group"><a class="nav-chapter" href="#chapter-01">医学伦理学基本概念</a><a class="nav-section" href="#section-01-01">道德、伦理与伦理学形态</a><a class="nav-section" href="#section-01-02">医德体系与医学道德的特点</a><a class="nav-section" href="#section-01-03">道德判断与非道德判断</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-02">医学伦理学的原则与范畴</a><a class="nav-section" href="#section-02-01">四大基本原则</a><a class="nav-section" href="#section-02-02">指导原则与社会主义医德基本规范</a><a class="nav-section" href="#section-02-03">医学道德的基本范畴</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-03">医疗人际关系伦理</a><a class="nav-section" href="#section-03-01">医患关系伦理</a><a class="nav-section" href="#section-03-02">医际关系伦理</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-04">临床诊疗伦理</a><a class="nav-section" href="#section-04-01">临床诊疗的伦理原则</a><a class="nav-section" href="#section-04-02">临床诊断的伦理要求</a><a class="nav-section" href="#section-04-03">临床治疗与特殊科室的伦理要求</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-05">公共卫生伦理与战争灾害伦理</a><a class="nav-section" href="#section-05-01">公共卫生伦理</a><a class="nav-section" href="#section-05-02">战争与灾害医学伦理</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-06">医学科研伦理</a><a class="nav-section" href="#section-06-01">科研诚信与学术不端</a><a class="nav-section" href="#section-06-02">动物实验伦理与 4R 原则</a><a class="nav-section" href="#section-06-03">人体试验伦理与伦理审查</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-07">生命伦理前沿</a><a class="nav-section" href="#section-07-01">人类辅助生殖技术伦理</a><a class="nav-section" href="#section-07-02">人体器官移植伦理</a><a class="nav-section" href="#section-07-03">安乐死与临终关怀伦理</a></div></aside>

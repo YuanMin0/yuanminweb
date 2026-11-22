@@ -1383,12 +1383,21 @@ main p, main li, main td, main th, main dd, main dt,
   .mobile-nav{ background:#FBF7EF; border-color:var(--monet-line); }
   .mobile-nav a{ background:#EFE9F4; color:var(--monet-deep); }
 }
-</style></head>
+</style><style>
+  /* 顶部「选择题刷题」入口：与莫奈封面配色统一（干草金） */
+  .hero-cta{grid-column:1;grid-row:4;justify-self:start;display:inline-flex;align-items:center;gap:9px;margin-top:16px;padding:10px 22px;color:#3A2A12;background:linear-gradient(180deg,#F4D79F,#D9A75E);border:1px solid #FFEBC8;border-radius:999px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55);font:700 15px var(--font-heading);text-decoration:none;letter-spacing:.02em;transition:filter .25s ease,transform .34s cubic-bezier(.16,1,.3,1);}
+  .hero-cta:hover{filter:brightness(1.06);transform:translateY(-2px);}
+  .hero-cta:focus-visible{outline:3px solid #FFEBC8;outline-offset:3px;}
+  .hero-cta em{font:400 13px var(--font-kai);font-style:normal;color:#6B4A1E;}
+  @media (max-width:600px){.hero-cta{margin-top:12px;padding:9px 16px;font-size:14px;}.hero-cta em{font-size:12px;}}
+  @media (prefers-reduced-motion:reduce){.hero-cta{transition:none;}}
+</style>
+</head>
 <body>
 <header class="hero"><div class="hero-inner">
 <h1>航空航天卫生学 · 考前速记</h1>
 <p>飞行环境对人体的影响、营养保障、环境卫生与飞行疲劳防护。</p>
-<div class="hero-meta"><span>大三上</span><span>共 5 讲 · 7 个知识点</span></div>
+<div class="hero-meta"><span>大三上</span><span>共 5 讲 · 7 个知识点</span></div><a class="hero-cta" href="../quiz.html?s=hangwei"><span class="hero-cta-ico" aria-hidden="true">✎</span>选择题刷题<em>31 题 · 即时判分</em></a>
 </div></header>
 <div class="layout">
 <aside class="sidebar"><h2 class="sidebar-title">章节目录</h2><div class="nav-group"><a class="nav-chapter" href="#chapter-01">飞行环境对消化与代谢的影响</a><a class="nav-section" href="#section-01-01">飞行对消化代谢的影响</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-02">飞行人员合理膳食与营养标准</a><a class="nav-section" href="#section-02-01">合理膳食的基本要求</a><a class="nav-section" href="#section-02-02">餐制与空腹/饱腹飞行</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-03">飞行疲劳与防护</a><a class="nav-section" href="#section-03-01">飞行疲劳的成因与评价</a><a class="nav-section" href="#section-03-02">飞行疲劳的防护措施</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-04">环境卫生：场站与座舱</a><a class="nav-section" href="#section-04-01">场站与座舱卫生</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-05">航天卫生学概论</a><a class="nav-section" href="#section-05-01">航天环境因素与防护</a></div></aside>

@@ -101,11 +101,16 @@
 
   function fromSubject(s, onlyKid) {
     var out = [];
+    var qm = (window.QUIZ_META || {})[s.id] || [];
+    var gi = 0;
     s.chapters.forEach(function (ch) {
       (ch.knowledge || []).forEach(function (k) {
-        if (onlyKid && k.id !== onlyKid) return;
         (k.quiz || []).forEach(function (q, i) {
+          var meta = qm[gi++] || [];
+          if (onlyKid && k.id !== onlyKid) return;
           out.push(Object.assign({}, q, {
+            freq: q.freq || meta[1] || '',
+            level: q.level || meta[0] || '',
             uid: uidOf(s.id, k.id, i), subjectId: s.id, subjectName: s.name,
             kid: k.id, kTitle: k.title, chapterTitle: ch.title, accent: s.accent, accentSoft: s.accentSoft
           }));
@@ -276,6 +281,7 @@
         '<div class="small" style="margin-bottom:6px">你的答案：<b>' + WB.esc(WB.myAnswerText(q, my, permOf(q))) + '</b>' +
         (ok ? '' : '　｜　正确答案：<b>' + WB.esc(WB.answerText(q, permOf(q))) + '</b>') + '</div>' +
         (q.explain ? '<div style="font-size:14px;line-height:1.75">' + WB.rich(q.explain) + '</div>' : '') +
+        (q.source ? '<div class="small muted" style="margin-top:6px">来源：' + WB.esc(q.source) + '</div>' : '') +
         (kid ? '' : '<div class="mt-2"><a class="gbtn gbtn-sm" href="' + WB.link('knowledge.html', { s: q.subjectId, k: q.kid }) + '">📖 复习对应知识点</a></div>') +
         '</div>';
     }

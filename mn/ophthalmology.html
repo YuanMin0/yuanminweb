@@ -1383,12 +1383,21 @@ main p, main li, main td, main th, main dd, main dt,
   .mobile-nav{ background:#FBF7EF; border-color:var(--monet-line); }
   .mobile-nav a{ background:#EFE9F4; color:var(--monet-deep); }
 }
-</style></head>
+</style><style>
+  /* 顶部「选择题刷题」入口：与莫奈封面配色统一（干草金） */
+  .hero-cta{grid-column:1;grid-row:4;justify-self:start;display:inline-flex;align-items:center;gap:9px;margin-top:16px;padding:10px 22px;color:#3A2A12;background:linear-gradient(180deg,#F4D79F,#D9A75E);border:1px solid #FFEBC8;border-radius:999px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55);font:700 15px var(--font-heading);text-decoration:none;letter-spacing:.02em;transition:filter .25s ease,transform .34s cubic-bezier(.16,1,.3,1);}
+  .hero-cta:hover{filter:brightness(1.06);transform:translateY(-2px);}
+  .hero-cta:focus-visible{outline:3px solid #FFEBC8;outline-offset:3px;}
+  .hero-cta em{font:400 13px var(--font-kai);font-style:normal;color:#6B4A1E;}
+  @media (max-width:600px){.hero-cta{margin-top:12px;padding:9px 16px;font-size:14px;}.hero-cta em{font-size:12px;}}
+  @media (prefers-reduced-motion:reduce){.hero-cta{transition:none;}}
+</style>
+</head>
 <body>
 <header class="hero"><div class="hero-inner">
 <h1>眼科学 · 考前速记</h1>
 <p>房水循环、眼压与青光眼、白内障、眼底病与常见眼睑疾病。</p>
-<div class="hero-meta"><span>—</span><span>共 3 讲 · 5 个知识点</span></div>
+<div class="hero-meta"><span>—</span><span>共 3 讲 · 5 个知识点</span></div><a class="hero-cta" href="../quiz.html?s=ophthalmology"><span class="hero-cta-ico" aria-hidden="true">✎</span>选择题刷题<em>28 题 · 即时判分</em></a>
 </div></header>
 <div class="layout">
 <aside class="sidebar"><h2 class="sidebar-title">章节目录</h2><div class="nav-group"><a class="nav-chapter" href="#chapter-01">眼部解剖与检查</a><a class="nav-section" href="#section-01-01">房水循环与眼压</a><a class="nav-section" href="#section-01-02">角膜缘、视路与 RAPD</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-02">眼睑与泪器疾病</a><a class="nav-section" href="#section-02-01">睑腺炎与睑板腺囊肿</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-03">青光眼与白内障</a><a class="nav-section" href="#section-03-01">青光眼</a><a class="nav-section" href="#section-03-02">白内障</a></div></aside>

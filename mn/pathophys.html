@@ -1383,12 +1383,21 @@ main p, main li, main td, main th, main dd, main dt,
   .mobile-nav{ background:#FBF7EF; border-color:var(--monet-line); }
   .mobile-nav a{ background:#EFE9F4; color:var(--monet-deep); }
 }
-</style></head>
+</style><style>
+  /* 顶部「选择题刷题」入口：与莫奈封面配色统一（干草金） */
+  .hero-cta{grid-column:1;grid-row:4;justify-self:start;display:inline-flex;align-items:center;gap:9px;margin-top:16px;padding:10px 22px;color:#3A2A12;background:linear-gradient(180deg,#F4D79F,#D9A75E);border:1px solid #FFEBC8;border-radius:999px;box-shadow:0 12px 26px -14px rgba(0,0,0,.55);font:700 15px var(--font-heading);text-decoration:none;letter-spacing:.02em;transition:filter .25s ease,transform .34s cubic-bezier(.16,1,.3,1);}
+  .hero-cta:hover{filter:brightness(1.06);transform:translateY(-2px);}
+  .hero-cta:focus-visible{outline:3px solid #FFEBC8;outline-offset:3px;}
+  .hero-cta em{font:400 13px var(--font-kai);font-style:normal;color:#6B4A1E;}
+  @media (max-width:600px){.hero-cta{margin-top:12px;padding:9px 16px;font-size:14px;}.hero-cta em{font-size:12px;}}
+  @media (prefers-reduced-motion:reduce){.hero-cta{transition:none;}}
+</style>
+</head>
 <body>
 <header class="hero"><div class="hero-inner">
 <h1>病理生理学 · 考前速记</h1>
 <p>讲「病是怎么发生的」：应激、发热、缺氧、休克、DIC、器官功能不全的共同机制。</p>
-<div class="hero-meta"><span>—</span><span>共 9 讲 · 15 个知识点</span></div>
+<div class="hero-meta"><span>—</span><span>共 9 讲 · 15 个知识点</span></div><a class="hero-cta" href="../quiz.html?s=pathophys"><span class="hero-cta-ico" aria-hidden="true">✎</span>选择题刷题<em>69 题 · 即时判分</em></a>
 </div></header>
 <div class="layout">
 <aside class="sidebar"><h2 class="sidebar-title">章节目录</h2><div class="nav-group"><a class="nav-chapter" href="#chapter-01">疾病概论</a><a class="nav-section" href="#section-01-01">健康、疾病与病因</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-02">应激</a><a class="nav-section" href="#section-02-01">应激反应与神经内分泌机制</a><a class="nav-section" href="#section-02-02">应激性溃疡</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-03">发热</a><a class="nav-section" href="#section-03-01">致热原与体温调定点</a><a class="nav-section" href="#section-03-02">发热的分期与代谢变化</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-04">缺氧</a><a class="nav-section" href="#section-04-01">四型缺氧及血气特点</a><a class="nav-section" href="#section-04-02">缺氧时机体的功能代谢变化</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-05">缺血-再灌注损伤</a><a class="nav-section" href="#section-05-01">缺血-再灌注损伤的机制</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-06">弥散性血管内凝血（DIC）</a><a class="nav-section" href="#section-06-01">DIC 的病因与发生机制</a><a class="nav-section" href="#section-06-02">DIC 的实验室诊断</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-07">休克</a><a class="nav-section" href="#section-07-01">休克时微循环的变化</a><a class="nav-section" href="#section-07-02">休克时的细胞代谢与器官功能变化</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-08">心功能不全与呼吸功能不全</a><a class="nav-section" href="#section-08-01">心功能不全的代偿与发生机制</a><a class="nav-section" href="#section-08-02">呼吸功能不全与 ARDS</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-09">肝功能不全</a><a class="nav-section" href="#section-09-01">肝性脑病的发生机制</a></div></aside>

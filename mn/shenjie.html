@@ -1392,7 +1392,7 @@ main p, main li, main td, main th, main dd, main dt,
 </div></header>
 <div class="layout">
 <aside class="sidebar"><h2 class="sidebar-title">章节目录</h2><div class="nav-group"><a class="nav-chapter" href="#chapter-01">第01章 中枢神经系统结构</a><a class="nav-section" href="#section-01-01">一、中枢神经系统结构</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-02">第02章 脑干与小脑</a><a class="nav-section" href="#section-02-01">二、脑干与小脑</a></div></aside>
-<main><section class="chapter" id="chapter-01"><header class="chapter-header"><span class="chapter-number">01</span><div><p>神经解剖学</p><h2>第01章 中枢神经系统结构</h2></div></header><article class="knowledge-block reveal" id="section-01-01"><h3>一、中枢神经系统结构</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"></div><p>大脑皮质分为额、顶、颞、枕叶。内囊是投射纤维的密集区，分为前肢、膝部与后肢。</p><div style="margin:16px 0;padding:14px 12px 8px;background:rgba(255,255,255,.74);border:1px solid var(--gray-200);border-radius:10px">
+<main><section class="chapter" id="chapter-01"><header class="chapter-header"><span class="chapter-number">01</span><div><p>神经解剖学</p><h2>第01章 中枢神经系统结构</h2></div></header><article class="knowledge-block" id="section-01-01"><h3>一、中枢神经系统结构</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"></div><p>大脑皮质分为额、顶、颞、枕叶。内囊是投射纤维的密集区，分为前肢、膝部与后肢。</p><div style="margin:16px 0;padding:14px 12px 8px;background:rgba(255,255,255,.74);border:1px solid var(--gray-200);border-radius:10px">
 <svg viewBox="0 0 660 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="内囊的分部与投射纤维">
 <text x="20" y="24" font-size="13" font-weight="700" fill="#1E2832">内囊三部：前肢、膝部、后肢</text>
 
@@ -1417,7 +1417,7 @@ main p, main li, main td, main th, main dd, main dt,
 <rect x="20" y="172" width="620" height="56" rx="8" fill="#F4F6F8" stroke="#C6CDD4" stroke-width="1"/>
 <text x="32" y="192" font-size="11.5" font-weight="700" fill="#3B4652">内囊损伤的典型表现</text>
 <text x="32" y="212" font-size="10.5" fill="#4A5560">「三偏征」：对侧偏瘫（皮质脊髓束）+ 对侧偏身感觉障碍（丘脑辐射）+ 对侧同向性偏盲（视辐射）</text>
-</svg></div></div></article></section><section class="chapter" id="chapter-02"><header class="chapter-header"><span class="chapter-number">02</span><div><p>神经解剖学</p><h2>第02章 脑干与小脑</h2></div></header><article class="knowledge-block reveal" id="section-02-01"><h3>二、脑干与小脑</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"></div><p>脑干包括中脑、脑桥与延髓，含第 III–XII 对颅神经核团与多种传导束。小脑分为原小脑、旧小脑与新小脑。</p><div style="margin:16px 0;padding:14px 12px 8px;background:rgba(255,255,255,.74);border:1px solid var(--gray-200);border-radius:10px">
+</svg></div></div></article></section><section class="chapter" id="chapter-02"><header class="chapter-header"><span class="chapter-number">02</span><div><p>神经解剖学</p><h2>第02章 脑干与小脑</h2></div></header><article class="knowledge-block" id="section-02-01"><h3>二、脑干与小脑</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"></div><p>脑干包括中脑、脑桥与延髓，含第 III–XII 对颅神经核团与多种传导束。小脑分为原小脑、旧小脑与新小脑。</p><div style="margin:16px 0;padding:14px 12px 8px;background:rgba(255,255,255,.74);border:1px solid var(--gray-200);border-radius:10px">
 <svg viewBox="0 0 660 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="脑干三段与小脑三部">
 <text x="20" y="24" font-size="13" font-weight="700" fill="#1E2832">脑干三段 + 小脑三部</text>
 
@@ -1471,6 +1471,23 @@ main p, main li, main td, main th, main dd, main dt,
       });
     });
   });
+})();
+</script>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!els.length) return;
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    },{threshold:0,rootMargin:'0px 0px -4% 0px'});
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('visible'); });
+  }
 })();
 </script>
 </body></html>

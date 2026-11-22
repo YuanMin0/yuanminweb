@@ -48,3 +48,7 @@ pnpm-debug.log*
 .env
 .env.*
 !.env.example
+
+# ---- 本地临时/备份 ----
+_bak/
+_tmp/

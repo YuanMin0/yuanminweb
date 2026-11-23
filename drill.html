@@ -514,7 +514,7 @@ body.mode-pick .wrap{padding-bottom:40px}
             /* 主观题与来源字段必须一并带出，否则渲染时拿不到 */
             explainBrief: q.explainBrief, answerPoints: q.answerPoints,
             caseText: q.caseText, source: q.source, sourceUrl: q.sourceUrl,
-            freq: q.freq || m[1], level: q.level || m[0], years: q.years,
+            freq: q.freq || m[1], level: q.level || m[0], years: q.years, tested: q.tested,
             uid: uidOf(s.id, k.id, i),
             subjectId: s.id, subjectName: s.name,
             chapterTitle: ch.title, kTitle: k.title,
@@ -581,7 +581,7 @@ body.mode-pick .wrap{padding-bottom:40px}
       if (!list || !list.length) return;
       list = list.slice().sort(function (a, b) { return (a.order || 99) - (b.order || 99); });
       var totalQ = 0;
-      list.forEach(function (s) { totalQ += s._count.quiz; });
+      list.forEach(function (s) { totalQ += (s._count.choice || 0); });
 
       html += '<section class="grade"><h2 class="grade-h"><b>' + WB.esc(cat.name) + '</b>' +
         '<span>' + list.length + ' 科 · ' + totalQ + ' 题</span></h2><div class="sg">';
@@ -595,11 +595,11 @@ body.mode-pick .wrap{padding-bottom:40px}
         var link = href || s.ext;
         var pool = hasPool(s);
         var done = pool ? doneOf(s.id) : 0;
-        var pct = (pool && s._count.quiz) ? Math.min(100, Math.round(done / s._count.quiz * 100)) : 0;
+        var pct = (pool && s._count.choice) ? Math.min(100, Math.round(done / s._count.choice * 100)) : 0;
         html += '<a class="scard" href="' + link + '">' +
           '<div class="scard-t">' + WB.esc(s.name) +
             (isDoc ? '<span class="scard-tag scard-tag-doc">文档页</span>' : (pool ? '' : '<span class="scard-tag">独立页</span>')) + '</div>' +
-          '<div class="scard-m"><span>' + s._count.quiz + ' 题</span>' +
+          '<div class="scard-m"><span>' + (s._count.choice || 0) + ' 题</span>' +
             '<span>' + (pool ? (done ? '已答 ' + done + ' · ' + pct + '%' : '未开始') : '—') + '</span></div>' +
           '<div class="scard-bar"><i style="width:' + pct + '%"></i></div>' +
           '</a>';
@@ -611,8 +611,11 @@ body.mode-pick .wrap{padding-bottom:40px}
     document.getElementById('stage').innerHTML = html;
   }
 
+  /* 刷题只出选择题：单选 + 多选；名词解释/简答/论述归「全科测验」 */
+  function isChoice(q) { return q.type === 'single' || q.type === 'multiple'; }
+
   if (single) {
-    base = collect(subject);
+    base = collect(subject).filter(isChoice);
   } else {
     /* 无科目参数：先按年级选科目，不加载全量题池 */
     renderPicker();

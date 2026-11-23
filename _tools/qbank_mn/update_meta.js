@@ -25,11 +25,14 @@ for (const m of meta) {
   }
   const chapters = (cap.chapters || []).concat(...exams);
   const knowledge = chapters.reduce((n, c) => n + (c.knowledge || []).length, 0);
-  const quiz = chapters.reduce((n, c) => n + (c.knowledge || []).reduce((k, x) => k + (x.quiz || []).length, 0), 0);
+  const allQuiz = chapters.reduce((n, c) => n + (c.knowledge || []).reduce((k, x) => k + (x.quiz || []).length, 0), 0);
+  const choice = chapters.reduce((n, c) => n + (c.knowledge || []).reduce((k, x) => k + (x.quiz || []).filter(q => q.type === 'single' || q.type === 'multiple').length, 0), 0);
+  const quiz = allQuiz;
   const old = m._count ? m._count.quiz : null;
-  if (old !== quiz || !m._count) {
-    m._count = { chapters: chapters.length, knowledge, quiz };
-    changes.push({ id: m.id, old, now: quiz });
+  const oldChoice = m._count ? m._count.choice : null;
+  if (old !== quiz || oldChoice !== choice || !m._count) {
+    m._count = { chapters: chapters.length, knowledge, quiz, choice };
+    changes.push({ id: m.id, old, now: quiz, choice });
   }
 }
 fs.writeFileSync(metaPath, 'window.WB_META = ' + JSON.stringify(meta) + ';\n', 'utf8');

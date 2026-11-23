@@ -17,6 +17,21 @@
 <!-- 访问门禁：未登录直接跳转登录页（置于 head 内，避免内容闪现） -->
 <script src="js/auth.js"></script>
 <script>if(window.WB&&WB.auth)WB.auth.guard();</script>
+<style>
+/* 主观题（名词解释 / 简答 / 论述） */
+.subj-hint{margin:0 0 14px;padding:10px 14px;border-radius:10px;background:var(--accent-soft);color:var(--text);font:700 13.5px/1.65 inherit}
+.points{margin:0;padding:0;list-style:none;counter-reset:pt}
+.points li{position:relative;padding:9px 0 9px 32px;font-size:15px;line-height:1.8;border-bottom:1px dashed var(--border)}
+.points li:last-child{border-bottom:0}
+.points li::before{counter-increment:pt;content:counter(pt);position:absolute;left:0;top:10px;width:22px;height:22px;display:grid;place-items:center;background:var(--accent);color:#fff;border-radius:6px;font:800 11.5px/1 inherit}
+.term-full{font-size:15px;line-height:1.85}
+.term-brief{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:14.5px;line-height:1.8;background:var(--accent-soft);border-left:4px solid var(--accent)}
+.brief-tag{display:inline-block;margin-right:8px;padding:1px 8px;border-radius:999px;vertical-align:1px;background:var(--accent);color:#fff;font:800 11px/1.5 inherit}
+.case-box{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:14.5px;line-height:1.8;background:rgba(34,197,94,.10);border-left:4px solid #22c55e}
+.case-tag{display:inline-block;margin-right:8px;padding:1px 8px;border-radius:999px;vertical-align:1px;background:#22c55e;color:#fff;font:800 11px/1.5 inherit}
+.subj-note{margin-top:12px;padding-top:10px;font-size:14px;line-height:1.8;color:var(--text);opacity:.85;border-top:1px dashed var(--border)}
+.subj-self{margin-top:14px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+</style>
 </head>
 <body>
 <noscript>
@@ -173,7 +188,7 @@
   document.title = title + ' · 在线练习 · MediLearn';
 
   /* ==================== 状态 ==================== */
-  var st = { i: 0, ans: {}, checked: {}, right: 0, order: pool.map(function (_, i) { return i; }), opt: {}, t0: Date.now(), started: false };
+  var st = { i: 0, ans: {}, checked: {}, right: 0, order: pool.map(function (_, i) { return i; }), opt: {}, revealed: {}, t0: Date.now(), started: false };
 
   /* 选项乱序：为每道题生成一次「显示位次 → 原始下标」映射，本次练习内保持稳定 */
   function permOf(q) {
@@ -189,14 +204,38 @@
     return p;
   }
   function resetSt() {
-    st = { i: 0, ans: {}, checked: {}, right: 0, order: pool.map(function (_, i) { return i; }), opt: {}, t0: Date.now(), started: true };
+    st = { i: 0, ans: {}, checked: {}, right: 0, order: pool.map(function (_, i) { return i; }), opt: {}, revealed: {}, t0: Date.now(), started: true };
   }
 
   /* ==================== 开始页 ==================== */
   function typeBreak() {
-    var c = { single: 0, multiple: 0, judge: 0, fill: 0 };
+    var c = { single: 0, multiple: 0, judge: 0, fill: 0, term: 0, short: 0, essay: 0 };
     pool.forEach(function (q) { c[q.type] = (c[q.type] || 0) + 1; });
     return c;
+  }
+  /* 主观题参考答案（名解：完整版 + 简化版；简答/论述：分点 + 案例） */
+  function subjBody(q) {
+    var out = '';
+    if (q.type === 'term') {
+      out += '<div class="term-full">' + (q.explain || '') + '</div>';
+      if (q.explainBrief) {
+        out += '<div class="term-brief"><span class="brief-tag">简化版</span>' + q.explainBrief + '</div>';
+      }
+    } else {
+      var pts = q.answerPoints || [];
+      if (pts.length) {
+        out += '<ol class="points">' + pts.map(function (p) { return '<li>' + p + '</li>'; }).join('') + '</ol>';
+      } else if (q.explain) {
+        out += '<div>' + q.explain + '</div>';
+      }
+      if (q.caseText) {
+        out += '<div class="case-box"><span class="case-tag">案例</span>' + q.caseText + '</div>';
+      }
+      if (q.explain && pts.length) {
+        out += '<div class="subj-note">' + q.explain + '</div>';
+      }
+    }
+    return out;
   }
 
   function renderIntro() {
@@ -209,10 +248,11 @@
         '<h1 style="font-size:clamp(23px,3vw,32px)">' + WB.esc(title) + '</h1>' +
         '<p class="lead">共 <b data-count="' + pool.length + '">0</b> 道题。每道题作答后即时给出解析；答错的题会自动进入错题本。</p>' +
         '<div class="metric-strip" style="margin-bottom:20px">' +
-          '<div class="metric"><b>' + (c.single || 0) + '</b><span>单选</span></div>' +
-          '<div class="metric"><b>' + (c.multiple || 0) + '</b><span>多选</span></div>' +
-          '<div class="metric"><b>' + (c.judge || 0) + '</b><span>判断</span></div>' +
-          '<div class="metric"><b>' + (c.fill || 0) + '</b><span>填空</span></div>' +
+          '<div class="metric"><b>' + ((c.single || 0) + (c.multiple || 0)) + '</b><span>选择题</span></div>' +
+          '<div class="metric"><b>' + (c.term || 0) + '</b><span>名词解释</span></div>' +
+          '<div class="metric"><b>' + (c.short || 0) + '</b><span>简答</span></div>' +
+          '<div class="metric"><b>' + (c.essay || 0) + '</b><span>论述</span></div>' +
+          ((c.judge || 0) + (c.fill || 0) ? '<div class="metric"><b>' + ((c.judge || 0) + (c.fill || 0)) + '</b><span>判断填空</span></div>' : '') +
         '</div>' +
         '<div class="hero-actions">' +
           '<button class="gbtn gbtn-primary gbtn-lg" id="startBtn"><span class="gbtn-ico">▶</span> 开始作答</button>' +
@@ -221,7 +261,7 @@
         '</div>' +
       '</section>' +
       '<div class="card card-pad mt-3 rv rv-d2 small muted">' +
-        '<b>作答提示</b>：多选题需选中全部正确项才算答对；填空题忽略大小写与空格，支持同义写法。每次开始练习时<b>选项顺序会随机打乱</b>，请不要依赖位置记忆。' +
+        '<b>作答提示</b>：本页为全科测验，包含单选、多选、名词解释、简答、论述等全部题型。多选题需选中全部正确项才算答对；填空题忽略大小写与空格，支持同义写法。名词解释/简答/论述为主观题，请先自行作答，再展开参考答案自评。每次开始练习时<b>选项顺序会随机打乱</b>，请不要依赖位置记忆。' +
       '</div>';
     document.getElementById('startBtn').addEventListener('click', start);
     document.getElementById('shuffleBtn').addEventListener('click', function () {
@@ -241,8 +281,19 @@
     var checked = !!st.checked[q.uid];
     var my = st.ans[q.uid];
 
+    var subj = WB.isSubjective(q.type);
+    var revealed = !!st.revealed[q.uid];
     var body = '';
-    if (q.type === 'fill') {
+    if (subj) {
+      body = '<div class="subj-hint">主观题：请先在纸上（或心里）列出要点，再展开参考答案自评。</div>' +
+        (revealed
+          ? subjBody(q) +
+            (checked ? '' :
+              '<div class="subj-self"><span class="small muted">对照参考答案，你的作答：</span>' +
+              '<button class="gbtn gbtn-sm gbtn-primary" id="selfOk">基本答对</button>' +
+              '<button class="gbtn gbtn-sm" id="selfBad">要点缺失</button></div>')
+          : '<div class="mt-2"><button class="gbtn gbtn-primary" id="revealBtn">展开参考答案</button></div>');
+    } else if (q.type === 'fill') {
       body = '<input class="q-fill" id="fillIn" placeholder="在此输入答案…" ' + (checked ? 'disabled' : '') +
         ' value="' + WB.esc(checked ? String(my == null ? '' : my) : (my == null ? '' : my)) + '">';
     } else if (q.type === 'judge') {
@@ -275,12 +326,13 @@
 
     var fb = '';
     if (checked) {
-      var ok = WB.isCorrect(q, my);
+      var ok = subj ? (my === true) : WB.isCorrect(q, my);
       fb = '<div class="fb ' + (ok ? 'fb-ok' : 'fb-bad') + '">' +
-        '<div class="fb-t">' + (ok ? '✓ 回答正确' : '✗ 回答错误') + '</div>' +
-        '<div class="small" style="margin-bottom:6px">你的答案：<b>' + WB.esc(WB.myAnswerText(q, my, permOf(q))) + '</b>' +
-        (ok ? '' : '　｜　正确答案：<b>' + WB.esc(WB.answerText(q, permOf(q))) + '</b>') + '</div>' +
-        (q.explain ? '<div style="font-size:14px;line-height:1.75">' + WB.rich(q.explain) + '</div>' : '') +
+        '<div class="fb-t">' + (subj ? (ok ? '✓ 已掌握' : '✗ 待复习') : (ok ? '✓ 回答正确' : '✗ 回答错误')) + '</div>' +
+        (subj ? '' :
+          '<div class="small" style="margin-bottom:6px">你的答案：<b>' + WB.esc(WB.myAnswerText(q, my, permOf(q))) + '</b>' +
+          (ok ? '' : '　｜　正确答案：<b>' + WB.esc(WB.answerText(q, permOf(q))) + '</b>') + '</div>') +
+        (q.explain && !subj ? '<div style="font-size:14px;line-height:1.75">' + WB.rich(q.explain) + '</div>' : '') +
         (q.source ? '<div class="small muted" style="margin-top:6px">来源：' + WB.esc(q.source) + '</div>' : '') +
         (kid ? '' : '<div class="mt-2"><a class="gbtn gbtn-sm" href="' + WB.link('knowledge.html', { s: q.subjectId, k: q.kid }) + '">📖 复习对应知识点</a></div>') +
         '</div>';
@@ -317,7 +369,7 @@
         '<div class="q-foot">' +
           (checked
             ? '<button class="gbtn gbtn-primary" id="nextBtn">' + (st.i >= pool.length - 1 ? '查看结果' : '下一题 →') + '</button>'
-            : '<button class="gbtn gbtn-primary" id="submitBtn">提交答案</button>') +
+            : (subj ? '' : '<button class="gbtn gbtn-primary" id="submitBtn">提交答案</button>')) +
           '<button class="gbtn" id="skipBtn">' + (checked ? '跳到结果' : '跳过') + '</button>' +
           '<div class="spacer"></div>' +
           '<button class="gbtn gbtn-sm" id="prevBtn"' + (st.i === 0 ? ' disabled' : '') + '>← 上一题</button>' +
@@ -336,7 +388,7 @@
     if (!d) return;
     d.innerHTML = pool.map(function (q, i) {
       var cls = 'qdot';
-      if (st.checked[q.uid]) cls += WB.isCorrect(q, st.ans[q.uid]) ? ' ok' : ' bad';
+      if (st.checked[q.uid]) cls += (WB.isSubjective(q.type) ? (st.ans[q.uid] === true) : WB.isCorrect(q, st.ans[q.uid])) ? ' ok' : ' bad';
       else if (i === st.i) cls += ' cur';
       return '<div class="' + cls + '" data-jump="' + i + '" title="第 ' + (i + 1) + ' 题">' + (i + 1) + '</div>';
     }).join('');
@@ -373,6 +425,22 @@
         });
       });
     }
+
+    var rv = document.getElementById('revealBtn');
+    if (rv) rv.addEventListener('click', function () {
+      st.revealed[q.uid] = true;
+      renderQ();
+    });
+
+    function selfMark(ok) {
+      st.ans[q.uid] = ok;
+      commit(q);
+      WB.toast(ok ? '已记为掌握 ✓' : '已加入错题本');
+    }
+    var so = document.getElementById('selfOk');
+    if (so) so.addEventListener('click', function () { selfMark(true); });
+    var sd = document.getElementById('selfBad');
+    if (sd) sd.addEventListener('click', function () { selfMark(false); });
 
     var sb = document.getElementById('submitBtn');
     if (sb) sb.addEventListener('click', function () {
@@ -425,13 +493,13 @@
 
   function commit(q) {
     var my = st.ans[q.uid];
-    var ok = WB.isCorrect(q, my);
+    var ok = WB.isSubjective(q.type) ? (my === true) : WB.isCorrect(q, my);
     st.checked[q.uid] = true;
     if (ok) st.right++;
     else WB.store.addWrong(Object.assign({}, q, { myAnswer: my }));
     WB.store.addLog({ uid: q.uid, subjectId: q.subjectId, kid: q.kid, ok: ok });
     renderQ();
-    if (ok) WB.toast('回答正确 ✓');
+    if (ok && !WB.isSubjective(q.type)) WB.toast('回答正确 ✓');
   }
 
   /* ==================== 计时 ==================== */
@@ -449,7 +517,7 @@
     var done = Object.keys(st.checked).length;
     var score = WB.pct(st.right, total);
     var secs = Math.floor((Date.now() - st.t0) / 1000);
-    var wrongs = pool.filter(function (q) { return st.checked[q.uid] && !WB.isCorrect(q, st.ans[q.uid]); });
+    var wrongs = pool.filter(function (q) { return st.checked[q.uid] && !(WB.isSubjective(q.type) ? (st.ans[q.uid] === true) : WB.isCorrect(q, st.ans[q.uid])); });
 
     root.innerHTML =
       '<div class="card rv" style="padding:0;overflow:hidden">' +
@@ -489,7 +557,7 @@
     var d2 = document.getElementById('dots2');
     d2.innerHTML = pool.map(function (q, i) {
       var cls = 'qdot';
-      if (st.checked[q.uid]) cls += WB.isCorrect(q, st.ans[q.uid]) ? ' ok' : ' bad';
+      if (st.checked[q.uid]) cls += (WB.isSubjective(q.type) ? (st.ans[q.uid] === true) : WB.isCorrect(q, st.ans[q.uid])) ? ' ok' : ' bad';
       else cls += ' skip';
       return '<div class="' + cls + '" data-jump2="' + i + '">' + (i + 1) + '</div>';
     }).join('');

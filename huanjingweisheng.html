@@ -1230,6 +1230,21 @@ main p, main li, main td, main th, main dd, main dt,
   @media (prefers-reduced-motion:reduce){ .hero-cta{ transition:none; } }
   @media (max-width:980px){ .hero-cta{ grid-row:auto; } }
 </style>
+<style>
+/* ---------- 标准规范 PDF ---------- */
+.pdf-docs{margin:26px 0 34px;padding:22px 24px;border:1px solid var(--gray-200);border-radius:12px;background:rgba(255,255,255,.86);box-shadow:var(--shadow-sm)}
+.pdf-docs h2{font-size:20px;margin:0 0 6px;color:var(--navy)}
+.pdf-docs .pdf-sub{margin:0 0 16px;font-size:13.5px;color:var(--gray-500);line-height:1.7}
+.pdf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.pdf-card{display:flex;align-items:center;gap:12px;padding:13px 15px;border:1px solid var(--gray-200);border-radius:10px;background:#fff;text-decoration:none;color:inherit;transition:.22s ease}
+.pdf-card:hover{transform:translateY(-2px);border-color:var(--blue);box-shadow:0 8px 22px -12px rgba(0,0,0,.35)}
+.pdf-tag{flex:0 0 40px;height:40px;display:grid;place-items:center;border-radius:8px;background:rgba(233,19,121,.10);color:#B01060;font:800 11px/1 var(--font-heading);letter-spacing:.02em}
+.pdf-card>div{flex:1;min-width:0}
+.pdf-card b{display:block;font-size:14px;color:var(--navy);line-height:1.4}
+.pdf-card span{display:block;font-size:12.5px;color:var(--gray-500);line-height:1.5;margin-top:2px}
+.pdf-card em{margin-left:auto;align-self:flex-start;margin-top:3px;flex:0 0 auto;font-style:normal;font-size:12px;color:var(--blue);white-space:nowrap}
+@media (max-width:560px){.pdf-grid{grid-template-columns:1fr}.pdf-card em{display:none}}
+</style>
 </head>
 <body>
   <a class="skip-link" href="#overview">跳到正文</a>
@@ -1245,7 +1260,7 @@ main p, main li, main td, main th, main dd, main dt,
     <aside class="sidebar" aria-label="章节目录">
       <h2 class="sidebar-title">章节目录</h2>
       <div class="nav-group"><a class="nav-chapter" href="#chapter-01">第01讲 环境与健康</a><a class="nav-section" href="#section-01-01">环境的概念与构成</a><a class="nav-section" href="#section-01-02">环境与健康的关系</a><a class="nav-section" href="#section-01-03">环境污染对健康的影响</a><a class="nav-section" href="#section-01-04">环境卫生学的研究内容</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-02">第02讲 空气卫生（一）大气特征与物理性状</a><a class="nav-section" href="#section-02-01">大气的结构</a><a class="nav-section" href="#section-02-01a">大气的作用</a><a class="nav-section" href="#section-02-02">太阳辐射</a><a class="nav-section" href="#section-02-03">气象因素与热环境指标</a><a class="nav-section" href="#section-02-04">空气离子化</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-03">第03讲 空气卫生（二）大气污染与健康</a><a class="nav-section" href="#section-03-01">大气污染的来源</a><a class="nav-section" href="#section-03-02">烟雾事件的分型</a><a class="nav-section" href="#section-03-03">生产事故的特点</a><a class="nav-section" href="#section-03-04">大气颗粒物</a><a class="nav-section" href="#section-03-05">大气污染的防护</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-04">第04讲 水体卫生</a><a class="nav-section" href="#section-04-01">水体与水体污染</a><a class="nav-section" href="#section-04-02">水体的自净</a><a class="nav-section" href="#section-04-03">水体污染的调查与监测</a><a class="nav-section" href="#section-04-04">水源卫生侦查与防护</a><a class="nav-section" href="#section-04-05">水源水质评价</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-05">第05讲 饮用水与健康</a><a class="nav-section" href="#section-05-01">水的生理功能</a><a class="nav-section" href="#section-05-02">饮水安全现状</a><a class="nav-section" href="#section-05-03">饮用水与疾病</a><a class="nav-section" href="#section-05-04">饮用水的基本卫生要求</a><a class="nav-section" href="#section-05-05">二次供水污染</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-06">第06讲 饮用水卫生标准</a><a class="nav-section" href="#section-06-01">标准的沿革与框架</a><a class="nav-section" href="#section-06-02">五类指标与关键限值</a><a class="nav-section" href="#section-06-03">战时饮水卫生标准</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-07">第07讲 水质改善</a><a class="nav-section" href="#section-07-01">常规净水工艺</a><a class="nav-section" href="#section-07-02">消毒</a><a class="nav-section" href="#section-07-03">特殊水质处理</a><a class="nav-section" href="#section-07-04">战时水质处理</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-08">第08讲 土壤卫生</a><a class="nav-section" href="#section-08-01">土壤污染的概念与评价标准</a><a class="nav-section" href="#section-08-02">土壤污染的特点</a><a class="nav-section" href="#section-08-03">土壤生物污染与土源性寄生虫</a><a class="nav-section" href="#section-08-04">粪污无害化处理</a><a class="nav-section" href="#section-08-05">土壤重金属污染</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-09">第09讲 公共场所卫生</a><a class="nav-section" href="#section-09-01">概念与分类</a><a class="nav-section" href="#section-09-02">公共场所的卫生学特点</a><a class="nav-section" href="#section-09-03">卫生学要求</a><a class="nav-section" href="#section-09-04">卫生指标与限值</a><a class="nav-section" href="#section-09-05">卫生调查的采样与判定</a><a class="nav-section" href="#section-09-06">卫生管理与监督</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-10">第10讲 环境质量评价</a><a class="nav-section" href="#section-10-01">基本概念与分类</a><a class="nav-section" href="#section-10-02">污染源调查与评价</a><a class="nav-section" href="#section-10-03">环境质量评价的基本要素与方法</a><a class="nav-section" href="#section-10-04">环境效应评价</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-11">第11讲 家用化学品卫生</a><a class="nav-section" href="#section-11-01">家用化学品的分类与使用特点</a><a class="nav-section" href="#section-11-02">化妆品的概念与分类</a><a class="nav-section" href="#section-11-03">化妆品皮肤病</a><a class="nav-section" href="#section-11-04">化妆品的微生物污染</a><a class="nav-section" href="#section-11-05">化妆品中有毒化学物质的危害</a><a class="nav-section" href="#section-11-06">化学消毒剂</a><a class="nav-section" href="#section-11-07">卫生监督与管理</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-12">第12讲 突发环境污染事件及其应急处理</a><a class="nav-section" href="#section-12-01">定义与基本特征</a><a class="nav-section" href="#section-12-02">事件的危害</a><a class="nav-section" href="#section-12-03">事件分级</a><a class="nav-section" href="#section-12-04">应急准备：一案三制</a><a class="nav-section" href="#section-12-05">应急处理</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-13">第13讲 自然灾害环境卫生</a><a class="nav-section" href="#section-13-01">概念、分类与灾度分级</a><a class="nav-section" href="#section-13-02">灾害源性疾病</a><a class="nav-section" href="#section-13-03">疫病流行的成因与条件</a><a class="nav-section" href="#section-13-04">卫生应急措施</a><a class="nav-section" href="#section-13-05">灾害应激与 PTSD</a></div>
-      <div class="nav-question-bank"><a class="nav-chapter" href="#question-bank">题库 · 135 题</a></div>
+      <div class="nav-group"><a class="nav-chapter" href="#standards">标准规范原文（PDF）</a></div><div class="nav-question-bank"><a class="nav-chapter" href="#question-bank">题库 · 135 题</a></div>
     </aside>
     <main>
       <section class="intro" id="overview">
@@ -1253,6 +1268,38 @@ main p, main li, main td, main th, main dd, main dt,
         <p>本册覆盖大气、水体、饮用水、土壤、公共场所、环境质量评价、家用化学品、突发环境事件与自然灾害九大板块，共 13 讲。</p>
         <p>标准限值以现行国家标准为准：GB 5749—2022《生活饮用水卫生标准》、GB 37488—2019《公共场所卫生指标及限值要求》、GB 7959—2012《粪便无害化卫生要求》、《化妆品安全技术规范》（2015 年版）。课件与现行标准不一致处，均在正文中以「核对」标出。</p>
       </section>
+      <section class="pdf-docs" id="standards">
+        <h2>标准规范原文（PDF）</h2>
+        <p class="pdf-sub">以下 5 份国家标准与卫生行业标准，对应第09讲公共场所卫生与集中空调通风系统，可直接打开原文查阅限值与检验方法。</p>
+        <div class="pdf-grid">
+          <a class="pdf-card" href="files/huanjingweisheng/GB37487-2019.pdf" target="_blank" rel="noopener">
+            <span class="pdf-tag">GB</span>
+            <div><b>GB 37487—2019</b><span>公共场所卫生管理规范</span></div>
+            <em>11 页 · 打开 →</em>
+          </a>
+          <a class="pdf-card" href="files/huanjingweisheng/GB37488-2019.pdf" target="_blank" rel="noopener">
+            <span class="pdf-tag">GB</span>
+            <div><b>GB 37488—2019</b><span>公共场所卫生指标及限值要求</span></div>
+            <em>7 页 · 打开 →</em>
+          </a>
+          <a class="pdf-card" href="files/huanjingweisheng/GBT18204.2-2025.pdf" target="_blank" rel="noopener">
+            <span class="pdf-tag">GB/T</span>
+            <div><b>GB/T 18204.2—2025</b><span>公共场所卫生检验方法 第2部分：化学性指标</span></div>
+            <em>39 页 · 打开 →</em>
+          </a>
+          <a class="pdf-card" href="files/huanjingweisheng/GBT18204.4-2025.pdf" target="_blank" rel="noopener">
+            <span class="pdf-tag">GB/T</span>
+            <div><b>GB/T 18204.4—2025</b><span>公共场所卫生检验方法 第4部分：公共用品用具微生物指标</span></div>
+            <em>27 页 · 打开 →</em>
+          </a>
+          <a class="pdf-card" href="files/huanjingweisheng/WS10013-2023.pdf" target="_blank" rel="noopener">
+            <span class="pdf-tag">WS</span>
+            <div><b>WS 10013—2023</b><span>公共场所集中空调通风系统卫生规范</span></div>
+            <em>9 页 · 打开 →</em>
+          </a>
+        </div>
+      </section>
+
       <section class="chapter" id="chapter-01"><header class="chapter-header"><span class="chapter-number">01</span><div><p>环境卫生学 · 63 页 · 郑刚 副教授</p><h2>第01讲 环境与健康</h2></div></header><article class="knowledge-block reveal" id="section-01-01"><h3>环境的概念与构成</h3><div class="knowledge-content"><p>环境（environment）是指围绕人类生存空间、可以直接或间接影响人类生活与生产的一切自然形成和社会形成的因素的总和。环境卫生学关注的是其中与健康相关的部分。</p><div style="overflow-x:auto;margin:14px 0"><table><thead><tr><th>层次</th><th>内容</th><th>卫生学关注点</th></tr></thead><tbody><tr><td>自然环境</td><td>大气圈、水圈、土壤岩石圈、生物圈</td><td>污染物的来源、迁移与人体暴露</td></tr><tr><td>社会环境</td><td>社会经济、文化、制度、人际关系</td><td>通过生活方式与卫生服务间接影响健康</td></tr></tbody></table></div><p>构成环境的四个基本要素是<b>空气、水、土壤、生物</b>，它们被称为环境介质（environmental media）；食物、衣物、住宅等则是由介质衍生出的暴露载体。</p></div></article><article class="knowledge-block reveal" id="section-01-02"><h3>环境与健康的关系</h3><div class="knowledge-content"><p>健康是环境因素与遗传因素共同作用的结果。环境因素通过<b>暴露—剂量—效应</b>链条作用于人体：污染物先进入环境介质，经呼吸道、消化道、皮肤等途径进入机体，达到一定剂量后产生生物学效应。</p><ul><li><b>剂量-效应关系</b>：个体水平上，效应强度随剂量增加而变化。</li><li><b>剂量-反应关系</b>：群体水平上，出现某种效应的个体比例随剂量增加而升高。</li><li>两者是判定环境污染物与健康损害之间因果关系的重要依据，也是制定卫生标准的理论基础。</li></ul><blockquote><strong>提示：</strong>区分要点：<b>效应</b>说的是"一个人身上反应有多强"，<b>反应</b>说的是"一群人里有多少人出现反应"。</blockquote></div></article><article class="knowledge-block reveal" id="section-01-03"><h3>环境污染对健康的影响</h3><div class="knowledge-content"><div style="overflow-x:auto;margin:14px 0"><table><thead><tr><th>类型</th><th>特点</th><th>举例</th></tr></thead><tbody><tr><td>急性危害</td><td>短时间、高浓度暴露，发病急</td><td>伦敦烟雾事件、光化学烟雾、生产事故泄漏</td></tr><tr><td>慢性危害</td><td>低浓度、长期暴露，起病隐匿</td><td>慢性铅中毒、尘肺、地方性氟中毒</td></tr><tr><td>远期危害</td><td>致癌、致畸、致突变（三致）</td><td>苯与白血病、甲基汞致胎儿水俣病</td></tr><tr><td>间接效应</td><td>通过改变环境质量影响健康</td><td>温室效应、臭氧层破坏、酸雨</td></tr></tbody></table></div><blockquote><strong>考点：</strong>考试常把"急性中毒"与"慢性危害"混在一道题里：<b>看浓度与时间</b>——高浓度短时间即急性，低浓度长时间即慢性，与毒物种类无关。</blockquote></div></article><article class="knowledge-block reveal" id="section-01-04"><h3>环境卫生学的研究内容</h3><div class="knowledge-content"><ul><li>环境因素（物理、化学、生物）的来源、性质与在环境中的迁移转化规律；</li><li>环境因素对人群健康的影响及其机制；</li><li>环境与健康关系的调查、监测与评价方法；</li><li>环境卫生标准与法规的制定，以及环境卫生监督与管理。</li></ul><p>其根本任务是<b>利用有利环境因素、控制不利环境因素</b>，预防疾病、提高人群健康水平。</p></div></article></section><section class="chapter" id="chapter-02"><header class="chapter-header"><span class="chapter-number">02</span><div><p>环境卫生学 · 45 页 · 张建彬 副教授</p><h2>第02讲 空气卫生（一）大气特征与物理性状</h2></div></header><article class="knowledge-block reveal" id="section-02-01"><h3>大气的结构</h3><div class="knowledge-content"><div style="margin:16px 0;padding:12px 12px 8px;background:rgba(255,255,255,.74);border:1px solid var(--gray-200);border-radius:10px"><svg viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg">
         <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stop-color="#0E61AC" stop-opacity=".10"/><stop offset="1" stop-color="#0E61AC" stop-opacity=".30"/></linearGradient></defs>

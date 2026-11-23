@@ -50,59 +50,9 @@
 <footer class="ftr" data-ftr></footer>
 
 <script src="js/core.js"></script>
+<script src="js/loader.js"></script>
 <script src="data/_meta.js"></script>
-<script src="data/xssx.js"></script>
-<script src="data/exam-xssx.js"></script>
-<script src="data/ethics.js"></script>
-<script src="data/exam-ethics.js"></script>
-<script src="data/bigdata.js"></script>
-<script src="data/exam-bigdata.js"></script>
-<script src="data/statistics.js"></script>
-<script src="data/exam-statistics.js"></script>
-<script src="data/pharmacology.js"></script>
-<script src="data/exam-pharmacology.js"></script>
-<script src="data/respiratory.js"></script>
-<script src="data/exam-respiratory.js"></script>
-<script src="data/cardiology.js"></script>
-<script src="data/exam-cardiology.js"></script>
-<script src="data/hematology.js"></script>
-<script src="data/exam-hematology.js"></script>
-<script src="data/endocrinology.js"></script>
-<script src="data/exam-endocrinology.js"></script>
-<script src="data/diagnostics.js"></script>
-<script src="data/exam-diagnostics.js"></script>
-<script src="data/surgery.js"></script>
-<script src="data/exam-surgery.js"></script>
-<script src="data/surgery-nursing.js"></script>
-<script src="data/internal-nursing.js"></script>
-<script src="data/organ3.js"></script>
-<script src="data/health-stats.js"></script>
-<script src="data/pathophys.js"></script>
-<script src="data/pathology.js"></script>
-<script src="data/hangwei.js"></script>
-<script src="data/hangxin.js"></script>
-<script src="data/digestive.js"></script>
-<script src="data/infectious.js"></script>
-<script src="data/neurology.js"></script>
-<script src="data/ophthalmology.js"></script>
-<script src="data/dermatology.js"></script>
-<script src="data/ent.js"></script>
-<script src="data/pediatrics.js"></script>
-<script src="data/laoweisheng.js"></script>
-<script src="data/jishengchong.js"></script>
-<script src="data/weishengwu.js"></script>
-<script src="data/shenghua.js"></script>
-<script src="data/shizhen.js"></script>
-<script src="data/linxin.js"></script>
-<script src="data/fenzi.js"></script>
-<script src="data/yichuan.js"></script>
-<script src="data/mianyi.js"></script>
-<script src="data/wenxian.js"></script>
-<script src="data/shensheng.js"></script>
-<script src="data/shenjie.js"></script>
-<script src="data/extra-subjects.js"></script>
 <script src="data/quiz-meta.js"></script>
-<script src="data/changelog.js"></script>
 <script src="js/fx.js"></script>
 <script>
 (function () {
@@ -110,6 +60,26 @@
 
   var root = document.getElementById('root');
   var sid = WB.qs('s'), kid = WB.qs('k'), mode = WB.qs('mode');
+
+  /* 按需加载：错题模式用本地存档、无参数直接报错，都不必拉题库；
+     随机模式才需要全站，指定科目只拉该科目（约 0.1–0.5 MB） */
+  var need;
+  if (mode === 'wrong') need = Promise.resolve(null);
+  else if (sid) need = WB.ensureSubject(sid);
+  else if (mode === 'random') need = WB.ensureAll();
+  else need = Promise.resolve(null);
+  need.then(boot);
+
+  function boot() {
+  /* 独立刷题页科目：给出明确入口，不静默跳转 */
+  var _s0 = sid ? WB.subjectOf(sid) : null;
+  if (_s0 && _s0.extAlt) {
+    document.title = _s0.name + ' · 在线练习 · MediLearn';
+    root.innerHTML = WB.empty('✎', _s0.name + ' 的题目在独立刷题页',
+      '该科目使用单独的刷题页面，题型与判分体验一致。',
+      '<a class="gbtn gbtn-primary" href="' + _s0.extAlt + '">前往刷题 →</a>', 'search');
+    WB.fx.init(); return;
+  }
 
   /* ==================== 收集题目 ==================== */
   function uidOf(s, k, i) { return s + '|' + k + '|' + i; }
@@ -153,7 +123,7 @@
     title = '错题重做'; subtitle = '来自错题本，共 ' + pool.length + ' 题';
     accent = 'var(--rose)'; accentSoft = 'var(--rose-soft)';
   } else {
-    var s = WB.getSubject(sid);
+    var s = WB.subjectOf(sid);
     if (!s) { notFound(); return; }
     pool = fromSubject(s, kid || null);
     accent = s.accent; accentSoft = s.accentSoft;
@@ -585,6 +555,7 @@
   }
 
   renderIntro();
+  }
 })();
 </script>
 <script src="js/changelog.js"></script>

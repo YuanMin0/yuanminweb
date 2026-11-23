@@ -430,64 +430,28 @@ body.mode-pick .wrap{padding-bottom:40px}
 </div>
 
 <script src="js/core.js"></script>
+<script src="js/loader.js"></script>
 <script src="data/_meta.js"></script>
-<script src="data/xssx.js"></script>
-<script src="data/exam-xssx.js"></script>
-<script src="data/ethics.js"></script>
-<script src="data/exam-ethics.js"></script>
-<script src="data/bigdata.js"></script>
-<script src="data/exam-bigdata.js"></script>
-<script src="data/statistics.js"></script>
-<script src="data/exam-statistics.js"></script>
-<script src="data/pharmacology.js"></script>
-<script src="data/exam-pharmacology.js"></script>
-<script src="data/respiratory.js"></script>
-<script src="data/exam-respiratory.js"></script>
-<script src="data/cardiology.js"></script>
-<script src="data/exam-cardiology.js"></script>
-<script src="data/hematology.js"></script>
-<script src="data/exam-hematology.js"></script>
-<script src="data/endocrinology.js"></script>
-<script src="data/exam-endocrinology.js"></script>
-<script src="data/diagnostics.js"></script>
-<script src="data/exam-diagnostics.js"></script>
-<script src="data/surgery.js"></script>
-<script src="data/exam-surgery.js"></script>
-<script src="data/surgery-nursing.js"></script>
-<script src="data/internal-nursing.js"></script>
-<script src="data/organ3.js"></script>
-<script src="data/health-stats.js"></script>
-<script src="data/pathophys.js"></script>
-<script src="data/pathology.js"></script>
-<script src="data/hangwei.js"></script>
-<script src="data/hangxin.js"></script>
-<script src="data/digestive.js"></script>
-<script src="data/infectious.js"></script>
-<script src="data/neurology.js"></script>
-<script src="data/ophthalmology.js"></script>
-<script src="data/dermatology.js"></script>
-<script src="data/ent.js"></script>
-<script src="data/pediatrics.js"></script>
-<script src="data/laoweisheng.js"></script>
-<script src="data/jishengchong.js"></script>
-<script src="data/weishengwu.js"></script>
-<script src="data/shenghua.js"></script>
-<script src="data/shizhen.js"></script>
-<script src="data/linxin.js"></script>
-<script src="data/fenzi.js"></script>
-<script src="data/yichuan.js"></script>
-<script src="data/mianyi.js"></script>
-<script src="data/wenxian.js"></script>
-<script src="data/shensheng.js"></script>
-<script src="data/shenjie.js"></script>
-<script src="data/extra-subjects.js"></script>
 <script src="data/quiz-meta.js"></script>
 <script>
 (function () {
   'use strict';
 
   var sid = WB.qs('s');
-  var subject = sid ? WB.getSubject(sid) : null;
+  /* 只加载当前科目的题库（约 0.1–0.5 MB）；无 s 参数时仅读 _meta 渲染选择器 */
+  WB.ensureSubject(sid, { drill: true }).then(boot);
+  function boot() {
+  var subject = sid ? WB.subjectOf(sid) : null;
+  /* 有独立刷题页的科目（环境卫生学）：给出明确入口，不静默跳转 */
+  if (subject && subject.extAlt) {
+    document.getElementById('stage').innerHTML =
+      '<div class="card"><p class="stem" style="margin:0">' + WB.esc(subject.name) +
+      ' 的题目在独立刷题页。</p>' +
+      '<p style="margin-top:14px"><a class="btn" href="' + subject.extAlt + '">前往刷题 →</a></p></div>';
+    var _pos = document.getElementById('pos'); if (_pos) _pos.textContent = '— / —';
+    var _pt = document.getElementById('progressText'); if (_pt) _pt.textContent = '独立刷题页';
+    return;
+  }
   var single = !!subject;
 
   /* ---------------- 收集题目 ---------------- */
@@ -528,7 +492,9 @@ body.mode-pick .wrap{padding-bottom:40px}
 
   /* ---------------- 科目选择页（按年级分组） ---------------- */
   function hasPool(s) {
-    return (s.chapters || []).some(function (c) {
+    /* 只加载 _meta 时没有 chapters，用 choice 计数判断有没有可刷的题 */
+    if (!s.chapters) return !!(s._count && s._count.choice > 0);
+    return s.chapters.some(function (c) {
       return (c.knowledge || []).some(function (k) { return (k.quiz || []).length; });
     });
   }
@@ -1182,6 +1148,7 @@ body.mode-pick .wrap{padding-bottom:40px}
   function renderAll() { render(); }
 
   renderAll();
+  }
 })();
 </script>
 </body>

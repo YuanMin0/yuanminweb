@@ -32,7 +32,7 @@
 
   /* 预计算科目索引：章节 id、知识点 id、计数、扁平索引 */
   function indexSubject(s) {
-    var kIndex = {}, chapters = s.chapters || [], n = 0, q = 0;
+    var kIndex = {}, chapters = s.chapters || [], n = 0, q = 0, qc = 0;
     chapters.forEach(function (ch, ci) {
       ch.id = ch.id || (s.id + '-c' + (ci + 1));
       (ch.knowledge || []).forEach(function (k, ki) {
@@ -45,15 +45,19 @@
         k._ki = ki;
         kIndex[k.id] = k;
         n++;
-        q += (k.quiz || []).length;
+        (k.quiz || []).forEach(function (x) {
+          q++;
+          /* choice = 单选 + 多选：刷题页只出这类题，必须单独计数 */
+          if (x.type === 'single' || x.type === 'multiple') qc++;
+        });
       });
     });
     s._kIndex = kIndex;
     /* 外部 HTML 科目（ext）内容在独立页面里，chapters 恒为空，
        不能按 chapters 重算计数，否则卡片会退化成「资料型 0 份资料」。
        这类科目保留注册时声明的 _count。 */
-    if (!s.ext) s._count = { chapters: chapters.length, knowledge: n, quiz: q };
-    else if (!s._count) s._count = { chapters: 0, knowledge: 0, quiz: 0 };
+    if (!s.ext) s._count = { chapters: chapters.length, knowledge: n, quiz: q, choice: qc };
+    else if (!s._count) s._count = { chapters: 0, knowledge: 0, quiz: 0, choice: 0 };
     return s;
   }
 

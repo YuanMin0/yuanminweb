@@ -93,8 +93,8 @@ WB.register({
   id: 'huanjingweisheng', name: '环境卫生学', en: 'Environmental Hygiene', icon: '🌍',
   accent: 'var(--teal)', accentSoft: 'var(--teal-soft)', sem: 'dasan1', order: 15.7,
   tag: '预防医学',
-  desc: '大气、水体、饮用水、土壤、公共场所、环境质量评价与家用化学品，13 讲 60 个知识点、135 题，另配 114 题选择题刷题页。',
+  desc: '大气、水体、饮用水、土壤、公共场所、环境质量评价与家用化学品，13 讲 60 个知识点、191 题，另配 113 题选择题刷题页。',
   ext: 'huanjingweisheng.html',
   extAlt: 'huanjingweisheng-quiz.html',
-  chapters: [], _count: { chapters: 13, knowledge: 60, quiz: 135 }
+  chapters: [], _count: { chapters: 13, knowledge: 60, quiz: 191, choice: 113 }
 });

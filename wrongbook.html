@@ -35,58 +35,8 @@
 <footer class="ftr" data-ftr></footer>
 
 <script src="js/core.js"></script>
+<script src="js/loader.js"></script>
 <script src="data/_meta.js"></script>
-<script src="data/xssx.js"></script>
-<script src="data/exam-xssx.js"></script>
-<script src="data/ethics.js"></script>
-<script src="data/exam-ethics.js"></script>
-<script src="data/bigdata.js"></script>
-<script src="data/exam-bigdata.js"></script>
-<script src="data/statistics.js"></script>
-<script src="data/exam-statistics.js"></script>
-<script src="data/pharmacology.js"></script>
-<script src="data/exam-pharmacology.js"></script>
-<script src="data/respiratory.js"></script>
-<script src="data/exam-respiratory.js"></script>
-<script src="data/cardiology.js"></script>
-<script src="data/exam-cardiology.js"></script>
-<script src="data/hematology.js"></script>
-<script src="data/exam-hematology.js"></script>
-<script src="data/endocrinology.js"></script>
-<script src="data/exam-endocrinology.js"></script>
-<script src="data/diagnostics.js"></script>
-<script src="data/exam-diagnostics.js"></script>
-<script src="data/surgery.js"></script>
-<script src="data/exam-surgery.js"></script>
-<script src="data/surgery-nursing.js"></script>
-<script src="data/internal-nursing.js"></script>
-<script src="data/organ3.js"></script>
-<script src="data/health-stats.js"></script>
-<script src="data/pathophys.js"></script>
-<script src="data/pathology.js"></script>
-<script src="data/hangwei.js"></script>
-<script src="data/hangxin.js"></script>
-<script src="data/digestive.js"></script>
-<script src="data/infectious.js"></script>
-<script src="data/neurology.js"></script>
-<script src="data/ophthalmology.js"></script>
-<script src="data/dermatology.js"></script>
-<script src="data/ent.js"></script>
-<script src="data/pediatrics.js"></script>
-<script src="data/laoweisheng.js"></script>
-<script src="data/jishengchong.js"></script>
-<script src="data/weishengwu.js"></script>
-<script src="data/shenghua.js"></script>
-<script src="data/shizhen.js"></script>
-<script src="data/linxin.js"></script>
-<script src="data/fenzi.js"></script>
-<script src="data/yichuan.js"></script>
-<script src="data/mianyi.js"></script>
-<script src="data/wenxian.js"></script>
-<script src="data/shensheng.js"></script>
-<script src="data/shenjie.js"></script>
-<script src="data/extra-subjects.js"></script>
-<script src="data/quiz-meta.js"></script>
 <script src="data/changelog.js"></script>
 <script src="js/fx.js"></script>
 <script>
@@ -104,7 +54,7 @@
     var pendingN = WB.store.wrongCount();
     var progMap = WB.store.progress() || {};
     var progList = Object.keys(progMap).map(function (sid) {
-      var sj = WB.getSubject(sid);
+      var sj = WB.subjectOf(sid);
       if (!sj || !sj._count || !sj._count.knowledge) return null;
       var done = Object.keys(progMap[sid] || {}).length;
       return { name: sj.name, icon: sj.icon, done: done, total: sj._count.knowledge,
@@ -196,7 +146,7 @@
     }
 
     function row(w) {
-      var s = WB.getSubject(w.subjectId);
+      var s = WB.subjectOf(w.subjectId);
       var acc = s ? s.accent : 'var(--bad)';
       var accSoft = s ? s.accentSoft : 'var(--bad-soft)';
       var k = s ? WB.getKnowledge(w.subjectId, w.kid) : null;
@@ -215,7 +165,7 @@
         '<div class="wrow-line">正确答案：<b style="color:var(--ok)">' + WB.esc(WB.answerPlain(w)) + '</b></div>' +
         (w.explain ? '<div class="wrow-line muted mt-1" style="line-height:1.75">' + WB.rich(w.explain) + '</div>' : '') +
         '<div class="mt-2 row" style="flex-wrap:wrap">' +
-          (k ? '<a class="gbtn gbtn-sm" href="' + WB.link('knowledge.html', { s: w.subjectId, k: w.kid }) + '">📖 复习知识点</a>' : '') +
+          (w.kid ? '<a class="gbtn gbtn-sm" href="' + WB.link('knowledge.html', { s: w.subjectId, k: w.kid }) + '">📖 复习知识点</a>' : '') +
           '<a class="gbtn gbtn-sm" href="' + WB.link('quiz.html', { s: w.subjectId, k: w.kid }) + '">◉ 重做该知识点</a>' +
           '<button class="gbtn gbtn-sm" data-rm="' + WB.esc(w.uid) + '">✕ 移除</button>' +
         '</div>' +

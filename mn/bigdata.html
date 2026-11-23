@@ -1105,6 +1105,11 @@ main p, main li, main td, main th, main dd, main dt,
     .knowledge-content table { min-width:410px; }
     .knowledge-content svg { min-width:540px; }
     .knowledge-content > div:has(> svg) > p { text-align:left!important; }
+    /* 窄屏防横向溢出：长代码断行，宽图改为容器内横向滚动 */
+    .knowledge-content code { overflow-wrap:anywhere; word-break:break-word; }
+    .knowledge-content pre { max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .knowledge-content pre code { overflow-wrap:normal; word-break:normal; }
+    .knowledge-content > div:has(> svg) { overflow-x:auto; -webkit-overflow-scrolling:touch; }
   }
 }
 

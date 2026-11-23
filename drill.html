@@ -115,6 +115,7 @@ body::after{
 /* 考频：高频用琥珀色，避免与柠檬黄题卡同色 */
 .st-fq-high{background:var(--amber); color:var(--ink)}
 .st-fq-mid{background:var(--ocean); color:#fff}
+.st-fq-low{background:#9AA3AF; color:#fff}
 .st-ex{background:var(--cream); color:var(--ink); border-style:dashed}
 
 .stem{position:relative; z-index:1; margin:0 0 16px; font-size:17px; line-height:1.75; font-weight:800}
@@ -800,6 +801,10 @@ body.mode-pick .wrap{padding-bottom:40px}
       sticks += sticker('st-lv st-lv-' + lvCls(lv), lv, lvHint(lv));
     }
     if (q.freq) sticks += sticker('st-freq st-fq-' + fqCls(q.freq), q.freq, fqHint(q.freq));
+    if (q.tested) {
+      var tcls = /原题/.test(q.tested) ? 'high' : (/考点/.test(q.tested) ? 'mid' : 'low');
+      sticks += sticker('st-freq st-fq-' + tcls, q.tested.replace(/（.*?）/, ''), q.tested);
+    }
     sticks += sticker('st-ch', clip(q.chapterTitle, 10), q._chFull);
 
     var body = '';

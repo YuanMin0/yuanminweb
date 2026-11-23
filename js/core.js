@@ -785,6 +785,10 @@
     if (ys && ys.length) {
       h += '<span class="chip chip-year">' + ys.slice(0, 6).map(function (y) { return WB.esc(String(y)); }).join(' · ') + '</span>';
     }
+    if (q.tested) {
+      var tc = /原题/.test(q.tested) ? 'chip-hot' : (/考点/.test(q.tested) ? 'chip-mid' : 'chip-low');
+      h += '<span class="chip ' + tc + '" title="' + WB.esc(q.tested) + '">' + WB.esc(q.tested.replace(/（.*?）/, '')) + '</span>';
+    }
     return h;
   };
   /* perm 可选：显示位次 → 原始下标 的映射数组；用于选项乱序后仍输出正确的字母标号 */

@@ -303,6 +303,15 @@ body::after{
 }
 .pill-link:hover{ transform:translate(-2px,-2px); box-shadow:8px 8px 0 rgba(11,18,32,.9); }
 .pill-link:active{ transform:translate(1px,1px); box-shadow:2px 2px 0 rgba(11,18,32,.9); }
+.fav-chip{
+  margin-left:auto; cursor:pointer; border:2px solid var(--ink); background:#fff; color:var(--ink);
+  font:900 12px/1.1 inherit; border-radius:999px; padding:5px 11px;
+  box-shadow:2px 2px 0 var(--ink); transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.fav-chip:hover{ transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--ink); }
+.fav-chip:active{ transform:translate(1px,1px); box-shadow:1px 1px 0 var(--ink); }
+.fav-chip.on{ background:var(--lemon); }
+@media (max-width:520px){ .fav-chip{ margin-left:0; } }
 @media (prefers-reduced-motion:reduce){ .pill-link{ transition:none; } }
 </style>
 </head>
@@ -326,6 +335,7 @@ body::after{
     <button class="tool" id="jumpBtn" type="button">选题</button>
     <button class="tool" id="mode" type="button">顺序出题</button>
     <button class="tool" id="onlyWrong" type="button">只刷错题<span class="badge" id="wrongCount">0</span></button>
+    <button class="tool" id="onlyFav" type="button">收藏夹<span class="badge" id="favCount">0</span></button>
     <button class="tool" id="wrongBtn" type="button">错题集</button>
     <button class="tool" id="reset" type="button">重置进度</button>
   </div>
@@ -378,11 +388,34 @@ let state = {
   cur: 0,
   mode: 'seq',
   onlyWrong: false,
+  onlyFav: false,
   filterCh: null,
   answers: {},      // qid -> {pick, ok}
   wrong: new Set(),
   done: false
 };
+
+/* ---------------- 收藏夹（与主站共用 medilearn.fav.v1） ---------------- */
+const FAV_KEY = 'medilearn.fav.v1';
+const FAV_PREFIX = 'huanjingweisheng-quiz|';
+function favMap(){
+  try{ return JSON.parse(localStorage.getItem(FAV_KEY) || '{}') || {}; }catch(e){ return {}; }
+}
+function favSave(m){ try{ localStorage.setItem(FAV_KEY, JSON.stringify(m)); }catch(e){} }
+function isFav(qid){ return !!favMap()[FAV_PREFIX + qid]; }
+function favCount(){ return Object.keys(favMap()).filter(k=>k.indexOf(FAV_PREFIX)===0).length; }
+function toggleFav(qid){
+  const m = favMap(), k = FAV_PREFIX + qid, q = DATA[qid];
+  if(m[k]){ delete m[k]; favSave(m); return false; }
+  m[k] = {
+    uid: k, subjectId: 'huanjingweisheng', subjectName: '环境卫生学',
+    kid: '', kTitle: q.pt || '', chapterTitle: q.ch,
+    stem: q.q, type: 'single', options: q.o, answer: q.a,
+    explain: q.e || '', source: (q.src === 'file' ? '文件原题' : '扩展题'),
+    ts: Date.now()
+  };
+  favSave(m); return true;
+}
 
 function load(){
   try{
@@ -408,6 +441,7 @@ function baseOrder(){
   let base = DATA.map((_,i)=>i);
   if(state.filterCh) base = base.filter(i => DATA[i].ch === state.filterCh);
   if(state.onlyWrong) base = base.filter(i => state.wrong.has(i));
+  if(state.onlyFav) base = base.filter(i => isFav(i));
   if(state.mode === 'shuffle') base = shuffle(base);
   return base;
 }
@@ -429,12 +463,13 @@ function render(){
   if(state.done && state.order.length === 0){
     const box = el('div','done', `
       <h2>这里没有题 ✦</h2>
-      <p>当前范围（${state.filterCh || '全部讲次'}${state.onlyWrong ? ' · 仅错题' : ''}）还没有可练的题。</p>
+      <p>当前范围（${state.filterCh || '全部讲次'}${state.onlyWrong ? ' · 仅错题' : ''}${state.onlyFav ? ' · 仅收藏' : ''}）还没有可练的题。</p>
       <button class="btn btn-ocean" id="again">回到全部题目</button>`);
     stage.appendChild(box);
     box.querySelector('#again').onclick = ()=>{
-      state.onlyWrong = false; state.filterCh = null;
+      state.onlyWrong = false; state.onlyFav = false; state.filterCh = null;
       $('#onlyWrong').classList.remove('on');
+      $('#onlyFav').classList.remove('on');
       rebuild();
     };
     updateBar();
@@ -451,7 +486,7 @@ function render(){
       <p>作答 ${answered} 题 · 正确 ${right} · 错题 ${state.wrong.size}</p>
       <button class="btn btn-ocean" id="again">再来一轮</button>`);
     stage.appendChild(box);
-    box.querySelector('#again').onclick = ()=>{ state.done=false; state.onlyWrong=false; state.filterCh=null; state.cur=0; rebuild(); };
+    box.querySelector('#again').onclick = ()=>{ state.done=false; state.onlyWrong=false; state.onlyFav=false; state.filterCh=null; state.cur=0; $('#onlyWrong').classList.remove('on'); $('#onlyFav').classList.remove('on'); rebuild(); };
     updateBar();
     return;
   }
@@ -468,6 +503,7 @@ function render(){
       <span class="chip ghost">第 ${state.cur+1} / ${state.order.length} 题</span>
       ${q.pt ? `<span class="chip ghost">考点：${q.pt}</span>` : ''}
       ${rec ? `<span class="chip ghost">${rec.ok?'已答对':'已答错'}</span>` : ''}
+      <button class="fav-chip ${isFav(qid)?'on':''}" id="favStar" type="button" aria-pressed="${isFav(qid)}">${isFav(qid)?'★ 已收藏':'☆ 收藏'}</button>
     </div>
     <div class="tags">
       <span class="tag ${q.src==='file'?'src-file':'src-ext'}"><i>${q.src==='file'?'文件原题':'扩展题'}</i></span>
@@ -477,6 +513,13 @@ function render(){
     <h1 class="stem">${q.q}</h1>
     <div class="opts" id="opts"></div>`;
   stage.appendChild(card);
+
+  const favStar = card.querySelector('#favStar');
+  if(favStar) favStar.onclick = ()=>{
+    const on = toggleFav(qid);
+    if(state.onlyFav && !on){ rebuild(); return; }
+    render();
+  };
 
   const opts = card.querySelector('#opts');
   q.o.forEach((text, i)=>{
@@ -546,7 +589,9 @@ function updateBar(){
   $('#score').textContent = `✓ ${right}　✕ ${state.wrong.size}`;
   $('#bar').style.width = (total ? (state.done ? 100 : scoped/total*100) : 0) + '%';
   $('#wrongCount').textContent = state.wrong.size;
-  $('#progressText').textContent = '已答 ' + scoped + ' / ' + total + ' · ' + (state.filterCh || '全部讲次');
+  $('#favCount').textContent = favCount();
+  $('#onlyFav').classList.toggle('on', state.onlyFav);
+  $('#progressText').textContent = '已答 ' + scoped + ' / ' + total + ' · ' + (state.filterCh || '全部讲次') + (state.onlyFav ? ' · 仅收藏' : '');
   $('#prev').disabled = state.cur === 0 || state.done;
   $('#next').disabled = state.done;
   $('#next').textContent = state.cur === state.order.length-1 ? '完成本轮 →' : '下一题 →';
@@ -675,6 +720,12 @@ function init(){
     state.done = false;
     rebuild();
   };
+  $('#onlyFav').onclick = ()=>{
+    state.onlyFav = !state.onlyFav;
+    $('#onlyFav').classList.toggle('on', state.onlyFav);
+    state.done = false;
+    rebuild();
+  };
   $('#wrongBtn').onclick = openDrawer;
   $('#jumpBtn').onclick = openJump;
   $('#closeJump').onclick = ()=> $('#jumpDrawer').classList.remove('open');
@@ -698,6 +749,11 @@ function init(){
     }
   });
   render();
+  const wantQ = new URLSearchParams(location.search).get('q');
+  if(wantQ !== null && wantQ !== ''){
+    const qid = parseInt(wantQ, 10);
+    if(!isNaN(qid) && DATA[qid]) jumpToQid(qid);
+  }
 }
 init();
 </script>

@@ -250,6 +250,36 @@ function check(name, ok, detail) {
     await close(pg, targetId);
   }
 
+  console.log('\n[favorites] 收藏 → 筛选');
+  {
+    const { pg, targetId } = await open('drill.html?s=organ3', 1100);
+    const r = await ev(pg, `new Promise(function(res){
+      try{ localStorage.removeItem('medilearn.fav.v1'); }catch(e){}
+      var star=document.getElementById('favStar');
+      if(!star){ res({err:'no star'}); return; }
+      star.click();
+      setTimeout(function(){
+        var a={count:document.getElementById('favCount').textContent, on:document.getElementById('favStar').classList.contains('on')};
+        document.getElementById('favBtn').click();
+        setTimeout(function(){ a.pool=document.getElementById('progressText').textContent; res(a); },350);
+      },300);
+    })`, true);
+    check('收藏后计数为 1', r && r.count === '1', JSON.stringify(r));
+    check('收藏按钮进入已收藏态', r && r.on === true, JSON.stringify(r));
+    check('收藏夹筛选收敛到 1 题', r && /\/\s*1(\D|$)/.test(r.pool || ''), JSON.stringify(r));
+    await close(pg, targetId);
+  }
+
+  console.log('\n[favorites] 收藏页渲染');
+  {
+    const { pg, targetId } = await open('favorites.html', 1000);
+    const r = await ev(pg, `JSON.stringify({rows:document.querySelectorAll('.wrow').length, h1:document.querySelectorAll('h1').length})`);
+    const o = JSON.parse(r);
+    check('收藏页显示 1 条记录', o.rows === 1, r);
+    check('收藏页只有 1 个 h1', o.h1 === 1, r);
+    await close(pg, targetId);
+  }
+
   console.log('\n==== 通过 ' + pass + ' / 失败 ' + fail + ' ====');
   if (fail) fails.forEach(f => console.log('  ✗ ' + f));
   process.exit(0);

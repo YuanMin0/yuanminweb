@@ -92,6 +92,14 @@ body::after{
   background:repeating-linear-gradient(115deg, transparent 0 22px, rgba(11,18,32,.045) 22px 23px);
 }
 .stickers{position:relative; z-index:1; display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px}
+.fav-star{margin-left:auto; display:inline-flex; align-items:center; gap:5px; padding:6px 12px;
+  border:2px solid var(--ink); border-radius:999px; background:#fff; color:var(--ink);
+  font:800 12px/1.1 inherit; cursor:pointer; box-shadow:2px 2px 0 var(--ink);
+  transition:transform .12s ease, box-shadow .12s ease, background .12s ease}
+.fav-star:hover{transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--ink)}
+.fav-star:active{transform:translate(1px,1px); box-shadow:1px 1px 0 var(--ink)}
+.fav-star.on{background:#FFD34D}
+@media (max-width:520px){ .fav-star{margin-left:0} }
 .sticker{
   position:relative; display:inline-block; padding:5px 12px 4px; overflow:hidden;
   border:3px solid var(--ink); border-radius:7px;
@@ -402,6 +410,7 @@ body.mode-pick .wrap{padding-bottom:40px}
     <button class="tool" id="pickBtn" type="button" aria-expanded="false" aria-controls="drawer">选题</button>
     <button class="tool" id="orderBtn" type="button">顺序出题</button>
     <button class="tool" id="wrongBtn" type="button">只刷错题<span class="badge" id="wrongCount">0</span></button>
+    <button class="tool" id="favBtn" type="button">收藏夹<span class="badge" id="favCount">0</span></button>
     <button class="tool" id="resetBtn" type="button">重置进度</button>
   </div>
 
@@ -486,7 +495,7 @@ body.mode-pick .wrap{padding-bottom:40px}
             freq: q.freq || m[1], level: q.level || m[0], years: q.years, tested: q.tested,
             uid: uidOf(s.id, k.id, i),
             subjectId: s.id, subjectName: s.name,
-            chapterTitle: ch.title, kTitle: k.title,
+            chapterTitle: ch.title, kTitle: k.title, kid: k.id,
             _exam: !!ch._exam
           });
         });
@@ -610,7 +619,7 @@ body.mode-pick .wrap{padding-bottom:40px}
     try {
       localStorage.setItem(KEY, JSON.stringify({
         ans: st.ans, checked: st.checked, revealed: st.revealed,
-        i: st.i, ch: st.ch, wrongOnly: st.wrongOnly, order: st.order, src: st.src
+        i: st.i, ch: st.ch, wrongOnly: st.wrongOnly, favOnly: st.favOnly, order: st.order, src: st.src
       }));
     } catch (e) {}
   }
@@ -621,6 +630,7 @@ body.mode-pick .wrap{padding-bottom:40px}
   st.ch = st.ch || '';
   st.src = st.src || '';            /* 来源筛选：'' = 全部 */
   st.wrongOnly = !!st.wrongOnly;
+  st.favOnly = !!st.favOnly;          /* 只看收藏 */
   st.order = st.order || 'seq';
   st.revealed = st.revealed || {};   /* 主观题是否已展开参考答案 */
 
@@ -638,6 +648,7 @@ body.mode-pick .wrap{padding-bottom:40px}
     }
     if (st.ch) list = list.filter(function (q) { return q._chKey === st.ch; });
     if (st.src) list = list.filter(function (q) { return WB.srcType(q) === st.src; });
+    if (st.favOnly) list = list.filter(function (q) { return WB.store.isFav(q.uid); });
     if (st.wrongOnly) {
       var w = WB.store.wrong();
       list = list.filter(function (q) { return !!w[q.uid]; });
@@ -662,6 +673,8 @@ body.mode-pick .wrap{padding-bottom:40px}
   var wrongCountEl = document.getElementById('wrongCount');
   var orderBtn = document.getElementById('orderBtn');
   var wrongBtn = document.getElementById('wrongBtn');
+  var favBtn = document.getElementById('favBtn');
+  var favCountEl = document.getElementById('favCount');
   var brandEl = document.getElementById('brand');
   var backLink = document.getElementById('backLink');
 
@@ -746,16 +759,29 @@ body.mode-pick .wrap{padding-bottom:40px}
   function render() {
     rebuild();
 
+    /* 从收藏夹/错题本点进来时，用 ?q=<uid> 直接定位到该题 */
+    var wantQ = WB.qs('q');
+    if (wantQ && !st._jumped) {
+      var at = -1;
+      for (var qi = 0; qi < pool.length; qi++) { if (pool[qi].uid === wantQ) { at = qi; break; } }
+      if (at < 0 && (st.ch || st.src || st.favOnly || st.wrongOnly)) {
+        st.ch = ''; st.src = ''; st.favOnly = false; st.wrongOnly = false;
+        rebuild();
+        for (var qj = 0; qj < pool.length; qj++) { if (pool[qj].uid === wantQ) { at = qj; break; } }
+      }
+      if (at > -1) { st.i = at; st._jumped = true; }
+    }
+
     if (!pool.length) {
       stage.innerHTML = '<div class="card"><p class="stem" style="margin:0 0 14px">这里没有题。</p>' +
-        '<p style="margin:0;font-weight:700;font-size:14px">当前筛选下没有可练的题目，可能都答对了或该讲暂无题。</p>' +
+        '<p style="margin:0;font-weight:700;font-size:14px">当前筛选下没有可练的题目，可能都答对了、该讲暂无题，或收藏夹为空。</p>' +
         '<div class="actions"><button class="btn" id="toAll" type="button">回到全部题目</button></div></div>';
       posEl.textContent = '— / —';
       ptextEl.textContent = '没有可练的题';
       barEl.style.width = '0%';
       var b = document.getElementById('toAll');
       if (b) b.addEventListener('click', function () {
-        st.ch = ''; st.src = ''; st.wrongOnly = false; st.i = 0; save(); renderAll();
+        st.ch = ''; st.src = ''; st.wrongOnly = false; st.favOnly = false; st.i = 0; save(); renderAll();
       });
       updateTools();
       return;
@@ -782,6 +808,9 @@ body.mode-pick .wrap{padding-bottom:40px}
       sticks += sticker('st-freq st-fq-' + tcls, q.tested.replace(/（.*?）/, ''), q.tested);
     }
     sticks += sticker('st-ch', clip(q.chapterTitle, 10), q._chFull);
+    var favOn = WB.store.isFav(q.uid);
+    sticks += '<button class="fav-star' + (favOn ? ' on' : '') + '" id="favStar" type="button" aria-pressed="' +
+      favOn + '" title="' + (favOn ? '取消收藏' : '收藏本题') + '">' + (favOn ? '★ 已收藏' : '☆ 收藏') + '</button>';
 
     var body = '';
     if (subjective) {
@@ -888,6 +917,9 @@ body.mode-pick .wrap{padding-bottom:40px}
     var w = WB.store.wrong();
     var n = base.filter(function (q) { return !!w[q.uid]; }).length;
     wrongCountEl.textContent = n;
+    favBtn.classList.toggle('on', st.favOnly);
+    /* 计数按当前科目范围，避免「收藏夹 1」点进去却是空池 */
+    favCountEl.textContent = base.filter(function (q) { return WB.store.isFav(q.uid); }).length;
   }
 
   /* ---------------- 交互 ---------------- */
@@ -900,6 +932,13 @@ body.mode-pick .wrap{padding-bottom:40px}
 
   function bind() {
     var q = pool[st.i];
+
+    var favStar = document.getElementById('favStar');
+    if (favStar) favStar.addEventListener('click', function () {
+      var on = WB.store.toggleFav(q);
+      if (WB.toast) WB.toast(on ? '已加入收藏' : '已取消收藏');
+      render();
+    });
 
     stage.querySelectorAll('.opt').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -999,6 +1038,11 @@ body.mode-pick .wrap{padding-bottom:40px}
 
   wrongBtn.addEventListener('click', function () {
     st.wrongOnly = !st.wrongOnly;
+    st.i = 0; save(); render();
+  });
+
+  favBtn.addEventListener('click', function () {
+    st.favOnly = !st.favOnly;
     st.i = 0; save(); render();
   });
 

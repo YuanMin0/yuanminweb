@@ -189,7 +189,7 @@
   };
 
   /* ---------------- 本地存储 ---------------- */
-  var K = { prog: 'medilearn.progress.v1', wrong: 'medilearn.wrong.v1', log: 'medilearn.quizlog.v1', theme: 'medilearn.theme', days: 'medilearn.days.v1' };
+  var K = { prog: 'medilearn.progress.v1', wrong: 'medilearn.wrong.v1', fav: 'medilearn.fav.v1', log: 'medilearn.quizlog.v1', theme: 'medilearn.theme', days: 'medilearn.days.v1' };
 
   function read(key, dft) {
     try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : dft; } catch (e) { return dft; }
@@ -281,6 +281,45 @@
       out.sort(function (a, b) { return (b.ts || 0) - (a.ts || 0); });
       return out;
     },
+    /* 收藏夹：{ [uid]: 题目快照 }。与错题本分开存储，重置进度不会清空收藏。 */
+    fav: function () { return read(K.fav, {}); },
+    isFav: function (uid) { return !!read(K.fav, {})[uid]; },
+    addFav: function (q) {
+      var f = read(K.fav, {});
+      f[q.uid] = {
+        uid: q.uid,
+        subjectId: q.subjectId || '',
+        subjectName: q.subjectName || '',
+        kid: q.kid || '',
+        kTitle: q.kTitle || '',
+        chapterTitle: q.chapterTitle || '',
+        stem: q.stem || '',
+        type: q.type || 'single',
+        options: q.options || null,
+        answer: q.answer,
+        explain: q.explain || '',
+        source: q.source || '',
+        ts: Date.now()
+      };
+      write(K.fav, f);
+      return f[q.uid];
+    },
+    removeFav: function (uid) {
+      var f = read(K.fav, {});
+      if (f[uid]) { delete f[uid]; write(K.fav, f); }
+    },
+    toggleFav: function (q) {
+      if (WB.store.isFav(q.uid)) { WB.store.removeFav(q.uid); return false; }
+      WB.store.addFav(q);
+      return true;
+    },
+    favList: function () {
+      var f = read(K.fav, {}), out = [];
+      for (var k in f) out.push(f[k]);
+      out.sort(function (a, b) { return (b.ts || 0) - (a.ts || 0); });
+      return out;
+    },
+    favCount: function () { return Object.keys(read(K.fav, {})).length; },
     reset: function () {
       write(K.prog, {}); write(K.wrong, {}); write(K.log, []);
     }
@@ -438,7 +477,8 @@
               ['总览', 'index.html'],
               ['全部科目', 'subjects.html'],
               ['题库总览', 'bank.html'],
-              ['错题本', 'wrongbook.html']
+              ['错题本', 'wrongbook.html'],
+              ['我的收藏', 'favorites.html']
             ]) +
             col('资料', [
               ['资料汇总', 'materials.html'],

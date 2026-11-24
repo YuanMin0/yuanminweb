@@ -177,6 +177,7 @@
     { ico: '◈', t: '继续上次学习', d: last ? (last.name + ' · ' + last.kTitle) : '从任一科目开始你的复习',
       href: last ? WB.link('knowledge.html', { s: last.s, k: last.k }) : 'subjects.html' },
     { ico: '✦', t: '错题本', d: '自动收录做错的题，支持重做与移除', href: 'wrongbook.html' },
+    { ico: '★', t: '我的收藏', d: '刷题时标记的题，考前集中回看', href: 'favorites.html' },
     { ico: '⚡', t: '随机练习', d: '从全部科目随机抽题，检验掌握程度', href: 'quiz.html?mode=random' }
   ];
   document.getElementById('tiles').innerHTML = tiles.map(function (t, i) {

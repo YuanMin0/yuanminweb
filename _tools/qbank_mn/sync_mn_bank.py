@@ -13,7 +13,7 @@ import subprocess
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 MN = os.path.join(ROOT, 'mn')
-SKIP = {'organ3'}
+SKIP = {'organ3', 'xssx'}   # 手工精编页，重跑会丢手写解析
 
 TYPE_LABEL = {
     'single': '单选题', 'multiple': '多选题', 'judge': '判断题', 'fill': '填空题',
@@ -43,7 +43,7 @@ def safe_html(t):
     """保留常见排版标签，转义孤立的 < > &。"""
     if not t:
         return ''
-    s = str(t)
+    s = html.unescape(str(t))   # 先还原实体，避免 &lt; 被二次转义成 &amp;lt;
     # 先把合法标签占位
     tags = []
 

@@ -86,8 +86,13 @@ for h, v in dead[:40]:
 # mn/list.js 一致性
 print('\n--- mn 列表一致性 ---')
 lst = open(os.path.join(ROOT, 'mn', 'list.js'), encoding='utf-8').read()
-ids = re.findall(r'id:\s*[\'"]([a-z0-9\-]+)[\'"]', lst)
+try:
+    obj = json.loads(re.sub(r'^window\.WB_MN\s*=\s*', '', lst.strip()).rstrip(';'))
+except Exception:
+    obj = {}
+ids = set(obj.keys())
 files = {f[:-5] for f in os.listdir(os.path.join(ROOT, 'mn')) if f.endswith('.html')}
+bad = [k for k, v in obj.items() if not os.path.exists(os.path.join(ROOT, v))]
 print('list.js 条目 %d，mn 目录页面 %d' % (len(ids), len(files)))
-print('  list.js 有但无页面:', sorted(set(ids) - files))
-print('  有页面但 list.js 无:', sorted(files - set(ids) - {'index'}))
+print('  路径不存在:', bad)
+print('  有页面但 list.js 无:', sorted(files - ids - {'index'}))

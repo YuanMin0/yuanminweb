@@ -1,0 +1,12 @@
+[
+  {
+    "stem": "DNA 复制需要的条件包括",
+    "add": "NTP（核糖核苷三磷酸）",
+    "note": "DNA 复制的原料是 dNTP（脱氧核糖核苷三磷酸），NTP 是 RNA 合成的原料。"
+  },
+  {
+    "stem": "PCR 反应体系包括",
+    "add": "RNA 聚合酶",
+    "note": "PCR 依赖耐热的 DNA 聚合酶（Taq），不需要 RNA 聚合酶。"
+  }
+]

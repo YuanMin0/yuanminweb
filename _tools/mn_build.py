@@ -15,6 +15,12 @@ SEM_MAP = {'dayi1':'大一上','dayi2':'大一下','daer1':'大二上','daer2':'
 TPL = Path(r'G:\学习资料\大三上\习思想\习思想PPT-莫奈版.html')
 tpl = TPL.read_text(encoding='utf-8')
 CSS = tpl[tpl.find('<style>') + 7: tpl.find('</style>')]
+EXTRA_CSS = '''
+    /* 全宽度防横向溢出：长代码/公式在容器内滚动，不撑破页面 */
+    pre { max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    pre code { overflow-wrap:normal; word-break:normal; }
+'''
+CSS = CSS + EXTRA_CSS
 
 
 def md(t):

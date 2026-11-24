@@ -99,7 +99,7 @@ function renderPaper(p, meta) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#e8e8e8">
 <title>${esc(p.name)} · ${esc(meta.exam)}</title>
-<meta name="description" content="${esc(meta.course)}期末考试（考试5）${esc(p.name)}：选择题 40 道、名词解释 6 道、论述题 3 道，含答案、解析与来源。">
+<meta name="description" content="${esc(meta.course)}${esc(meta.exam)}（${esc(p.name)}）：选择题 40 道、名词解释 6 道、论述题 3 道，含答案、解析与来源。">
 <link rel="icon" href="../icons/icon-192.png">
 <link rel="stylesheet" href="exam.css">
 </head>
@@ -113,9 +113,9 @@ function renderPaper(p, meta) {
 
 <div class="page">
   <header class="exam-head">
-    <div class="org">${esc(meta.course)}</div>
+    <div class="org">期末考试</div>
     <h1>${esc(meta.exam)}<br>${esc(p.name)}</h1>
-    <div class="sub">考试时间：120 分钟　　满分：100 分</div>
+    <div class="sub">考试时间：90 分钟　　满分：100 分</div>
     <div class="meta-line">${esc(meta.format)}</div>
     <div class="candidate"><span>姓名 <i></i></span><span>学号 <i></i></span><span>班级 <i></i></span><span>得分 <i></i></span></div>
   </header>
@@ -154,8 +154,8 @@ function renderIndex() {
     p.sections.forEach(s => sec[s.key] = s.items);
     const nSingle = (sec.single || []).length, nMulti = (sec.multiple || []).length;
     const counts = nMulti
-      ? `单项选择 ${nSingle} 道 · 多项选择 ${nMulti} 道（每题 1 分，共 40 分）`
-      : `单项选择 ${nSingle} 道（每题 1 分，共 40 分）`;
+      ? `单项 ${nSingle} 道 · 多项 ${nMulti} 道`
+      : `单项选择 ${nSingle} 道`;
     const focus = p.id === 1 ? '基础覆盖：生理、病理、病生、药理四大板块的基本概念与常规判断。'
       : p.id === 2 ? '机制与鉴别：侧重发生机制、类型鉴别与常用药物特点。'
         : '综合与病例：侧重跨章节综合、病例分析与用药注意事项。';
@@ -178,15 +178,15 @@ function renderIndex() {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#e8e8e8">
-<title>器官系统 · 考试5 模拟卷（三套）</title>
-<meta name="description" content="器官系统期末考试（考试5）三套模拟卷：选择题 40 道、名词解释 6 道、论述题 3 道，按学时占比配分，含答案、解析与来源。">
+<title>器官系统基础IV模拟卷（三套）</title>
+<meta name="description" content="器官系统基础IV模拟卷（三套）：选择题 40 道、名词解释 6 道、论述题 3 道，按学时占比配分，含答案、解析与来源。">
 <link rel="icon" href="../icons/icon-192.png">
 <link rel="stylesheet" href="exam.css">
 </head>
 <body>
 <div class="index-wrap">
   <header class="index-head">
-    <p style="letter-spacing:.28em;font-size:13px">${esc(EX.meta.course)}</p>
+    <p style="letter-spacing:.28em;font-size:13px">期末考试</p>
     <h1>${esc(EX.meta.exam)}</h1>
     <p>${esc(EX.meta.scope)}</p>
     <p>${esc(EX.meta.format)}</p>

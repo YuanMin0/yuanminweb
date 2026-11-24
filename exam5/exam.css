@@ -1,0 +1,163 @@
+/* ==========================================================================
+   器官系统 · 考试5 模拟卷 · 试卷版式
+   白底黑字，宋体正文、黑体标题；仅答案与解析使用彩色。
+   ========================================================================== */
+:root{
+  --ink:#000;
+  --paper:#fff;
+  --desk:#e8e8e8;
+  --ans:#8b1a1a;
+  --exp:#1b3b5f;
+  --src:#555;
+  --rule:#000;
+  --soft:#f4f4f4;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--desk);
+  color:var(--ink);
+  font-family:"Songti SC","SimSun","Noto Serif SC","Source Han Serif SC",serif;
+  font-size:16px;
+  line-height:1.9;
+}
+a{color:var(--ink)}
+.page{
+  width:210mm;
+  max-width:100%;
+  min-height:297mm;
+  margin:22px auto;
+  padding:18mm 16mm 16mm;
+  background:var(--paper);
+  box-shadow:0 3px 14px rgba(0,0,0,.16);
+}
+
+/* ---------- 卷头 ---------- */
+.exam-head{ text-align:center; border-bottom:2px solid var(--rule); padding-bottom:12px; margin-bottom:6px; }
+.exam-head .org{ font-family:"Heiti SC","SimHei","Microsoft YaHei",sans-serif; font-size:14px; letter-spacing:.28em; margin-bottom:6px; }
+.exam-head h1{
+  font-family:"Heiti SC","SimHei","Microsoft YaHei",sans-serif;
+  font-size:24px; line-height:1.5; margin:0 0 4px; font-weight:700; letter-spacing:.02em;
+}
+.exam-head .sub{ font-size:14px; }
+.exam-head .meta-line{ font-size:13px; margin-top:6px; color:#000; }
+
+.candidate{
+  display:flex; flex-wrap:wrap; gap:6px 26px;
+  font-size:14px; margin:10px 0 0; padding:0;
+}
+.candidate span{ white-space:nowrap; }
+.candidate i{ font-style:normal; display:inline-block; min-width:86px; border-bottom:1px solid var(--rule); }
+
+.notice{
+  border:1px solid var(--rule); padding:10px 14px; margin:14px 0 18px; font-size:13.5px; line-height:1.8;
+}
+.notice b{ font-family:"Heiti SC","SimHei",sans-serif; }
+
+/* ---------- 大题 ---------- */
+.sec{ margin-top:22px; }
+.sec-title{
+  font-family:"Heiti SC","SimHei","Microsoft YaHei",sans-serif;
+  font-size:17px; font-weight:700; margin:0 0 2px;
+}
+.sec-desc{ font-size:13.5px; margin:0 0 10px; }
+
+/* ---------- 题目 ---------- */
+.q{ margin:0 0 16px; break-inside:avoid; page-break-inside:avoid; }
+.q-head{ display:block; }
+.q-no{ font-weight:700; margin-right:4px; }
+.q-tag{
+  display:inline-block; font-family:"Heiti SC","SimHei",sans-serif;
+  font-size:11.5px; line-height:1.5; padding:0 5px; margin-right:6px;
+  border:1px solid #000; color:#000; background:var(--soft); vertical-align:1px;
+  white-space:nowrap;
+}
+.q-stem{ }
+.opts{ display:flex; flex-wrap:wrap; gap:0 20px; margin:4px 0 0; }
+.opt{ flex:1 1 45%; min-width:240px; display:flex; gap:6px; }
+.opt .k{ flex:none; }
+.opt .t{ flex:1; min-width:0; }
+
+/* ---------- 论述题作答区 ---------- */
+.write{ height:104px; margin:6px 0 4px; }
+
+/* ---------- 答案与解析 ---------- */
+.ans{ margin:6px 0 0; }
+.ans > summary{
+  cursor:pointer; list-style:none; display:inline-block;
+  font-family:"Heiti SC","SimHei",sans-serif; font-size:12.5px;
+  border:1px dashed #777; padding:0 8px; color:#333; background:#fafafa;
+}
+.ans > summary::-webkit-details-marker{ display:none; }
+.ans > summary::before{ content:"▸ "; }
+.ans[open] > summary::before{ content:"▾ "; }
+.ans-body{ border-left:3px solid #bbb; margin-top:6px; padding:6px 0 4px 12px; font-size:14.5px; line-height:1.85; }
+.ans-line{ margin:0 0 2px; }
+.ans-line .lbl{ font-family:"Heiti SC","SimHei",sans-serif; }
+.ans-key{ color:var(--ans); font-weight:700; }
+.ans-exp{ color:var(--exp); }
+.ans-src{ color:var(--src); font-size:13px; }
+.ans-brief{ color:var(--ans); }
+.ans-points{ margin:2px 0 0; padding-left:1.4em; }
+.ans-points li{ margin:2px 0; color:var(--exp); }
+.ans-list{ margin:4px 0 0; padding:0; list-style:none; }
+.ans-list li{ margin:0 0 4px; color:var(--ans); }
+
+/* ---------- 工具条 ---------- */
+.tools{
+  position:fixed; right:18px; top:18px; z-index:20;
+  display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;
+  font-family:"Heiti SC","SimHei",sans-serif;
+}
+.tools button, .tools a{
+  font:13px/1.6 "Heiti SC","SimHei","Microsoft YaHei",sans-serif;
+  padding:6px 10px; background:#fff; color:#000; border:1px solid #000;
+  cursor:pointer; text-decoration:none;
+}
+.tools button:hover, .tools a:hover{ background:#000; color:#fff; }
+
+/* ---------- 目录页 ---------- */
+.index-wrap{ width:210mm; max-width:100%; margin:22px auto; }
+.index-head{ text-align:center; padding:26px 10px 18px; background:#fff; box-shadow:0 3px 14px rgba(0,0,0,.16); }
+.index-head h1{ font-family:"Heiti SC","SimHei",sans-serif; font-size:26px; margin:0 0 6px; }
+.index-head p{ margin:2px 0; font-size:14px; }
+.cards{ display:grid; gap:14px; margin-top:16px; }
+.card{
+  display:block; background:#fff; padding:20px 22px; text-decoration:none; color:#000;
+  border:1px solid #000; box-shadow:0 3px 14px rgba(0,0,0,.10); transition:transform .15s ease;
+}
+.card:hover{ transform:translateY(-2px); }
+.card h2{ font-family:"Heiti SC","SimHei",sans-serif; font-size:20px; margin:0 0 4px; }
+.card .tag{ font-size:13px; margin:0 0 8px; }
+.card ul{ margin:0; padding-left:1.2em; font-size:14px; line-height:1.8; }
+.card .go{ margin-top:10px; font-family:"Heiti SC","SimHei",sans-serif; font-size:14px; }
+.foot-note{ text-align:center; font-size:12.5px; color:#333; padding:16px 0 30px; }
+
+/* ---------- 窄屏 ---------- */
+@media (max-width:760px){
+  body{ font-size:15.5px; }
+  .page{ width:100%; min-height:0; margin:0; padding:16px 14px 22px; box-shadow:none; }
+  .index-wrap{ width:100%; margin:0; }
+  .index-head, .card{ box-shadow:none; }
+  .exam-head h1{ font-size:20px; }
+  .opt{ flex:1 1 100%; min-width:0; }
+  .tools{ position:sticky; top:0; right:auto; background:#fff; border-bottom:1px solid #000; padding:6px 8px; justify-content:center; }
+}
+
+/* ---------- 打印 ---------- */
+@media print{
+  @page{ size:A4; margin:16mm 14mm; }
+  body{ background:#fff; font-size:12pt; line-height:1.75; }
+  .page{ width:auto; min-height:0; margin:0; padding:0; box-shadow:none; }
+  .tools{ display:none !important; }
+  .ans > summary{ display:none !important; }
+  .ans:not([open]){ display:none !important; }
+  .ans-body{ border-left:0; padding-left:0; }
+  .opt{ flex:1 1 45%; min-width:0; }
+  .opts{ gap:0 16px; }
+  .q{ margin-bottom:12px; }
+  .write{ height:120px; }
+  .exam-head h1{ font-size:18pt; }
+  a{ text-decoration:none; }
+}

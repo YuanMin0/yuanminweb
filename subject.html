@@ -116,6 +116,9 @@
             ? '<a class="gbtn" href="materials.html?s=' + encodeURIComponent(s.id) + '"><span class="gbtn-ico">📂</span> 资料汇总 ' + mg.files.length + '</a>'
             : '';
         })() +
+        (s.id === 'organ3'
+          ? '<a class="gbtn gbtn-primary" href="exam5/index.html"><span class="gbtn-ico">🎯</span> 考试5 模拟卷 · 3 套</a>'
+          : '') +
       '</div>' +
     '</section>' +
 

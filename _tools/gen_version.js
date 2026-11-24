@@ -14,7 +14,7 @@ const ROOT_FILES = ['404.html', 'about.html', 'bank.html', 'download.html', 'ind
   'knowledge.html', 'login.html', 'materials.html', 'offline.html', 'quiz.html', 'subject.html',
   'subjects.html', 'wrongbook.html', 'drill.html', 'huanjingweisheng.html', 'huanjingweisheng-quiz.html',
   'laoweisheng.html', 'manifest.webmanifest', 'robots.txt', 'sw.js'];
-const DIRS = ['css', 'js', 'data', 'doc', 'reader', 'mn', 'icons', 'img', 'files'];
+const DIRS = ['css', 'js', 'data', 'doc', 'reader', 'mn', 'icons', 'img', 'files', 'exam5'];
 const EXT = /\.(html|css|js|json|webmanifest|png|jpg|jpeg|webp|svg|ico|woff2?|txt|pdf)$/i;
 const SKIP_FILE = /(^|\/)(_tmp_|audit_|probe)/;
 

@@ -795,6 +795,43 @@
     }
     return h;
   };
+  /* ---------------- 题目来源分类 ----------------
+     刷题页按「来源」筛选：只来自 PPT 的一组、只来自真题的一组……
+     规则集中在 core，新增题目无需改数据，按 source 文本自动归类。 */
+  WB.SRC_TYPES = [
+    { id: 'ppt', name: 'PPT课件' },
+    { id: 'exam', name: '往年真题' },
+    { id: 'bank', name: '习题题库' },
+    { id: 'textbook', name: '教材' },
+    { id: 'notes', name: '复习资料' },
+    { id: 'mix', name: '综合来源' },
+    { id: 'other', name: '其他' }
+  ];
+  WB.srcType = function (q) {
+    var s = String((q && q.source) || '');
+    if (!s) return 'other';
+    var isExam = /真题|往年|期末|考过|回忆版|在线考试|考研/.test(s);
+    var isPpt = /PPT|课件|幻灯片|授课/.test(s);
+    var isBank = /习题集|题库|在线自测|学习指导|练习册/.test(s);
+    var isBook = /教材|人卫|人民卫生/.test(s);
+    var isNotes = /复习|讲义|重点|名解|知识点|笔记|总结|要点|整理/.test(s);
+    if (isExam) return 'exam';
+    /* 同时命中两类以上（如「复习要点 + 课程 PPT」）归入综合来源，
+       保证「PPT课件」这一组里全部是纯课件题。 */
+    var kinds = (isPpt ? 1 : 0) + (isBank ? 1 : 0) + (isBook ? 1 : 0) + (isNotes ? 1 : 0);
+    if (kinds >= 2) return 'mix';
+    if (isPpt) return 'ppt';
+    if (isBank) return 'bank';
+    if (isBook) return 'textbook';
+    if (isNotes) return 'notes';
+    if (/^第\s*\d+\s*章/.test(s)) return 'notes';
+    return 'other';
+  };
+  WB.srcName = function (id) {
+    for (var i = 0; i < WB.SRC_TYPES.length; i++) if (WB.SRC_TYPES[i].id === id) return WB.SRC_TYPES[i].name;
+    return '其他';
+  };
+
   /* perm 可选：显示位次 → 原始下标 的映射数组；用于选项乱序后仍输出正确的字母标号 */
   function letterOf(i, perm) {
     var d = perm ? perm.indexOf(i) : i;

@@ -102,7 +102,8 @@ const evalArg = process.argv.find(a => a.startsWith('--eval='));
   });
 
   const t0 = Date.now();
-  await page.send('Page.navigate', { url: BASE + arg });
+  const target = /^https?:/.test(arg) ? arg : BASE + arg;
+  await page.send('Page.navigate', { url: target });
   // 等 load
   await new Promise(r => setTimeout(r, extraWait));
 

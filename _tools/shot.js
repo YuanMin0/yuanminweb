@@ -24,7 +24,8 @@ const openAll = process.argv.includes('--open');
   await pg.send('Network.setCacheDisabled', { cacheDisabled: true });
   if (mobile) await pg.send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 2, mobile: true });
   else await pg.send('Emulation.setDeviceMetricsOverride', { width: 1200, height: 900, deviceScaleFactor: 1, mobile: false });
-  await pg.send('Page.navigate', { url: BASE + arg });
+  const target = /^https?:/.test(arg) ? arg : BASE + arg;
+  await pg.send('Page.navigate', { url: target });
   await new Promise(r => setTimeout(r, 1400));
   const atArg = process.argv.find(a => a.startsWith('--at='));
   if (atArg) {

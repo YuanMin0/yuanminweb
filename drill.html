@@ -398,7 +398,7 @@ body.mode-pick .wrap{padding-bottom:40px}
   </div>
 
   <div class="tools">
-    <button class="tool" id="pickBtn" type="button">选题</button>
+    <button class="tool" id="pickBtn" type="button" aria-expanded="false" aria-controls="drawer">选题</button>
     <button class="tool" id="orderBtn" type="button">顺序出题</button>
     <button class="tool" id="wrongBtn" type="button">只刷错题<span class="badge" id="wrongCount">0</span></button>
     <button class="tool" id="resetBtn" type="button">重置进度</button>
@@ -786,7 +786,7 @@ body.mode-pick .wrap{padding-bottom:40px}
     if (subjective) {
       body = '<p class="subj-hint">' + (revealed ? '对照参考答案，自评是否掌握：' : '先在心里默答，再展开参考答案对照。') + '</p>';
     } else if (q.type === 'fill') {
-      body = '<div class="fillwrap"><input id="fillInput" type="text" autocomplete="off" ' +
+      body = '<div class="fillwrap"><input id="fillInput" type="text" aria-label="填空作答" autocomplete="off" ' +
         'placeholder="输入答案，多个答案用 / 分隔" value="' + (my == null ? '' : esc4(my)) + '"' +
         (checked ? ' disabled' : '') + '></div>';
     } else if (q.type === 'judge') {
@@ -1013,14 +1013,19 @@ body.mode-pick .wrap{padding-bottom:40px}
   var chbar = document.getElementById('chbar');
   var gridWrap = document.getElementById('gridWrap');
 
+  var pickBtnEl = document.getElementById('pickBtn');
   function openDrawer() {
     renderDrawer();
     drawer.classList.add('on'); mask.classList.add('on');
     drawer.setAttribute('aria-hidden', 'false');
+    if (pickBtnEl) pickBtnEl.setAttribute('aria-expanded', 'true');
+    var c = document.getElementById('drClose');
+    if (c) c.focus();
   }
   function closeDrawer() {
     drawer.classList.remove('on'); mask.classList.remove('on');
     drawer.setAttribute('aria-hidden', 'true');
+    if (pickBtnEl) { pickBtnEl.setAttribute('aria-expanded', 'false'); pickBtnEl.focus(); }
   }
   document.getElementById('pickBtn').addEventListener('click', openDrawer);
   document.getElementById('drClose').addEventListener('click', closeDrawer);

@@ -91,9 +91,11 @@ main{min-width:0}
   font:700 11.5px var(--font-head);letter-spacing:.05em}
 .qcard.hot .qid{background:var(--redL);color:var(--red)}
 .qhead h3{flex:1 1 320px;min-width:0}
-.star{margin-right:6px;color:var(--gold);letter-spacing:1px;font-size:.92em}
-.star.hot{color:var(--red)}
-.star.low{color:#B9AE97}
+.star{display:inline-block;margin-right:7px;padding:1px 7px 2px;border-radius:5px;
+  background:var(--goldL);border:1px solid #E3C48C;color:#8A5B18;
+  font:700 11px/1.5 var(--font-head);letter-spacing:1.5px;vertical-align:2px}
+.star.hot{background:var(--red);border-color:#A8413A;color:#FFF4EE}
+.star.low{background:#F2EEE3;border-color:#DCD3BE;color:#8A8375}
 .tipbox{margin-top:12px;padding:11px 14px;border-radius:9px;background:#F1F5E9;
   border-left:4px solid var(--green);font:14.5px/1.75 var(--font-body);color:#43502F}
 .tipbox b{color:var(--red);font-family:var(--font-head);margin-right:2px}
@@ -178,7 +180,7 @@ main{min-width:0}
   <p class="side-title">分类目录</p>
   <input class="side-search" id="sideQ" type="search" placeholder="搜索题目 / 关键词…" aria-label="搜索题目">
   <p id="searchHint" style="margin:-4px 0 8px;font:12px var(--font-kai);color:var(--sub)"></p>
-  <a class="nav-cat" href="#cat-physio"><span>一、生理 · 泌尿</span><em>23</em></a><a class="nav-cat" href="#cat-patho"><span>二、病生 · 水盐酸碱 / 休克 / 应激 / 肾衰</span><em>31</em></a><a class="nav-cat" href="#cat-path"><span>三、病理 · 泌尿系统疾病</span><em>14</em></a><a class="nav-cat" href="#cat-pharm"><span>四、药理 · 利尿药与抗菌药</span><em>18</em></a>
+  <a class="nav-cat" href="#cat-physio"><span>一、生理 · 泌尿</span><em>23</em></a><a class="nav-cat" href="#cat-patho"><span>二、病生 · 水盐酸碱与肾衰</span><em>31</em></a><a class="nav-cat" href="#cat-path"><span>三、病理 · 泌尿系统疾病</span><em>14</em></a><a class="nav-cat" href="#cat-pharm"><span>四、药理 · 利尿药与抗菌药</span><em>18</em></a>
   <a class="nav-hot" href="#hot">★ 最常考（≥4 次）· 10 条</a>
   <div class="nav-legend">
     <div><i style="background:#C0554A"></i>考过 4 次及以上（标红）</div>

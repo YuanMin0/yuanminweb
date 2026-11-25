@@ -100,7 +100,7 @@ for cat in data:
     items = cat['items']
     all_items.extend(items)
     nav.append('<a class="nav-cat" href="#cat-%s"><span>%s</span><em>%d</em></a>'
-               % (cat['id'], cat['name'], len(items)))
+               % (cat['id'], cat.get('short') or cat['name'], len(items)))
     cards = '\n'.join(render_item(it, cat['id']) for it in items)
     sections.append('''<section class="cat" id="cat-%s">
   <header class="cat-head">
@@ -205,9 +205,11 @@ main{min-width:0}
   font:700 11.5px var(--font-head);letter-spacing:.05em}
 .qcard.hot .qid{background:var(--redL);color:var(--red)}
 .qhead h3{flex:1 1 320px;min-width:0}
-.star{margin-right:6px;color:var(--gold);letter-spacing:1px;font-size:.92em}
-.star.hot{color:var(--red)}
-.star.low{color:#B9AE97}
+.star{display:inline-block;margin-right:7px;padding:1px 7px 2px;border-radius:5px;
+  background:var(--goldL);border:1px solid #E3C48C;color:#8A5B18;
+  font:700 11px/1.5 var(--font-head);letter-spacing:1.5px;vertical-align:2px}
+.star.hot{background:var(--red);border-color:#A8413A;color:#FFF4EE}
+.star.low{background:#F2EEE3;border-color:#DCD3BE;color:#8A8375}
 .tipbox{margin-top:12px;padding:11px 14px;border-radius:9px;background:#F1F5E9;
   border-left:4px solid var(--green);font:14.5px/1.75 var(--font-body);color:#43502F}
 .tipbox b{color:var(--red);font-family:var(--font-head);margin-right:2px}

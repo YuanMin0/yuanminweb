@@ -331,7 +331,7 @@ html_doc = '''<!doctype html>
     <a class="hero-cta" href="mn/organ3.html">📖 考前速记<em>知识点版</em></a>
     <a class="hero-cta ghost" href="drill.html?s=organ3">✎ 刷题<em>344 题</em></a>
     <a class="hero-cta ghost" href="exam5/index.html">🎯 模拟卷<em>3 套</em></a>
-    <a class="hero-cta ghost" href="pdf/organ3-dati.pdf" download="器官系统基础IV-考前大题速背.pdf" title="导出本页为 PDF（A4，含题干、答案、考频、重点提示与示意图）">⇩ 导出本页<em>PDF · 48 页</em></a>
+    <a class="hero-cta ghost" href="pdf/organ3-dati.pdf" download="器官系统基础IV-考前大题速背.pdf" title="导出本页为 PDF（A4，含题干、答案、考频、重点提示与示意图）">⇩ 导出大题速背<em>PDF · 48 页</em></a>
     <a class="hero-cta ghost" href="pdf/organ3.pdf" download>⇩ 速记 PDF<em>知识点版</em></a>
   </div>
 </div></header>

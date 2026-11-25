@@ -23,8 +23,12 @@ const mobile = process.argv.includes('--mobile');
   await pg.send('Page.navigate', { url: BASE + p });
   await new Promise(r => setTimeout(r, 1600));
   if (sel) {
-    await pg.send('Runtime.evaluate', { expression: `(function(){var e=document.querySelector(${JSON.stringify(sel)}); if(e){e.click(); e.scrollIntoView({block:'center'});} return !!e;})()`, returnByValue: true });
-    await new Promise(r => setTimeout(r, 700));
+    const scrollExpr = `(function(){var e=document.querySelector(${JSON.stringify(sel)}); if(!e) return 'NOTFOUND'; var r=e.getBoundingClientRect(); window.scrollTo(0, window.scrollY + r.top - 120); return 'OK '+Math.round(r.top);})()`;
+    for (let k = 0; k < 3; k++) {
+      const r0 = await pg.send('Runtime.evaluate', { expression: scrollExpr, returnByValue: true });
+      if (k === 0) console.log('  target:', r0.result.value);
+      await new Promise(r => setTimeout(r, 500));
+    }
   }
   const { data } = await pg.send('Page.captureScreenshot', { format: 'png' });
   fs.writeFileSync(out, Buffer.from(data, 'base64'));

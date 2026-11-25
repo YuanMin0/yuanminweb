@@ -19,6 +19,11 @@ EXTRA_CSS = '''
     /* 全宽度防横向溢出：长代码/公式在容器内滚动，不撑破页面 */
     pre { max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
     pre code { overflow-wrap:normal; word-break:normal; }
+    /* 知识块内的小标题（type=h） */
+    .kc-h { margin:22px 0 10px; color:var(--navy); font-family:var(--font-heading); line-height:1.45; }
+    h4.kc-h { font-size:1.05em; }
+    h5.kc-h { font-size:1em; }
+    @media print { .kc-h { break-after:avoid; page-break-after:avoid; } }
 '''
 CSS = CSS + EXTRA_CSS
 
@@ -35,13 +40,16 @@ def render_content(items):
         ty = it.get('type')
         if ty == 'p':
             out.append('<p>%s</p>' % md(it.get('text', '')))
+        elif ty == 'h':
+            lv = min(5, max(3, int(it.get('level') or 3)))
+            out.append('<h%d class="kc-h">%s</h%d>' % (lv, md(it.get('text', '')), lv))
         elif ty == 'table':
             head = ''.join('<th>%s</th>' % md(str(h)) for h in it.get('head', []))
             rows = ''.join('<tr>' + ''.join('<td>%s</td>' % md(str(c)) for c in r) + '</tr>'
                            for r in it.get('rows', []))
             out.append('<div class="table-wrap"><table><thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>' % (head, rows))
-        elif ty in ('ol', 'ul'):
-            tag = ty
+        elif ty in ('ol', 'ul', 'list'):
+            tag = 'ol' if ty == 'ol' else 'ul'
             out.append('<%s>%s</%s>' % (tag, ''.join('<li>%s</li>' % md(str(x)) for x in it.get('items', [])), tag))
         elif ty in ('tip', 'quote', 'note'):
             out.append('<blockquote>%s</blockquote>' % md(it.get('text', '')))
@@ -102,16 +110,22 @@ def parse(p):
         return None
 
 
-ok, skip = [], []
-for p in sorted(DATA.glob('*.js')):
-    if p.name.startswith(('exam-', '_', 'quiz-', 'cdn', 'desktop', 'changelog')):
-        continue
-    sub = parse(p)
-    if not sub or not sub.get('chapters'):
-        skip.append(p.name)
-        continue
-    (OUT / (sub['id'] + '.html')).write_text(build(sub), encoding='utf-8')
-    ok.append(sub['id'])
+if __name__ == '__main__':
+    import sys
+    ONLY = set(sys.argv[1:])   # 指定科目 id 时只重建这些页，避免覆盖手工精编页与已注入题库
 
-print('生成 %d 个：%s' % (len(ok), ', '.join(ok[:12]) + (' …' if len(ok) > 12 else '')))
-print('跳过 %d 个：%s' % (len(skip), ', '.join(skip[:8])))
+    ok, skip = [], []
+    for p in sorted(DATA.glob('*.js')):
+        if p.name.startswith(('exam-', '_', 'quiz-', 'cdn', 'desktop', 'changelog')):
+            continue
+        sub = parse(p)
+        if not sub or not sub.get('chapters'):
+            skip.append(p.name)
+            continue
+        if ONLY and sub['id'] not in ONLY:
+            continue
+        (OUT / (sub['id'] + '.html')).write_text(build(sub), encoding='utf-8')
+        ok.append(sub['id'])
+
+    print('生成 %d 个：%s' % (len(ok), ', '.join(ok[:12]) + (' …' if len(ok) > 12 else '')))
+    print('跳过 %d 个：%s' % (len(skip), ', '.join(skip[:8])))

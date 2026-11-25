@@ -195,8 +195,12 @@ def build_section(name, chapters):
 
 
 def main():
+    import sys
+    only = set(a for a in sys.argv[1:] if not a.startswith('-'))
     ids = sorted(os.path.basename(p)[:-5] for p in glob.glob(os.path.join(MN, '*.html'))
                  if not p.endswith('index.html'))
+    if only:
+        ids = [i for i in ids if i in only]
     rows = []
     for sid in ids:
         if sid in SKIP:

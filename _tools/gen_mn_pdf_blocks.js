@@ -120,7 +120,7 @@ const CSS = `
       printBackground: true, paperWidth: 8.27, paperHeight: 11.69,
       marginTop: 0.45, marginBottom: 0.45, marginLeft: 0.45, marginRight: 0.45
     };
-    if (i === 23) {
+    if (ID === 'organ3' && i === 23) {
       /* 该块宽表 + 6 张图，整块打印会卡死：先打印文字/表格，再打印图片 */
       await pg.send('Runtime.evaluate', { expression: `(function(){var st=document.createElement('style');st.textContent='figure{display:none!important}.table-wrap{display:none!important}';document.head.appendChild(st);})()` });
       let r1 = await pg.send('Page.printToPDF', pdfOpts);

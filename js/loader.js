@@ -16,7 +16,7 @@
   /* 有 data/<id>.js 的科目；exam 表示另有 data/exam-<id>.js */
   var HAS_DATA = {
     bigdata: 1, cardiology: 1, dermatology: 1, diagnostics: 1, digestive: 1,
-    endocrinology: 1, ent: 1, ethics: 1, fenzi: 1, hangwei: 1, hangxin: 1,
+    endocrinology: 1, ent: 1, ertong: 1, ethics: 1, fenzi: 1, hangwei: 1, hangxin: 1,
     'health-stats': 1, hematology: 1, infectious: 1, 'internal-nursing': 1,
     jishengchong: 1, laoweisheng: 1, linxin: 1, mianyi: 1, neurology: 1,
     ophthalmology: 1, organ3: 1, pathology: 1, pathophys: 1, pediatrics: 1,

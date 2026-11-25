@@ -43,7 +43,8 @@ const CSS = `
   .sidebar,.mobile-nav,.footer,.hdr,.top,.tools,.progress,.dock,.tabbar,.menu-btn,
   .nav-question-bank,.question-bank,.hero-ctas,.hero-cta,.qb-exam,
   body::before,body::after,.grain,.scroll-progress,.to-top,.qr-zoom,
-  .entry-gate,.entry-canvas,.entry-bloom,.entry-shine,.skip-link{display:none!important}
+  .entry-gate,.entry-canvas,.entry-bloom,.entry-shine,.skip-link,
+  .ring-bg,.ring-fg,.entry-halo,.entry-btn-ring{display:none!important}
   .layout{display:block!important;width:100%!important;margin:0!important;padding:0!important}
   main{width:100%!important;margin:0!important;padding:0!important;border:0!important;box-shadow:none!important}
   body{background:#fff!important;color:#000!important;font-size:10.5pt!important}
@@ -91,7 +92,7 @@ const CSS = `
         document.querySelectorAll('.reveal').forEach(e=>e.classList.add('visible'));
         document.querySelectorAll('details').forEach(d=>d.open=true);
         document.querySelectorAll('.chapter').forEach((c,j)=>{ if(j!==${i}) c.remove(); });
-        if(${i}>0){ var h=document.querySelector('.hero'); if(h) h.remove(); }
+        if(${i}>0){ var h=document.querySelector('.hero'); if(h) h.remove(); document.querySelectorAll('.intro').forEach(function(e){e.remove()}); }
         var st=document.createElement('style'); st.textContent=${JSON.stringify(CSS)}; document.head.appendChild(st);
       })()`
     });

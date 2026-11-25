@@ -52,3 +52,6 @@ pnpm-debug.log*
 # ---- 本地临时/备份 ----
 _bak/
 _tmp/
+
+# PDF 分块临时文件
+pdf/_parts/

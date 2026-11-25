@@ -44,25 +44,31 @@ def wrap(body, w=720, h=320, title=''):
             ) % (w, h, title, defs, w, h, C['paper'], body)
 
 
-# ---------------- 1. 肾单位与利尿药靶点 ----------------
+# ---------------- 1. 两类肾单位 ----------------
 SVG_NEPHRON = wrap(
-    _box(20, 40, 300, 230, C['blueL'], C['blue'], 12) +
-    _t(170, 66, '皮质肾单位（85%～90%）', 14, C['blueD'], 'middle', '700') +
-    '<circle cx="110" cy="115" r="26" fill="%s" stroke="%s" stroke-width="2"/>' % (C['paper'], C['red']) +
-    _t(110, 120, '肾小体', 11, C['red'], 'middle') +
-    '<path d="M110 141 L110 175 Q110 205 150 215 L200 225" fill="none" stroke="%s" stroke-width="2.4"/>' % C['blueD'] +
-    _t(150, 205, '髓袢短', 12, C['sub']) +
-    _t(40, 250, '入球＞出球，管周毛细血管胶渗压高', 11, C['sub']) +
-    _box(400, 40, 300, 230, C['violetL'], C['violet'], 12) +
-    _t(550, 66, '近髓肾单位（10%～15%）', 14, C['violet'], 'middle', '700') +
-    '<circle cx="470" cy="105" r="24" fill="%s" stroke="%s" stroke-width="2"/>' % (C['paper'], C['red']) +
-    _t(470, 110, '肾小体', 11, C['red'], 'middle') +
-    '<path d="M470 129 L470 160 Q470 250 520 262 L560 272" fill="none" stroke="%s" stroke-width="2.4"/>' % C['violet'] +
-    '<path d="M478 160 Q500 240 545 250" fill="none" stroke="%s" stroke-width="2" stroke-dasharray="4 3"/>' % C['blue'] +
-    _t(500, 200, '髓袢长', 12, C['sub']) +
-    _t(430, 250, 'U 形直小血管参与髓质高渗', 11, C['sub']) +
-    _t(360, 300, '两类肾单位：数量、髓袢长度、入/出球口径、出球后血管与功能均不同', 12, C['sub'], 'middle'),
-    720, 320, '两类肾单位对比')
+    # 左：皮质肾单位
+    _box(20, 40, 310, 240, C['blueL'], C['blue'], 12) +
+    _t(175, 66, '皮质肾单位（85%～90%）', 13.5, C['blueD'], 'middle', '700') +
+    '<circle cx="110" cy="112" r="24" fill="%s" stroke="%s" stroke-width="2"/>' % (C['paper'], C['red']) +
+    _t(110, 117, '肾小体', 11, C['red'], 'middle') +
+    '<path d="M110 136 L110 182 Q110 216 150 228 L196 240" fill="none" stroke="%s" stroke-width="2.6" stroke-linecap="round"/>' % C['blueD'] +
+    _t(146, 190, '髓袢短', 12, C['blueD'], 'start', '700') +
+    _t(40, 262, '入球＞出球 · 管周毛细血管胶渗压高', 11, C['sub']) +
+    # 右：近髓肾单位
+    _box(390, 40, 310, 240, C['violetL'], C['violet'], 12) +
+    _t(545, 66, '近髓肾单位（10%～15%）', 13.5, C['violet'], 'middle', '700') +
+    '<circle cx="470" cy="112" r="24" fill="%s" stroke="%s" stroke-width="2"/>' % (C['paper'], C['red']) +
+    _t(470, 117, '肾小体', 11, C['red'], 'middle') +
+    # 髓袢（实线，长）
+    '<path d="M470 136 L470 182 Q470 240 505 254 L540 264" fill="none" stroke="%s" stroke-width="2.6" stroke-linecap="round"/>' % C['violet'] +
+    # 直小血管（虚线，与髓袢并行）
+    '<path d="M492 142 L492 186 Q492 236 522 248 L552 258" fill="none" stroke="%s" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round"/>' % C['blue'] +
+    _t(498, 188, '髓袢长', 12, C['violet'], 'start', '700') +
+    _t(600, 200, '直小血管', 11.5, C['blueD'], 'start', '700') +
+    '<line x1="596" y1="205" x2="560" y2="240" stroke="%s" stroke-width="1.3" stroke-dasharray="3 3"/>' % C['blue'] +
+    # 底部总结
+    _t(360, 312, '两类肾单位的数量、髓袢长度、入/出球口径、出球后血管与功能均不同', 12, C['sub'], 'middle'),
+    720, 330, '两类肾单位的结构对比')
 
 # ---------------- 2. 滤过膜三层 ----------------
 SVG_FILTRATION = wrap(

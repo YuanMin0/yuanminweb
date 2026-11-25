@@ -46,9 +46,24 @@ def freq_badge(n, note):
         return '<span class="freq low" title="%s">考过 1 次</span>' % html.escape(note)
     return '<span class="freq none" title="%s">未标次数</span>' % html.escape(note)
 
+def stars(n):
+    if n >= 5:
+        return '<span class="star hot" title="考过 %d 次 · 最高频">★★★</span>' % n
+    if n == 4:
+        return '<span class="star hot" title="考过 %d 次 · 高频">★★</span>' % n
+    if n >= 2:
+        return '<span class="star" title="考过 %d 次">★</span>' % n
+    if n == 1:
+        return '<span class="star low" title="考过 1 次">☆</span>'
+    return ''
+
+
 def render_item(it, ci):
     hot = ' hot' if it['freq'] >= 4 else ''
     ans = ''.join('<li>%s</li>' % md(x) for x in it['answer'])
+    tip = ''
+    if it.get('tip'):
+        tip = '<div class="tipbox"><b>★ 重点提示：</b>%s</div>' % md(it['tip'])
     fig = ''
     if it.get('figure') and it['figure'] in FIGURES:
         svg = FIGURES[it['figure']]
@@ -65,6 +80,7 @@ def render_item(it, ci):
   </header>
   <ol class="ans">%s</ol>
   %s
+  %s
   <div class="qfoot">
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-%s"><span class="bulb">💡</span>通俗解释</button>
     <span class="src">%s</span>
@@ -73,8 +89,8 @@ def render_item(it, ci):
 </article>''' % (
         hot, it['id'], ci, it['freq'], it['type'],
         html.escape(it['title'] + ' ' + ' '.join(it['answer']))[:400],
-        it['id'].upper(), md(it['title']), it['type'], freq_badge(it['freq'], it['freqNote']),
-        ans, fig, it['id'], md(it['source']), it['id'], md(it['explain']))
+        it['id'].upper(), stars(it['freq']) + md(it['title']), it['type'], freq_badge(it['freq'], it['freqNote']),
+        ans, tip, fig, it['id'], md(it['source']), it['id'], md(it['explain']))
 
 sections = []
 nav = []
@@ -188,6 +204,12 @@ main{min-width:0}
   font:700 11.5px var(--font-head);letter-spacing:.05em}
 .qcard.hot .qid{background:var(--redL);color:var(--red)}
 .qhead h3{flex:1 1 320px;min-width:0}
+.star{margin-right:6px;color:var(--gold);letter-spacing:1px;font-size:.92em}
+.star.hot{color:var(--red)}
+.star.low{color:#B9AE97}
+.tipbox{margin-top:12px;padding:11px 14px;border-radius:9px;background:#F1F5E9;
+  border-left:4px solid var(--green);font:14.5px/1.75 var(--font-body);color:#43502F}
+.tipbox b{color:var(--red);font-family:var(--font-head);margin-right:2px}
 .qtype{flex:none;padding:2px 8px;border-radius:999px;border:1px solid var(--line);
   color:var(--sub);font:12px var(--font-kai)}
 .freq{flex:none;padding:2px 9px;border-radius:999px;font:700 11.5px var(--font-head);white-space:nowrap}
@@ -309,7 +331,8 @@ html_doc = '''<!doctype html>
     <a class="hero-cta" href="mn/organ3.html">📖 考前速记<em>知识点版</em></a>
     <a class="hero-cta ghost" href="drill.html?s=organ3">✎ 刷题<em>344 题</em></a>
     <a class="hero-cta ghost" href="exam5/index.html">🎯 模拟卷<em>3 套</em></a>
-    <a class="hero-cta ghost" href="pdf/organ3.pdf" download>⇩ 导出 PDF<em>速记页</em></a>
+    <a class="hero-cta ghost" href="pdf/organ3-dati.pdf" download="器官系统基础IV-考前大题速背.pdf" title="导出本页为 PDF（A4，含题干、答案、考频、重点提示与示意图）">⇩ 导出本页<em>PDF · 48 页</em></a>
+    <a class="hero-cta ghost" href="pdf/organ3.pdf" download>⇩ 速记 PDF<em>知识点版</em></a>
   </div>
 </div></header>
 

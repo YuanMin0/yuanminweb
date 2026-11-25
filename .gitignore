@@ -55,3 +55,4 @@ _tmp/
 
 # PDF 分块临时文件
 pdf/_parts/
+_tools/child_deep/png/

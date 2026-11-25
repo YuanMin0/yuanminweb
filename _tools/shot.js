@@ -27,11 +27,17 @@ const openAll = process.argv.includes('--open');
   const target = /^https?:/.test(arg) ? arg : BASE + arg;
   await pg.send('Page.navigate', { url: target });
   await new Promise(r => setTimeout(r, 1400));
+  /* 强制显示 reveal 元素，避免滚动到目标区块后内容仍是透明 */
+  await pg.send('Runtime.evaluate', { expression: "(function(){document.querySelectorAll('.reveal').forEach(function(e){e.classList.add('visible');});})()" });
   const atArg = process.argv.find(a => a.startsWith('--at='));
   if (atArg) {
     const sel = atArg.slice('--at='.length);
-    await pg.send('Runtime.evaluate', { expression: `(function(){var e=document.querySelector(${JSON.stringify(sel)}); if(e) e.scrollIntoView({block:'start'});})()` });
-    await new Promise(r => setTimeout(r, 400));
+    const scrollExpr = `(function(){var e=document.querySelector(${JSON.stringify(sel)}); if(e){var y=e.getBoundingClientRect().top+window.scrollY-12;window.scrollTo({top:y,behavior:'instant'});}})()`;
+    await pg.send('Runtime.evaluate', { expression: scrollExpr });
+    /* 懒加载图片会改变布局，等加载完再定位一次 */
+    await new Promise(r => setTimeout(r, 900));
+    await pg.send('Runtime.evaluate', { expression: scrollExpr });
+    await new Promise(r => setTimeout(r, 500));
   }
   if (openAll) {
     await pg.send('Runtime.evaluate', { expression: "document.querySelectorAll('details.ans').forEach(function(d){d.open=true})" });

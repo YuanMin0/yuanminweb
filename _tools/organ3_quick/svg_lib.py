@@ -390,6 +390,32 @@ SVG_DIUR = wrap(
     _t(360, 322, '作用部位越靠后 → 回收钠越少 → 利尿越弱', 12, C['blueD'], 'middle', '700'),
     720, 348, '利尿药的作用部位与强度')
 
+# ---------------- 16. 肾病综合征五型对比 ----------------
+ROWS = [
+    ('微小病变', '光镜基本正常', '足突弥漫融合', '儿童最常见 · 激素敏感', C['green'], C['greenL']),
+    ('膜性肾病', '基底膜增厚、钉突', '上皮下沉积 · IgG/C3', '成人最常见 · 易血栓', C['gold'], C['goldL']),
+    ('FSGS', '局灶节段性硬化', '足突融合', '激素抵抗 · 预后较差', C['red'], C['redL']),
+    ('膜增生性', '系膜插入、双轨征', 'C3 沉积为主', '常伴低补体血症', C['violet'], C['violetL']),
+    ('系膜增生性', '系膜细胞与基质增生', '系膜区沉积', '我国常见 · 可伴 IgA', C['blue'], C['blueL']),
+]
+_body = [
+    _t(30, 34, '类型', 11.5, C['sub'], 'start', '700'),
+    _t(180, 34, '光镜特点', 11.5, C['sub'], 'start', '700'),
+    _t(370, 34, '电镜 / 免疫', 11.5, C['sub'], 'start', '700'),
+    _t(545, 34, '临床要点', 11.5, C['sub'], 'start', '700'),
+    '<line x1="26" y1="44" x2="694" y2="44" stroke="%s" stroke-width="1"/>' % C['line'],
+]
+_y = 52
+for name, lm, em, cl, col, coll in ROWS:
+    _body.append('<rect x="26" y="%d" width="668" height="44" rx="6" fill="%s" stroke="%s" stroke-width="1"/>' % (_y, coll, col))
+    _body.append(_t(38, _y + 27, name, 12, col, 'start', '700'))
+    _body.append(_t(180, _y + 27, lm, 11, C['ink']))
+    _body.append(_t(370, _y + 27, em, 11, C['ink']))
+    _body.append(_t(545, _y + 27, cl, 10.5, C['sub']))
+    _y += 50
+_body.append(_t(360, 322, '肾活检是诊断金标准：光镜 + 免疫荧光 + 电镜三者结合定型', 11.5, C['sub'], 'middle'))
+SVG_NS_TYPES = wrap(''.join(_body), 720, 336, '肾病综合征五大病理类型对比')
+
 FIGURES = {
     'svg-nephron': SVG_NEPHRON,
     'svg-filtration': SVG_FILTRATION,
@@ -406,4 +432,5 @@ FIGURES = {
     'svg-arf': SVG_ARF,
     'svg-dic': SVG_DIC,
     'svg-diuretics': SVG_DIUR,
+    'svg-ns-types': SVG_NS_TYPES,
 }

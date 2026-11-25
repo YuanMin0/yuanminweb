@@ -22,6 +22,7 @@ FIG_TITLES = {
     'svg-arf': '急性肾衰少尿期「一低四高」',
     'svg-dic': 'DIC 的发生过程与四大表现',
     'svg-diuretics': '利尿药的作用部位与强度',
+    'svg-ns-types': '肾病综合征五大病理类型对比',
 }
 
 D = Path(__file__).parent

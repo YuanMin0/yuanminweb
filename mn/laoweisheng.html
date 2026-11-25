@@ -1394,22 +1394,21 @@ main p, main li, main td, main th, main dd, main dt,
   @media (max-width:600px){.hero-cta{margin-top:12px;padding:9px 16px;font-size:14px;}.hero-cta em{font-size:12px;}}
   @media (prefers-reduced-motion:reduce){.hero-cta{transition:none;}}
 </style>
-<style>
-.pdf-export{position:fixed;right:18px;bottom:78px;z-index:9998;display:inline-flex;align-items:center;gap:6px;
-  padding:10px 15px;border-radius:999px;background:#3E5F7D;color:#fff!important;text-decoration:none!important;
-  font:700 13px/1 -apple-system,'PingFang SC','Microsoft YaHei',sans-serif;letter-spacing:.02em;
-  box-shadow:0 8px 22px rgba(20,35,55,.28);border:1px solid rgba(255,255,255,.18);transition:transform .15s ease,box-shadow .15s ease}
-.pdf-export:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(20,35,55,.34)}
-.pdf-export:active{transform:translateY(0)}
-@media (max-width:600px){.pdf-export{right:12px;bottom:84px;padding:9px 13px;font-size:12px}}
-@media print{.pdf-export{display:none!important}}
+<style id="pdf-cta-css">
+.hero-ctas{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-top:16px;
+  grid-column:1;grid-row:4;justify-self:start;max-width:100%}
+.hero-ctas .hero-cta{margin-top:0}
+.hero-cta-pdf{background:linear-gradient(180deg,#FFFFFF,#E4EDF7)!important;color:#1E3A5F!important;border-color:#FFFFFF!important}
+.hero-cta-pdf em{color:#4A6684!important}
+@media (max-width:600px){.hero-ctas{gap:8px 10px}}
+@media print{.hero-cta-pdf,.to-top{display:none!important}}
 </style>
 </head>
 <body>
 <header class="hero"><div class="hero-inner">
 <h1>劳动卫生学 · 考前速记</h1>
 <p>按 10 讲课件编排：绪论、职业生理与心理、粉尘与尘肺、职业工效学、职业性肿瘤、矽肺诊断、热环境、噪声、铅与汞中毒、有害因素识别与评价。</p>
-<div class="hero-meta"><span>大三上</span><span>共 10 讲 · 53 个知识点</span></div><a class="hero-cta" href="../drill.html?s=laoweisheng"><span class="hero-cta-ico" aria-hidden="true">✎</span>刷题<em>77 题 · 即时判分</em></a>
+<div class="hero-meta"><span>大三上</span><span>共 10 讲 · 53 个知识点</span></div><div class="hero-ctas"><a class="hero-cta" href="../drill.html?s=laoweisheng"><span class="hero-cta-ico" aria-hidden="true">✎</span>刷题<em>77 题 · 即时判分</em></a><a class="hero-cta hero-cta-pdf" href="../pdf/laoweisheng.pdf" download="劳动卫生学-考前速记.pdf" title="导出为 PDF（A4，含知识点与图示）"><span class="hero-cta-ico" aria-hidden="true">⇩</span>导出 PDF</a></div>
 </div></header>
 <div class="layout">
 <aside class="sidebar"><div class="nav-question-bank"><a class="nav-chapter" href="#question-bank">题库 · 101 题 →</a></div><h2 class="sidebar-title">章节目录</h2><div class="nav-group"><a class="nav-chapter" href="#chapter-01">第01讲 绪论</a><a class="nav-section" href="#section-01-01">一、学科定位与基本概念</a><a class="nav-section" href="#section-01-02">二、职业性有害因素</a><a class="nav-section" href="#section-01-03">三、职业与健康</a><a class="nav-section" href="#section-01-04">四、三级预防与健康监护</a><a class="nav-section" href="#section-01-05">五、研究方法</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-02">第02讲 职业生理与心理</a><a class="nav-section" href="#section-02-01">一、军事劳动与学科任务</a><a class="nav-section" href="#section-02-02">二、肌肉活动的能量来源</a><a class="nav-section" href="#section-02-03">三、氧消耗与劳动强度</a><a class="nav-section" href="#section-02-04">四、作业类型与疲劳</a><a class="nav-section" href="#section-02-05">五、体能训练原则与判定</a><a class="nav-section" href="#section-02-06">六、军事训练伤</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-03">第03讲 粉尘与尘肺</a><a class="nav-section" href="#section-03-01">一、生产性粉尘及其理化特性</a><a class="nav-section" href="#section-03-02">二、粉尘在体内的过程</a><a class="nav-section" href="#section-03-03">三、尘肺总论</a><a class="nav-section" href="#section-03-04">四、矽肺</a><a class="nav-section" href="#section-03-05">五、治疗与预防</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-04">第04讲 职业工效学</a><a class="nav-section" href="#section-04-01">一、学科概念与工效学负荷</a><a class="nav-section" href="#section-04-02">二、生物力学与作业姿势</a><a class="nav-section" href="#section-04-03">三、人体测量学</a><a class="nav-section" href="#section-04-04">四、人机系统：显示器与控制器</a><a class="nav-section" href="#section-04-05">五、职业性肌肉骨骼疾患（WMSD）</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-05">第05讲 职业性肿瘤</a><a class="nav-section" href="#section-05-01">一、概念与作用特征</a><a class="nav-section" href="#section-05-02">二、职业性致癌因素的分类</a><a class="nav-section" href="#section-05-03">三、识别与确认</a><a class="nav-section" href="#section-05-04">四、常见职业性肿瘤与诊断</a><a class="nav-section" href="#section-05-05">五、预防原则</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-06">第06讲 矽肺临床诊断</a><a class="nav-section" href="#section-06-01">一、读片总要求与正常胸片</a><a class="nav-section" href="#section-06-02">二、小阴影的形态与密集度</a><a class="nav-section" href="#section-06-03">三、尘肺分期标准</a><a class="nav-section" href="#section-06-04">四、胸膜改变与附加代号</a><a class="nav-section" href="#section-06-05">五、判断步骤与鉴别</a><a class="nav-section" href="#section-06-06">六、致残分级与安置</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-07">第07讲 热环境</a><a class="nav-section" href="#section-07-01">一、热环境与热平衡</a><a class="nav-section" href="#section-07-02">二、中暑的定义与分型</a><a class="nav-section" href="#section-07-03">三、现场急救</a><a class="nav-section" href="#section-07-04">四、热环境评价与热习服</a><a class="nav-section" href="#section-07-05">五、综合预防策略</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-08">第09讲 噪声</a><a class="nav-section" href="#section-08-01">一、声音与噪声的基本概念</a><a class="nav-section" href="#section-08-02">二、噪声的物理参量</a><a class="nav-section" href="#section-08-03">三、噪声对机体的影响</a><a class="nav-section" href="#section-08-04">四、损伤机制</a><a class="nav-section" href="#section-08-05">五、防护措施</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-09">第11讲 毒物与职业中毒（一）</a><a class="nav-section" href="#section-09-01">一、铅的理化性质与接触机会</a><a class="nav-section" href="#section-09-02">二、铅的吸收、分布与排泄</a><a class="nav-section" href="#section-09-03">三、铅的毒理与临床表现</a><a class="nav-section" href="#section-09-04">四、铅中毒的诊断与治疗</a><a class="nav-section" href="#section-09-05">五、汞危害及其卫生防护</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-10">第12讲 职业有害因素的识别与评价</a><a class="nav-section" href="#section-10-01">一、识别基础与分类</a><a class="nav-section" href="#section-10-02">二、已知因素的识别方法</a><a class="nav-section" href="#section-10-03">三、未知因素鉴定与因果判断</a><a class="nav-section" href="#section-10-04">四、职业环境监测</a><a class="nav-section" href="#section-10-05">五、生物监测</a><a class="nav-section" href="#section-10-06">六、危险度评价</a></div><div class="nav-question-bank" style="margin-top:22px;padding-top:14px;border-top:1px solid var(--gray-200)"><a class="nav-chapter" href="#question-bank">题库 · 101 题 →</a></div></aside>
@@ -1697,5 +1696,25 @@ main p, main li, main td, main th, main dd, main dt,
   });
 })();
 </script>
-<a class="pdf-export" href="../pdf/laoweisheng.pdf" download="劳动卫生学-考前速记.pdf" title="导出为 PDF（A4，含知识点与图示）">⇩ 导出 PDF</a>
+<button class="to-top" type="button" aria-label="回到顶部" title="回到顶部">
+<svg viewBox="0 0 54 54" aria-hidden="true"><circle class="ring-bg" cx="27" cy="27" r="24"/><circle class="ring-fg" cx="27" cy="27" r="24"/></svg>
+<span class="arrow">↑</span>
+</button>
+<script>
+(function(){
+  var b=document.querySelector('.to-top'); if(!b) return;
+  var ring=b.querySelector('.ring-fg');
+  var C=2*Math.PI*24;
+  function upd(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    var p=h>0?Math.min(1,Math.max(0,window.scrollY/h)):0;
+    if(ring){ ring.style.strokeDasharray=C; ring.style.strokeDashoffset=C*(1-p); }
+    b.classList.toggle('show', window.scrollY>480);
+  }
+  window.addEventListener('scroll',upd,{passive:true});
+  window.addEventListener('resize',upd);
+  b.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+  upd();
+})();
+</script>
 </body></html>

@@ -1394,22 +1394,21 @@ main p, main li, main td, main th, main dd, main dt,
   @media (max-width:600px){.hero-cta{margin-top:12px;padding:9px 16px;font-size:14px;}.hero-cta em{font-size:12px;}}
   @media (prefers-reduced-motion:reduce){.hero-cta{transition:none;}}
 </style>
-<style>
-.pdf-export{position:fixed;right:18px;bottom:78px;z-index:9998;display:inline-flex;align-items:center;gap:6px;
-  padding:10px 15px;border-radius:999px;background:#3E5F7D;color:#fff!important;text-decoration:none!important;
-  font:700 13px/1 -apple-system,'PingFang SC','Microsoft YaHei',sans-serif;letter-spacing:.02em;
-  box-shadow:0 8px 22px rgba(20,35,55,.28);border:1px solid rgba(255,255,255,.18);transition:transform .15s ease,box-shadow .15s ease}
-.pdf-export:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(20,35,55,.34)}
-.pdf-export:active{transform:translateY(0)}
-@media (max-width:600px){.pdf-export{right:12px;bottom:84px;padding:9px 13px;font-size:12px}}
-@media print{.pdf-export{display:none!important}}
+<style id="pdf-cta-css">
+.hero-ctas{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-top:16px;
+  grid-column:1;grid-row:4;justify-self:start;max-width:100%}
+.hero-ctas .hero-cta{margin-top:0}
+.hero-cta-pdf{background:linear-gradient(180deg,#FFFFFF,#E4EDF7)!important;color:#1E3A5F!important;border-color:#FFFFFF!important}
+.hero-cta-pdf em{color:#4A6684!important}
+@media (max-width:600px){.hero-ctas{gap:8px 10px}}
+@media print{.hero-cta-pdf,.to-top{display:none!important}}
 </style>
 </head>
 <body>
 <header class="hero"><div class="hero-inner">
 <h1>医学伦理学 · 考前速记</h1>
 <p>四大原则、四大范畴、医患与医际关系、临床与科研伦理，附口诀与案例分析。</p>
-<div class="hero-meta"><span>大三上</span><span>共 7 讲 · 19 个知识点</span></div><a class="hero-cta" href="../drill.html?s=ethics"><span class="hero-cta-ico" aria-hidden="true">✎</span>刷题<em>113 题 · 即时判分</em></a>
+<div class="hero-meta"><span>大三上</span><span>共 7 讲 · 19 个知识点</span></div><div class="hero-ctas"><a class="hero-cta" href="../drill.html?s=ethics"><span class="hero-cta-ico" aria-hidden="true">✎</span>刷题<em>113 题 · 即时判分</em></a><a class="hero-cta hero-cta-pdf" href="../pdf/ethics.pdf" download="医学伦理学-考前速记.pdf" title="导出为 PDF（A4，含知识点与图示）"><span class="hero-cta-ico" aria-hidden="true">⇩</span>导出 PDF</a></div>
 </div></header>
 <div class="layout">
 <aside class="sidebar"><div class="nav-question-bank"><a class="nav-chapter" href="#question-bank">题库 · 157 题 →</a></div><h2 class="sidebar-title">章节目录</h2><div class="nav-group"><a class="nav-chapter" href="#chapter-01">医学伦理学基本概念</a><a class="nav-section" href="#section-01-01">道德、伦理与伦理学形态</a><a class="nav-section" href="#section-01-02">医德体系与医学道德的特点</a><a class="nav-section" href="#section-01-03">道德判断与非道德判断</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-02">医学伦理学的原则与范畴</a><a class="nav-section" href="#section-02-01">四大基本原则</a><a class="nav-section" href="#section-02-02">指导原则与社会主义医德基本规范</a><a class="nav-section" href="#section-02-03">医学道德的基本范畴</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-03">医疗人际关系伦理</a><a class="nav-section" href="#section-03-01">医患关系伦理</a><a class="nav-section" href="#section-03-02">医际关系伦理</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-04">临床诊疗伦理</a><a class="nav-section" href="#section-04-01">临床诊疗的伦理原则</a><a class="nav-section" href="#section-04-02">临床诊断的伦理要求</a><a class="nav-section" href="#section-04-03">临床治疗与特殊科室的伦理要求</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-05">公共卫生伦理与战争灾害伦理</a><a class="nav-section" href="#section-05-01">公共卫生伦理</a><a class="nav-section" href="#section-05-02">战争与灾害医学伦理</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-06">医学科研伦理</a><a class="nav-section" href="#section-06-01">科研诚信与学术不端</a><a class="nav-section" href="#section-06-02">动物实验伦理与 4R 原则</a><a class="nav-section" href="#section-06-03">人体试验伦理与伦理审查</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-07">生命伦理前沿</a><a class="nav-section" href="#section-07-01">人类辅助生殖技术伦理</a><a class="nav-section" href="#section-07-02">人体器官移植伦理</a><a class="nav-section" href="#section-07-03">安乐死与临终关怀伦理</a></div><div class="nav-question-bank" style="margin-top:22px;padding-top:14px;border-top:1px solid var(--gray-200)"><a class="nav-chapter" href="#question-bank">题库 · 157 题 →</a></div></aside>
@@ -1581,5 +1580,25 @@ main p, main li, main td, main th, main dd, main dt,
   });
 })();
 </script>
-<a class="pdf-export" href="../pdf/ethics.pdf" download="医学伦理学-考前速记.pdf" title="导出为 PDF（A4，含知识点与图示）">⇩ 导出 PDF</a>
+<button class="to-top" type="button" aria-label="回到顶部" title="回到顶部">
+<svg viewBox="0 0 54 54" aria-hidden="true"><circle class="ring-bg" cx="27" cy="27" r="24"/><circle class="ring-fg" cx="27" cy="27" r="24"/></svg>
+<span class="arrow">↑</span>
+</button>
+<script>
+(function(){
+  var b=document.querySelector('.to-top'); if(!b) return;
+  var ring=b.querySelector('.ring-fg');
+  var C=2*Math.PI*24;
+  function upd(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    var p=h>0?Math.min(1,Math.max(0,window.scrollY/h)):0;
+    if(ring){ ring.style.strokeDasharray=C; ring.style.strokeDashoffset=C*(1-p); }
+    b.classList.toggle('show', window.scrollY>480);
+  }
+  window.addEventListener('scroll',upd,{passive:true});
+  window.addEventListener('resize',upd);
+  b.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+  upd();
+})();
+</script>
 </body></html>

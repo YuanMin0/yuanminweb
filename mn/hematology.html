@@ -1394,22 +1394,21 @@ main p, main li, main td, main th, main dd, main dt,
   @media (max-width:600px){.hero-cta{margin-top:12px;padding:9px 16px;font-size:14px;}.hero-cta em{font-size:12px;}}
   @media (prefers-reduced-motion:reduce){.hero-cta{transition:none;}}
 </style>
-<style>
-.pdf-export{position:fixed;right:18px;bottom:78px;z-index:9998;display:inline-flex;align-items:center;gap:6px;
-  padding:10px 15px;border-radius:999px;background:#3E5F7D;color:#fff!important;text-decoration:none!important;
-  font:700 13px/1 -apple-system,'PingFang SC','Microsoft YaHei',sans-serif;letter-spacing:.02em;
-  box-shadow:0 8px 22px rgba(20,35,55,.28);border:1px solid rgba(255,255,255,.18);transition:transform .15s ease,box-shadow .15s ease}
-.pdf-export:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(20,35,55,.34)}
-.pdf-export:active{transform:translateY(0)}
-@media (max-width:600px){.pdf-export{right:12px;bottom:84px;padding:9px 13px;font-size:12px}}
-@media print{.pdf-export{display:none!important}}
+<style id="pdf-cta-css">
+.hero-ctas{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-top:16px;
+  grid-column:1;grid-row:4;justify-self:start;max-width:100%}
+.hero-ctas .hero-cta{margin-top:0}
+.hero-cta-pdf{background:linear-gradient(180deg,#FFFFFF,#E4EDF7)!important;color:#1E3A5F!important;border-color:#FFFFFF!important}
+.hero-cta-pdf em{color:#4A6684!important}
+@media (max-width:600px){.hero-ctas{gap:8px 10px}}
+@media print{.hero-cta-pdf,.to-top{display:none!important}}
 </style>
 </head>
 <body>
 <header class="hero"><div class="hero-inner">
 <h1>血液系统 · 考前速记</h1>
 <p>贫血的三类鉴别（缺铁、巨幼、再障）、白血病的分型与治疗、淋巴瘤与出血性疾病，案例题常考。</p>
-<div class="hero-meta"><span>大三下</span><span>共 3 讲 · 9 个知识点</span></div><a class="hero-cta" href="../drill.html?s=hematology"><span class="hero-cta-ico" aria-hidden="true">✎</span>刷题<em>68 题 · 即时判分</em></a>
+<div class="hero-meta"><span>大三下</span><span>共 3 讲 · 9 个知识点</span></div><div class="hero-ctas"><a class="hero-cta" href="../drill.html?s=hematology"><span class="hero-cta-ico" aria-hidden="true">✎</span>刷题<em>68 题 · 即时判分</em></a><a class="hero-cta hero-cta-pdf" href="../pdf/hematology.pdf" download="血液系统-考前速记.pdf" title="导出为 PDF（A4，含知识点与图示）"><span class="hero-cta-ico" aria-hidden="true">⇩</span>导出 PDF</a></div>
 </div></header>
 <div class="layout">
 <aside class="sidebar"><div class="nav-question-bank"><a class="nav-chapter" href="#question-bank">题库 · 100 题 →</a></div><h2 class="sidebar-title">章节目录</h2><div class="nav-group"><a class="nav-chapter" href="#chapter-01">贫血总论与三类贫血</a><a class="nav-section" href="#section-01-01">贫血的定义、分类与临床表现</a><a class="nav-section" href="#section-01-02">缺铁性贫血</a><a class="nav-section" href="#section-01-03">巨幼细胞贫血与再生障碍性贫血</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-02">白血病</a><a class="nav-section" href="#section-02-01">急性白血病的临床表现与诊断</a><a class="nav-section" href="#section-02-02">急性早幼粒细胞白血病（M3）</a><a class="nav-section" href="#section-02-03">慢性髓性白血病（CML）</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-03">淋巴瘤与出血性疾病</a><a class="nav-section" href="#section-03-01">霍奇金淋巴瘤与非霍奇金淋巴瘤</a><a class="nav-section" href="#section-03-02">原发免疫性血小板减少症（ITP）</a><a class="nav-section" href="#section-03-03">血友病与弥散性血管内凝血（DIC）</a></div><div class="nav-question-bank" style="margin-top:22px;padding-top:14px;border-top:1px solid var(--gray-200)"><a class="nav-chapter" href="#question-bank">题库 · 100 题 →</a></div></aside>
@@ -1561,5 +1560,25 @@ main p, main li, main td, main th, main dd, main dt,
   });
 })();
 </script>
-<a class="pdf-export" href="../pdf/hematology.pdf" download="血液系统-考前速记.pdf" title="导出为 PDF（A4，含知识点与图示）">⇩ 导出 PDF</a>
+<button class="to-top" type="button" aria-label="回到顶部" title="回到顶部">
+<svg viewBox="0 0 54 54" aria-hidden="true"><circle class="ring-bg" cx="27" cy="27" r="24"/><circle class="ring-fg" cx="27" cy="27" r="24"/></svg>
+<span class="arrow">↑</span>
+</button>
+<script>
+(function(){
+  var b=document.querySelector('.to-top'); if(!b) return;
+  var ring=b.querySelector('.ring-fg');
+  var C=2*Math.PI*24;
+  function upd(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    var p=h>0?Math.min(1,Math.max(0,window.scrollY/h)):0;
+    if(ring){ ring.style.strokeDasharray=C; ring.style.strokeDashoffset=C*(1-p); }
+    b.classList.toggle('show', window.scrollY>480);
+  }
+  window.addEventListener('scroll',upd,{passive:true});
+  window.addEventListener('resize',upd);
+  b.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+  upd();
+})();
+</script>
 </body></html>

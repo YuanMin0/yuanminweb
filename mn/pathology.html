@@ -1394,22 +1394,21 @@ main p, main li, main td, main th, main dd, main dt,
   @media (max-width:600px){.hero-cta{margin-top:12px;padding:9px 16px;font-size:14px;}.hero-cta em{font-size:12px;}}
   @media (prefers-reduced-motion:reduce){.hero-cta{transition:none;}}
 </style>
-<style>
-.pdf-export{position:fixed;right:18px;bottom:78px;z-index:9998;display:inline-flex;align-items:center;gap:6px;
-  padding:10px 15px;border-radius:999px;background:#3E5F7D;color:#fff!important;text-decoration:none!important;
-  font:700 13px/1 -apple-system,'PingFang SC','Microsoft YaHei',sans-serif;letter-spacing:.02em;
-  box-shadow:0 8px 22px rgba(20,35,55,.28);border:1px solid rgba(255,255,255,.18);transition:transform .15s ease,box-shadow .15s ease}
-.pdf-export:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(20,35,55,.34)}
-.pdf-export:active{transform:translateY(0)}
-@media (max-width:600px){.pdf-export{right:12px;bottom:84px;padding:9px 13px;font-size:12px}}
-@media print{.pdf-export{display:none!important}}
+<style id="pdf-cta-css">
+.hero-ctas{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-top:16px;
+  grid-column:1;grid-row:4;justify-self:start;max-width:100%}
+.hero-ctas .hero-cta{margin-top:0}
+.hero-cta-pdf{background:linear-gradient(180deg,#FFFFFF,#E4EDF7)!important;color:#1E3A5F!important;border-color:#FFFFFF!important}
+.hero-cta-pdf em{color:#4A6684!important}
+@media (max-width:600px){.hero-ctas{gap:8px 10px}}
+@media print{.hero-cta-pdf,.to-top{display:none!important}}
 </style>
 </head>
 <body>
 <header class="hero"><div class="hero-inner">
 <h1>病理学 · 考前速记</h1>
 <p>看形态说机制：从细胞损伤到炎症、肿瘤，再到各系统疾病的病理变化。</p>
-<div class="hero-meta"><span>大二下</span><span>共 8 讲 · 14 个知识点</span></div><a class="hero-cta" href="../drill.html?s=pathology"><span class="hero-cta-ico" aria-hidden="true">✎</span>刷题<em>70 题 · 即时判分</em></a>
+<div class="hero-meta"><span>大二下</span><span>共 8 讲 · 14 个知识点</span></div><div class="hero-ctas"><a class="hero-cta" href="../drill.html?s=pathology"><span class="hero-cta-ico" aria-hidden="true">✎</span>刷题<em>70 题 · 即时判分</em></a><a class="hero-cta hero-cta-pdf" href="../pdf/pathology.pdf" download="病理学-考前速记.pdf" title="导出为 PDF（A4，含知识点与图示）"><span class="hero-cta-ico" aria-hidden="true">⇩</span>导出 PDF</a></div>
 </div></header>
 <div class="layout">
 <aside class="sidebar"><div class="nav-question-bank"><a class="nav-chapter" href="#question-bank">题库 · 100 题 →</a></div><h2 class="sidebar-title">章节目录</h2><div class="nav-group"><a class="nav-chapter" href="#chapter-01">细胞和组织的适应与损伤</a><a class="nav-section" href="#section-01-01">适应：萎缩、肥大、增生、化生</a><a class="nav-section" href="#section-01-02">变性：可逆性损伤</a><a class="nav-section" href="#section-01-03">坏死与凋亡</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-02">损伤的修复</a><a class="nav-section" href="#section-02-01">再生、肉芽组织与创伤愈合</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-03">局部血液循环障碍</a><a class="nav-section" href="#section-03-01">血栓形成</a><a class="nav-section" href="#section-03-02">栓塞与梗死</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-04">炎症</a><a class="nav-section" href="#section-04-01">炎症的基本病理变化</a><a class="nav-section" href="#section-04-02">慢性炎症与肉芽肿性炎</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-05">肿瘤</a><a class="nav-section" href="#section-05-01">肿瘤的异型性与生长方式</a><a class="nav-section" href="#section-05-02">肿瘤的扩散与癌前病变</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-06">心血管系统疾病</a><a class="nav-section" href="#section-06-01">动脉粥样硬化与高血压</a><a class="nav-section" href="#section-06-02">心肌梗死</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-07">呼吸系统疾病</a><a class="nav-section" href="#section-07-01">肺炎的类型与病理</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-08">消化系统疾病</a><a class="nav-section" href="#section-08-01">消化性溃疡与肝硬化</a></div><div class="nav-question-bank" style="margin-top:22px;padding-top:14px;border-top:1px solid var(--gray-200)"><a class="nav-chapter" href="#question-bank">题库 · 100 题 →</a></div></aside>
@@ -1599,5 +1598,25 @@ main p, main li, main td, main th, main dd, main dt,
   });
 })();
 </script>
-<a class="pdf-export" href="../pdf/pathology.pdf" download="病理学-考前速记.pdf" title="导出为 PDF（A4，含知识点与图示）">⇩ 导出 PDF</a>
+<button class="to-top" type="button" aria-label="回到顶部" title="回到顶部">
+<svg viewBox="0 0 54 54" aria-hidden="true"><circle class="ring-bg" cx="27" cy="27" r="24"/><circle class="ring-fg" cx="27" cy="27" r="24"/></svg>
+<span class="arrow">↑</span>
+</button>
+<script>
+(function(){
+  var b=document.querySelector('.to-top'); if(!b) return;
+  var ring=b.querySelector('.ring-fg');
+  var C=2*Math.PI*24;
+  function upd(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    var p=h>0?Math.min(1,Math.max(0,window.scrollY/h)):0;
+    if(ring){ ring.style.strokeDasharray=C; ring.style.strokeDashoffset=C*(1-p); }
+    b.classList.toggle('show', window.scrollY>480);
+  }
+  window.addEventListener('scroll',upd,{passive:true});
+  window.addEventListener('resize',upd);
+  b.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+  upd();
+})();
+</script>
 </body></html>

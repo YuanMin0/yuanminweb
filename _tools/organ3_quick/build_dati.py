@@ -38,6 +38,13 @@ def md(t):
     t = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', t)
     return t
 
+def md_multi(t):
+    """把空行分段、单换行转 <br>，用于长文（通俗解释）。"""
+    t = md(t)
+    parts = [x.strip() for x in t.split('\n\n') if x.strip()]
+    return ''.join('<p>%s</p>' % x.replace('\n', '<br>') for x in parts)
+
+
 def freq_badge(n, note):
     if n >= 4:
         return '<span class="freq hot" title="%s">★ 考过 %d 次</span>' % (html.escape(note), n)
@@ -129,7 +136,7 @@ def render_item(it, ci):
   %s
   %s
   <div class="qfoot">
-    <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-%s"><span class="bulb">💡</span>通俗解释</button>
+    <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-%s"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">%s</span>
   </div>
   <div class="ex" id="ex-%s" hidden><div class="ex-inner">%s</div></div>
@@ -137,7 +144,7 @@ def render_item(it, ci):
         hot, it['id'], ci, it['freq'], it['type'],
         html.escape(it['title'] + ' ' + ' '.join(it['answer']))[:400],
         it['id'].upper(), stars(it['freq']) + md(it['title']), qtype, exam_badge(it), real_badge(it), freq_badge(it['freq'], it['freqNote']),
-        ans, tip, fig, it['id'], md(it['source']), it['id'], md(it['explain']))
+        ans, tip, fig, it['id'], md(it['source']), it['id'], md_multi(it['explain']))
 
 EXAM_LINE = {
     'physio': '本次考法：论述 1 道（P18 尿生成最可能；P15 / P19 / P20 / P21 为备选）＋ 选择题。生理不考名解。',
@@ -345,7 +352,7 @@ main{min-width:0}
 .qcard.hot .ans li.sec{border-left-color:var(--red);background:var(--redL);color:var(--red)}
 .qcard.hot .ans li::before{color:var(--red)}
 .qfoot{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:14px;padding-top:10px;border-top:1px dashed var(--line)}
-.ex-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;
+.ex-btn{display:inline-flex;align-items:center;gap:7px;padding:7px 16px;border-radius:999px;
   border:1px solid var(--gold);background:var(--goldL);color:#7A4E12;
   font:700 12.5px var(--font-head);cursor:pointer}
 .ex-btn:hover{background:#F7E7C4}
@@ -356,6 +363,8 @@ main{min-width:0}
   border:1px solid #EBD3A6;border-left:4px solid var(--gold);animation:exin .22s ease}
 @keyframes exin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 .ex-inner{font:15.5px/1.8 var(--font-body);color:#4A3A22}
+.ex-inner p{margin:0 0 9px}
+.ex-inner p:last-child{margin-bottom:0}
 .ex-inner b{color:#8A5B18}
 .fig{margin:14px 0 2px;padding:10px;background:var(--paper2);border:1px solid var(--line);border-radius:10px;
   max-width:100%;overflow-x:auto}

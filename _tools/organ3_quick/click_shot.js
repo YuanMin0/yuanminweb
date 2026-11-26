@@ -22,12 +22,22 @@ const mobile = process.argv.includes('--mobile');
     : { width: 1280, height: 900, deviceScaleFactor: 1, mobile: false });
   await pg.send('Page.navigate', { url: BASE + p });
   await new Promise(r => setTimeout(r, 1600));
+  const thenArg = process.argv.find(a => a.startsWith('--then='));
   if (sel) {
-    const scrollExpr = `(function(){var e=document.querySelector(${JSON.stringify(sel)}); if(!e) return 'NOTFOUND'; var r=e.getBoundingClientRect(); window.scrollTo(0, window.scrollY + r.top - 120); return 'OK '+Math.round(r.top);})()`;
+    const scrollExpr = `(function(){var e=document.querySelector(${JSON.stringify(sel)}); if(!e) return 'NOTFOUND'; if(e.classList.contains('ex-btn')) e.click(); var r=e.getBoundingClientRect(); window.scrollTo(0, window.scrollY + r.top - 120); return 'OK '+Math.round(r.top);})()`;
     for (let k = 0; k < 3; k++) {
       const r0 = await pg.send('Runtime.evaluate', { expression: scrollExpr, returnByValue: true });
       if (k === 0) console.log('  target:', r0.result.value);
       await new Promise(r => setTimeout(r, 500));
+    }
+    if (thenArg) {
+      const sel2 = thenArg.slice(7);
+      const expr2 = `(function(){var e=document.querySelector(${JSON.stringify(sel2)}); if(!e) return 'NOTFOUND'; var r=e.getBoundingClientRect(); window.scrollTo(0, window.scrollY + r.top - 120); return 'OK2 '+Math.round(r.top);})()`;
+      for (let k = 0; k < 3; k++) {
+        const r2 = await pg.send('Runtime.evaluate', { expression: expr2, returnByValue: true });
+        if (k === 0) console.log('  then:', r2.result.value);
+        await new Promise(r => setTimeout(r, 500));
+      }
     }
   }
   const { data } = await pg.send('Page.captureScreenshot', { format: 'png' });

@@ -21,7 +21,13 @@ const mobile = process.argv.includes('--mobile');
     ? { width: 390, height: 844, deviceScaleFactor: 2, mobile: true }
     : { width: 1280, height: 900, deviceScaleFactor: 1, mobile: false });
   await pg.send('Page.navigate', { url: BASE + p });
-  await new Promise(r => setTimeout(r, 1600));
+  await new Promise(r => setTimeout(r, 1200));
+  if (process.argv.includes('--reset')) {
+    await pg.send('Runtime.evaluate', { expression: "try{localStorage.removeItem('medilearn.mn.side');localStorage.removeItem('medilearn.dati.side');}catch(e){}" });
+    await pg.send('Page.reload', { ignoreCache: true });
+    await new Promise(r => setTimeout(r, 1400));
+  }
+  await new Promise(r => setTimeout(r, 500));
   const thenArg = process.argv.find(a => a.startsWith('--then='));
   if (sel) {
     const scrollExpr = `(function(){var e=document.querySelector(${JSON.stringify(sel)}); if(!e) return 'NOTFOUND'; e.click(); var r=e.getBoundingClientRect(); window.scrollTo(0, window.scrollY + r.top - 120); return 'OK '+Math.round(r.top);})()`;

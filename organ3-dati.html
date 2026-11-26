@@ -63,20 +63,25 @@ a{color:var(--blueD)}
 body.side-collapsed .layout{grid-template-columns:0 minmax(0,1fr);gap:0}
 body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-events:none;overflow:hidden}
 .sidebar{position:sticky;top:64px;max-height:calc(100vh - 84px);overflow:auto;
-  transition:opacity .26s ease,transform .3s ease;
+  transition:opacity .26s ease,transform .3s ease,box-shadow .5s ease;
   padding:18px 14px 16px;border-radius:16px;
-  background:linear-gradient(180deg,#FFFDF7 0%,#FBF7EB 100%);
-  border:1px solid #E7DCC5;
-  box-shadow:0 20px 50px -34px rgba(62,95,125,.55),inset 0 1px 0 #fff;
+  background:linear-gradient(160deg,rgba(255,255,255,.965),rgba(247,251,254,.93));
+  border:1px solid rgba(255,255,255,.92);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.92),0 26px 64px -30px rgba(62,95,125,.46);
   scrollbar-width:thin;scrollbar-color:#D9CDB4 transparent}
+.sidebar:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.92),0 34px 78px -32px rgba(62,95,125,.55)}
 .sidebar::-webkit-scrollbar{width:7px}
 .sidebar::-webkit-scrollbar-thumb{background:#DED3BB;border-radius:99px}
 .sidebar::-webkit-scrollbar-thumb:hover{background:#C9BB9C}
 .sidebar::-webkit-scrollbar-track{background:transparent}
 .side-title{display:flex;align-items:center;gap:7px;margin:0 0 12px;padding:0 4px 10px;
   border-bottom:1px solid #EADFC9;font:700 12.5px var(--font-head);color:#8A7A5E;letter-spacing:.14em}
+.side-title{position:relative}
 .side-title::before{content:"";width:3px;height:13px;border-radius:2px;
   background:linear-gradient(180deg,var(--gold),var(--red))}
+.side-title::after{content:"";position:absolute;left:4px;bottom:0;height:2px;width:0;border-radius:2px;
+  background:linear-gradient(90deg,var(--gold),var(--red) 58%,rgba(192,85,74,0));
+  animation:navGrowInset 1.1s cubic-bezier(.16,1,.3,1) .25s forwards}
 .side-search{width:100%;margin-bottom:10px;padding:9px 12px 9px 32px;border:1px solid #E4D9C1;border-radius:10px;
   background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23A99C82' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E") no-repeat 10px center;
   font:14px var(--font-body);color:var(--ink);transition:border-color .22s,box-shadow .22s}
@@ -94,8 +99,9 @@ body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-event
 .nav-cat em{flex:none;min-width:22px;padding:1px 6px;border-radius:99px;background:#F1EADA;
   color:#8A7A5E;font:700 11px var(--font-head);font-style:normal;text-align:center;
   transition:background .2s,color .2s}
-.nav-cat:hover{background:#fff;border-color:#EBE0C9;transform:translateX(2px);
-  box-shadow:0 6px 16px -14px rgba(0,0,0,.5)}
+.nav-cat:hover{background:#fff;border-color:#EBE0C9;
+  transform:perspective(760px) translate3d(4px,0,20px);
+  box-shadow:0 14px 30px -20px rgba(0,0,0,.55)}
 .nav-cat:hover::before{background:var(--gold);height:20px}
 .nav-cat[data-cat="physio"]::before{background:rgba(91,132,168,.35)}
 .nav-cat[data-cat="patho"]::before{background:rgba(192,85,74,.32)}
@@ -110,6 +116,9 @@ body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-event
 .nav-cat[data-cat="path"].active::before,.nav-cat[data-cat="path"]:hover::before{background:var(--violet)}
 .nav-cat[data-cat="pharm"].active::before,.nav-cat[data-cat="pharm"]:hover::before{background:var(--green)}
 .nav-cat.active{background:#fff;border-color:#E7D8B6;box-shadow:0 8px 22px -18px rgba(0,0,0,.55)}
+.nav-cat.active::after{content:"";position:absolute;left:12px;right:10px;bottom:2px;height:2px;
+  border-radius:2px;background:linear-gradient(90deg,var(--gold),transparent);
+  animation:navGrowFull .55s cubic-bezier(.16,1,.3,1) both}
 .nav-cat.active::before{height:26px}
 .nav-cat.active span{color:var(--blueD)}
 .nav-cat.active em{background:var(--blueD);color:#fff}
@@ -193,6 +202,8 @@ main{min-width:0}
 /* 真题徽章 */
 .real{flex:none;padding:2px 7px;border-radius:5px;background:#EAF1F8;border:1px solid #B9CDE0;
   color:#3E5F7D;font:700 10.5px var(--font-head);white-space:nowrap}
+@keyframes navGrowFull{from{width:0}to{width:100%}}
+@keyframes navGrowInset{from{width:0}to{width:calc(100% - 16px)}}
 /* 本次必背 */
 .mustbox{margin-bottom:28px;padding:18px 22px;border-radius:14px;background:#FFF4F0;border:1px solid #EBC3BB}
 .mb-head h2{font-size:1.25rem;color:var(--red)}

@@ -1447,13 +1447,37 @@ body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-event
   transition:transform .2s,border-color .2s}
 .side-fab:hover{transform:translateY(-1px);border-color:var(--gold)}
 body.side-collapsed .side-fab{display:flex}
-/* 当前章节高亮 */
-.nav-chapter{transition:background .2s,color .2s}
-.nav-chapter.active{background:var(--gray-100);color:var(--navy-deep);border-radius:6px;
-  box-shadow:inset 3px 0 0 var(--navy)}
-.nav-section{transition:background .2s,color .2s,box-shadow .2s}
-.nav-section.active{background:#fff;color:var(--blue);font-weight:700;border-radius:5px;
-  box-shadow:inset 2px 0 0 var(--blue)}
+/* 侧栏容器：渐变白底 + 内高光 + 悬浮阴影 */
+.sidebar{
+  background:linear-gradient(160deg,rgba(255,255,255,.965),rgba(247,251,254,.93));
+  border:1px solid rgba(255,255,255,.92);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 26px 64px -30px rgba(92,122,16,.46);
+  transition:box-shadow .5s ease}
+.sidebar:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 34px 78px -32px rgba(92,122,16,.55)}
+/* 标题下方渐变发丝线 */
+.sidebar-title{position:relative}
+.sidebar-title::after{content:"";position:absolute;left:8px;bottom:0;height:2px;width:0;
+  border-radius:2px;background:linear-gradient(90deg,var(--gold),var(--blue) 58%,rgba(233,19,121,0));
+  animation:navGrowInset 1.1s cubic-bezier(.16,1,.3,1) .25s forwards}
+/* 章节：hover 3D 前浮，active 底部渐变线 */
+.nav-chapter{position:relative;transition:color .25s ease,transform .34s cubic-bezier(.16,1,.3,1)}
+.nav-chapter:hover{transform:perspective(760px) translate3d(4px,0,20px)}
+.nav-chapter.active{color:var(--blue)}
+.nav-chapter.active::after{content:"";position:absolute;left:7px;right:7px;bottom:2px;height:2px;
+  border-radius:2px;background:linear-gradient(90deg,var(--gold),transparent);
+  animation:navGrowFull .55s cubic-bezier(.16,1,.3,1) both}
+/* 知识点：active 渐变底 + 圆点 */
+.nav-section{position:relative;transition:color .25s ease,background .25s ease,transform .34s cubic-bezier(.16,1,.3,1)}
+.nav-section::before{content:"";position:absolute;left:6px;top:50%;width:5px;height:5px;margin-top:-2.5px;
+  border-radius:50%;background:var(--gold);opacity:0;transform:scale(0);
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .25s ease}
+.nav-section.active{color:var(--navy);font-weight:700;
+  background:linear-gradient(90deg,rgba(136,174,27,.18),rgba(253,233,242,.92))}
+.nav-section.active::before{opacity:1;transform:scale(1.5)}
+.nav-section:hover{transform:perspective(760px) translate3d(5px,0,20px)}
+.nav-section:hover::before{opacity:1;transform:scale(1.4)}
+@keyframes navGrowFull{from{width:0}to{width:100%}}
+@keyframes navGrowInset{from{width:0}to{width:calc(100% - 16px)}}
 @media print{.side-fab,.side-collapse{display:none!important}}
 </style>
 </head>

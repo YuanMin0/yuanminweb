@@ -59,9 +59,53 @@ def stars(n):
     return ''
 
 
+def real_badge(it):
+    ys = it.get('realYears') or []
+    if not ys:
+        return ''
+    short = []
+    for y in ys:
+        if y == '未知':
+            t = '?'
+        elif y == '划重点':
+            t = '重点'
+        else:
+            t = y.replace('临床', '').replace('级', '')
+        if t not in short:
+            short.append(t)
+    return ('<span class="real" title="历年真题：%s">真题 %s</span>'
+            % (html.escape('、'.join(ys)), '·'.join(short)))
+
+
+def exam_badge(it):
+    e = it.get('exam')
+    if not e:
+        return ''
+    r = it.get('examRank', 0)
+    note = html.escape(it.get('examNote') or '')
+    if e == '名解':
+        cls = 'mn' if r == 1 else 'mn2'
+        txt = '名解 · 必背' if r == 1 else '名解 · 候选'
+    elif e == '论述':
+        cls = 'ln' if r == 1 else 'ln2'
+        txt = '论述 · 必背' if r == 1 else '论述 · 候选'
+    elif e == '选择':
+        cls, txt = 'sel', '选择'
+    else:
+        cls, txt = 'ign', '仅了解'
+    return '<span class="exam %s" title="%s">%s</span>' % (cls, note, txt)
+
+
 def render_item(it, ci):
     hot = ' hot' if it['freq'] >= 4 else ''
-    ans = ''.join('<li>%s</li>' % md(x) for x in it['answer'])
+    qtype = '' if it.get('exam') == it['type'] else '<span class="qtype">%s</span>' % it['type']
+    # 以「一、二、三、」开头的要点当作小标题，不参与编号
+    ans = ''
+    for x in it['answer']:
+        if re.match(r'^(\*\*)?[一二三四五六七八九十]+、', x):
+            ans += '<li class="sec">%s</li>' % md(x)
+        else:
+            ans += '<li>%s</li>' % md(x)
     tip = ''
     if it.get('tip'):
         tip = '<div class="tipbox"><b>★ 重点提示：</b>%s</div>' % md(it['tip'])
@@ -76,10 +120,12 @@ def render_item(it, ci):
   <header class="qhead">
     <span class="qid">%s</span>
     <h3>%s</h3>
-    <span class="qtype">%s</span>
+    %s
+    %s
+    %s
     %s
   </header>
-  <ol class="ans">%s</ol>
+  <ul class="ans">%s</ul>
   %s
   %s
   <div class="qfoot">
@@ -90,8 +136,15 @@ def render_item(it, ci):
 </article>''' % (
         hot, it['id'], ci, it['freq'], it['type'],
         html.escape(it['title'] + ' ' + ' '.join(it['answer']))[:400],
-        it['id'].upper(), stars(it['freq']) + md(it['title']), it['type'], freq_badge(it['freq'], it['freqNote']),
+        it['id'].upper(), stars(it['freq']) + md(it['title']), qtype, exam_badge(it), real_badge(it), freq_badge(it['freq'], it['freqNote']),
         ans, tip, fig, it['id'], md(it['source']), it['id'], md(it['explain']))
+
+EXAM_LINE = {
+    'physio': '本次考法：论述 1 道（P18 尿生成最可能；P15 / P19 / P20 / P21 为备选）＋ 选择题。生理不考名解。',
+    'patho': '本次考法：名解 4 道（水电解质 / 酸碱 / 休克 / 肾衰 各 1 个）＋ 论述 1 道（休克）。',
+    'path': '本次考法：名解 1 道（新月体最可能）；病理没有论述题，其余按选择题准备。',
+    'pharm': '本次考法：名解 1 道（概论里的概念，如化疗指数 / 抗生素后效应）＋ 论述 1 道（考整体：机制 / 耐药 / 应用原则）；各药特点与利尿药只考选择题。',
+}
 
 sections = []
 nav = []
@@ -106,9 +159,17 @@ for cat in data:
   <header class="cat-head">
     <div><p class="cat-en">%s</p><h2>%s</h2></div>
     <p class="cat-desc">%s</p>
+    <p class="cat-exam">%s</p>
   </header>
   %s
-</section>''' % (cat['id'], cat['en'], cat['name'], md(cat['desc']), cards))
+</section>''' % (cat['id'], cat['en'], cat['name'], md(cat['desc']), md(EXAM_LINE.get(cat['id'], '')), cards))
+
+# 本次必背（examRank==1）
+must_items = [x for x in all_items if x.get('examRank') == 1]
+must_html = ''.join(
+    '<a class="must-link %s" href="#%s"><em>%s</em><b>%s</b><span>%s</span></a>'
+    % ('mn' if x['exam'] == '名解' else 'ln', x['id'], x['exam'], x['id'].upper(), md(x['title']))
+    for x in must_items)
 
 # 最常考（>=4 次）
 hot_items = sorted([x for x in all_items if x['freq'] >= 4], key=lambda x: (-x['freq'], x['id']))
@@ -213,6 +274,60 @@ main{min-width:0}
 .tipbox{margin-top:12px;padding:11px 14px;border-radius:9px;background:#F1F5E9;
   border-left:4px solid var(--green);font:14.5px/1.75 var(--font-body);color:#43502F}
 .tipbox b{color:var(--red);font-family:var(--font-head);margin-right:2px}
+/* 考试情报 */
+.exam-brief{margin-bottom:24px;padding:20px 22px;border-radius:14px;
+  background:linear-gradient(180deg,#FFFDF6,#FFF8E8);border:1px solid #E8D5A8}
+.eb-head{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:14px}
+.eb-head h2{font-size:1.25rem;color:#8A5B18}
+.eb-icon{font-size:1.05em}
+.eb-src{margin-left:auto;font:11.5px var(--font-kai);color:var(--sub)}
+.eb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:10px}
+.eb-cell{padding:10px 12px;border-radius:9px;background:#fff;border:1px solid #EFE2C6}
+.eb-cell b{display:block;margin-bottom:3px;color:var(--red);font:700 12.5px var(--font-head)}
+.eb-cell p{margin:0;font:13px/1.65 var(--font-body);color:#4A4234}
+.eb-cell strong{color:var(--red)}
+/* 历年真题 */
+.realbox{margin-bottom:22px;padding:14px 20px;border-radius:12px;background:#F2F6FA;border:1px solid #C9D8E6}
+.realbox summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;
+  font:700 14.5px var(--font-head);color:var(--blueD)}
+.realbox summary::-webkit-details-marker{display:none}
+.realbox summary em{font:400 12px var(--font-kai);color:var(--sub);font-style:normal;margin-left:auto}
+.rb-ico{font-size:1em}
+.rb-body{margin-top:12px}
+.rb-lead{margin:0 0 12px;font:13px/1.7 var(--font-body);color:#3C4A57}
+.rb-lead strong{color:var(--blueD)}
+.rb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:9px}
+.rb-cell{padding:9px 11px;border-radius:8px;background:#fff;border:1px solid #D5E1EC}
+.rb-cell b{display:block;margin-bottom:2px;color:var(--blueD);font:700 12px var(--font-head)}
+.rb-cell p{margin:0;font:12.5px/1.6 var(--font-body);color:#46525E}
+/* 真题徽章 */
+.real{flex:none;padding:2px 7px;border-radius:5px;background:#EAF1F8;border:1px solid #B9CDE0;
+  color:#3E5F7D;font:700 10.5px var(--font-head);white-space:nowrap}
+/* 本次必背 */
+.mustbox{margin-bottom:28px;padding:18px 22px;border-radius:14px;background:#FFF4F0;border:1px solid #EBC3BB}
+.mb-head h2{font-size:1.25rem;color:var(--red)}
+.mb-head p{margin:3px 0 13px;font:12.5px var(--font-kai);color:#8A4A42}
+.must-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.must-link{display:flex;align-items:baseline;gap:8px;padding:8px 11px;border-radius:8px;
+  background:#fff;border:1px solid #EFD3CD;text-decoration:none;color:var(--ink);font-size:13.5px}
+.must-link:hover{border-color:var(--red)}
+.must-link em{flex:none;font-style:normal;font:700 10.5px var(--font-head);padding:1px 5px;border-radius:4px}
+.must-link.mn em{background:var(--red);color:#fff}
+.must-link.ln em{background:var(--violet);color:#fff}
+.must-link b{flex:none;color:var(--sub);font-size:11px}
+.must-link span{flex:1;min-width:0;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;line-height:1.45}
+/* 本次考法徽章 */
+.exam{flex:none;padding:2px 8px;border-radius:999px;font:700 11px var(--font-head);white-space:nowrap}
+.exam.mn{background:var(--red);color:#fff}
+.exam.mn2{background:var(--redL);color:var(--red);border:1px solid #E0B0A8}
+.exam.ln{background:var(--violet);color:#fff}
+.exam.ln2{background:var(--violetL);color:var(--violet);border:1px solid #C9BBD8}
+.exam.sel{background:#F2EEE3;color:#6B6255;border:1px solid var(--line)}
+.exam.ign{background:transparent;color:#A79E8C;border:1px dashed #D6CDB8}
+/* 分类考法行 */
+.cat-exam{margin:8px 0 0;padding:7px 11px;border-radius:7px;background:#FFF6E4;
+  border-left:3px solid var(--gold);font:12.5px/1.6 var(--font-kai);color:#6B4A1E}
 .qtype{flex:none;padding:2px 8px;border-radius:999px;border:1px solid var(--line);
   color:var(--sub);font:12px var(--font-kai)}
 .freq{flex:none;padding:2px 9px;border-radius:999px;font:700 11.5px var(--font-head);white-space:nowrap}
@@ -220,10 +335,15 @@ main{min-width:0}
 .freq.mid{background:var(--goldL);color:#8A5B18;border:1px solid var(--gold)}
 .freq.low{background:var(--greenL);color:#4F6634;border:1px solid var(--green)}
 .freq.none{background:#F2EEE3;color:var(--sub);border:1px solid var(--line)}
-.ans{margin:0;padding-left:22px}
-.ans li{margin:5px 0;padding-left:2px}
-.ans li::marker{color:var(--blue);font-weight:700}
-.qcard.hot .ans li::marker{color:var(--red)}
+.ans{margin:0;padding-left:24px;list-style:none;counter-reset:q}
+.ans li{margin:5px 0;padding-left:5px;position:relative;counter-increment:q}
+.ans li::before{content:counter(q) ".";position:absolute;left:-24px;width:18px;
+  color:var(--blue);font-weight:700;text-align:right}
+.ans li.sec{counter-increment:none;list-style:none;margin:14px 0 4px -24px;padding:3px 0 3px 10px;
+  border-left:3px solid var(--blue);font:700 1.02em var(--font-head);color:var(--blueD);background:var(--blueL);border-radius:0 5px 5px 0}
+.ans li.sec::before{content:none}
+.qcard.hot .ans li.sec{border-left-color:var(--red);background:var(--redL);color:var(--red)}
+.qcard.hot .ans li::before{color:var(--red)}
 .qfoot{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:14px;padding-top:10px;border-top:1px dashed var(--line)}
 .ex-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;
   border:1px solid var(--gold);background:var(--goldL);color:#7A4E12;
@@ -327,14 +447,14 @@ html_doc = '''<!doctype html>
   <h1>考前大题速背</h1>
   <p class="lede">按 <b>生理 · 病生 · 病理 · 药理</b> 四类整理，只收泌尿系统当前要考的内容。每条给出可直接背诵的分点答案、考频（来自「泡面往年」的次数标注）与一段通俗解释——解释默认折叠，点开才看，避免干扰背诵。</p>
   <div class="hero-meta">
-    <span><b>%d</b> 条</span><span>名解 <b>%d</b></span><span>简答 <b>%d</b></span><span>论述 <b>%d</b></span>
+    <span><b>%d</b> 条</span><span>本次必背 <b>%d</b></span><span>名解 <b>%d</b></span><span>简答 <b>%d</b></span><span>论述 <b>%d</b></span>
     <span>★ 标红 = 考过 <b>4</b> 次及以上</span>
   </div>
   <div class="hero-ctas">
     <a class="hero-cta" href="mn/organ3.html">📖 考前速记<em>知识点版</em></a>
     <a class="hero-cta ghost" href="drill.html?s=organ3">✎ 刷题<em>344 题</em></a>
     <a class="hero-cta ghost" href="exam5/index.html">🎯 模拟卷<em>3 套</em></a>
-    <a class="hero-cta ghost" href="pdf/organ3-dati.pdf" download="器官系统基础IV-考前大题速背.pdf" title="导出本页为 PDF（A4，含题干、答案、考频、重点提示与示意图）">⇩ 导出大题速背<em>PDF · 48 页</em></a>
+    <a class="hero-cta ghost" href="pdf/organ3-dati.pdf" download="器官系统基础IV-考前大题速背.pdf" title="导出本页为 PDF（A4，含题干、答案、考频、重点提示与示意图）">⇩ 导出大题速背<em>PDF · 65 页</em></a>
     <a class="hero-cta ghost" href="pdf/organ3.pdf" download>⇩ 速记 PDF<em>知识点版</em></a>
   </div>
 </div></header>
@@ -345,6 +465,7 @@ html_doc = '''<!doctype html>
   <input class="side-search" id="sideQ" type="search" placeholder="搜索题目 / 关键词…" aria-label="搜索题目">
   <p id="searchHint" style="margin:-4px 0 8px;font:12px var(--font-kai);color:var(--sub)"></p>
   %s
+  <a class="nav-hot" href="#must" style="background:#FBE9E4;color:#A8413A">★ 本次必背 · %d 条</a>
   <a class="nav-hot" href="#hot">★ 最常考（≥4 次）· %d 条</a>
   <div class="nav-legend">
     <div><i style="background:#C0554A"></i>考过 4 次及以上（标红）</div>
@@ -354,6 +475,39 @@ html_doc = '''<!doctype html>
   </div>
 </aside>
 <main>
+  <section class="exam-brief" id="exam">
+    <div class="eb-head"><span class="eb-icon" aria-hidden="true">📋</span><h2>本次考试情报</h2>
+      <span class="eb-src">来源：教员与课代表群消息（11-24～11-26）</span></div>
+    <div class="eb-grid">
+      <div class="eb-cell"><b>题型与分值</b><p>选择 <strong>40</strong> 道 · 名解 <strong>6</strong> 道 · 论述 <strong>3</strong> 道；各科分值按学时占比：生理 4 / 病理 2 / 病生 10 / 药理 7。</p></div>
+      <div class="eb-cell"><b>名解 6 道</b><p>病生 <strong>4</strong>（一章一个）· 病理 <strong>1</strong> · 药理 <strong>1</strong>；名解<strong>没有英文</strong>。</p></div>
+      <div class="eb-cell"><b>论述 3 道</b><p>生理 <strong>1</strong> · 病生 <strong>1</strong>（休克）· 药理 <strong>1</strong>；<strong>病理没有论述</strong>。</p></div>
+      <div class="eb-cell"><b>药理怎么考</b><p>论述考<strong>整体</strong>（机制 / 耐药 / 应用原则）；各药特点与<strong>利尿药只考选择题</strong>。</p></div>
+      <div class="eb-cell"><b>不考</b><p>抗寄生虫药（自学）· 名解无英文；其余基本根据 PPT。</p></div>
+      <div class="eb-cell"><b>抗菌药概论提示</b><p>概论里的概念可出名解（如<strong>抗生素后效应</strong>）；机制与耐药机制偏整体，可作论述。</p></div>
+    </div>
+  </section>
+
+  <details class="realbox" id="real" open>
+    <summary><span class="rb-ico" aria-hidden="true">🗂️</span>历年真题（器官 3 相关）<em>点击展开 16/17/19/20 级清单</em></summary>
+    <div class="rb-body">
+      <p class="rb-lead">来自「资料」里的历年真题记录。反复出现的是：<strong>急性肾衰少尿期（4 次）</strong>、<strong>等渗性脱水 / DIC / 碱剩余 / 肾性高血压 / 失血性休克代偿（各 3 次）</strong>。</p>
+      <div class="rb-grid">
+        <div class="rb-cell"><b>16 临床</b><p>肾（肺）性高血压 · DIC · 等渗性脱水 · 急性肾衰少尿期 · 失血性休克的代偿</p></div>
+        <div class="rb-cell"><b>17 级</b><p>DIC · 原尿返漏 · 碱剩余（BE）· 何种脱水引起失液性休克</p></div>
+        <div class="rb-cell"><b>19 临床</b><p>碱剩余 · 自身输血 · 哪一种脱水会休克（原因）</p></div>
+        <div class="rb-cell"><b>20 临床</b><p>反常性碱性尿 · 超极化阻滞 · 急性反应期蛋白 · 微血管病性溶血性贫血 · 应激原 · 肾性骨营养不良 · 低渗性脱水 · 反常性酸性尿 · 休克Ⅰ期表现及意义 · 休克难治的原因</p></div>
+        <div class="rb-cell"><b>划重点</b><p>等渗性脱水 · DIC · 肾性高血压 · 急性肾功能不全少尿期 · 失血性休克代偿 · 三种脱水比较 · 水肿机制 · 酸碱四型计算大题</p></div>
+        <div class="rb-cell"><b>用法</b><p>带「真题」徽章的条目 = 历年考过；结合「必背」徽章判断本次优先级。</p></div>
+      </div>
+    </div>
+  </details>
+
+  <section class="mustbox" id="must">
+    <div class="mb-head"><h2>★ 本次必背 · 9 条</h2><p>按情报只背这 9 条：名解 6（病生 4 · 病理 1 · 药理 1）＋ 论述 3（生理 1 · 病生 1 · 药理 1）。</p></div>
+    <div class="must-grid">%s</div>
+  </section>
+
   <section class="hotbox" id="hot">
     <h2>★ 最常考 · 优先背这些</h2>
     <p>考过 4 次及以上，或课件明确标为重点；按次数从高到低排列。</p>
@@ -368,8 +522,8 @@ html_doc = '''<!doctype html>
 <button class="to-top" type="button" aria-label="回到顶部"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 19V6M12 6l-6 6M12 6l6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 <script>%s</script>
 </body>
-</html>''' % (CSS, len(all_items), n_term, n_short, n_essay,
-               ''.join(nav), len(hot_items), hot_html, '\n'.join(sections), JS)
+</html>''' % (CSS, len(all_items), len(must_items), n_term, n_short, n_essay,
+               ''.join(nav), len(must_items), len(hot_items), must_html, hot_html, '\n'.join(sections), JS)
 
 OUT.write_text(html_doc, encoding='utf-8', newline='\n')
 print('written', OUT, len(html_doc), 'bytes')

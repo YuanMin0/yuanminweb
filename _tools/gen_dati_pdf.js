@@ -42,7 +42,7 @@ const PRINT_CSS = `
   @page { size: A4; }
   html, body { background:#fff !important; }
   body { font-size: 10.5pt !important; line-height: 1.62 !important; }
-  .topbar, .sidebar, .hero-ctas, .ex-btn, .to-top, .hotbox, .footer, .cat-en { display:none !important; }
+  .topbar, .sidebar, .hero-ctas, .ex-btn, .to-top, .hotbox, .mustbox, .footer, .cat-en { display:none !important; }
   .layout { display:block !important; width:100% !important; margin:0 !important; }
   main { padding:0 !important; background:#fff !important; border:0 !important; box-shadow:none !important; }
   .hero { background:#fff !important; color:#000 !important; padding:0 0 8pt !important; border-bottom:1.5pt solid #333 !important; }
@@ -62,6 +62,11 @@ const PRINT_CSS = `
   .qid { background:#eee !important; color:#333 !important; }
   .qcard.hot .qid { background:#F6DDD8 !important; color:#8C2F26 !important; }
   .qhead { margin-bottom:5pt !important; gap:4pt 7pt !important; }
+  .exam { font-size:7.5pt !important; padding:1pt 5pt !important; }
+  .exam.mn { background:#B03A2E !important; color:#fff !important; }
+  .exam.ln { background:#6B5B84 !important; color:#fff !important; }
+  .exam.sel, .exam.ign { background:#fff !important; color:#666 !important; border:0.4pt solid #bbb !important; }
+  .cat-exam { font-size:8pt !important; color:#6B4A1E !important; background:#FFF6E4 !important; }
   .qhead h3 { font-size:11pt !important; }
   .qtype { color:#555 !important; font-size:8pt !important; }
   .freq { font-size:8pt !important; padding:1pt 6pt !important; }

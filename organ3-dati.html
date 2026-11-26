@@ -2069,11 +2069,28 @@ main{min-width:0}
     }
   });
 
-  /* 滚动监听：高亮当前分类 + 阅读进度 */
+  /* 滚动监听：高亮当前分类 + 侧栏跟随 + 阅读进度 */
   var pbar=document.getElementById('pbar');
   var cats=[].slice.call(document.querySelectorAll('.cat'));
   var navLinks=[].slice.call(document.querySelectorAll('.nav-cat'));
-  var ticking=false;
+  var sbSide=document.querySelector('.sidebar');
+  var lastCat=null, sbHold=0, ticking=false;
+  if(sbSide){
+    ['wheel','touchstart','pointerdown'].forEach(function(ev){
+      sbSide.addEventListener(ev, function(){ sbHold=Date.now(); }, {passive:true});
+    });
+  }
+  function followCat(link){
+    if(!link || !sbSide) return;
+    if(document.body.classList.contains('side-collapsed')) return;
+    if(Date.now()-sbHold < 1600) return;
+    var lr=link.getBoundingClientRect(), sr=sbSide.getBoundingClientRect();
+    var pad=Math.min(90, sbSide.clientHeight*0.24);
+    if(lr.top < sr.top+pad || lr.bottom > sr.bottom-pad){
+      var target=sbSide.scrollTop + (lr.top-sr.top) - sbSide.clientHeight/2 + lr.height/2;
+      sbSide.scrollTo({top:Math.max(0,target), behavior:'smooth'});
+    }
+  }
   function onScroll(){
     if(ticking) return;
     ticking=true;
@@ -2089,14 +2106,11 @@ main{min-width:0}
         a.classList.toggle('active', on);
         if(on) activeLink=a;
       });
-      /* 侧栏内部滚动跟随当前分类 */
-      var sb=document.querySelector('.sidebar');
-      if(activeLink && sb && !document.body.classList.contains('side-collapsed')){
-        var lr=activeLink.getBoundingClientRect(), sr=sb.getBoundingClientRect();
-        if(lr.top<sr.top+16 || lr.bottom>sr.bottom-16){
-          var target=sb.scrollTop + (lr.top - sr.top) - sb.clientHeight/2 + lr.height/2;
-          sb.scrollTo({top:Math.max(0,target),behavior:'smooth'});
-        }
+      /* 内容到哪，侧栏跟到哪：仅在分类变化时跟随 */
+      if(cur && cur.id!==lastCat){
+        var isFirst = lastCat===null;
+        lastCat=cur.id;
+        if(!isFirst) followCat(activeLink);
       }
       if(pbar){
         var h=document.documentElement.scrollHeight-window.innerHeight;

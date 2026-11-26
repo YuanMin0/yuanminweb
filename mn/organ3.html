@@ -28,7 +28,7 @@
     .hero p { max-width:850px; margin:16px 0 0; color:#F2F8E0; }
     .hero-meta { display:flex; flex-wrap:wrap; gap:12px 26px; margin-top:22px; color:#D6E7B4; font:16px var(--font-kai); }
     .mobile-nav { display:none; }
-    .layout { display:grid; grid-template-columns:minmax(250px,290px) minmax(0,1fr); gap:28px; width:min(1440px,calc(100% - 40px)); margin:28px auto 70px; align-items:start; }
+    .layout { display:grid; grid-template-columns:minmax(266px,300px) minmax(0,1fr); gap:28px; width:min(1440px,calc(100% - 40px)); margin:28px auto 70px; align-items:start; }
     .sidebar { position:sticky; top:18px; max-height:calc(100vh - 36px); overflow:auto; padding:18px 14px; background:rgba(255,255,255,.88); border:1px solid rgba(220,229,225,.9); border-radius:10px; box-shadow:var(--shadow); backdrop-filter:blur(22px); }
     .sidebar-title { margin:0 0 12px; padding:0 8px 11px; border-bottom:1px solid var(--gray-200); font:700 16px var(--font-heading); }
     .nav-group { margin-bottom:12px; }
@@ -964,7 +964,7 @@ main p, main li, main td, main th, main dd, main dt,
 
   .layout {
     width:min(1332px,calc(100% - 2 * var(--gutter)));
-    grid-template-columns:minmax(220px,256px) minmax(0,1fr);
+    grid-template-columns:minmax(252px,274px) minmax(0,1fr);
     gap:clamp(20px,3.2vw,48px); margin:clamp(22px,3.9vw,52px) auto 64px;
   }
   .sidebar, .sidebar:hover {
@@ -2460,10 +2460,29 @@ body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-event
 <script id="nav-enhance-js">
 (function(){
   var chapters=[].slice.call(document.querySelectorAll('section.chapter'));
-  var sb=document.querySelector('.side-list');
+  var sb=document.querySelector('.sidebar');
   var linksCh=[].slice.call(document.querySelectorAll('.nav-chapter'));
   var linksSec=[].slice.call(document.querySelectorAll('.nav-section'));
-  var lastId=null, ticking=false;
+  var lastId=null, ticking=false, sbHold=0;
+
+  /* 用户手动滚侧栏后 1.6s 内不自动跟随，避免抢操作 */
+  if(sb){
+    ['wheel','touchstart','pointerdown'].forEach(function(ev){
+      sb.addEventListener(ev, function(){ sbHold=Date.now(); }, {passive:true});
+    });
+  }
+
+  function followSide(link){
+    if(!link || !sb) return;
+    if(document.body.classList.contains('side-collapsed')) return;
+    if(Date.now()-sbHold < 1600) return;
+    var lr=link.getBoundingClientRect(), sr=sb.getBoundingClientRect();
+    var pad=Math.min(110, sb.clientHeight*0.26);
+    if(lr.top < sr.top+pad || lr.bottom > sr.bottom-pad){
+      var target=sb.scrollTop + (lr.top-sr.top) - sb.clientHeight/2 + lr.height/2;
+      sb.scrollTo({top:Math.max(0,target), behavior:'smooth'});
+    }
+  }
 
   function onScroll(){
     if(ticking) return;
@@ -2482,6 +2501,16 @@ body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-event
       linksSec.forEach(function(a){
         a.classList.toggle('active', !!curBlk && a.getAttribute('href')==='#'+curBlk.id);
       });
+      /* 内容到哪，侧栏跟到哪：仅在当前项变化时跟随 */
+      var cur=curBlk?('#'+curBlk.id):(curCh?('#'+curCh.id):null);
+      if(cur && cur!==lastId){
+        var isFirst = lastId===null;
+        lastId=cur;
+        if(!isFirst){
+          followSide(document.querySelector('.nav-section[href="'+cur+'"]') ||
+                     document.querySelector('.nav-chapter[href="'+cur+'"]'));
+        }
+      }
       ticking=false;
     });
   }

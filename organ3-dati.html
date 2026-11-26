@@ -25,12 +25,20 @@ h1,h2{font-family:var(--font-title);font-weight:400;margin:0}
 h3{font-family:var(--font-head);margin:0;font-size:1.06em;line-height:1.5}
 b{font-family:var(--font-head);color:var(--blueD)}
 a{color:var(--blueD)}
+.pbar{position:fixed;top:0;left:0;z-index:120;height:2.5px;width:0;
+  background:linear-gradient(90deg,var(--gold),#C0554A);box-shadow:0 0 8px rgba(192,85,74,.5);
+  transition:width .08s linear;pointer-events:none}
 .topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:14px;
   padding:10px 22px;background:rgba(250,246,236,.94);border-bottom:1px solid var(--line);
   backdrop-filter:blur(12px);font:13px var(--font-head)}
 .topbar a{text-decoration:none;color:var(--sub)}
 .topbar a:hover{color:var(--blueD)}
 .topbar .sep{color:var(--line)}
+.side-toggle{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;padding:0;border:1px solid var(--line);border-radius:8px;background:#fff;
+  color:var(--sub);cursor:pointer;transition:border-color .2s,color .2s,background .2s}
+.side-toggle:hover{border-color:var(--gold);color:var(--blueD);background:#FFFDF6}
+.side-toggle:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .hero{position:relative;overflow:hidden;padding:54px 26px 44px;color:#FFF9EC;
   background:linear-gradient(135deg,#3E5F7D 0%,#5B84A8 55%,#7FA0BE 100%)}
 .hero::after{content:"";position:absolute;inset:auto -10% -60% -10%;height:220px;
@@ -49,24 +57,76 @@ a{color:var(--blueD)}
   box-shadow:0 10px 22px -14px rgba(0,0,0,.5)}
 .hero-cta.ghost{background:rgba(255,255,255,.10);color:#FFF6E2;border-color:rgba(255,235,200,.55)}
 .hero-cta em{font:400 12px var(--font-kai);font-style:normal;opacity:.8}
-.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:26px;
-  width:min(1280px,calc(100% - 36px));margin:26px auto 80px;align-items:start}
+.layout{display:grid;grid-template-columns:278px minmax(0,1fr);gap:26px;
+  width:min(1280px,calc(100% - 36px));margin:26px auto 80px;align-items:start;
+  transition:grid-template-columns .36s cubic-bezier(.22,.61,.36,1),gap .36s}
+body.side-collapsed .layout{grid-template-columns:0 minmax(0,1fr);gap:0}
+body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-events:none;overflow:hidden}
 .sidebar{position:sticky;top:64px;max-height:calc(100vh - 84px);overflow:auto;
-  padding:16px 12px;background:var(--paper2);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
-.side-title{margin:0 0 10px;padding:0 6px 8px;border-bottom:1px solid var(--line);
-  font:700 13px var(--font-head);color:var(--sub);letter-spacing:.08em}
-.side-search{width:100%;margin-bottom:12px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;
-  background:#fff;font:14px var(--font-body);color:var(--ink)}
-.side-search:focus{outline:2px solid var(--blue);outline-offset:1px}
-.nav-cat{display:flex;justify-content:space-between;align-items:center;gap:8px;
-  padding:8px 8px;border-radius:7px;text-decoration:none;color:var(--ink);font:600 13.5px var(--font-head)}
-.nav-cat em{font:400 12px var(--font-kai);color:var(--sub);font-style:normal}
-.nav-cat:hover{background:var(--blueL)}
-.nav-hot{display:block;margin-top:10px;padding:9px 8px;border-radius:7px;text-decoration:none;
-  color:var(--red);font:700 13px var(--font-head);background:var(--redL)}
-.nav-legend{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
-  font:12px/1.7 var(--font-kai);color:var(--sub)}
-.nav-legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+  transition:opacity .26s ease,transform .3s ease;
+  padding:18px 14px 16px;border-radius:16px;
+  background:linear-gradient(180deg,#FFFDF7 0%,#FBF7EB 100%);
+  border:1px solid #E7DCC5;
+  box-shadow:0 20px 50px -34px rgba(62,95,125,.55),inset 0 1px 0 #fff;
+  scrollbar-width:thin;scrollbar-color:#D9CDB4 transparent}
+.sidebar::-webkit-scrollbar{width:7px}
+.sidebar::-webkit-scrollbar-thumb{background:#DED3BB;border-radius:99px}
+.sidebar::-webkit-scrollbar-thumb:hover{background:#C9BB9C}
+.sidebar::-webkit-scrollbar-track{background:transparent}
+.side-title{display:flex;align-items:center;gap:7px;margin:0 0 12px;padding:0 4px 10px;
+  border-bottom:1px solid #EADFC9;font:700 12.5px var(--font-head);color:#8A7A5E;letter-spacing:.14em}
+.side-title::before{content:"";width:3px;height:13px;border-radius:2px;
+  background:linear-gradient(180deg,var(--gold),var(--red))}
+.side-search{width:100%;margin-bottom:10px;padding:9px 12px 9px 32px;border:1px solid #E4D9C1;border-radius:10px;
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23A99C82' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E") no-repeat 10px center;
+  font:14px var(--font-body);color:var(--ink);transition:border-color .22s,box-shadow .22s}
+.side-search::placeholder{color:#B3A78D}
+.side-search:focus{outline:0;border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,167,94,.18)}
+.nav-cat{position:relative;display:flex;align-items:center;gap:9px;
+  margin-bottom:4px;padding:9px 8px 9px 11px;border-radius:10px;border:1px solid transparent;
+  text-decoration:none;color:var(--ink);font:600 12.8px var(--font-head);
+  transition:background .2s,transform .2s,border-color .2s,box-shadow .2s}
+.nav-cat::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:16px;border-radius:2px;background:#DDD2B9;transition:height .22s,background .22s}
+.nav-cat .nc-ico{flex:none;width:13px;text-align:center;font:400 12px var(--font-title);
+  color:#A99C82;font-style:normal;transition:color .2s}
+.nav-cat span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-cat em{flex:none;min-width:22px;padding:1px 6px;border-radius:99px;background:#F1EADA;
+  color:#8A7A5E;font:700 11px var(--font-head);font-style:normal;text-align:center;
+  transition:background .2s,color .2s}
+.nav-cat:hover{background:#fff;border-color:#EBE0C9;transform:translateX(2px);
+  box-shadow:0 6px 16px -14px rgba(0,0,0,.5)}
+.nav-cat:hover::before{background:var(--gold);height:20px}
+.nav-cat[data-cat="physio"]::before{background:rgba(91,132,168,.35)}
+.nav-cat[data-cat="patho"]::before{background:rgba(192,85,74,.32)}
+.nav-cat[data-cat="path"]::before{background:rgba(142,123,168,.35)}
+.nav-cat[data-cat="pharm"]::before{background:rgba(143,169,107,.38)}
+.nav-cat[data-cat="physio"].active .nc-ico,.nav-cat[data-cat="physio"]:hover .nc-ico{color:var(--blue)}
+.nav-cat[data-cat="patho"].active .nc-ico,.nav-cat[data-cat="patho"]:hover .nc-ico{color:var(--red)}
+.nav-cat[data-cat="path"].active .nc-ico,.nav-cat[data-cat="path"]:hover .nc-ico{color:var(--violet)}
+.nav-cat[data-cat="pharm"].active .nc-ico,.nav-cat[data-cat="pharm"]:hover .nc-ico{color:var(--green)}
+.nav-cat[data-cat="physio"].active::before,.nav-cat[data-cat="physio"]:hover::before{background:var(--blue)}
+.nav-cat[data-cat="patho"].active::before,.nav-cat[data-cat="patho"]:hover::before{background:var(--red)}
+.nav-cat[data-cat="path"].active::before,.nav-cat[data-cat="path"]:hover::before{background:var(--violet)}
+.nav-cat[data-cat="pharm"].active::before,.nav-cat[data-cat="pharm"]:hover::before{background:var(--green)}
+.nav-cat.active{background:#fff;border-color:#E7D8B6;box-shadow:0 8px 22px -18px rgba(0,0,0,.55)}
+.nav-cat.active::before{height:26px}
+.nav-cat.active span{color:var(--blueD)}
+.nav-cat.active em{background:var(--blueD);color:#fff}
+.nav-hot{position:relative;display:flex;align-items:center;gap:7px;margin-top:6px;padding:10px 12px;
+  border-radius:10px;text-decoration:none;color:#A8413A;font:700 12.5px var(--font-head);
+  background:linear-gradient(135deg,#FDEEE9,#FBE3DC);border:1px solid #F0CFC7;
+  transition:transform .2s,box-shadow .2s,border-color .2s}
+.nav-hot + .nav-hot{margin-top:7px}
+.nav-hot:hover{transform:translateY(-1px);border-color:#E3A79C;box-shadow:0 10px 22px -18px rgba(168,65,58,.8)}
+.nav-hot.gold{color:#7A4E12;background:linear-gradient(135deg,#FDF6E6,#F8EBCE);border-color:#EBD3A6}
+.nav-hot.gold:hover{border-color:#D9B877}
+.nav-legend{margin-top:16px;padding-top:14px;border-top:1px dashed #E2D7BF;
+  font:11.5px/1.9 var(--font-kai);color:#8A7A5E}
+.nav-legend{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px}
+.nav-legend div{display:flex;align-items:center;gap:5px}
+.nav-legend i{display:inline-block;width:8px;height:8px;border-radius:50%;flex:none;
+  box-shadow:0 0 0 2px rgba(255,255,255,.9)}
 main{min-width:0}
 .hotbox{margin-bottom:30px;padding:20px 22px;background:var(--redL);border:1px solid #EBC3BB;border-radius:14px}
 .hotbox h2{font-size:1.35rem;color:var(--red);margin-bottom:4px}
@@ -84,7 +144,12 @@ main{min-width:0}
 .cat-head h2{font-size:clamp(1.5rem,2.6vw,2rem);color:var(--blueD)}
 .cat-desc{max-width:820px;margin:8px 0 0;font:13.5px/1.7 var(--font-kai);color:var(--sub)}
 .qcard{position:relative;margin-bottom:18px;padding:20px 22px 16px;background:#fff;
-  border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:10px;box-shadow:0 6px 20px -16px rgba(0,0,0,.35)}
+  border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:12px;
+  box-shadow:0 6px 20px -16px rgba(0,0,0,.35);
+  transition:box-shadow .26s ease,transform .26s ease,border-color .26s ease}
+.qcard:hover{box-shadow:0 18px 42px -26px rgba(62,95,125,.55);transform:translateY(-2px);
+  border-color:#DCD2BB}
+.qcard.hot:hover{box-shadow:0 18px 42px -26px rgba(192,85,74,.55)}
 .qcard.hot{border-left-color:var(--red);background:linear-gradient(180deg,#FFF9F7,#fff 120px)}
 .qhead{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-bottom:12px}
 .qid{flex:none;padding:2px 7px;border-radius:5px;background:var(--blueL);color:var(--blueD);
@@ -177,12 +242,18 @@ main{min-width:0}
 .ex-btn[aria-expanded="true"]{background:var(--gold);color:#3A2A12}
 .ex-btn .bulb{font-size:13px}
 .src{flex:1 1 240px;min-width:0;font:12px/1.55 var(--font-kai);color:var(--sub);text-align:right}
-.ex{margin-top:12px;padding:14px 16px;border-radius:10px;background:var(--goldL);
-  border:1px solid #EBD3A6;border-left:4px solid var(--gold);animation:exin .22s ease}
-@keyframes exin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
-.ex-inner{font:15.5px/1.8 var(--font-body);color:#4A3A22}
+.ex{display:grid;grid-template-rows:0fr;opacity:0;margin-top:0;
+  border-radius:12px;background:linear-gradient(180deg,#FDF5E4,#FBF0DA);
+  border:0 solid #EBD3A6;border-left-width:0;
+  transition:grid-template-rows .36s cubic-bezier(.22,.61,.36,1),opacity .26s ease,
+    margin-top .32s ease,border-width .32s ease}
+.ex.open{grid-template-rows:1fr;opacity:1;margin-top:13px;border-width:1px;border-left-width:4px}
+.ex > .ex-inner{overflow:hidden;min-height:0;padding:0 16px;transition:padding .32s ease}
+.ex.open > .ex-inner{padding:14px 16px 15px}
+.ex-inner{font:15.5px/1.82 var(--font-body);color:#4A3A22}
 .ex-inner p{margin:0 0 9px}
 .ex-inner p:last-child{margin-bottom:0}
+.ex-inner b{color:#8A5B18}
 .ex-inner b{color:#8A5B18}
 .fig{margin:14px 0 2px;padding:10px;background:var(--paper2);border:1px solid var(--line);border-radius:10px;
   max-width:100%;overflow-x:auto}
@@ -214,10 +285,14 @@ main{min-width:0}
 </style>
 </head>
 <body>
+<div class="pbar" id="pbar" aria-hidden="true"></div>
 <div class="topbar">
   <a href="index.html">MediLearn</a><span class="sep">/</span>
   <a href="subject.html?s=organ3">器官系统基础IV</a><span class="sep">/</span>
   <span>考前大题速背</span>
+  <button class="side-toggle" id="sideToggle" type="button" aria-label="收起侧栏" aria-expanded="true" title="收起 / 展开侧栏">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
 </div>
 <header class="hero"><div class="hero-inner">
   <p class="eyebrow">ORGAN SYSTEM BASICS IV · 2026 秋</p>
@@ -241,13 +316,13 @@ main{min-width:0}
   <p class="side-title">分类目录</p>
   <input class="side-search" id="sideQ" type="search" placeholder="搜索题目 / 关键词…" aria-label="搜索题目">
   <p id="searchHint" style="margin:-4px 0 8px;font:12px var(--font-kai);color:var(--sub)"></p>
-  <a class="nav-cat" href="#cat-physio"><span>一、生理 · 泌尿</span><em>23</em></a><a class="nav-cat" href="#cat-patho"><span>二、病生 · 水盐酸碱与肾衰</span><em>33</em></a><a class="nav-cat" href="#cat-path"><span>三、病理 · 泌尿系统疾病</span><em>14</em></a><a class="nav-cat" href="#cat-pharm"><span>四、药理 · 利尿药与抗菌药</span><em>21</em></a>
-  <a class="nav-hot" href="#must" style="background:#FBE9E4;color:#A8413A">★ 本次必背 · 9 条</a>
-  <a class="nav-hot" href="#hot">★ 最常考（≥4 次）· 10 条</a>
+  <a class="nav-cat" href="#cat-physio" data-cat="physio" title="一、生理 · 泌尿"><i class="nc-ico" aria-hidden="true">Ⅰ</i><span>一、生理 · 泌尿</span><em>23</em></a><a class="nav-cat" href="#cat-patho" data-cat="patho" title="二、病生 · 水盐酸碱 / 休克 / 应激 / 肾衰"><i class="nc-ico" aria-hidden="true">Ⅱ</i><span>二、病生 · 水电酸碱肾衰</span><em>33</em></a><a class="nav-cat" href="#cat-path" data-cat="path" title="三、病理 · 泌尿系统疾病"><i class="nc-ico" aria-hidden="true">Ⅲ</i><span>三、病理 · 泌尿疾病</span><em>14</em></a><a class="nav-cat" href="#cat-pharm" data-cat="pharm" title="四、药理 · 利尿药与抗菌药"><i class="nc-ico" aria-hidden="true">Ⅳ</i><span>四、药理 · 利尿与抗菌</span><em>21</em></a>
+  <a class="nav-hot" href="#must"><span aria-hidden="true">★</span>本次必背 · 9 条</a>
+  <a class="nav-hot gold" href="#hot"><span aria-hidden="true">🔥</span>最常考（≥4 次）· 10 条</a>
   <div class="nav-legend">
-    <div><i style="background:#C0554A"></i>考过 4 次及以上（标红）</div>
-    <div><i style="background:#D9A75E"></i>考过 2～3 次</div>
-    <div><i style="background:#8FA96B"></i>考过 1 次</div>
+    <div><i style="background:#C0554A"></i>≥4 次（标红）</div>
+    <div><i style="background:#D9A75E"></i>2～3 次</div>
+    <div><i style="background:#8FA96B"></i>1 次</div>
     <div><i style="background:#E0D6C0"></i>未标次数</div>
   </div>
 </aside>
@@ -312,7 +387,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p01"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·名解 1；2026 秋课件 13 泌尿生理一</span>
   </div>
-  <div class="ex" id="ex-p01" hidden><div class="ex-inner"><p>肾小球旁器就是肾小球入口处的监测站，盯着血压和盐分，随时调节肾素。</p><p>把肾小球想成收费站，入球小动脉是入口。入口旁站着三个岗位：球旁细胞是血压监测员，血压低就分泌肾素；致密斑贴在远曲小管起始部，专门尝小管液里的 NaCl 浓度；系膜细胞是联络员，把信号传给球旁细胞。三者加极周细胞，合称肾小球旁器。</p><p>血压一低、盐一少，肾素—血管紧张素—醛固酮系统被点燃，全身血管收缩、肾脏保钠保水。</p><p>易错：致密斑只负责感受，分泌肾素的是球旁细胞。</p></div></div>
+  <div class="ex" id="ex-p01"><div class="ex-inner"><p>肾小球旁器就是肾小球入口处的监测站，盯着血压和盐分，随时调节肾素。</p><p>把肾小球想成收费站，入球小动脉是入口。入口旁站着三个岗位：球旁细胞是血压监测员，血压低就分泌肾素；致密斑贴在远曲小管起始部，专门尝小管液里的 NaCl 浓度；系膜细胞是联络员，把信号传给球旁细胞。三者加极周细胞，合称肾小球旁器。</p><p>血压一低、盐一少，肾素—血管紧张素—醛固酮系统被点燃，全身血管收缩、肾脏保钠保水。</p><p>易错：致密斑只负责感受，分泌肾素的是球旁细胞。</p></div></div>
 </article>
 <article class="qcard" id="p02" data-cat="physio" data-freq="0" data-type="名解" data-text="肾小球滤过作用 当血液流经肾小球毛细血管时，血液中的**水分和小分子溶质**透过肾小球滤过膜，进入肾小囊腔形成**肾小球滤液（原尿）** 的过程。 滤过的结构基础是**滤过膜**（内皮细胞窗孔、基膜、足细胞裂孔膜）与**有效滤过压**。 滤过膜具有**分子屏障**（孔径）与**电荷屏障**（负电荷）双重选择性。">
   <header class="qhead">
@@ -330,7 +405,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p02"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·名解 2</span>
   </div>
-  <div class="ex" id="ex-p02" hidden><div class="ex-inner"><p>肾小球滤过就是血液流经肾小球时过一次筛子，水和小分子漏到肾小囊里形成原尿。</p><p>这张筛子有三层：内皮细胞窗孔挡血细胞、基底膜挡大分子蛋白（主力屏障）、足细胞裂孔膜再兜一遍。它不只按大小筛，还按电荷筛——基底膜带负电，白蛋白也带负电，同性相斥，正常白蛋白漏不出去。肾炎时负电荷丢失，白蛋白漏进尿里，就是蛋白尿。</p><p>一天滤出约 180 L 原尿，99% 被肾小管回收，终尿只剩 1.5 L。</p><p>易错：滤过是被动按压力和孔径筛，主动挑选在肾小管。</p></div></div>
+  <div class="ex" id="ex-p02"><div class="ex-inner"><p>肾小球滤过就是血液流经肾小球时过一次筛子，水和小分子漏到肾小囊里形成原尿。</p><p>这张筛子有三层：内皮细胞窗孔挡血细胞、基底膜挡大分子蛋白（主力屏障）、足细胞裂孔膜再兜一遍。它不只按大小筛，还按电荷筛——基底膜带负电，白蛋白也带负电，同性相斥，正常白蛋白漏不出去。肾炎时负电荷丢失，白蛋白漏进尿里，就是蛋白尿。</p><p>一天滤出约 180 L 原尿，99% 被肾小管回收，终尿只剩 1.5 L。</p><p>易错：滤过是被动按压力和孔径筛，主动挑选在肾小管。</p></div></div>
 </article>
 <article class="qcard hot" id="p03" data-cat="physio" data-freq="6" data-type="名解" data-text="肾小球滤过率（GFR） 单位时间内（每分钟）**两肾生成的超滤液量**。 正常成人约 **125 ml/min**（约 180 L/d）。 可随**体表面积、年龄、性别、环境**等变化。 是衡量**肾功能最重要的指标**；临床用**内生肌酐清除率**近似反映 GFR。 影响因素：有效滤过压、肾血浆流量、滤过膜面积与通透性。">
   <header class="qhead">
@@ -348,7 +423,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p03"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·名解 3（六次）；2026 秋课件 13 泌尿生理一</span>
   </div>
-  <div class="ex" id="ex-p03" hidden><div class="ex-inner"><p>GFR 就是肾脏每分钟能滤出多少原尿，正常约 125 ml/min，是肾功能的「总分」。</p><p>把肾脏想成净水厂：进水约 660 ml/min，约 1/5 被筛出（滤过分数 19%），即 125 ml/min；一天约 180 L，相当于 360 瓶矿泉水，但 99% 被回收，终尿只剩 1.5 L。</p><p>肾功能受损时 GFR 最先下降，下降幅度与肾单位毁损平行，CKD 分期也按它划 1～5 期。</p><p>易错：把 GFR 当成每分钟尿量，两者差一百多倍。</p></div></div>
+  <div class="ex" id="ex-p03"><div class="ex-inner"><p>GFR 就是肾脏每分钟能滤出多少原尿，正常约 125 ml/min，是肾功能的「总分」。</p><p>把肾脏想成净水厂：进水约 660 ml/min，约 1/5 被筛出（滤过分数 19%），即 125 ml/min；一天约 180 L，相当于 360 瓶矿泉水，但 99% 被回收，终尿只剩 1.5 L。</p><p>肾功能受损时 GFR 最先下降，下降幅度与肾单位毁损平行，CKD 分期也按它划 1～5 期。</p><p>易错：把 GFR 当成每分钟尿量，两者差一百多倍。</p></div></div>
 </article>
 <article class="qcard" id="p04" data-cat="physio" data-freq="0" data-type="名解" data-text="滤过分数 **肾小球滤过率与肾血浆流量的比值**，即 GFR / 肾血浆流量。 正常约为 **19%**（125 / 660）。 意义：表示流经肾脏的血浆中，约有 1/5 被滤过到肾小囊形成原尿，反映**滤过效率**。">
   <header class="qhead">
@@ -366,7 +441,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p04"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·名解 4</span>
   </div>
-  <div class="ex" id="ex-p04" hidden><div class="ex-inner"><p>滤过分数就是流经肾脏的血浆里有多大比例被筛出去，正常约 19%。</p><p>每分钟约 660 ml 血浆流进肾脏，其中 125 ml 被滤成原尿，125 ÷ 660 ≈ 19%，差不多五分之一。剩下五分之四继续往前走，被管周毛细血管带走。</p><p>为什么不是 100%？因为有效滤过压有限，而且越往后胶体渗透压越高、滤过越难，到滤过平衡点就停了。</p><p>它和 GFR 是一对：GFR 说滤了多少量，滤过分数说滤得多彻底。</p><p>易错：分母是肾血浆流量，不是肾血流量。</p></div></div>
+  <div class="ex" id="ex-p04"><div class="ex-inner"><p>滤过分数就是流经肾脏的血浆里有多大比例被筛出去，正常约 19%。</p><p>每分钟约 660 ml 血浆流进肾脏，其中 125 ml 被滤成原尿，125 ÷ 660 ≈ 19%，差不多五分之一。剩下五分之四继续往前走，被管周毛细血管带走。</p><p>为什么不是 100%？因为有效滤过压有限，而且越往后胶体渗透压越高、滤过越难，到滤过平衡点就停了。</p><p>它和 GFR 是一对：GFR 说滤了多少量，滤过分数说滤得多彻底。</p><p>易错：分母是肾血浆流量，不是肾血流量。</p></div></div>
 </article>
 <article class="qcard" id="p05" data-cat="physio" data-freq="2" data-type="名解" data-text="有效滤过压 指**促进超滤的动力与对抗超滤的阻力之间的差值**。 **有效滤过压 = 肾小球毛细血管血压 −（血浆胶体渗透压 + 囊内压）**。 肾小球毛细血管血压是**动力**；血浆胶体渗透压与囊内压是**阻力**。 沿毛细血管走行，胶体渗透压逐渐升高，有效滤过压逐渐下降，降至 0 处即**滤过平衡点**。">
   <header class="qhead">
@@ -384,7 +459,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p05"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·名解 5（两次）；2026 秋课件 13 泌尿生理一</span>
   </div>
-  <div class="ex" id="ex-p05" hidden><div class="ex-inner"><p>有效滤过压就是推动滤过的净压力——动力减阻力，正常约 10 mmHg。</p><p>用滤纸过滤豆浆：往下压的力（毛细血管血压，约 45）是动力；滤纸顶回来的力（囊内压，约 10）和豆浆变稠的阻力（胶体渗透压，约 25）是阻力。45 −（25 + 10）= 10 mmHg，这 10 mmHg 才是真正推动滤过的净压力。</p><p>沿毛细血管走，水不断被滤出、蛋白留在管内，胶渗压越来越高，净压力一路下降，降到 0 的那点叫滤过平衡点。肾血浆流量增加时平衡点后移，滤过面积变大、GFR 升高。</p><p>易错：囊内压是阻力，不是动力。</p></div></div>
+  <div class="ex" id="ex-p05"><div class="ex-inner"><p>有效滤过压就是推动滤过的净压力——动力减阻力，正常约 10 mmHg。</p><p>用滤纸过滤豆浆：往下压的力（毛细血管血压，约 45）是动力；滤纸顶回来的力（囊内压，约 10）和豆浆变稠的阻力（胶体渗透压，约 25）是阻力。45 −（25 + 10）= 10 mmHg，这 10 mmHg 才是真正推动滤过的净压力。</p><p>沿毛细血管走，水不断被滤出、蛋白留在管内，胶渗压越来越高，净压力一路下降，降到 0 的那点叫滤过平衡点。肾血浆流量增加时平衡点后移，滤过面积变大、GFR 升高。</p><p>易错：囊内压是阻力，不是动力。</p></div></div>
 </article>
 <article class="qcard" id="p06" data-cat="physio" data-freq="0" data-type="名解" data-text="管-球反馈（tubuloglomerular feedback） 指**小管液流量的变化对单个肾单位肾血流量和肾小球滤过率进行自身调节**的一种机制。 小管液成分受 GFR 影响；当小管液的成分和流量改变时，又可通过反馈机制调节 GFR，使流经远端的小管液成分只在较小范围内变动。 感受器为**致密斑**（感受 NaCl 浓度），效应器为**入球小动脉**。 **GFR 升高 → 致密斑 NaCl 升高 → 入球小动脉收缩 → 肾血浆流量与 GFR 回落**；反之亦然。">
   <header class="qhead">
@@ -402,7 +477,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p06"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·名解 6；2026 秋课件 13 泌尿生理一</span>
   </div>
-  <div class="ex" id="ex-p06" hidden><div class="ex-inner"><p>管-球反馈是肾脏的自动恒温器：滤得太多就关小，滤得太少就开大。</p><p>致密斑贴在远曲小管起始部，实时尝小管液里的 NaCl 浓度。GFR 升高、滤出增多时，流到致密斑的 NaCl 变浓，它立刻让入球小动脉收缩，GFR 回落；GFR 偏低时 NaCl 变淡，入球舒张，GFR 回升。</p><p>这套机制让每个肾单位输出的盐水量保持稳定，和肌源性自身调节一起，保证肾血流量在 80～180 mmHg 内恒定。</p><p>易错：致密斑感受的是 NaCl 浓度，不是血压。</p></div></div>
+  <div class="ex" id="ex-p06"><div class="ex-inner"><p>管-球反馈是肾脏的自动恒温器：滤得太多就关小，滤得太少就开大。</p><p>致密斑贴在远曲小管起始部，实时尝小管液里的 NaCl 浓度。GFR 升高、滤出增多时，流到致密斑的 NaCl 变浓，它立刻让入球小动脉收缩，GFR 回落；GFR 偏低时 NaCl 变淡，入球舒张，GFR 回升。</p><p>这套机制让每个肾单位输出的盐水量保持稳定，和肌源性自身调节一起，保证肾血流量在 80～180 mmHg 内恒定。</p><p>易错：致密斑感受的是 NaCl 浓度，不是血压。</p></div></div>
 </article>
 <article class="qcard" id="p07" data-cat="physio" data-freq="0" data-type="名解" data-text="肾小管和集合管的重吸收作用 指**小管液内的水和溶质通过肾小管上皮细胞的转运而进入管周毛细血管**的过程。 由小管液进入肾小管上皮细胞多为**被动转运**；由上皮细胞进入组织液多为**主动转运**。 重吸收具有**选择性**：葡萄糖、氨基酸几乎全部重吸收，尿素部分重吸收，肌酐不重吸收。 **近端小管**重吸收约 65%～70% 的 Na⁺ 和水，是重吸收的主要部位。">
   <header class="qhead">
@@ -420,7 +495,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p07"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·名解 7</span>
   </div>
-  <div class="ex" id="ex-p07" hidden><div class="ex-inner"><p>重吸收就是肾小管把原尿里还有用的东西捡回来，送回血液。</p><p>原尿像一车刚分拣完的垃圾，混着大量还能用的东西。近端小管是粗加工车间，一口气回收约 65%～70% 的水和钠以及几乎全部葡萄糖、氨基酸；髓袢是浓缩车间；远曲小管和集合管是精加工加开关，靠 ADH 和醛固酮微调。</p><p>回收还很挑食：葡萄糖、氨基酸几乎全收，尿素收一部分，肌酐基本不收。所以原尿 180 L，终尿只有 1.5 L，废物被浓缩了几十倍。</p><p>易错：重吸收是选择性回收，不是把原尿原样抽回。</p></div></div>
+  <div class="ex" id="ex-p07"><div class="ex-inner"><p>重吸收就是肾小管把原尿里还有用的东西捡回来，送回血液。</p><p>原尿像一车刚分拣完的垃圾，混着大量还能用的东西。近端小管是粗加工车间，一口气回收约 65%～70% 的水和钠以及几乎全部葡萄糖、氨基酸；髓袢是浓缩车间；远曲小管和集合管是精加工加开关，靠 ADH 和醛固酮微调。</p><p>回收还很挑食：葡萄糖、氨基酸几乎全收，尿素收一部分，肌酐基本不收。所以原尿 180 L，终尿只有 1.5 L，废物被浓缩了几十倍。</p><p>易错：重吸收是选择性回收，不是把原尿原样抽回。</p></div></div>
 </article>
 <article class="qcard" id="p08" data-cat="physio" data-freq="1" data-type="名解" data-text="肾糖阈 **尿中开始出现葡萄糖时的最低血糖浓度**。 正常人约为 **180 mg/100 ml（10 mmol/L）**。 当血糖超过肾糖阈时，肾小管对葡萄糖的重吸收达到极限，出现**糖尿**。 肾糖阈的个体差异与**有效肾单位数目**有关：肾单位减少（如慢性肾病）时肾糖阈升高。">
   <header class="qhead">
@@ -438,7 +513,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p08"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·名解 8（一次）；2026 秋课件 14 泌尿生理二</span>
   </div>
-  <div class="ex" id="ex-p08" hidden><div class="ex-inner"><p>肾糖阈就是尿里开始出现葡萄糖时的最低血糖浓度，正常约 180 mg/dl（10 mmol/L）。</p><p>肾小管回收葡萄糖靠一群搬运工（SGLT 转运体），数量固定。血糖不高时糖全部能搬回去；血糖升高，搬运工渐渐忙不过来，到某个临界点开始漏糖——这条线就是肾糖阈。</p><p>为什么是 180？因为搬运工总运力有上限（TmG，男约 375、女约 300 mg/min），血糖超过 300 mg/dl 时全部满负荷，再多只能随尿排掉。</p><p>易错：肾糖阈是开始漏糖的血糖线，TmG 是最大回收速率，两者不同。</p></div></div>
+  <div class="ex" id="ex-p08"><div class="ex-inner"><p>肾糖阈就是尿里开始出现葡萄糖时的最低血糖浓度，正常约 180 mg/dl（10 mmol/L）。</p><p>肾小管回收葡萄糖靠一群搬运工（SGLT 转运体），数量固定。血糖不高时糖全部能搬回去；血糖升高，搬运工渐渐忙不过来，到某个临界点开始漏糖——这条线就是肾糖阈。</p><p>为什么是 180？因为搬运工总运力有上限（TmG，男约 375、女约 300 mg/min），血糖超过 300 mg/dl 时全部满负荷，再多只能随尿排掉。</p><p>易错：肾糖阈是开始漏糖的血糖线，TmG 是最大回收速率，两者不同。</p></div></div>
 </article>
 <article class="qcard" id="p09" data-cat="physio" data-freq="0" data-type="名解" data-text="葡萄糖吸收极限量（TmG） 当血糖浓度超过 **300 mg/dl** 时，**全部肾小管对葡萄糖的吸收达到极限**，此时肾小管对葡萄糖的重吸收率即为葡萄糖吸收极限量。 男性约 **375 mg/min**，女性约 **300 mg/min**。 本质是**载体蛋白数量有限**，达到转运饱和。 超过 TmG 后，多余的葡萄糖全部随尿排出。">
   <header class="qhead">
@@ -456,7 +531,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p09"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·名解 9；2026 秋课件 14 泌尿生理二</span>
   </div>
-  <div class="ex" id="ex-p09" hidden><div class="ex-inner"><p>葡萄糖吸收极限量（TmG）就是肾小管一分钟最多能搬回多少葡萄糖，男约 375 mg/min、女约 300 mg/min。</p><p>还是那群搬运工。血糖不断升高，从闲一半到全满负荷，再到再怎么加活也搬不动——这个满负荷的搬运速度就是 TmG，对应血糖约 300 mg/dl。超过这个点，多余的糖全部随尿排出。</p><p>为什么有极限？转运体数量有限、周转率也有限，属于载体饱和。</p><p>临床联系：糖尿病酮症酸中毒时血糖常超过 300，大量葡萄糖留在管腔里把水拽住排出去，形成渗透性利尿，病人严重脱水。</p><p>易错：TmG 是速率，单位 mg/min，不是 mg/dl。</p></div></div>
+  <div class="ex" id="ex-p09"><div class="ex-inner"><p>葡萄糖吸收极限量（TmG）就是肾小管一分钟最多能搬回多少葡萄糖，男约 375 mg/min、女约 300 mg/min。</p><p>还是那群搬运工。血糖不断升高，从闲一半到全满负荷，再到再怎么加活也搬不动——这个满负荷的搬运速度就是 TmG，对应血糖约 300 mg/dl。超过这个点，多余的糖全部随尿排出。</p><p>为什么有极限？转运体数量有限、周转率也有限，属于载体饱和。</p><p>临床联系：糖尿病酮症酸中毒时血糖常超过 300，大量葡萄糖留在管腔里把水拽住排出去，形成渗透性利尿，病人严重脱水。</p><p>易错：TmG 是速率，单位 mg/min，不是 mg/dl。</p></div></div>
 </article>
 <article class="qcard" id="p10" data-cat="physio" data-freq="1" data-type="名解" data-text="渗透性利尿 因**小管液中溶质浓度升高**，**阻碍水的重吸收**，引起的**尿量增加**现象。 机制：小管液渗透压升高 → 水重吸收减少 → 尿量增多。 典型例子：**糖尿病多尿**（血糖超过肾糖阈，尿中葡萄糖增多）、**甘露醇利尿**（不被重吸收，提高小管液渗透压）。 与**水利尿**的区别：渗透性利尿是溶质带走水，水利尿是 ADH 减少致水重吸收减少。">
   <header class="qhead">
@@ -474,7 +549,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p10"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·名解 10（一次）；2026 秋课件 14 泌尿生理二</span>
   </div>
-  <div class="ex" id="ex-p10" hidden><div class="ex-inner"><p>渗透性利尿就是小管液里的溶质太多，把水拽住不让回收，结果尿量增多。</p><p>肾小管回收水靠溶质拉水——钠、葡萄糖被回收时水跟着走。如果管腔里堆了大量不被回收的溶质（甘露醇、高血糖漏出的葡萄糖），管腔渗透压升高，水就被拽在管里出不去，尿量自然增多。</p><p>两个例子：糖尿病多尿，尿里全是糖，糖把水带走；甘露醇脱水降颅压，它不被回收，故意在管腔里占位把水带出去。</p><p>与水利尿的区别：渗透性利尿是溶质带走水，尿渗透压高；水利尿是 ADH 减少，尿渗透压低。</p><p>易错：糖尿病多尿不是 ADH 减少，那是尿崩症。</p></div></div>
+  <div class="ex" id="ex-p10"><div class="ex-inner"><p>渗透性利尿就是小管液里的溶质太多，把水拽住不让回收，结果尿量增多。</p><p>肾小管回收水靠溶质拉水——钠、葡萄糖被回收时水跟着走。如果管腔里堆了大量不被回收的溶质（甘露醇、高血糖漏出的葡萄糖），管腔渗透压升高，水就被拽在管里出不去，尿量自然增多。</p><p>两个例子：糖尿病多尿，尿里全是糖，糖把水带走；甘露醇脱水降颅压，它不被回收，故意在管腔里占位把水带出去。</p><p>与水利尿的区别：渗透性利尿是溶质带走水，尿渗透压高；水利尿是 ADH 减少，尿渗透压低。</p><p>易错：糖尿病多尿不是 ADH 减少，那是尿崩症。</p></div></div>
 </article>
 <article class="qcard" id="p11" data-cat="physio" data-freq="1" data-type="名解" data-text="水利尿 **饮清水引起尿增多**的现象称为水利尿。 机制：饮大量清水 → **血浆晶体渗透压下降** → 下丘脑渗透压感受器刺激减弱 → **ADH 分泌减少** → 远曲小管和集合管对水的重吸收减少 → 尿量增加。 一般在饮水后 **30 min** 尿量开始增加，**1 h** 达高峰。 若饮**生理盐水**，尿量增加不明显（渗透压不变，主要靠容量感受器）。">
   <header class="qhead">
@@ -492,7 +567,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p11"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·名解 11（一次）；2026 秋课件 16 泌尿生理四</span>
   </div>
-  <div class="ex" id="ex-p11" hidden><div class="ex-inner"><p>水利尿就是喝大量白开水后尿量增多，本质是 ADH 被稀释信号关小了。</p><p>身体里有台浓度监测仪（下丘脑渗透压感受器），血液一被稀释就报警水太多，大脑立刻减少抗利尿激素释放。ADH 本是命令集合管抓紧回收水的，它一少，水通道减少，水大量放出去——所以喝完一大杯水，半小时后就想上厕所。</p><p>关键对比：喝生理盐水不会明显利尿。渗透压没变，浓度监测仪不报警，ADH 不减少；只是血容量增加，靠容量感受器轻度抑制 ADH，作用弱得多。</p><p>易错：水利尿的主因是 ADH 减少，不是肾小球滤过增加。</p></div></div>
+  <div class="ex" id="ex-p11"><div class="ex-inner"><p>水利尿就是喝大量白开水后尿量增多，本质是 ADH 被稀释信号关小了。</p><p>身体里有台浓度监测仪（下丘脑渗透压感受器），血液一被稀释就报警水太多，大脑立刻减少抗利尿激素释放。ADH 本是命令集合管抓紧回收水的，它一少，水通道减少，水大量放出去——所以喝完一大杯水，半小时后就想上厕所。</p><p>关键对比：喝生理盐水不会明显利尿。渗透压没变，浓度监测仪不报警，ADH 不减少；只是血容量增加，靠容量感受器轻度抑制 ADH，作用弱得多。</p><p>易错：水利尿的主因是 ADH 减少，不是肾小球滤过增加。</p></div></div>
 </article>
 <article class="qcard" id="p12" data-cat="physio" data-freq="0" data-type="名解" data-text="清除率（clearance） **单位时间内，两肾排出某一物质的总量与该物质血浆浓度的比值**。 即「肾脏每分钟能把多少毫升血浆中的某物质完全清除出去」，单位 ml/min。 **菊粉清除率** = GFR（约 125 ml/min），因菊粉可自由滤过、不被重吸收也不被分泌。 **对氨基马尿酸（PAH）清除率** ≈ 肾血浆流量（约 660 ml/min），因流经肾脏一次即被几乎完全清除。 意义：测定 GFR、肾血浆流量、肾小管转运功能，判断肾功能损害程度与部位。">
   <header class="qhead">
@@ -510,7 +585,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p12"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·名解 12；2026 秋课件 14 泌尿生理二</span>
   </div>
-  <div class="ex" id="ex-p12" hidden><div class="ex-inner"><p>清除率就是肾脏每分钟能把多少毫升血浆里的某物质彻底清干净，单位 ml/min。</p><p>排风扇每分钟能把 125 立方米空气里的烟排净，清除率就是 125 m³/min。肾脏对某物质也一样：每分钟排出多少量，除以血浆浓度，就是清掉了多少体积的血浆。</p><p>它最妙的是一物一用：菊粉只滤过不回收不分泌，清除率等于 GFR（125）；PAH 流经一次几乎被完全清除，清除率约等于肾血浆流量（660）；葡萄糖清除率为 0，说明全部被回收。</p><p>易错：单位是 ml/min，不是 ml。</p></div></div>
+  <div class="ex" id="ex-p12"><div class="ex-inner"><p>清除率就是肾脏每分钟能把多少毫升血浆里的某物质彻底清干净，单位 ml/min。</p><p>排风扇每分钟能把 125 立方米空气里的烟排净，清除率就是 125 m³/min。肾脏对某物质也一样：每分钟排出多少量，除以血浆浓度，就是清掉了多少体积的血浆。</p><p>它最妙的是一物一用：菊粉只滤过不回收不分泌，清除率等于 GFR（125）；PAH 流经一次几乎被完全清除，清除率约等于肾血浆流量（660）；葡萄糖清除率为 0，说明全部被回收。</p><p>易错：单位是 ml/min，不是 ml。</p></div></div>
 </article>
 <article class="qcard" id="p13" data-cat="physio" data-freq="0" data-type="名解" data-text="排尿反射（micturition reflex） 尿液在膀胱内储存达一定量时，即可引起**反射性排尿**，尿液经尿道排出体外。 它是一种**脊髓反射**，初级中枢在**骶髓（S2～S4）**。 **脑的高级中枢（脑桥排尿中枢、大脑皮层）可抑制或加强**其反射过程。 反射弧：膀胱牵张感受器 → 盆神经传入 → 骶髓排尿中枢 → 盆神经传出（逼尿肌收缩）+ 阴部神经抑制（尿道外括约肌舒张）。 临床：骶髓损伤致**尿失禁**；高位脊髓损伤致**尿潴留**（失去高级中枢调控）。">
   <header class="qhead">
@@ -528,7 +603,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p13"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·名解 13；2026 秋课件 16 泌尿生理四</span>
   </div>
-  <div class="ex" id="ex-p13" hidden><div class="ex-inner"><p>排尿反射就是膀胱装到一定量后自动放水的脊髓反射，但大脑可以踩刹车。</p><p>膀胱是个气球，装到 400 ml 左右，壁上牵张感受器报警，信号沿盆神经传到骶髓（S2～S4）排尿中枢，中枢下令逼尿肌收缩、尿道外括约肌舒张，尿就出去了。这是低级自动程序，婴儿和截瘫病人都能完成；成年人能憋尿，是因为脑桥和大脑皮层可以压住它。</p><p>临床联系：骶髓损伤尿失禁（低级中枢没了）；高位脊髓损伤尿潴留（中枢还在但大脑管不了）；盆神经损伤也尿潴留（逼尿肌无力）。</p><p>易错：初级中枢在骶髓，不是腰髓。</p></div></div>
+  <div class="ex" id="ex-p13"><div class="ex-inner"><p>排尿反射就是膀胱装到一定量后自动放水的脊髓反射，但大脑可以踩刹车。</p><p>膀胱是个气球，装到 400 ml 左右，壁上牵张感受器报警，信号沿盆神经传到骶髓（S2～S4）排尿中枢，中枢下令逼尿肌收缩、尿道外括约肌舒张，尿就出去了。这是低级自动程序，婴儿和截瘫病人都能完成；成年人能憋尿，是因为脑桥和大脑皮层可以压住它。</p><p>临床联系：骶髓损伤尿失禁（低级中枢没了）；高位脊髓损伤尿潴留（中枢还在但大脑管不了）；盆神经损伤也尿潴留（逼尿肌无力）。</p><p>易错：初级中枢在骶髓，不是腰髓。</p></div></div>
 </article>
 <article class="qcard" id="p14" data-cat="physio" data-freq="1" data-type="简答" data-text="两类肾单位的结构与功能比较 **数量**：皮质肾单位多（约 85%～90%），近髓肾单位少（10%～15%）。 **位置**：皮质肾单位位于皮质外 2/3；近髓肾单位靠近髓质。 **肾小球体积**：皮质肾单位小；近髓肾单位大。 **髓袢**：皮质肾单位髓袢短，不到髓质或仅达外髓；近髓肾单位髓袢长，可达内髓甚至肾乳头。 **入/出球小动脉口径**：皮质肾单位入球＞出球（约 2:1），毛细血管血压高，利于滤过；近髓肾单位两者口径无明显差异。 **出球后血管**：皮质肾单位为管周毛细血管网，胶体渗透压高，利于重吸收；近髓肾单位为管周毛细血管 + **U 形直小血管**，参与髓质高渗维持。 **功能**：皮质肾单位主要承担**滤过与重吸收**；近髓肾单位主要参与**尿液浓缩与稀释**。">
   <header class="qhead">
@@ -546,7 +621,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p14"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·大题 1（一次）；2026 秋课件 13 泌尿生理一</span>
   </div>
-  <div class="ex" id="ex-p14" hidden><div class="ex-inner"><p>两类肾单位就是普通工人和特种工人的分工：皮质肾单位负责日常滤过，近髓肾单位负责浓缩尿液。</p><p>皮质肾单位数量多（85%～90%）、位置靠外、髓袢短、入球口径比出球粗（约 2:1），毛细血管压力高，天生为大量滤过设计；出球后形成管周毛细血管网，胶渗压高，又方便大量回收。</p><p>近髓肾单位数量少（10%～15%）、位置靠内、髓袢特别长（可达肾乳头），还带 U 形直小血管，天生为浓缩设计。</p><p>两套配合，肾脏才能既筛得快又缩得浓。</p><p>易错：入球＞出球是皮质肾单位的特点，近髓两者无明显差异。</p></div></div>
+  <div class="ex" id="ex-p14"><div class="ex-inner"><p>两类肾单位就是普通工人和特种工人的分工：皮质肾单位负责日常滤过，近髓肾单位负责浓缩尿液。</p><p>皮质肾单位数量多（85%～90%）、位置靠外、髓袢短、入球口径比出球粗（约 2:1），毛细血管压力高，天生为大量滤过设计；出球后形成管周毛细血管网，胶渗压高，又方便大量回收。</p><p>近髓肾单位数量少（10%～15%）、位置靠内、髓袢特别长（可达肾乳头），还带 U 形直小血管，天生为浓缩设计。</p><p>两套配合，肾脏才能既筛得快又缩得浓。</p><p>易错：入球＞出球是皮质肾单位的特点，近髓两者无明显差异。</p></div></div>
 </article>
 <article class="qcard" id="p15" data-cat="physio" data-freq="0" data-type="简答" data-text="滤过膜的组成及其屏障作用；肾小球滤过率的影响因素 **滤过膜三层**：①**内皮细胞窗孔**——血细胞屏障，阻挡血细胞；②**肾小球毛细血管基膜**——大分子物质的**第一屏障**（主要屏障），阻挡蛋白、脂类；③**肾小囊足细胞裂孔膜**——大分子蛋白质的**第二屏障**。 **通透性取决于分子大小与所带电荷**：有效半径＜1.8 nm（MW 10 000）可自由通过；＞3.6 nm（MW 70 000）不能通过；同样大小，**正电荷＞中性＞负电荷**（电荷屏障由基膜的带负电糖蛋白构成）。 **影响因素**： ① **肾小球毛细血管血压**：动脉血压在 80～180 mmHg 内自身调节，GFR 稳定；超出范围血压下降则 GFR 下降。 ② **血浆胶体渗透压**：降低（如大量输生理盐水、低蛋白血症）→ 有效滤过压升高 → GFR 增加。 ③ **囊内压**：升高（如尿路梗阻、肾小管阻塞）">
   <header class="qhead">
@@ -564,7 +639,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p15"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·大题 2；2026 秋课件 13 泌尿生理一</span>
   </div>
-  <div class="ex" id="ex-p15" hidden><div class="ex-inner"><p>滤过膜是肾小球的三道安检，GFR 的影响因素就是哪些条件会改变安检效率。</p><p>三道安检：内皮细胞窗孔挡血细胞；基底膜挡大分子蛋白和脂类（主力屏障）；足细胞裂孔膜再兜一遍。它不只按大小拦，还按电荷拦：膜带负电、白蛋白也带负电，同性相斥。肾炎时负电荷丢失，白蛋白漏出就是蛋白尿。</p><p>五条影响因素：毛细血管血压（动力，80～180 内自身调节）、血浆胶渗压（阻力，降低则 GFR 升高）、囊内压（阻力，梗阻时升高则 GFR 降）、肾血浆流量（增加则 GFR 升）、滤过膜面积与通透性。</p><p>易错：胶渗压降低是阻力减小，GFR 反而升高。</p></div></div>
+  <div class="ex" id="ex-p15"><div class="ex-inner"><p>滤过膜是肾小球的三道安检，GFR 的影响因素就是哪些条件会改变安检效率。</p><p>三道安检：内皮细胞窗孔挡血细胞；基底膜挡大分子蛋白和脂类（主力屏障）；足细胞裂孔膜再兜一遍。它不只按大小拦，还按电荷拦：膜带负电、白蛋白也带负电，同性相斥。肾炎时负电荷丢失，白蛋白漏出就是蛋白尿。</p><p>五条影响因素：毛细血管血压（动力，80～180 内自身调节）、血浆胶渗压（阻力，降低则 GFR 升高）、囊内压（阻力，梗阻时升高则 GFR 降）、肾血浆流量（增加则 GFR 升）、滤过膜面积与通透性。</p><p>易错：胶渗压降低是阻力减小，GFR 反而升高。</p></div></div>
 </article>
 <article class="qcard" id="p16" data-cat="physio" data-freq="0" data-type="简答" data-text="肾血流量的特点及其调节 **特点**：血流量大（安静时约 **1200 ml/min**，占心输出量 1/5～1/4），且**分布不均**——**皮质约 94%**，髓质仅 5%～6%。 **意义**：皮质高灌注利于血浆滤过；髓质低灌注 + 直小血管排列利于维持髓质高渗、浓缩尿液。 **自身调节**：肾动脉灌注压在 **80～180 mmHg** 范围内，肾血流量与 GFR 保持相对恒定。机制为**肌源性学说**（入球小动脉平滑肌受牵拉收缩）与**管-球反馈**。 **神经调节**：**肾交感神经兴奋**（T12～L2）→ 入球小动脉 α₁ 受体收缩 → 肾血流量减少；同时 β₁ 受体促球旁细胞释放肾素。 **体液调节**：**缩血管**——去甲肾上腺素、肾上腺素、血管紧张素Ⅱ、内皮素、血管升压素；**舒血管**——前列腺素、心房钠尿肽（ANP）、一氧化氮。 **应急时**：剧烈运动、大失">
   <header class="qhead">
@@ -582,7 +657,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p16"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·大题 3；2026 秋课件 13 泌尿生理一</span>
   </div>
-  <div class="ex" id="ex-p16" hidden><div class="ex-inner"><p>肾血流量就是每分钟有多少血经过肾脏，约 1200 ml/min，占心输出量的 1/5～1/4，但分布极不均匀。</p><p>肾脏像一座超大用水量的工厂，全城五分之一的水都往这儿送，但 94% 只灌皮质，髓质只分到 5%～6%。皮质要滤过，血多才滤得多；髓质血少，才能维持高渗盐田浓缩尿液。</p><p>调节分三层：自身调节（动脉压 80～180 内保持恒定，靠肌源学说加管球反馈）、神经调节（交感兴奋使入球收缩、血流减少、肾素释放）、体液调节（缩血管有去甲肾上腺素、血管紧张素Ⅱ、内皮素；舒血管有前列腺素、心房钠尿肽）。</p><p>最常考应急表现：大失血时交感强烈兴奋，肾血管收缩、血流骤减，血液重新分配到心脑——这就是休克时最先少尿的原因。</p><p>易错：自身调节范围是 80～180 mmHg。</p></div></div>
+  <div class="ex" id="ex-p16"><div class="ex-inner"><p>肾血流量就是每分钟有多少血经过肾脏，约 1200 ml/min，占心输出量的 1/5～1/4，但分布极不均匀。</p><p>肾脏像一座超大用水量的工厂，全城五分之一的水都往这儿送，但 94% 只灌皮质，髓质只分到 5%～6%。皮质要滤过，血多才滤得多；髓质血少，才能维持高渗盐田浓缩尿液。</p><p>调节分三层：自身调节（动脉压 80～180 内保持恒定，靠肌源学说加管球反馈）、神经调节（交感兴奋使入球收缩、血流减少、肾素释放）、体液调节（缩血管有去甲肾上腺素、血管紧张素Ⅱ、内皮素；舒血管有前列腺素、心房钠尿肽）。</p><p>最常考应急表现：大失血时交感强烈兴奋，肾血管收缩、血流骤减，血液重新分配到心脑——这就是休克时最先少尿的原因。</p><p>易错：自身调节范围是 80～180 mmHg。</p></div></div>
 </article>
 <article class="qcard" id="p17" data-cat="physio" data-freq="0" data-type="简答" data-text="肾小管和集合管重吸收与分泌的机制（分部位） **近端小管**：**等渗重吸收**，重吸收约 65%～70% 的 Na⁺、水和全部葡萄糖、氨基酸。Na⁺ 经**Na⁺-H⁺ 交换（逆向转运）** 与**Na⁺-葡萄糖/氨基酸同向转运**进入细胞；Cl⁻ 被动重吸收；水经水通道（AQP1）随溶质等渗吸收。 **髓袢降支细段**：**对水通透、对 NaCl 不通透**，水被抽出，小管液被浓缩。 **髓袢升支细段**：对水不通透、对 NaCl 通透，NaCl 被动扩散出去，小管液被稀释。 **髓袢升支粗段**：**对水、尿素不通透**，经 **Na⁺-K⁺-2Cl⁻ 同向转运体（NKCC2）** 主动重吸收 NaCl，是**稀释段**，也是**呋塞米的作用靶点**。 **远曲小管和集合管**：**对水、尿素不通透**（无 ADH 时），Na⁺ 经 **Na⁺ 通道（ENaC）** 主动重吸收，Cl">
   <header class="qhead">
@@ -600,7 +675,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p17"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·大题 4；2026 秋课件 14、15 泌尿生理二/三</span>
   </div>
-  <div class="ex" id="ex-p17" hidden><div class="ex-inner"><p>肾小管重吸收与分泌，就是一条分段加工线：每段有各自的转运蛋白，负责不同的活。</p><p>近端小管是粗加工车间：等渗重吸收约 65%～70% 的水和钠，葡萄糖、氨基酸全部收回，钠靠 Na⁺-H⁺ 交换和 Na⁺-葡萄糖同向转运进来。</p><p>髓袢降支只透水不透盐，水被抽走、小管液变浓；升支粗段只透盐不透水，靠 NKCC2 把 Na⁺-K⁺-2Cl⁻ 泵出去，小管液变稀——这里也是呋塞米的作用靶点。</p><p>远曲小管和集合管是精加工加开关：钠经 ENaC 进来，ADH 决定放不放水（AQP2），醛固酮决定留钠排钾。分泌方面，近端小管泌 H⁺、NH₃ 和有机酸，远曲小管和集合管泌 H⁺、K⁺。</p><p>易错：降支只透水，泵盐的是升支粗段。</p></div></div>
+  <div class="ex" id="ex-p17"><div class="ex-inner"><p>肾小管重吸收与分泌，就是一条分段加工线：每段有各自的转运蛋白，负责不同的活。</p><p>近端小管是粗加工车间：等渗重吸收约 65%～70% 的水和钠，葡萄糖、氨基酸全部收回，钠靠 Na⁺-H⁺ 交换和 Na⁺-葡萄糖同向转运进来。</p><p>髓袢降支只透水不透盐，水被抽走、小管液变浓；升支粗段只透盐不透水，靠 NKCC2 把 Na⁺-K⁺-2Cl⁻ 泵出去，小管液变稀——这里也是呋塞米的作用靶点。</p><p>远曲小管和集合管是精加工加开关：钠经 ENaC 进来，ADH 决定放不放水（AQP2），醛固酮决定留钠排钾。分泌方面，近端小管泌 H⁺、NH₃ 和有机酸，远曲小管和集合管泌 H⁺、K⁺。</p><p>易错：降支只透水，泵盐的是升支粗段。</p></div></div>
 </article>
 <article class="qcard" id="p18" data-cat="physio" data-freq="0" data-type="论述" data-text="尿生成的全过程及其调节 **① 肾小球滤过**：血液流经肾小球毛细血管，水和小分子溶质透过滤过膜进入肾小囊形成**原尿**。滤过膜三层（内皮窗孔、基膜、足细胞裂孔膜）构成分子屏障与电荷屏障；动力为有效滤过压 = 毛细血管血压 −（血浆胶体渗透压 + 囊内压）。 **② 肾小管与集合管重吸收**：近端小管等渗重吸收约 65%～70% 的 Na⁺ 和水及全部葡萄糖、氨基酸；髓袢降支透水、升支粗段经 NKCC2 重吸收 NaCl（稀释段）；远曲小管和集合管在 ADH、醛固酮调节下进行精细调节。 **③ 肾小管与集合管分泌**：分泌 H⁺（泌氢保碱）、K⁺（K⁺-Na⁺ 交换）、NH₃，以及有机酸、有机碱与药物；参与酸碱平衡与排钾。 **④ 调节**： **神经调节**：T12～L2 交感神经兴奋 → 入球小动脉收缩、球旁细胞释放肾素、肾小管重吸收 Na⁺ 增加 → 尿量减少、尿钠减少。 **自身">
   <header class="qhead">
@@ -618,7 +693,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p18"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·大题 5；2026 秋课件 13～16 泌尿生理四讲</span>
   </div>
-  <div class="ex" id="ex-p18" hidden><div class="ex-inner"><p>尿的生成是一条三道工序的生产线：先滤、再收、后调。</p><p>第一道，肾小球滤过。血液流经肾小球，水和小分子穿过滤过膜形成原尿，动力是有效滤过压（毛细血管血压 − 胶渗压 − 囊内压），一天滤出约 180 L。</p><p>第二道，重吸收。近端小管回收 65%～70% 的水和钠以及全部葡萄糖；髓袢降支透水、升支粗段靠 NKCC2 泵盐；远曲小管和集合管在 ADH、醛固酮调节下微调。99% 的水被收回，终尿只剩 1.5 L。</p><p>第三道，分泌。肾小管把 H⁺、K⁺、NH₃ 和部分药物排进管腔，参与酸碱平衡和排钾。</p><p>调节分三层：神经（交感兴奋则尿少）、自身（渗透性利尿、球管平衡）、体液（ADH 管水、醛固酮管钠钾、ANP 促排钠水）。</p><p>易错：尿生成不只滤过，重吸收和分泌各占一半分。</p></div></div>
+  <div class="ex" id="ex-p18"><div class="ex-inner"><p>尿的生成是一条三道工序的生产线：先滤、再收、后调。</p><p>第一道，肾小球滤过。血液流经肾小球，水和小分子穿过滤过膜形成原尿，动力是有效滤过压（毛细血管血压 − 胶渗压 − 囊内压），一天滤出约 180 L。</p><p>第二道，重吸收。近端小管回收 65%～70% 的水和钠以及全部葡萄糖；髓袢降支透水、升支粗段靠 NKCC2 泵盐；远曲小管和集合管在 ADH、醛固酮调节下微调。99% 的水被收回，终尿只剩 1.5 L。</p><p>第三道，分泌。肾小管把 H⁺、K⁺、NH₃ 和部分药物排进管腔，参与酸碱平衡和排钾。</p><p>调节分三层：神经（交感兴奋则尿少）、自身（渗透性利尿、球管平衡）、体液（ADH 管水、醛固酮管钠钾、ANP 促排钠水）。</p><p>易错：尿生成不只滤过，重吸收和分泌各占一半分。</p></div></div>
 </article>
 <article class="qcard" id="p19" data-cat="physio" data-freq="3" data-type="论述" data-text="醛固酮的生理功能及分泌调节 **来源**：由**肾上腺皮质球状带**合成和分泌，属盐皮质激素，随血液循环到达肾脏。 **作用部位**：**远曲小管和集合管**的主细胞。 **作用机制**：与胞内**盐皮质激素受体**结合 → 促进 **ENaC（Na⁺ 通道）** 与 **Na⁺-K⁺-ATP 酶** 表达 → **保 Na⁺、排 K⁺、保水**，维持水盐代谢与血容量。 **分泌调节**： ① **RAAS（最主要）**：肾素由球旁细胞合成分泌 → 使血管紧张素原水解为 **AngⅠ**（十肽）→ 经肺血管内皮 **ACE** 转为 **AngⅡ**（八肽）→ 经血管紧张素酶 A 转为 AngⅢ。**AngⅡ 活性最强**，可刺激醛固酮合成与分泌。 ② **血 K⁺ 升高、血 Na⁺ 降低**：直接刺激球状带分泌醛固酮（对 K⁺ 最敏感）。 ③ **ACTH**：维持醛固酮的基础分泌，应激">
   <header class="qhead">
@@ -636,7 +711,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p19"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·大题 6（三次）；2026 秋课件 15 泌尿生理三</span>
   </div>
-  <div class="ex" id="ex-p19" hidden><div class="ex-inner"><p>醛固酮是身体里的保钠队长：它一到，钠一律留下、钾统统排掉，水跟着钠一起留。</p><p>远曲小管和集合管的主细胞上有钠通道（ENaC）和钠钾泵。醛固酮与胞内受体结合后，一边增加 ENaC 数量，一边增强钠钾泵，结果就是保钠、排钾、保水，血容量和血压回升。</p><p>谁指挥它？主要是 RAAS：肾缺血 → 球旁细胞分泌肾素 → 把血管紧张素原切成 AngⅠ → 经肺 ACE 变成 AngⅡ → 刺激球状带分泌醛固酮。AngⅡ 本身也猛：收缩血管升压、兴奋交感、引起渴感和 ADH 释放。另外血钾升高直接刺激醛固酮，ACTH 维持基础分泌。</p><p>易错：醛固酮是保钠排钾，不是排钠保钾。</p></div></div>
+  <div class="ex" id="ex-p19"><div class="ex-inner"><p>醛固酮是身体里的保钠队长：它一到，钠一律留下、钾统统排掉，水跟着钠一起留。</p><p>远曲小管和集合管的主细胞上有钠通道（ENaC）和钠钾泵。醛固酮与胞内受体结合后，一边增加 ENaC 数量，一边增强钠钾泵，结果就是保钠、排钾、保水，血容量和血压回升。</p><p>谁指挥它？主要是 RAAS：肾缺血 → 球旁细胞分泌肾素 → 把血管紧张素原切成 AngⅠ → 经肺 ACE 变成 AngⅡ → 刺激球状带分泌醛固酮。AngⅡ 本身也猛：收缩血管升压、兴奋交感、引起渴感和 ADH 释放。另外血钾升高直接刺激醛固酮，ACTH 维持基础分泌。</p><p>易错：醛固酮是保钠排钾，不是排钠保钾。</p></div></div>
 </article>
 <article class="qcard" id="p20" data-cat="physio" data-freq="3" data-type="论述" data-text="饮水与注射生理盐水后尿量增加的原理 **（一）饮清水（水利尿）** 体内水分增加 → **血浆晶体渗透压下降** → 对下丘脑视上核及其周围的**渗透压感受器**刺激减弱 → **ADH 生成与释放减少** → 远曲小管和集合管对水的重吸收减弱 → **尿量增加**。 **（二）注射生理盐水** ① **循环血量增加** → 容量感受器（心肺感受器）传入冲动增强 → 对 ADH 释放的抑制增强 → ADH 合成与释放减少 → 水重吸收减少、尿量增加。 ② 大量液体使**血浆蛋白稀释、血浆胶体渗透压下降** → **有效滤过压升高** → 滤液生成增加。 ③ **肾血浆流量增加** → 滤过平衡点向出球小动脉端移动 → **GFR 增加** → 尿量增加。 **（三）两者区别**：饮清水以**渗透压下降、ADH 减少**为主，尿量增加快而显著；注射生理盐水以**容量增加、胶渗压下降、GFR ">
   <header class="qhead">
@@ -654,7 +729,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p20"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·大题 7（三次）；2026 秋课件 16 泌尿生理四</span>
   </div>
-  <div class="ex" id="ex-p20" hidden><div class="ex-inner"><p>饮清水和注射生理盐水都会让尿变多，但报警信号完全不同：一个是浓度，一个是容量。</p><p>饮清水（水利尿）：血液被稀释，血浆晶体渗透压下降，下丘脑渗透压感受器发现水太多，减少 ADH 释放，集合管水通道减少，水大量放出去——30 分钟后尿量增加，1 小时达高峰。</p><p>注射生理盐水：渗透压没变，浓度报警器不响；但血容量增加，左心房容量感受器被撑开，经迷走神经抑制 ADH；同时血浆蛋白被稀释、胶渗压下降、有效滤过压升高，GFR 增加。三条路一起把尿量推上去。</p><p>区别：清水是浓度信号（快、尿稀），盐水是容量信号加滤过增加（缓、尿里带钠）。</p><p>易错：生理盐水是等渗的，不会升高渗透压。</p></div></div>
+  <div class="ex" id="ex-p20"><div class="ex-inner"><p>饮清水和注射生理盐水都会让尿变多，但报警信号完全不同：一个是浓度，一个是容量。</p><p>饮清水（水利尿）：血液被稀释，血浆晶体渗透压下降，下丘脑渗透压感受器发现水太多，减少 ADH 释放，集合管水通道减少，水大量放出去——30 分钟后尿量增加，1 小时达高峰。</p><p>注射生理盐水：渗透压没变，浓度报警器不响；但血容量增加，左心房容量感受器被撑开，经迷走神经抑制 ADH；同时血浆蛋白被稀释、胶渗压下降、有效滤过压升高，GFR 增加。三条路一起把尿量推上去。</p><p>区别：清水是浓度信号（快、尿稀），盐水是容量信号加滤过增加（缓、尿里带钠）。</p><p>易错：生理盐水是等渗的，不会升高渗透压。</p></div></div>
 </article>
 <article class="qcard" id="p21" data-cat="physio" data-freq="3" data-type="论述" data-text="抗利尿激素（ADH）分泌的调节因素 **① 血浆晶体渗透压（最敏感）**：大量出汗、严重呕吐或腹泻失水 → 血浆晶体渗透压升高 → 刺激下丘脑渗透压感受器 → ADH 分泌增多 → 水重吸收增强 → 尿浓缩、尿量减少；大量饮清水则相反（水利尿）。 **② 循环血量**：血量过多 → 左心房扩张 → 刺激**容量感受器** → 传入冲动经迷走神经传入中枢 → 抑制下丘脑-垂体后叶系统释放 ADH → 利尿；血量减少（失血）则 ADH 释放增加。 **③ 动脉血压**：血压升高 → 压力感受器传入增强 → 抑制 ADH 释放；血压下降则促进释放。 **④ 精神刺激、创伤、疼痛、应激**：通过中枢神经系统兴奋 ADH 释放（故手术、创伤后常少尿）。 **⑤ 激素与药物**：甲状腺素、糖皮质激素、胰岛素缺乏时血浆 ADH 升高；**血管紧张素Ⅱ** 促进 ADH 释放；**乙醇** 抑制 ADH ">
   <header class="qhead">
@@ -672,7 +747,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p21"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">生理泌尿泡面往年·大题 8（三次）；2026 秋课件 16 泌尿生理四</span>
   </div>
-  <div class="ex" id="ex-p21" hidden><div class="ex-inner"><p>ADH 是身体的节水开关，分泌受五个因素调节，按敏感度排：渗透压 &gt; 血容量 &gt; 血压 &gt; 应激 &gt; 激素药物。</p><p>① 血浆晶体渗透压（最敏感）：升高 1%～2% 就明显增加。出汗、呕吐、腹泻失水时血变浓，ADH 拼命释放，尿又少又浓。</p><p>② 循环血量：血量过多时左心房被撑开，容量感受器抑制 ADH，引起利尿；大失血时血量减少，ADH 增加，尿少——这是休克少尿的重要一环。</p><p>③ 动脉血压：血压升高抑制 ADH，下降则促进。</p><p>④ 应激：精神刺激、创伤、疼痛、手术通过中枢兴奋 ADH，所以术后常少尿。</p><p>⑤ 激素药物：血管紧张素Ⅱ 促进；乙醇抑制（喝酒后多尿）。</p><p>易错：最敏感的是晶体渗透压，不是循环血量。</p></div></div>
+  <div class="ex" id="ex-p21"><div class="ex-inner"><p>ADH 是身体的节水开关，分泌受五个因素调节，按敏感度排：渗透压 &gt; 血容量 &gt; 血压 &gt; 应激 &gt; 激素药物。</p><p>① 血浆晶体渗透压（最敏感）：升高 1%～2% 就明显增加。出汗、呕吐、腹泻失水时血变浓，ADH 拼命释放，尿又少又浓。</p><p>② 循环血量：血量过多时左心房被撑开，容量感受器抑制 ADH，引起利尿；大失血时血量减少，ADH 增加，尿少——这是休克少尿的重要一环。</p><p>③ 动脉血压：血压升高抑制 ADH，下降则促进。</p><p>④ 应激：精神刺激、创伤、疼痛、手术通过中枢兴奋 ADH，所以术后常少尿。</p><p>⑤ 激素药物：血管紧张素Ⅱ 促进；乙醇抑制（喝酒后多尿）。</p><p>易错：最敏感的是晶体渗透压，不是循环血量。</p></div></div>
 </article>
 <article class="qcard" id="p22" data-cat="physio" data-freq="0" data-type="简答" data-text="尿液浓缩与稀释的机制（逆流倍增与直小血管作用） **结构基础**：髓袢呈 U 形「逆流」排列，降支与升支对水、盐通透性不同；髓质直小血管亦呈 U 形，与髓袢平行。 **逆流倍增**：髓袢升支粗段经 **NKCC2** 主动重吸收 NaCl 而**对水不通透** → 小管液变稀释、髓质间液变高渗；降支细段**对水通透、对 NaCl 不通透** → 水被抽出、小管液被浓缩。如此反复「单次效应」沿髓袢叠加，形成从外髓到内髓逐渐升高的**渗透梯度**（内髓可达 1200 mOsm/L）。 **尿素再循环**：内髓集合管在 ADH 作用下透尿素，尿素进入内髓间质，参与建立内髓高渗。 **直小血管的逆流交换**：直小血管降支与升支并行，降支吸收溶质与水、升支返回，既**为髓质供血**又**不冲走溶质**，维持高渗梯度。 **ADH 的作用**：ADH 使集合管主细胞 **AQP2** 插入管腔膜 → ">
   <header class="qhead">
@@ -690,7 +765,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p22"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 15 泌尿生理三；《生理学学习指导与习题集》第 3 版第八章</span>
   </div>
-  <div class="ex" id="ex-p22" hidden><div class="ex-inner"><p>尿液浓缩靠的是髓质里一座高渗盐田，而这座盐田是髓袢用逆流倍增堆出来的。</p><p>髓袢是 U 形滑梯。降支只让水走、不让盐走，水被抽走、尿越来越浓；升支只让盐走、不让水走，盐被泵到周围、周围越来越咸。反复抽水抽盐，从外髓到内髓，渗透压从 300 升到 1200 mOsm/L。</p><p>两个帮手：尿素再循环（内髓集合管在 ADH 作用下透尿素）和直小血管的逆流交换（供血但不冲走溶质）。</p><p>最后一步在集合管：ADH 让 AQP2 插入，水顺着盐田的浓度差被吸回去，尿就浓缩了；ADH 缺乏则排稀释尿，就是尿崩症。呋塞米抑制升支粗段 NKCC2，等于关掉抽盐泵，盐田造不成，尿就稀了。</p><p>易错：降支只透水，泵盐的是升支粗段。</p></div></div>
+  <div class="ex" id="ex-p22"><div class="ex-inner"><p>尿液浓缩靠的是髓质里一座高渗盐田，而这座盐田是髓袢用逆流倍增堆出来的。</p><p>髓袢是 U 形滑梯。降支只让水走、不让盐走，水被抽走、尿越来越浓；升支只让盐走、不让水走，盐被泵到周围、周围越来越咸。反复抽水抽盐，从外髓到内髓，渗透压从 300 升到 1200 mOsm/L。</p><p>两个帮手：尿素再循环（内髓集合管在 ADH 作用下透尿素）和直小血管的逆流交换（供血但不冲走溶质）。</p><p>最后一步在集合管：ADH 让 AQP2 插入，水顺着盐田的浓度差被吸回去，尿就浓缩了；ADH 缺乏则排稀释尿，就是尿崩症。呋塞米抑制升支粗段 NKCC2，等于关掉抽盐泵，盐田造不成，尿就稀了。</p><p>易错：降支只透水，泵盐的是升支粗段。</p></div></div>
 </article>
 <article class="qcard" id="p23" data-cat="physio" data-freq="0" data-type="简答" data-text="球-管平衡及其生理意义 **概念**：无论肾小球滤过率如何变化，**近端小管对滤过液的定比重吸收**始终占滤过量的 **65%～70%**，这一现象称球-管平衡。 **机制**：主要与**管周毛细血管的胶体渗透压**有关——GFR 增加时，管周毛细血管胶渗压升高（因滤出增多、蛋白浓缩），推动更多水和 Na⁺ 回吸收；此外肾小管周围流体静压变化也参与。 **意义**：使**尿量不随 GFR 的剧烈波动而变化**，避免因 GFR 短时升降造成体液容量大幅波动，是维持内环境稳定的重要机制。 **临床联系**：球-管平衡失调时，即使 GFR 正常也可出现水钠潴留（如某些水肿性疾病）。">
   <header class="qhead">
@@ -708,7 +783,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-p23"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">《生理学学习指导与习题集》第 3 版第八章（原题）；2026 秋课件 14 泌尿生理二</span>
   </div>
-  <div class="ex" id="ex-p23" hidden><div class="ex-inner"><p>球-管平衡就是肾脏的按比例分成合同：不管滤出多少，近端小管固定回收 65%～70%。</p><p>工厂每天进多少原料，车间就固定加工 65%～70%，剩下的往下游走。所以即使原料（GFR）今天多两成、明天少两成，最终出厂量（尿量）也不会剧烈波动。</p><p>机制主要与管周毛细血管的胶体渗透压有关：GFR 增加时滤出增多、管内蛋白浓缩，管周毛细血管胶渗压升高，把更多水和钠吸回血液；GFR 减少时反之。</p><p>意义是尿量稳定的缓冲器——没有它，血压一波动 GFR 就变，尿量跟着大起大落。</p><p>易错：球-管平衡调的是重吸收比例，不是 GFR。</p></div></div>
+  <div class="ex" id="ex-p23"><div class="ex-inner"><p>球-管平衡就是肾脏的按比例分成合同：不管滤出多少，近端小管固定回收 65%～70%。</p><p>工厂每天进多少原料，车间就固定加工 65%～70%，剩下的往下游走。所以即使原料（GFR）今天多两成、明天少两成，最终出厂量（尿量）也不会剧烈波动。</p><p>机制主要与管周毛细血管的胶体渗透压有关：GFR 增加时滤出增多、管内蛋白浓缩，管周毛细血管胶渗压升高，把更多水和钠吸回血液；GFR 减少时反之。</p><p>意义是尿量稳定的缓冲器——没有它，血压一波动 GFR 就变，尿量跟着大起大落。</p><p>易错：球-管平衡调的是重吸收比例，不是 GFR。</p></div></div>
 </article>
 </section>
 <section class="cat" id="cat-patho">
@@ -733,7 +808,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b01"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·名解 1（四次）；病生最终精简版·名解 1</span>
   </div>
-  <div class="ex" id="ex-b01" hidden><div class="ex-inner"><p>等渗性脱水就是水和盐按原比例一起丢，像打翻一杯淡盐水，浓度没变，只是量少了。</p><p>呕吐、腹泻、大面积烧伤、抽放胸腹水时，水和钠按血浆比例一起流失，剩下液体浓度仍正常（血钠 135～150、渗透压 280～310），只是总量少了。</p><p>后果主要在容量而不是浓度：血容量下降，血压偏低、尿少、尿比重升高；细胞内外渗透压相等，水不会大量转移，所以细胞内液变化不大，口渴也不如高渗性明显，休克偶发。</p><p>补液以平衡盐溶液为主，不能只补 5% 葡萄糖，那会把血钠稀释成低渗。</p><p>易错：等渗性脱水也会口渴，只是程度轻。</p></div></div>
+  <div class="ex" id="ex-b01"><div class="ex-inner"><p>等渗性脱水就是水和盐按原比例一起丢，像打翻一杯淡盐水，浓度没变，只是量少了。</p><p>呕吐、腹泻、大面积烧伤、抽放胸腹水时，水和钠按血浆比例一起流失，剩下液体浓度仍正常（血钠 135～150、渗透压 280～310），只是总量少了。</p><p>后果主要在容量而不是浓度：血容量下降，血压偏低、尿少、尿比重升高；细胞内外渗透压相等，水不会大量转移，所以细胞内液变化不大，口渴也不如高渗性明显，休克偶发。</p><p>补液以平衡盐溶液为主，不能只补 5% 葡萄糖，那会把血钠稀释成低渗。</p><p>易错：等渗性脱水也会口渴，只是程度轻。</p></div></div>
 </article>
 <article class="qcard" id="b02" data-cat="patho" data-freq="1" data-type="名解" data-text="低渗性脱水 指**失 Na⁺ 多于失水**，血清 Na⁺ 浓度 **＜135 mmol/L（部分教材以 130 为界）**、血浆渗透压 **＜280 mOsm/L**，伴**细胞外液量减少**的病理过程。 又称**低容量性低钠血症**（慢性/继发性脱水）。 常见于**高渗性脱水后只补水不补盐**、大量出汗后饮白水、长期使用排钠利尿药、肾上腺皮质功能不全。 **细胞外液明显减少**（水向细胞内转移），**易发生休克**；**无口渴感**、早期尿量不减或增多、尿钠降低。 **补液**：含盐溶液，必要时**高渗盐水**。">
   <header class="qhead">
@@ -751,7 +826,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b02"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·名解 2（一次）；病生最终精简版·名解 1</span>
   </div>
-  <div class="ex" id="ex-b02" hidden><div class="ex-inner"><p>低渗性脱水就是盐丢得比水多，像一杯淡盐水又兑了水，越喝越淡。</p><p>大汗后只喝白开水、长期吃排钠利尿药，都会让钠丢失超过水。血清钠降到 135 以下、渗透压低于 280，细胞外液变成低渗。</p><p>最危险的一步：细胞外液变淡后，水顺着渗透压差往细胞里跑。血管里的水本来就不多，还不断渗进细胞，越来越空——所以低渗性脱水最容易发生失液性休克。</p><p>另一个坑是不渴：血不浓，渗透压感受器不报警，病人不主动喝水，容易拖到休克才被发现。早期尿量甚至不减或增多。</p><p>补液要补含盐溶液，必要时用高渗盐水。</p><p>易错：低渗性血钠是 ＜135，不是 ＞150。</p></div></div>
+  <div class="ex" id="ex-b02"><div class="ex-inner"><p>低渗性脱水就是盐丢得比水多，像一杯淡盐水又兑了水，越喝越淡。</p><p>大汗后只喝白开水、长期吃排钠利尿药，都会让钠丢失超过水。血清钠降到 135 以下、渗透压低于 280，细胞外液变成低渗。</p><p>最危险的一步：细胞外液变淡后，水顺着渗透压差往细胞里跑。血管里的水本来就不多，还不断渗进细胞，越来越空——所以低渗性脱水最容易发生失液性休克。</p><p>另一个坑是不渴：血不浓，渗透压感受器不报警，病人不主动喝水，容易拖到休克才被发现。早期尿量甚至不减或增多。</p><p>补液要补含盐溶液，必要时用高渗盐水。</p><p>易错：低渗性血钠是 ＜135，不是 ＞150。</p></div></div>
 </article>
 <article class="qcard" id="b03" data-cat="patho" data-freq="0" data-type="名解" data-text="高渗性脱水 指**失水多于失钠**，血清 Na⁺ 浓度 **＞150 mmol/L**、血浆渗透压 **＞310 mOsm/L** 的病理过程。 **细胞外液量和细胞内液量均减少**，以**细胞内液减少**为主。 又称**低容量性高钠血症**（原发性脱水）。 常见于**水摄入过少**（昏迷、禁食）、**水排出过多**（大量出汗、渗透性利尿、尿崩症）。 **口渴明显**、尿少、尿比重升高；严重者脑细胞脱水出现**烦躁、谵妄、昏迷**（「高渗性脑病」）。 **补液**：以**5% 葡萄糖溶液**为主，适当补盐。">
   <header class="qhead">
@@ -769,7 +844,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b03"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生最终精简版·名解 1；2026 秋课件 水电解质代谢紊乱</span>
   </div>
-  <div class="ex" id="ex-b03" hidden><div class="ex-inner"><p>高渗性脱水就是水丢得比盐多，像一锅汤被熬浓了。</p><p>发烧、大量出汗、渗透性利尿、尿崩症、昏迷禁食，都会让水丢失超过钠。血清钠升到 150 以上、渗透压超过 310，细胞外液变成高渗。</p><p>关键后果是细胞内脱水：细胞外液变浓后会把细胞里的水吸出来，所以虽然细胞内外液都减少，但以细胞内液减少为主。脑细胞对脱水最敏感，轻度烦躁嗜睡，重度可谵妄、抽搐、昏迷。</p><p>表现很有特点：口渴非常明显（身体的求救信号）、尿少、尿比重升高、皮肤黏膜干燥。</p><p>为什么不容易休克？水从细胞内转移到血管里，暂时补了血容量。但代价是细胞脱水。</p><p>补液以 5% 葡萄糖为主，不能只补盐水。</p><p>易错：不易休克不等于不严重，脑细胞脱水一样致命。</p></div></div>
+  <div class="ex" id="ex-b03"><div class="ex-inner"><p>高渗性脱水就是水丢得比盐多，像一锅汤被熬浓了。</p><p>发烧、大量出汗、渗透性利尿、尿崩症、昏迷禁食，都会让水丢失超过钠。血清钠升到 150 以上、渗透压超过 310，细胞外液变成高渗。</p><p>关键后果是细胞内脱水：细胞外液变浓后会把细胞里的水吸出来，所以虽然细胞内外液都减少，但以细胞内液减少为主。脑细胞对脱水最敏感，轻度烦躁嗜睡，重度可谵妄、抽搐、昏迷。</p><p>表现很有特点：口渴非常明显（身体的求救信号）、尿少、尿比重升高、皮肤黏膜干燥。</p><p>为什么不容易休克？水从细胞内转移到血管里，暂时补了血容量。但代价是细胞脱水。</p><p>补液以 5% 葡萄糖为主，不能只补盐水。</p><p>易错：不易休克不等于不严重，脑细胞脱水一样致命。</p></div></div>
 </article>
 <article class="qcard" id="b04" data-cat="patho" data-freq="1" data-type="名解" data-text="反常性酸性尿 指机体出现**代谢性碱中毒**时，尿液**反常地呈酸性**的现象。 通常由**低钾血症**引起。 **机制**：① 细胞外液 K⁺ 减少 → 细胞内 K⁺ 外出、细胞外 H⁺ 内移 → 引起**细胞外液碱中毒**；② 肾小管上皮细胞内 K⁺ 浓度降低、H⁺ 浓度增高 → **K⁺-Na⁺ 交换减弱、H⁺-Na⁺ 交换加强** → 尿排 K⁺ 减少、排 H⁺ 增多 → **加重代谢性碱中毒，尿液呈酸性**。 **临床意义**：低钾性碱中毒时补钾才能纠正，单纯补碱会加重低钾。">
   <header class="qhead">
@@ -787,7 +862,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b04"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·名解 7（一次）；病生最终精简版·名解 2</span>
   </div>
-  <div class="ex" id="ex-b04" hidden><div class="ex-inner"><p>反常性酸性尿就是身体碱中毒、尿却是酸的，听着矛盾，罪魁祸首是低钾。</p><p>钾和氢像两个抢座位的乘客。血钾低时，细胞为了保钾，把钾留在细胞内、把氢推出去，细胞外液变碱。同时肾脏也保钾排氢：肾小管上皮细胞内钾少氢多，K⁺-Na⁺ 交换减弱、H⁺-Na⁺ 交换加强，尿里排出大量 H⁺，尿液变酸。</p><p>于是出现怪现象：血是碱的，尿是酸的。</p><p>临床意义：这种碱中毒单纯补碱纠正不了，必须补钾。只要钾还低，肾脏就继续排氢、继续加重碱中毒。</p><p>常见于长期用排钾利尿药、呕吐、胃肠减压、原发性醛固酮增多症。</p><p>易错：反常性酸性尿由低钾引起，高钾是反常性碱性尿。</p></div></div>
+  <div class="ex" id="ex-b04"><div class="ex-inner"><p>反常性酸性尿就是身体碱中毒、尿却是酸的，听着矛盾，罪魁祸首是低钾。</p><p>钾和氢像两个抢座位的乘客。血钾低时，细胞为了保钾，把钾留在细胞内、把氢推出去，细胞外液变碱。同时肾脏也保钾排氢：肾小管上皮细胞内钾少氢多，K⁺-Na⁺ 交换减弱、H⁺-Na⁺ 交换加强，尿里排出大量 H⁺，尿液变酸。</p><p>于是出现怪现象：血是碱的，尿是酸的。</p><p>临床意义：这种碱中毒单纯补碱纠正不了，必须补钾。只要钾还低，肾脏就继续排氢、继续加重碱中毒。</p><p>常见于长期用排钾利尿药、呕吐、胃肠减压、原发性醛固酮增多症。</p><p>易错：反常性酸性尿由低钾引起，高钾是反常性碱性尿。</p></div></div>
 </article>
 <article class="qcard" id="b05" data-cat="patho" data-freq="1" data-type="名解" data-text="反常性碱性尿 指机体出现**代谢性酸中毒**时，尿液**反常地呈碱性**的现象。 通常由**高钾血症**引起。 **机制**：高钾时细胞外 K⁺ 移入细胞内、细胞内 H⁺ 移出 → **代谢性酸中毒**；但肾小管上皮细胞内 H⁺ 浓度降低 → 远曲小管**泌 H⁺ 减少**、K⁺-Na⁺ 交换增多 → **尿液呈碱性**。 **临床意义**：高钾性酸中毒需**降钾**而非单纯补碱。">
   <header class="qhead">
@@ -805,7 +880,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b05"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·名解 8（一次）；病生最终精简版·名解 2</span>
   </div>
-  <div class="ex" id="ex-b05" hidden><div class="ex-inner"><p>反常性碱性尿就是身体酸中毒、尿却是碱的，和反常性酸性尿正好相反，罪魁是高钾。</p><p>血钾高时，细胞把多余的钾吸进去、把氢推出来，细胞外液变酸。同时肾脏排钾保氢：肾小管上皮细胞内氢少，泌 H⁺ 减少、K⁺-Na⁺ 交换增多，尿里氢少，尿液变碱。</p><p>结果就是：血是酸的，尿是碱的。</p><p>临床意义：这种酸中毒单纯补碱效果差，关键要降钾——胰岛素加葡萄糖促钾入细胞、钙剂拮抗心肌毒性、排钾树脂、透析。</p><p>常见于急性肾衰少尿期、大量输入库存血、保钾利尿药过量。</p><p>易错：记住「反常」二字——血和尿的方向相反。</p></div></div>
+  <div class="ex" id="ex-b05"><div class="ex-inner"><p>反常性碱性尿就是身体酸中毒、尿却是碱的，和反常性酸性尿正好相反，罪魁是高钾。</p><p>血钾高时，细胞把多余的钾吸进去、把氢推出来，细胞外液变酸。同时肾脏排钾保氢：肾小管上皮细胞内氢少，泌 H⁺ 减少、K⁺-Na⁺ 交换增多，尿里氢少，尿液变碱。</p><p>结果就是：血是酸的，尿是碱的。</p><p>临床意义：这种酸中毒单纯补碱效果差，关键要降钾——胰岛素加葡萄糖促钾入细胞、钙剂拮抗心肌毒性、排钾树脂、透析。</p><p>常见于急性肾衰少尿期、大量输入库存血、保钾利尿药过量。</p><p>易错：记住「反常」二字——血和尿的方向相反。</p></div></div>
 </article>
 <article class="qcard hot" id="b06" data-cat="patho" data-freq="4" data-type="名解" data-text="碱剩余（BE） 指在**标准条件下**（PaCO₂ 40 mmHg、38℃、Hb 氧饱和度 100%），用**酸或碱滴定全血标本至 pH 7.40** 时所需的酸或碱的量（mmol/L）。 **用酸滴定**（碱过多）→ BE 用**正值**表示；**用碱滴定**（酸过多）→ BE 用**负值**表示。 正常值范围 **−3.0 ～ +3.0 mmol/L**（平均约 ±2.4）。 **意义**：反映**代谢性**酸碱失衡的性质与程度，不受呼吸因素影响。BE 增大（正值）提示代谢性碱中毒；BE 减小（负值）提示代谢性酸中毒。">
   <header class="qhead">
@@ -823,7 +898,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b06"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·名解（四次）；病生最终精简版·名解 5</span>
   </div>
-  <div class="ex" id="ex-b06" hidden><div class="ex-inner"><p>碱剩余（BE）就是血里多出来或少掉了多少碱，是判断代谢性酸碱失衡的硬指标。</p><p>把血液想象成一杯缓冲液。在标准条件下（PaCO₂ 40 mmHg、38℃、Hb 氧饱和度 100%）用酸或碱把它滴定回 pH 7.40。血里碱太多需要加酸，加进去的酸量记作正值；血里酸太多需要加碱，记作负值。正常范围 −3.0～+3.0 mmol/L。</p><p>为什么重要？它只反映代谢因素，不受呼吸影响。AB 会受 PaCO₂ 影响，SB 只反映 HCO₃⁻，BE 则把所有缓冲碱的总变化都算进去。</p><p>判读：BE 正值增大是代谢性碱中毒，负值增大是代谢性酸中毒。</p><p>易错：加酸才回到正常说明碱多，是正值。</p></div></div>
+  <div class="ex" id="ex-b06"><div class="ex-inner"><p>碱剩余（BE）就是血里多出来或少掉了多少碱，是判断代谢性酸碱失衡的硬指标。</p><p>把血液想象成一杯缓冲液。在标准条件下（PaCO₂ 40 mmHg、38℃、Hb 氧饱和度 100%）用酸或碱把它滴定回 pH 7.40。血里碱太多需要加酸，加进去的酸量记作正值；血里酸太多需要加碱，记作负值。正常范围 −3.0～+3.0 mmol/L。</p><p>为什么重要？它只反映代谢因素，不受呼吸影响。AB 会受 PaCO₂ 影响，SB 只反映 HCO₃⁻，BE 则把所有缓冲碱的总变化都算进去。</p><p>判读：BE 正值增大是代谢性碱中毒，负值增大是代谢性酸中毒。</p><p>易错：加酸才回到正常说明碱多，是正值。</p></div></div>
 </article>
 <article class="qcard" id="b07" data-cat="patho" data-freq="0" data-type="名解" data-text="阴离子间隙（AG） 指血浆中**未测定的阴离子（UA）与未测定的阳离子（UC）之间的差值**。 **AG = [Na⁺] −（[Cl⁻] + [HCO₃⁻]）**，正常平均值约 **12 mmol/L**（8～16）。 临床据 AG 变化将代谢性酸中毒分为 **AG 正常型（高氯型）** 与 **AG 增高型（正常氯型）**。 **AG 增高型**：固定酸（不含氯）增多，如肾衰、糖尿病酮症、乳酸酸中毒；**AG 正常型**：HCO₃⁻ 丢失伴 Cl⁻ 代偿性升高，如腹泻。">
   <header class="qhead">
@@ -841,7 +916,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b07"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生最终精简版·名解 6；2026 秋课件 酸碱平衡紊乱</span>
   </div>
-  <div class="ex" id="ex-b07" hidden><div class="ex-inner"><p>阴离子间隙（AG）就是化验单上没测到的那些阴离子有多少，正常约 12 mmol/L。</p><p>血液里正负离子必须相等，但化验单只测了 Na⁺、Cl⁻、HCO₃⁻。剩下没测的阴离子（白蛋白、乳酸、酮体、硫酸、磷酸）减去没测的阳离子，差值就是 AG。公式：AG = Na⁺ −（Cl⁻ + HCO₃⁻），正常 12±4。</p><p>它最大的用处是给代谢性酸中毒分型：<br>AG 增高型——血里多了不含氯的固定酸（乳酸、酮体、硫酸），见于肾衰、糖尿病酮症、乳酸酸中毒、休克，此时 AG 变大、Cl⁻ 正常。<br>AG 正常型（高氯型）——HCO₃⁻ 丢了、Cl⁻ 来补位，见于腹泻、肾小管酸中毒，此时 AG 正常、Cl⁻ 升高。</p><p>易错：AG 正常型是正常，不是降低。</p></div></div>
+  <div class="ex" id="ex-b07"><div class="ex-inner"><p>阴离子间隙（AG）就是化验单上没测到的那些阴离子有多少，正常约 12 mmol/L。</p><p>血液里正负离子必须相等，但化验单只测了 Na⁺、Cl⁻、HCO₃⁻。剩下没测的阴离子（白蛋白、乳酸、酮体、硫酸、磷酸）减去没测的阳离子，差值就是 AG。公式：AG = Na⁺ −（Cl⁻ + HCO₃⁻），正常 12±4。</p><p>它最大的用处是给代谢性酸中毒分型：<br>AG 增高型——血里多了不含氯的固定酸（乳酸、酮体、硫酸），见于肾衰、糖尿病酮症、乳酸酸中毒、休克，此时 AG 变大、Cl⁻ 正常。<br>AG 正常型（高氯型）——HCO₃⁻ 丢了、Cl⁻ 来补位，见于腹泻、肾小管酸中毒，此时 AG 正常、Cl⁻ 升高。</p><p>易错：AG 正常型是正常，不是降低。</p></div></div>
 </article>
 <article class="qcard" id="b08" data-cat="patho" data-freq="0" data-type="名解" data-text="代谢性酸中毒 / 呼吸性酸中毒 / 代谢性碱中毒 / 呼吸性碱中毒 **代谢性酸中毒**：由于酸摄入/产生过多或排出过少等原因，引起**血浆 HCO₃⁻ 原发性减少**、pH 降低的现象；分 AG 正常型与 AG 增高型。 **呼吸性酸中毒**：由于**通气不足**或通风不良，引起**血浆 PaCO₂ 原发性升高**、pH 降低的现象。 **代谢性碱中毒**：由于酸丢失过多或碱摄入过多，引起**血浆 HCO₃⁻ 原发性增多**、pH 升高的现象；分盐水反应性与盐水抵抗性。 **呼吸性碱中毒**：由于**过度通气**，引起**血浆 PaCO₂ 原发性降低**、pH 升高的现象。 **记忆抓手**：代谢看 **HCO₃⁻**（原发），呼吸看 **PaCO₂**（原发）；升高为碱、降低为酸。">
   <header class="qhead">
@@ -859,7 +934,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b08"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生最终精简版·名解 7；2026 秋课件 酸碱平衡紊乱</span>
   </div>
-  <div class="ex" id="ex-b08" hidden><div class="ex-inner"><p>四型酸碱失衡其实就两把尺子：HCO₃⁻（代谢线）和 PaCO₂（呼吸线）。哪条线先动就叫哪型，往哪个方向动就叫酸或碱。</p><p>身体里的 pH 像天平，一边是代谢砝码 HCO₃⁻，一边是呼吸砝码 CO₂。<br>HCO₃⁻ 原发性减少 → 代谢性酸中毒（腹泻、酮症、肾衰）。<br>HCO₃⁻ 原发性增多 → 代谢性碱中毒（呕吐、利尿药）。<br>PaCO₂ 原发性升高 → 呼吸性酸中毒（COPD、呼吸抑制）。<br>PaCO₂ 原发性降低 → 呼吸性碱中毒（癔症、高热、过度通气）。</p><p>为什么强调原发性？因为身体会代偿：代酸时肺加深呼吸排 CO₂，呼酸时肾多留 HCO₃⁻。判断要看谁先动、动得符合 pH 方向。</p><p>口诀：代谢看碳酸氢根，呼吸看二氧化碳；升高为碱，降低为酸。</p><p>易错：代偿不会过度，超出预计范围就是混合性。</p></div></div>
+  <div class="ex" id="ex-b08"><div class="ex-inner"><p>四型酸碱失衡其实就两把尺子：HCO₃⁻（代谢线）和 PaCO₂（呼吸线）。哪条线先动就叫哪型，往哪个方向动就叫酸或碱。</p><p>身体里的 pH 像天平，一边是代谢砝码 HCO₃⁻，一边是呼吸砝码 CO₂。<br>HCO₃⁻ 原发性减少 → 代谢性酸中毒（腹泻、酮症、肾衰）。<br>HCO₃⁻ 原发性增多 → 代谢性碱中毒（呕吐、利尿药）。<br>PaCO₂ 原发性升高 → 呼吸性酸中毒（COPD、呼吸抑制）。<br>PaCO₂ 原发性降低 → 呼吸性碱中毒（癔症、高热、过度通气）。</p><p>为什么强调原发性？因为身体会代偿：代酸时肺加深呼吸排 CO₂，呼酸时肾多留 HCO₃⁻。判断要看谁先动、动得符合 pH 方向。</p><p>口诀：代谢看碳酸氢根，呼吸看二氧化碳；升高为碱，降低为酸。</p><p>易错：代偿不会过度，超出预计范围就是混合性。</p></div></div>
 </article>
 <article class="qcard" id="b09" data-cat="patho" data-freq="0" data-type="名解" data-text="盐水反应性 / 盐水抵抗性代谢性碱中毒 **盐水反应性代谢性碱中毒**：由于**胃液丢失过多**（呕吐、胃肠减压）或**长期使用利尿药**，在丢失 H⁺ 的同时也丢失了 **Cl⁻** 引起的代碱；**仅输注生理盐水即有效**。 **盐水抵抗性代谢性碱中毒**：由于**盐皮质激素增多**（原发性醛固酮增多症、库欣综合征）、**低钾血症**等，机体仅丢失大量 H⁺ 而 **Cl⁻ 无明显变化**的代碱；**给予生理盐水治疗往往无效**，需纠正原发病、补钾或使用醛固酮拮抗剂。 **区分要点**：看**尿氯**——盐水反应性者尿氯 **＜20 mmol/L**（缺氯），盐水抵抗性者尿氯 **＞20 mmol/L**（不缺氯）。">
   <header class="qhead">
@@ -877,7 +952,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b09"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生最终精简版·名解 9；2026 秋课件 酸碱平衡紊乱</span>
   </div>
-  <div class="ex" id="ex-b09" hidden><div class="ex-inner"><p>代谢性碱中毒分两种：补盐水能好的，和补盐水好不了的。</p><p>丢了盐酸型（盐水反应性）：呕吐、胃肠减压丢了大量胃酸，长期用利尿药丢了 Cl⁻。身体既缺 H⁺ 又缺 Cl⁻，补生理盐水把 Cl⁻ 补回来，肾就能重新排 H⁺、纠正碱中毒。特点：尿氯 ＜20 mmol/L。</p><p>盐皮质激素太多型（盐水抵抗性）：原发性醛固酮增多症、库欣综合征、低钾血症。身体并不缺氯，是醛固酮在拼命保钠排钾排氢，补盐水没用。特点：尿氯 ＞20 mmol/L。</p><p>治疗：前者补盐水，必要时补钾；后者治原发病，切除腺瘤、用螺内酯、补钾。</p><p>记忆钩子：尿氯低→缺氯→补盐水；尿氯高→不缺氯→治原发病。</p><p>易错：利尿药引起的代碱属盐水反应性，因为它丢氯。</p></div></div>
+  <div class="ex" id="ex-b09"><div class="ex-inner"><p>代谢性碱中毒分两种：补盐水能好的，和补盐水好不了的。</p><p>丢了盐酸型（盐水反应性）：呕吐、胃肠减压丢了大量胃酸，长期用利尿药丢了 Cl⁻。身体既缺 H⁺ 又缺 Cl⁻，补生理盐水把 Cl⁻ 补回来，肾就能重新排 H⁺、纠正碱中毒。特点：尿氯 ＜20 mmol/L。</p><p>盐皮质激素太多型（盐水抵抗性）：原发性醛固酮增多症、库欣综合征、低钾血症。身体并不缺氯，是醛固酮在拼命保钠排钾排氢，补盐水没用。特点：尿氯 ＞20 mmol/L。</p><p>治疗：前者补盐水，必要时补钾；后者治原发病，切除腺瘤、用螺内酯、补钾。</p><p>记忆钩子：尿氯低→缺氯→补盐水；尿氯高→不缺氯→治原发病。</p><p>易错：利尿药引起的代碱属盐水反应性，因为它丢氯。</p></div></div>
 </article>
 <article class="qcard" id="b10" data-cat="patho" data-freq="0" data-type="名解" data-text="休克 指机体在受到各种有害因子侵袭时发生的，以**全身有效循环血量下降、组织灌流量减少**为特征，以致**细胞代谢和功能紊乱及器官功能障碍**的**全身性病理过程**。 **本质**：有效循环血量减少 → 组织灌注不足 → 细胞缺氧、代谢障碍 → 器官功能受损。 **三个关键环节**：血容量减少、心泵功能障碍、血管床容积扩大。 **分类**：失血性、感染性、过敏性、心源性、神经源性休克。 **分期**：缺血期（代偿期）、淤血期（失代偿期）、衰竭期（难治期）。">
   <header class="qhead">
@@ -895,7 +970,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b10"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生最终精简版·名解 27；2026 秋课件 休克</span>
   </div>
-  <div class="ex" id="ex-b10" hidden><div class="ex-inner"><p>休克不是血压低这么简单，本质是全身组织灌不上血，细胞在缺氧中一批批受损。</p><p>一座城市的供水系统出三种故障：水源不够（失血、脱水）、水泵坏了（心衰、心梗）、管道全被撑大（感染、过敏）。三种故障表现不同，结果一样：各家各户没水用，先省着用（代偿），再淤积（失代偿），最后管道瘫掉（衰竭）。</p><p>定义：机体在有害因子侵袭下，以有效循环血量下降、组织灌流量减少为特征，导致细胞代谢和功能紊乱、器官功能障碍的全身性病理过程。</p><p>三个关键环节：血容量减少、心泵功能障碍、血管床容积扩大，对应三类休克。</p><p>为什么不能只看血压？早期靠代偿能把血压撑住，此时组织已在缺血。判断休克要看灌注——意识、皮肤温度、尿量、乳酸。</p><p>易错：血压正常也可能是休克早期。</p></div></div>
+  <div class="ex" id="ex-b10"><div class="ex-inner"><p>休克不是血压低这么简单，本质是全身组织灌不上血，细胞在缺氧中一批批受损。</p><p>一座城市的供水系统出三种故障：水源不够（失血、脱水）、水泵坏了（心衰、心梗）、管道全被撑大（感染、过敏）。三种故障表现不同，结果一样：各家各户没水用，先省着用（代偿），再淤积（失代偿），最后管道瘫掉（衰竭）。</p><p>定义：机体在有害因子侵袭下，以有效循环血量下降、组织灌流量减少为特征，导致细胞代谢和功能紊乱、器官功能障碍的全身性病理过程。</p><p>三个关键环节：血容量减少、心泵功能障碍、血管床容积扩大，对应三类休克。</p><p>为什么不能只看血压？早期靠代偿能把血压撑住，此时组织已在缺血。判断休克要看灌注——意识、皮肤温度、尿量、乳酸。</p><p>易错：血压正常也可能是休克早期。</p></div></div>
 </article>
 <article class="qcard" id="b11" data-cat="patho" data-freq="2" data-type="名解" data-text="自身输血 / 自身输液 **自身输血**：在失血性休克的**缺血期**，有效循环血量减少，**肝、脾等储血器官收缩释放血细胞入血**，维持循环血内充足的血细胞供应，这种代偿反应称自身输血。 **自身输液**：在失血性休克的缺血期，有效循环血量减少，但由于**毛细血管前括约肌阻力较大、毛细血管流体静压降低**，**组织液经压力差进入微循环**，维持有效循环血量，这种代偿反应称自身输液。 **意义**：两者共同在休克早期「无外来补充」的情况下维持回心血量与血压，是重要的代偿机制。 **失代偿**：淤血期毛细血管后阻力大于前阻力、大量扩血管物质释放，血浆外渗，「自身输血、自身输液」停止，血液浓缩。">
   <header class="qhead">
@@ -913,7 +988,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b11"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·名解（两次）；病生最终精简版·名解 28</span>
   </div>
-  <div class="ex" id="ex-b11" hidden><div class="ex-inner"><p>自身输血和自身输液是休克早期的两招自救：一招挤存血，一招吸水回血管。</p><p>大出血时血管里的血不够了，身体先做两件事：<br>自身输血——肝、脾这些血库收缩，把存着的血细胞挤进循环，像停电时先装备用电池。<br>自身输液——毛细血管前括约肌收缩，毛细血管内流体静压下降，组织间隙的水被吸回血管，像水管压力低了，周围的水反过来渗进管子。</p><p>两招合起来，在没有外来补充的情况下把回心血量和血压暂时撑住，都发生在缺血期（代偿期）。</p><p>但到淤血期情况反转：前括约肌舒张、后括约肌仍收缩，血液淤在毛细血管里，加上血浆外渗，自身输血、自身输液双双停止，血液浓缩，血压开始垮。</p><p>易错：这里是生理代偿，不是临床输血技术。</p></div></div>
+  <div class="ex" id="ex-b11"><div class="ex-inner"><p>自身输血和自身输液是休克早期的两招自救：一招挤存血，一招吸水回血管。</p><p>大出血时血管里的血不够了，身体先做两件事：<br>自身输血——肝、脾这些血库收缩，把存着的血细胞挤进循环，像停电时先装备用电池。<br>自身输液——毛细血管前括约肌收缩，毛细血管内流体静压下降，组织间隙的水被吸回血管，像水管压力低了，周围的水反过来渗进管子。</p><p>两招合起来，在没有外来补充的情况下把回心血量和血压暂时撑住，都发生在缺血期（代偿期）。</p><p>但到淤血期情况反转：前括约肌舒张、后括约肌仍收缩，血液淤在毛细血管里，加上血浆外渗，自身输血、自身输液双双停止，血液浓缩，血压开始垮。</p><p>易错：这里是生理代偿，不是临床输血技术。</p></div></div>
 </article>
 <article class="qcard hot" id="b12" data-cat="patho" data-freq="6" data-type="名解" data-text="DIC（弥散性血管内凝血） 指各种原因引起以**全身性凝血系统过度激活、广泛微血栓形成**，继而**凝血因子与血小板大量消耗**或伴**纤溶功能亢进**，导致**出血、休克、多器官功能障碍及微血管病性贫血**为特征的**临床综合征**。 **本质**：凝血与纤溶失衡——先「广泛凝血」，后「消耗性低凝 + 继发纤溶亢进」。 **四大临床表现**：**出血**（消耗性凝血障碍 + 纤溶亢进）、**休克**（微血栓致回心血量减少）、**多器官功能障碍（MODS）**、**微血管病性溶血性贫血**。 **常见病因**：感染（尤其革兰阴性菌内毒素）、严重创伤、恶性肿瘤、产科意外、严重肝病。 **实验室**：血小板减少、纤维蛋白原降低、D-二聚体升高、凝血酶原时间延长、3P 试验阳性。 **治疗**：治疗原发病为主，早期抗凝（肝素），补充凝血因子与血小板，抗纤溶（仅在纤溶亢进为主时）。">
   <header class="qhead">
@@ -931,7 +1006,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b12"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·名解（六次）；病生最终精简版·名解 26</span>
   </div>
-  <div class="ex" id="ex-b12" hidden><div class="ex-inner"><p>DIC 就是全身血管里同时发生了无数个小血栓，先堵后漏，既栓塞又出血。</p><p>正常凝血像修补马路，哪里破了补哪里。DIC 则是全城同时乱铺沥青：感染内毒素、严重创伤、恶性肿瘤、产科意外把凝血系统全面点燃，微血管里到处结小血块。</p><p>接着连锁反应：广泛微血栓堵塞微循环，导致休克、MODS，红细胞被纤维蛋白网割破导致溶血性贫血；凝血因子和血小板被大量消耗，血止不住，广泛出血；继发纤溶亢进，FDP 又有抗凝作用，出血更重。</p><p>所以四大表现是：出血、休克、MODS、微血管病性溶血性贫血。很多人只写出血，漏掉另外三个。</p><p>治疗：治原发病为主，早期抗凝（肝素），补充凝血因子和血小板。</p><p>易错：DIC 是先栓塞后出血，不是单纯出血性疾病。</p></div></div>
+  <div class="ex" id="ex-b12"><div class="ex-inner"><p>DIC 就是全身血管里同时发生了无数个小血栓，先堵后漏，既栓塞又出血。</p><p>正常凝血像修补马路，哪里破了补哪里。DIC 则是全城同时乱铺沥青：感染内毒素、严重创伤、恶性肿瘤、产科意外把凝血系统全面点燃，微血管里到处结小血块。</p><p>接着连锁反应：广泛微血栓堵塞微循环，导致休克、MODS，红细胞被纤维蛋白网割破导致溶血性贫血；凝血因子和血小板被大量消耗，血止不住，广泛出血；继发纤溶亢进，FDP 又有抗凝作用，出血更重。</p><p>所以四大表现是：出血、休克、MODS、微血管病性溶血性贫血。很多人只写出血，漏掉另外三个。</p><p>治疗：治原发病为主，早期抗凝（肝素），补充凝血因子和血小板。</p><p>易错：DIC 是先栓塞后出血，不是单纯出血性疾病。</p></div></div>
 </article>
 <article class="qcard" id="b13" data-cat="patho" data-freq="1" data-type="名解" data-text="微血管病性溶血性贫血 DIC 时由于凝血反应，大量**纤维蛋白丝**在微血管腔内形成细网。 血流中的红细胞流过网孔时，可**黏着、滞留或挂在纤维蛋白丝上**；由于血流不断冲击，可引起**红细胞破裂**。 微血流通道受阻时，红细胞还可从**内皮细胞间裂隙被「挤压」出血管外**，使红细胞扭曲、变形、破碎。 除机械作用外，某些 DIC 病因（如内毒素）可使红细胞**变形性降低**，更易破碎。 大量红细胞破坏产生一种特殊类型的贫血，即**微血管病性溶血性贫血**；外周血涂片可见**盔形、三角形、锯齿形红细胞（裂细胞）**。">
   <header class="qhead">
@@ -949,7 +1024,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b13"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·名解（一次）；病生最终精简版·名解 26 附</span>
   </div>
-  <div class="ex" id="ex-b13" hidden><div class="ex-inner"><p>微血管病性溶血性贫血就是红细胞在血管里被割破了，不是造血不够，是血细胞被机械绞碎。</p><p>DIC 时微血管里布满纤维蛋白丝织成的网。红细胞像一条条鱼，硬要从网眼里挤过去，结果被网丝割破、撕碎；血流冲击越猛，破得越多。还有些红细胞被挤压出内皮细胞间的裂隙，扭曲变形后破碎。</p><p>结果就是贫血——但和缺铁、缺叶酸那种原料不够不同，这是成品被毁。外周血涂片能看到盔形、三角形、锯齿形红细胞（裂细胞），这是重要线索。</p><p>为什么总跟 DIC 一起出现？因为 DIC 的病理基础就是微血管内纤维蛋白网，网在，红细胞就会被割。</p><p>易错：它不是自身免疫性溶血，后者是抗体攻击。</p></div></div>
+  <div class="ex" id="ex-b13"><div class="ex-inner"><p>微血管病性溶血性贫血就是红细胞在血管里被割破了，不是造血不够，是血细胞被机械绞碎。</p><p>DIC 时微血管里布满纤维蛋白丝织成的网。红细胞像一条条鱼，硬要从网眼里挤过去，结果被网丝割破、撕碎；血流冲击越猛，破得越多。还有些红细胞被挤压出内皮细胞间的裂隙，扭曲变形后破碎。</p><p>结果就是贫血——但和缺铁、缺叶酸那种原料不够不同，这是成品被毁。外周血涂片能看到盔形、三角形、锯齿形红细胞（裂细胞），这是重要线索。</p><p>为什么总跟 DIC 一起出现？因为 DIC 的病理基础就是微血管内纤维蛋白网，网在，红细胞就会被割。</p><p>易错：它不是自身免疫性溶血，后者是抗体攻击。</p></div></div>
 </article>
 <article class="qcard" id="b14" data-cat="patho" data-freq="0" data-type="名解" data-text="应激 / 应激原 / 应激性溃疡 **应激（应激反应）**：指机体在受到**内外环境因素及社会、心理因素刺激**时所出现的**非特异性全身性适应反应**。 **应激原**：能引起应激反应的各种刺激因素，包括**物理性、化学性、生物性和心理性**应激原。 **应激性溃疡**：指机体遭受**严重创伤、大手术、感染**及其他应激情况时，出现**消化道黏膜的糜烂、浅溃疡、渗血**等急性损伤。 **应激性溃疡机制**：① **黏膜缺血**（**主要因素**，交感兴奋致胃肠血管收缩）；② **GC 分泌增多** → 蛋白质分解大于合成，胃上皮更新减慢、再生力降低；③ **胃黏膜 PG 合成减少** → 保护作用减弱；④ **酸中毒**使黏膜内 H⁺ 缓冲力降低；⑤ **自由基损伤**。">
   <header class="qhead">
@@ -967,7 +1042,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b14"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生最终精简版·名解 16、17、21；2026 秋课件 应激</span>
   </div>
-  <div class="ex" id="ex-b14" hidden><div class="ex-inner"><p>应激就是身体遇到大事时的全身总动员，不管什么刺激，反应都差不多，所以叫非特异性。</p><p>家里突然来了很多客人（创伤、大手术、感染、考试），不管客人是谁，你都要做同一套准备：收拾屋子、买菜、烧水。身体也一样，不管应激原是物理的、化学的、生物的、还是心理的，都启动同一套应激反应。应激原就是能引起这套反应的各种刺激。</p><p>代价之一在胃：应激时交感兴奋，内脏血管收缩，胃肠黏膜缺血（主要因素）；同时糖皮质激素升高使胃上皮更新减慢、前列腺素合成减少、酸中毒降低黏膜缓冲力、自由基损伤——几个因素叠加，黏膜糜烂、渗血，就是应激性溃疡。</p><p>易错：主要机制是黏膜缺血，不是胃酸增多。</p></div></div>
+  <div class="ex" id="ex-b14"><div class="ex-inner"><p>应激就是身体遇到大事时的全身总动员，不管什么刺激，反应都差不多，所以叫非特异性。</p><p>家里突然来了很多客人（创伤、大手术、感染、考试），不管客人是谁，你都要做同一套准备：收拾屋子、买菜、烧水。身体也一样，不管应激原是物理的、化学的、生物的、还是心理的，都启动同一套应激反应。应激原就是能引起这套反应的各种刺激。</p><p>代价之一在胃：应激时交感兴奋，内脏血管收缩，胃肠黏膜缺血（主要因素）；同时糖皮质激素升高使胃上皮更新减慢、前列腺素合成减少、酸中毒降低黏膜缓冲力、自由基损伤——几个因素叠加，黏膜糜烂、渗血，就是应激性溃疡。</p><p>易错：主要机制是黏膜缺血，不是胃酸增多。</p></div></div>
 </article>
 <article class="qcard" id="b15" data-cat="patho" data-freq="0" data-type="名解" data-text="急性期反应蛋白（APP） 指在**急性反应期**内，**血浆中浓度迅速变化的蛋白质**。 **正 APP（pAPP）**：浓度迅速升高，如 **C 反应蛋白（CRP）**、血清淀粉样蛋白 A、α₁-抗胰蛋白酶、纤维蛋白原、补体成分。 **负 APP（nAPP）**：浓度迅速下降，如**白蛋白**、转铁蛋白。 **生物学功能**：抑制蛋白酶、清除异物与坏死组织、抗感染、抗损伤、凝血与纤溶调节。 **临床意义**：CRP 是最常用的炎症指标，其升高幅度与感染/损伤程度相关。">
   <header class="qhead">
@@ -985,7 +1060,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b15"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生最终精简版·名解 19；2026 秋课件 应激</span>
   </div>
-  <div class="ex" id="ex-b15" hidden><div class="ex-inner"><p>急性期反应蛋白（APP）就是身体着火时肝脏紧急加班生产的一批消防物资。</p><p>感染、创伤、烧伤、大手术就像火警。肝脏接到信号（IL-1、IL-6、TNF-α），几小时内调整生产计划：把平时常备的蛋白减产，把应急用的蛋白增产。</p><p>正 APP（浓度升高）：C 反应蛋白（CRP）、血清淀粉样蛋白 A、纤维蛋白原、补体成分。功能是抑制蛋白酶、清除异物和坏死组织、抗感染、抗损伤。</p><p>负 APP（浓度下降）：白蛋白、转铁蛋白，因为肝脏把产能让给了正 APP。</p><p>临床意义：CRP 是最常用的炎症指标，感染、创伤、手术后几小时内飙升，幅度与炎症程度相关。</p><p>易错：CRP 是正 APP 的典型代表。</p></div></div>
+  <div class="ex" id="ex-b15"><div class="ex-inner"><p>急性期反应蛋白（APP）就是身体着火时肝脏紧急加班生产的一批消防物资。</p><p>感染、创伤、烧伤、大手术就像火警。肝脏接到信号（IL-1、IL-6、TNF-α），几小时内调整生产计划：把平时常备的蛋白减产，把应急用的蛋白增产。</p><p>正 APP（浓度升高）：C 反应蛋白（CRP）、血清淀粉样蛋白 A、纤维蛋白原、补体成分。功能是抑制蛋白酶、清除异物和坏死组织、抗感染、抗损伤。</p><p>负 APP（浓度下降）：白蛋白、转铁蛋白，因为肝脏把产能让给了正 APP。</p><p>临床意义：CRP 是最常用的炎症指标，感染、创伤、手术后几小时内飙升，幅度与炎症程度相关。</p><p>易错：CRP 是正 APP 的典型代表。</p></div></div>
 </article>
 <article class="qcard" id="b16" data-cat="patho" data-freq="1" data-type="名解" data-text="缺血-再灌注损伤 / 钙超载 / 无复流现象 **缺血-再灌注损伤（I/RI）**：组织缺血一段时间后血流重新恢复，组织损伤不但不能恢复，器官结构和功能损伤反而**较缺血时进一步加重**，甚至发生不可逆损伤的现象。 **钙超载**：因各种原因引起**细胞内钙含量异常增多**，并导致细胞结构损伤和功能代谢障碍，甚至细胞死亡的现象。 **无复流现象**：缺血组织恢复血液灌注后，**缺血区依然得不到充分血流灌注**的现象；白细胞黏附、聚集所致的机械阻塞是主要原因。 **呼吸爆发**：缺血组织重新获得大量 O₂，激活的白细胞耗氧量显著增加，产生大量**氧自由基**。 **机制**：氧自由基损伤、钙超载、白细胞黏附与炎症、能量代谢障碍、细胞凋亡。">
   <header class="qhead">
@@ -1003,7 +1078,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b16"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生最终精简版·名解 22～25；2026 秋课件 休克/应激</span>
   </div>
-  <div class="ex" id="ex-b16" hidden><div class="ex-inner"><p>缺血-再灌注损伤就是好心办坏事：组织缺血时已经受伤，好不容易把血打通，氧气一回来反而伤得更重。</p><p>一台快没电的机器，突然通高压电，容易烧坏。缺血组织也是这样——缺氧时细胞已经憋了很久，代谢废物堆积、离子泵失灵；血流一恢复，氧气骤增，线粒体大量产生活性氧，同时钙大量涌入细胞，白细胞黏附聚集、堵塞微血管，损伤反而加重。</p><p>四个关键机制：<br>氧自由基损伤——攻击细胞膜脂质、蛋白、DNA。<br>钙超载——细胞内钙异常增多，激活蛋白酶和磷脂酶，损伤线粒体。<br>白细胞黏附与炎症——白细胞堵在微血管里，释放炎症介质。<br>无复流现象——血虽然通了，但缺血区微血管被白细胞和血栓堵住，那片组织还是没血。</p><p>易错：无复流的主因是白细胞黏附聚集的机械阻塞。</p></div></div>
+  <div class="ex" id="ex-b16"><div class="ex-inner"><p>缺血-再灌注损伤就是好心办坏事：组织缺血时已经受伤，好不容易把血打通，氧气一回来反而伤得更重。</p><p>一台快没电的机器，突然通高压电，容易烧坏。缺血组织也是这样——缺氧时细胞已经憋了很久，代谢废物堆积、离子泵失灵；血流一恢复，氧气骤增，线粒体大量产生活性氧，同时钙大量涌入细胞，白细胞黏附聚集、堵塞微血管，损伤反而加重。</p><p>四个关键机制：<br>氧自由基损伤——攻击细胞膜脂质、蛋白、DNA。<br>钙超载——细胞内钙异常增多，激活蛋白酶和磷脂酶，损伤线粒体。<br>白细胞黏附与炎症——白细胞堵在微血管里，释放炎症介质。<br>无复流现象——血虽然通了，但缺血区微血管被白细胞和血栓堵住，那片组织还是没血。</p><p>易错：无复流的主因是白细胞黏附聚集的机械阻塞。</p></div></div>
 </article>
 <article class="qcard" id="b17" data-cat="patho" data-freq="1" data-type="名解" data-text="急性肾衰竭 / 原尿返漏 **急性肾衰竭（ARF）**：指各种病因引起**双侧肾脏泌尿功能急剧降低**，导致机体内环境出现严重紊乱的病理过程。 **原尿返漏**：在持续性肾缺血和肾毒物作用下，**肾小管上皮细胞变性、坏死、脱落**，**原尿通过受损的肾小管壁回漏入周围肾间质**。除直接造成尿量减少外，还引起**肾间质水肿**，压迫肾小管，造成**囊内压升高**，使 GFR 减少，出现少尿。 **分型**：肾前性（有效循环血量减少）、肾性（肾实质损伤，含急性肾小管坏死）、肾后性（尿路梗阻）。 **少尿期主要表现**：少尿/无尿、氮质血症、水肿、**高钾血症（首要死亡原因）**、代谢性酸中毒。">
   <header class="qhead">
@@ -1021,7 +1096,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b17"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·名解（一次）；病生最终精简版·名解 45、46</span>
   </div>
-  <div class="ex" id="ex-b17" hidden><div class="ex-inner"><p>急性肾衰竭就是肾脏突然罢工，按故障位置分三种：进水不够、机器坏了、下水道堵了。</p><p>一座污水处理厂突然停摆，原因可能有三：<br>肾前性——水压不够（失血、脱水、心衰），水送不到厂里，早期功能性、补液能恢复。<br>肾性——厂里机器坏了（肾炎、间质肾炎）或管道破了（急性肾小管坏死）。<br>肾后性——出水口堵了（结石、前列腺肥大），压力反传回厂里。</p><p>原尿返漏是肾性里的关键一环：肾小管上皮坏死脱落后管壁破了，原尿漏回肾间质，尿直接少了；肾间质被泡肿压迫肾小管；囊内压升高、有效滤过压下降、GFR 更低——恶性循环。</p><p>少尿期背成一低四高：低尿量、水高、钾高、氢高、氮高，其中高钾是首要死因。</p><p>易错：肾前性早期功能性可逆，这是抢救窗口。</p></div></div>
+  <div class="ex" id="ex-b17"><div class="ex-inner"><p>急性肾衰竭就是肾脏突然罢工，按故障位置分三种：进水不够、机器坏了、下水道堵了。</p><p>一座污水处理厂突然停摆，原因可能有三：<br>肾前性——水压不够（失血、脱水、心衰），水送不到厂里，早期功能性、补液能恢复。<br>肾性——厂里机器坏了（肾炎、间质肾炎）或管道破了（急性肾小管坏死）。<br>肾后性——出水口堵了（结石、前列腺肥大），压力反传回厂里。</p><p>原尿返漏是肾性里的关键一环：肾小管上皮坏死脱落后管壁破了，原尿漏回肾间质，尿直接少了；肾间质被泡肿压迫肾小管；囊内压升高、有效滤过压下降、GFR 更低——恶性循环。</p><p>少尿期背成一低四高：低尿量、水高、钾高、氢高、氮高，其中高钾是首要死因。</p><p>易错：肾前性早期功能性可逆，这是抢救窗口。</p></div></div>
 </article>
 <article class="qcard" id="b18" data-cat="patho" data-freq="3" data-type="名解" data-text="肾性高血压 / 肾性骨营养不良 / 尿毒症 **肾性高血压**：因**肾实质病变**引起的高血压，是**继发性高血压中最常见**的一种类型。机制包括：① **钠、水潴留**使血容量增多、心排血量增加；② **RAAS 活性增强**和**肾扩血管物质（前列腺素等）产生减少**致血管收缩、外周阻力升高。 **肾性骨营养不良（肾性骨病）**：**慢性肾衰**时由于**钙磷及维生素 D 代谢障碍、继发性甲状旁腺功能亢进、酸中毒和铝积聚**等引起的骨病，包括儿童**肾性佝偻病**和成人**骨质软化、纤维性骨炎、骨质疏松、骨囊性纤维化**。 **尿毒症**：急、慢性肾衰竭发展到严重阶段，除机体内平衡严重紊乱外，还出现**代谢产物、内源性毒素蓄积**，引起一系列**自体中毒**症状。">
   <header class="qhead">
@@ -1039,7 +1114,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b18"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·名解（肾性高血压三次）；病生最终精简版·名解 47～49</span>
   </div>
-  <div class="ex" id="ex-b18" hidden><div class="ex-inner"><p>肾坏了会连累三处：血压高、骨头软、毒素积——分别对应肾性高血压、肾性骨营养不良、尿毒症。</p><p>肾性高血压是继发性高血压里最常见的一种。机制两条：钠水潴留使血容量增多、心排血量增加；RAAS 激活加舒血管物质减少，血管收缩、外周阻力升高。</p><p>肾性骨营养不良的链条：GFR 下降 → 磷排不出去 → 血磷升高 → 低血钙 → 刺激甲状旁腺 → PTH 升高 → 溶骨、骨质脱钙；同时活性维生素 D 减少、酸中毒、铝积聚参与。结果出现肾性佝偻病、骨软化、纤维性骨炎、骨质疏松。</p><p>尿毒症是终末阶段：尿素、胍类、胺类、PTH 等毒素蓄积，引起消化道症状、贫血、出血、心包炎、脑病、皮肤瘙痒。</p><p>三者其实是一条链：排钠排水差（高血压）、排磷差（骨病）、排毒差（尿毒症）。</p><p>易错：肾性高血压不只 RAAS，钠水潴留同样重要。</p></div></div>
+  <div class="ex" id="ex-b18"><div class="ex-inner"><p>肾坏了会连累三处：血压高、骨头软、毒素积——分别对应肾性高血压、肾性骨营养不良、尿毒症。</p><p>肾性高血压是继发性高血压里最常见的一种。机制两条：钠水潴留使血容量增多、心排血量增加；RAAS 激活加舒血管物质减少，血管收缩、外周阻力升高。</p><p>肾性骨营养不良的链条：GFR 下降 → 磷排不出去 → 血磷升高 → 低血钙 → 刺激甲状旁腺 → PTH 升高 → 溶骨、骨质脱钙；同时活性维生素 D 减少、酸中毒、铝积聚参与。结果出现肾性佝偻病、骨软化、纤维性骨炎、骨质疏松。</p><p>尿毒症是终末阶段：尿素、胍类、胺类、PTH 等毒素蓄积，引起消化道症状、贫血、出血、心包炎、脑病、皮肤瘙痒。</p><p>三者其实是一条链：排钠排水差（高血压）、排磷差（骨病）、排毒差（尿毒症）。</p><p>易错：肾性高血压不只 RAAS，钠水潴留同样重要。</p></div></div>
 </article>
 <article class="qcard" id="b19" data-cat="patho" data-freq="1" data-type="论述" data-text="三种脱水类型的比较（含对机体的影响） **高渗性脱水（原发性脱水）**：失水＞失钠；血 Na⁺ **＞150 mmol/L**，渗透压 **↑**；**细胞内液减少为主**；病因多为水摄入不足或排出过多（大量出汗、渗透性利尿）；**口渴明显**、尿少、尿比重↑；**不易休克**；补 **5% 葡萄糖**为主。 **低渗性脱水（慢性/继发性脱水）**：失钠＞失水；血 Na⁺ **＜135 mmol/L**，渗透压 **↓**；**细胞外液明显减少**（水向细胞内转移）；病因多为只补水不补盐、长期排钠利尿；**无口渴**、早期尿量不减或增多、尿钠↓；**最易休克**；补**含盐溶液/高渗盐水**。 **等渗性脱水（急性/混合性脱水）**：水钠成比例丢失；血 Na⁺ **135～150 mmol/L**，渗透压**正常**；**细胞外液为主**，组织间液与血浆等比例丢失；病因多为呕吐、腹泻、大面">
   <header class="qhead">
@@ -1057,7 +1132,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b19"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·大题 4（一次）；病生最终精简版·简答 1</span>
   </div>
-  <div class="ex" id="ex-b19" hidden><div class="ex-inner"><p>三种脱水用一个盐水比例就能分清：水丢得多是高渗，盐丢得多是低渗，一起丢是等渗。</p><p>三杯淡盐水：<br>高渗性——只蒸发不添盐，越熬越浓：血钠 ＞150、渗透压 ＞310，细胞内液减少为主，口渴明显，不易休克，补 5% 葡萄糖。<br>低渗性——只添水不加盐，越喝越淡：血钠 ＜135、渗透压 ＜280，细胞外液明显减少（水往细胞里跑），不口渴，最容易休克，补含盐液。<br>等渗性——整杯倒掉一半，浓度不变：血钠 135～150、渗透压正常，细胞外液为主，口渴尿少，偶发休克，补平衡盐。</p><p>对机体的共同影响：血容量下降、循环障碍、肾灌注减少；电解质紊乱；酸碱失衡；严重时休克。</p><p>补液原则：高渗补水、低渗补盐、等渗补平衡液。</p><p>易错：低渗性不口渴，但缺的是容量，不是不缺水。</p></div></div>
+  <div class="ex" id="ex-b19"><div class="ex-inner"><p>三种脱水用一个盐水比例就能分清：水丢得多是高渗，盐丢得多是低渗，一起丢是等渗。</p><p>三杯淡盐水：<br>高渗性——只蒸发不添盐，越熬越浓：血钠 ＞150、渗透压 ＞310，细胞内液减少为主，口渴明显，不易休克，补 5% 葡萄糖。<br>低渗性——只添水不加盐，越喝越淡：血钠 ＜135、渗透压 ＜280，细胞外液明显减少（水往细胞里跑），不口渴，最容易休克，补含盐液。<br>等渗性——整杯倒掉一半，浓度不变：血钠 135～150、渗透压正常，细胞外液为主，口渴尿少，偶发休克，补平衡盐。</p><p>对机体的共同影响：血容量下降、循环障碍、肾灌注减少；电解质紊乱；酸碱失衡；严重时休克。</p><p>补液原则：高渗补水、低渗补盐、等渗补平衡液。</p><p>易错：低渗性不口渴，但缺的是容量，不是不缺水。</p></div></div>
 </article>
 <article class="qcard" id="b20" data-cat="patho" data-freq="2" data-type="论述" data-text="哪一种脱水最容易引起休克？简述其变化机制与临床表现 **低渗性脱水最容易引起休克（失液性/低血容量性休克）**。 **机制**： ① 细胞外液渗透压降低，**无口渴感，饮水减少**； ② **ADH 反射性分泌减少，尿量增加**，进一步丢失水分； ③ 细胞外液渗透压低于细胞内液，**水从细胞外液向细胞内转移**，使本已减少的细胞外液**进一步减少**； ④ 血浆容量急剧减少（循环血量减少）→ **血压显著下降** → 休克。 **临床表现**：静脉塌陷、动脉血压降低、脉搏细速、皮肤湿冷、尿量减少、**尿钠降低**，伴脱水体征（眼窝凹陷、皮肤弹性差）。">
   <header class="qhead">
@@ -1075,7 +1150,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b20"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·大题 5（两次）；病生最终精简版·简答 2</span>
   </div>
-  <div class="ex" id="ex-b20" hidden><div class="ex-inner"><p>低渗性脱水最容易引起休克，原因可以概括成三失一降：失水、失钠、失容量，血压下降。</p><p>血管是一根水管，里面的水本来就不多。低渗性脱水时发生三件坏事：<br>不渴，不喝水——血不浓，渗透压感受器不报警，病人不主动补水。<br>ADH 减少，尿还多——低渗抑制 ADH，肾脏继续排水。<br>水往细胞里跑——细胞外液渗透压低，水顺着渗透压差进入细胞内，血管里的水进一步减少。</p><p>三件事叠加，血浆容量急剧下降，血压显著降低，就是失液性休克。</p><p>表现：静脉塌陷、血压下降、脉搏细速、皮肤湿冷、尿少且尿钠降低。</p><p>为什么高渗性不容易休克？水从细胞内转移到血管里，暂时补了血容量。</p><p>易错：关键在「水向细胞内转移」，只答失钠多不够。</p></div></div>
+  <div class="ex" id="ex-b20"><div class="ex-inner"><p>低渗性脱水最容易引起休克，原因可以概括成三失一降：失水、失钠、失容量，血压下降。</p><p>血管是一根水管，里面的水本来就不多。低渗性脱水时发生三件坏事：<br>不渴，不喝水——血不浓，渗透压感受器不报警，病人不主动补水。<br>ADH 减少，尿还多——低渗抑制 ADH，肾脏继续排水。<br>水往细胞里跑——细胞外液渗透压低，水顺着渗透压差进入细胞内，血管里的水进一步减少。</p><p>三件事叠加，血浆容量急剧下降，血压显著降低，就是失液性休克。</p><p>表现：静脉塌陷、血压下降、脉搏细速、皮肤湿冷、尿少且尿钠降低。</p><p>为什么高渗性不容易休克？水从细胞内转移到血管里，暂时补了血容量。</p><p>易错：关键在「水向细胞内转移」，只答失钠多不够。</p></div></div>
 </article>
 <article class="qcard" id="b21" data-cat="patho" data-freq="1" data-type="简答" data-text="水肿的发生机制 **血管内外液体交换失衡（组织液生成＞回流）**： ① **毛细血管流体静压升高**：静脉回流受阻（心衰、肝硬化门脉高压、静脉血栓）→ 血液淤滞 → 组织液生成增多。 ② **血浆胶体渗透压降低**：肝硬化（白蛋白合成减少）或肾病综合征（大量蛋白尿）→ 血浆蛋白减少 → 水分外渗；白蛋白降至 **2.5±0.5 g%** 或总蛋白降至 **5±0.5 g%** 即可出现全身性水肿。 ③ **毛细血管通透性增加**：炎症、组胺、激肽、细菌毒素、缺氧 → 血浆蛋白渗出 → 组织液胶渗压升高、血浆胶渗压降低 → 水肿。 ④ **淋巴回流受阻**：乳腺癌根治术后腋窝淋巴结清扫、丝虫病淋巴管阻塞 → 局部水肿。 **体内外液体交换失衡（钠水潴留）**：肾小球滤过率下降、肾小管重吸收增加（RAAS 激活、ADH 增多、ANP 减少）→ 钠水排出减少。 **常见类型**：心性水肿（静水压">
   <header class="qhead">
@@ -1093,7 +1168,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b21"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·大题 6（一次）；病生最终精简版·简答 3</span>
   </div>
-  <div class="ex" id="ex-b21" hidden><div class="ex-inner"><p>水肿就是水跑到组织里出不来，只有两种可能：送出去太多，或回收太少，或身体整体水太多。</p><p>组织间隙是一片海绵，血管是水管。海绵变湿有四条路：<br>水管压力太高（流体静压升高）——心衰、静脉血栓、肝硬化门脉高压，心性水肿多从下垂部位开始。<br>水里的蛋白太少（胶渗压降低）——肝硬化、肾病综合征，白蛋白降到 2.5±0.5 g% 就可出现全身性水肿，肾性水肿常晨起眼睑明显。<br>管壁漏了（通透性增加）——炎症、组胺、缺氧，蛋白也漏出去，双向推动水肿。<br>下水道堵了（淋巴回流受阻）——乳腺癌术后、丝虫病，局部水肿。</p><p>还有一条整体水太多：GFR 下降、肾小管重吸收增加，钠水排出减少。</p><p>易错：通透性增加时蛋白也漏，是双向加重。</p></div></div>
+  <div class="ex" id="ex-b21"><div class="ex-inner"><p>水肿就是水跑到组织里出不来，只有两种可能：送出去太多，或回收太少，或身体整体水太多。</p><p>组织间隙是一片海绵，血管是水管。海绵变湿有四条路：<br>水管压力太高（流体静压升高）——心衰、静脉血栓、肝硬化门脉高压，心性水肿多从下垂部位开始。<br>水里的蛋白太少（胶渗压降低）——肝硬化、肾病综合征，白蛋白降到 2.5±0.5 g% 就可出现全身性水肿，肾性水肿常晨起眼睑明显。<br>管壁漏了（通透性增加）——炎症、组胺、缺氧，蛋白也漏出去，双向推动水肿。<br>下水道堵了（淋巴回流受阻）——乳腺癌术后、丝虫病，局部水肿。</p><p>还有一条整体水太多：GFR 下降、肾小管重吸收增加，钠水排出减少。</p><p>易错：通透性增加时蛋白也漏，是双向加重。</p></div></div>
 </article>
 <article class="qcard" id="b22" data-cat="patho" data-freq="2" data-type="论述" data-text="休克三期的微循环变化、机制与临床表现 **一、缺血期（代偿期 / 休克 I 期）** 微循环：**少灌少流、灌少于流**，组织缺血缺氧；**前紧后松，直捷通路与动静脉短路开放**。 机制：交感-肾上腺髓质强烈兴奋，儿茶酚胺经 **α 受体**使皮肤、腹腔内脏、肾小血管收缩；**β 受体**使动静脉吻合支开放。 代偿意义：① **自身输血**（肝脾储血库收缩）；② **自身输液**（组织液回流增加）；③ **血液重新分布**，保证心脑供血；④ 心收缩力增强、外周阻力增加，维持动脉血压。 临床表现：**面色苍白、四肢湿冷、脉压减小、神志清楚、脉搏细速、尿量减少**（「面白肢冷脉压小，神清脉快尿量少」）。 **二、淤血期（失代偿期 / 休克 II 期）** 微循环：**多灌少流、灌大于流**，血液淤滞；**前松后紧**。 机制：① **酸中毒**使血管平滑肌对儿茶酚胺反应性降低；② **内毒素（">
   <header class="qhead">
@@ -1111,7 +1186,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b22"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·大题 2、3、5（各两次）；病生最终精简版·简答 5</span>
   </div>
-  <div class="ex" id="ex-b22" hidden><div class="ex-inner"><p>休克三期可以想成水管三段故事：先收紧，再淤堵，最后瘫掉。</p><p>Ⅰ 期（缺血期/代偿期）——水管收紧。交感-肾上腺髓质兴奋，儿茶酚胺经 α 受体让皮肤、腹腔内脏、肾的小血管收缩；β 受体让动静脉短路开放。微循环少灌少流、灌少于流，口诀前紧后松、便道开通。代偿靠自身输血、自身输液、血液重新分布保心脑。表现：面白肢冷脉压小，神清脉快尿量少，此时血压可能还正常。</p><p>Ⅱ 期（淤血期/失代偿期）——水管淤堵。酸中毒使血管对儿茶酚胺反应性降低，内毒素、组胺使血管扩张，血液流变学改变形成微血栓。微循环多灌少流、灌大于流，口诀前松后紧、血液淤堵。自身输血输液停止，血液浓缩。表现：昏迷血压降，发绀无尿量。</p><p>Ⅲ 期（衰竭期）——水管瘫掉。血管麻痹性扩张加 DIC，微循环不灌不流、血液高凝。表现：低压难复开，凝血多脏衰。</p><p>易错：Ⅰ期血压可正常甚至略升。</p></div></div>
+  <div class="ex" id="ex-b22"><div class="ex-inner"><p>休克三期可以想成水管三段故事：先收紧，再淤堵，最后瘫掉。</p><p>Ⅰ 期（缺血期/代偿期）——水管收紧。交感-肾上腺髓质兴奋，儿茶酚胺经 α 受体让皮肤、腹腔内脏、肾的小血管收缩；β 受体让动静脉短路开放。微循环少灌少流、灌少于流，口诀前紧后松、便道开通。代偿靠自身输血、自身输液、血液重新分布保心脑。表现：面白肢冷脉压小，神清脉快尿量少，此时血压可能还正常。</p><p>Ⅱ 期（淤血期/失代偿期）——水管淤堵。酸中毒使血管对儿茶酚胺反应性降低，内毒素、组胺使血管扩张，血液流变学改变形成微血栓。微循环多灌少流、灌大于流，口诀前松后紧、血液淤堵。自身输血输液停止，血液浓缩。表现：昏迷血压降，发绀无尿量。</p><p>Ⅲ 期（衰竭期）——水管瘫掉。血管麻痹性扩张加 DIC，微循环不灌不流、血液高凝。表现：低压难复开，凝血多脏衰。</p><p>易错：Ⅰ期血压可正常甚至略升。</p></div></div>
 </article>
 <article class="qcard" id="b23" data-cat="patho" data-freq="2" data-type="论述" data-text="休克早期（缺血期）的代偿机制及其意义 **（1）交感-肾上腺髓质系统兴奋（最早、最快）**：致休克病因（血容量减少、疼痛、内毒素）→ 儿茶酚胺大量释放。 **α 受体效应**：皮肤、腹腔脏器、肾小血管收缩 → 外周阻力升高、血液重新分布。 **β 受体效应**：微循环动-静脉短路开放 → 血液绕过真毛细血管网直接入微静脉（此效应加重组织缺血，属不利一面）。 **（2）其他缩血管体液因子**：**血管紧张素Ⅱ、血管升压素（ADH）、血栓素 A₂、内皮素、白三烯** 释放，使皮肤、肌肉、腹腔内脏小血管收缩。 **（3）代偿意义**： ① **自身输血**：微静脉及肝、脾储血库收缩，回心血量增加； ② **自身输液**：毛细血管流体静压降低，组织液返流入血管，回心血量增加； ③ **血液重新分布**：保证心、脑等重要器官血液供应； ④ **心收缩力增强、外周阻力增加**，动脉血压维持正常（故早期">
   <header class="qhead">
@@ -1129,7 +1204,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b23"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·大题 5（两次）；病生最终精简版·简答 5</span>
   </div>
-  <div class="ex" id="ex-b23" hidden><div class="ex-inner"><p>休克早期的代偿机制，就是身体在拆东墙补西墙：把皮肤、肾、肠子的血抢过来，优先保心脑。</p><p>第一反应最快：交感-肾上腺髓质兴奋，儿茶酚胺大量释放。α 受体效应让皮肤、腹腔脏器、肾的小血管收缩，外周阻力升高、血液重新分布；β 受体效应让动静脉短路开放，血绕过真毛细血管——这一条其实加重组织缺血，是代偿中的不利面。</p><p>第二波：血管紧张素Ⅱ、血管升压素、血栓素 A₂、内皮素、白三烯等缩血管物质释放，进一步收缩皮肤、肌肉、腹腔内脏血管。</p><p>四大代偿意义：自身输血（肝脾储血库收缩）；自身输液（组织液返流）；血液重新分布保心脑；心收缩力增强、外周阻力增加，维持血压。</p><p>临床价值：这一期病人血压可能还正常，但已经面色苍白、四肢湿冷、尿少——末梢缺血信号比血压更早。</p><p>易错：β 受体开放短路反而加重缺氧，不是有利代偿。</p></div></div>
+  <div class="ex" id="ex-b23"><div class="ex-inner"><p>休克早期的代偿机制，就是身体在拆东墙补西墙：把皮肤、肾、肠子的血抢过来，优先保心脑。</p><p>第一反应最快：交感-肾上腺髓质兴奋，儿茶酚胺大量释放。α 受体效应让皮肤、腹腔脏器、肾的小血管收缩，外周阻力升高、血液重新分布；β 受体效应让动静脉短路开放，血绕过真毛细血管——这一条其实加重组织缺血，是代偿中的不利面。</p><p>第二波：血管紧张素Ⅱ、血管升压素、血栓素 A₂、内皮素、白三烯等缩血管物质释放，进一步收缩皮肤、肌肉、腹腔内脏血管。</p><p>四大代偿意义：自身输血（肝脾储血库收缩）；自身输液（组织液返流）；血液重新分布保心脑；心收缩力增强、外周阻力增加，维持血压。</p><p>临床价值：这一期病人血压可能还正常，但已经面色苍白、四肢湿冷、尿少——末梢缺血信号比血压更早。</p><p>易错：β 受体开放短路反而加重缺氧，不是有利代偿。</p></div></div>
 </article>
 <article class="qcard" id="b24" data-cat="patho" data-freq="1" data-type="简答" data-text="休克难以治疗（难治）的原因 **① DIC 形成**：休克晚期严重酸中毒、大量氧自由基、血管内皮与平滑肌损伤 → 微血管麻痹性扩张 + DIC；DIC 引起**无复流现象**与微血栓，导致全身器官持续低灌流，内环境严重破坏，可致 MODS 甚至死亡。 **② 肠黏膜屏障破坏引发 SIRS 与 CARS**：肠屏障受损 → 细菌与内毒素入血 → 细胞因子、脂类炎症介质、黏附分子、自由基经**级联放大反应**引起全身性炎症反应综合征（SIRS）；促炎-抗炎介质平衡紊乱 → 代偿性抗炎反应综合征（CARS）。 **③ 病因多样、机制复杂**：失血、感染、烧伤、过敏、创伤、心衰、神经刺激等机制各异，尚未完全阐明。 **④ 早期难诊断、后期进展迅速**：早期靠代偿维持血压，常规指标不能反映微循环状态；一旦失代偿则迅速恶化。 **⑤ 微循环障碍与缺氧难以纠正**：扩容、纠酸、升压药的时机与用量难以把握">
   <header class="qhead">
@@ -1147,7 +1222,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b24"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·大题 6（一次）；病生最终精简版·简答 6</span>
   </div>
-  <div class="ex" id="ex-b24" hidden><div class="ex-inner"><p>休克到后期为什么拉不回来？因为已经陷入三个死循环：微血管瘫了、到处是小血栓、肠子屏障破了。</p><p>① DIC 形成。晚期严重酸中毒、大量氧自由基、血管内皮损伤，微血管麻痹性扩张加 DIC。DIC 引起无复流现象和微血栓，全身器官持续低灌流，可致 MODS 甚至死亡。</p><p>② 肠黏膜屏障破坏引发 SIRS 与 CARS。肠道是休克的发动机：缺血缺氧使屏障受损，细菌和内毒素入血，激活细胞因子、炎症介质，经级联放大引起全身炎症反应综合征；促炎抗炎失衡又引起代偿性抗炎反应综合征。</p><p>③ 病因多样、机制复杂，难以对因治疗。</p><p>④ 早期难诊断、后期进展快。早期靠代偿维持血压，常规指标看不出微循环状态；一旦失代偿就急转直下。</p><p>⑤ 微循环障碍难以纠正，扩容、纠酸、升压药的时机和剂量很难把握。</p><p>一句话：凝、炎、衰三座大山，加上治疗窗口窄，所以难治。</p><p>易错：要落到具体机制，不能只答病情太重。</p></div></div>
+  <div class="ex" id="ex-b24"><div class="ex-inner"><p>休克到后期为什么拉不回来？因为已经陷入三个死循环：微血管瘫了、到处是小血栓、肠子屏障破了。</p><p>① DIC 形成。晚期严重酸中毒、大量氧自由基、血管内皮损伤，微血管麻痹性扩张加 DIC。DIC 引起无复流现象和微血栓，全身器官持续低灌流，可致 MODS 甚至死亡。</p><p>② 肠黏膜屏障破坏引发 SIRS 与 CARS。肠道是休克的发动机：缺血缺氧使屏障受损，细菌和内毒素入血，激活细胞因子、炎症介质，经级联放大引起全身炎症反应综合征；促炎抗炎失衡又引起代偿性抗炎反应综合征。</p><p>③ 病因多样、机制复杂，难以对因治疗。</p><p>④ 早期难诊断、后期进展快。早期靠代偿维持血压，常规指标看不出微循环状态；一旦失代偿就急转直下。</p><p>⑤ 微循环障碍难以纠正，扩容、纠酸、升压药的时机和剂量很难把握。</p><p>一句话：凝、炎、衰三座大山，加上治疗窗口窄，所以难治。</p><p>易错：要落到具体机制，不能只答病情太重。</p></div></div>
 </article>
 <article class="qcard" id="b25" data-cat="patho" data-freq="1" data-type="论述" data-text="急性肾衰竭的病因与发病机制 **（一）肾前性 ARF**： 病因：严重血压下降、血容量降低、心衰或肾血流灌注减少。 机制：有效循环血容量减少 → 自身调节与神经体液调节使**肾血管收缩、肾内血液重新分布** → 肾灌注量急剧减少 → **GFR 降低**。早期为功能性，及时补液可恢复；持续缺血可转为器质性（急性肾小管坏死）。 **（二）肾性 ARF**： 病因：肾小球、肾间质与肾血管疾病（急性肾皮质/髓质缺血缺氧坏死、急性肾小球肾炎、狼疮性肾炎、间质性肾炎、严重感染），以及**急性肾小管坏死**。 机制：① 肾小球/间质/血管病变 → **滤过膜通透性增加、滤过面积减少**；② 急性肾小管坏死 → 上皮细胞脱落、管腔内大量**管型** → **肾小管阻塞**与**原尿返漏**；③ 两者均使 **GFR 显著降低**。 **（三）肾后性 ARF**： 病因：前列腺肥大、结石、膀胱肿瘤或损伤引">
   <header class="qhead">
@@ -1165,7 +1240,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b25"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·大题（一次）；病生最终精简版·简答 14</span>
   </div>
-  <div class="ex" id="ex-b25" hidden><div class="ex-inner"><p>急性肾衰的病因分三型，用水管一句话记住：水压不够、净水器坏了、下水道堵了。</p><p>肾前性（水压不够）：严重血压下降、血容量降低、心衰、肾灌注减少。有效循环血量减少，肾血管收缩、肾内血流重新分布，肾灌注急剧减少，GFR 降低。早期功能性，补液升压可恢复；持续缺血转为器质性。</p><p>肾性（净水器坏了）：肾小球、肾间质、肾血管疾病，以及急性肾小管坏死。病变使滤过膜通透性增加、滤过面积减少；肾小管坏死使上皮脱落、管腔内大量管型，导致肾小管阻塞与原尿返漏。两者都使 GFR 显著降低。</p><p>肾后性（下水道堵了）：前列腺肥大、结石、膀胱肿瘤引起尿路阻塞，梗阻使囊内压升高、有效滤过压降低、GFR 下降。</p><p>三型尿液鉴别：肾前性尿比重高（＞1.020）、尿钠低（＜20）、补液后尿量增加；肾性尿比重低而固定（约 1.010）、尿钠高（＞40）、可见管型；肾后性尿量突然减少，解除梗阻后恢复。</p><p>易错：肾前性早期功能性可逆，肾性已坏死。</p></div></div>
+  <div class="ex" id="ex-b25"><div class="ex-inner"><p>急性肾衰的病因分三型，用水管一句话记住：水压不够、净水器坏了、下水道堵了。</p><p>肾前性（水压不够）：严重血压下降、血容量降低、心衰、肾灌注减少。有效循环血量减少，肾血管收缩、肾内血流重新分布，肾灌注急剧减少，GFR 降低。早期功能性，补液升压可恢复；持续缺血转为器质性。</p><p>肾性（净水器坏了）：肾小球、肾间质、肾血管疾病，以及急性肾小管坏死。病变使滤过膜通透性增加、滤过面积减少；肾小管坏死使上皮脱落、管腔内大量管型，导致肾小管阻塞与原尿返漏。两者都使 GFR 显著降低。</p><p>肾后性（下水道堵了）：前列腺肥大、结石、膀胱肿瘤引起尿路阻塞，梗阻使囊内压升高、有效滤过压降低、GFR 下降。</p><p>三型尿液鉴别：肾前性尿比重高（＞1.020）、尿钠低（＜20）、补液后尿量增加；肾性尿比重低而固定（约 1.010）、尿钠高（＞40）、可见管型；肾后性尿量突然减少，解除梗阻后恢复。</p><p>易错：肾前性早期功能性可逆，肾性已坏死。</p></div></div>
 </article>
 <article class="qcard hot" id="b26" data-cat="patho" data-freq="4" data-type="论述" data-text="急性肾衰竭少尿期的功能代谢变化 **口诀：一低四高**——少尿（低尿量）、水高（水肿）、钾高（高钾血症）、氢高（代谢性酸中毒）、氮高（氮质血症）。 **① 尿量及尿成分变化**：少尿（＜400 ml/d）或无尿（＜100 ml/d），因肾血流减少、肾小管阻塞、原尿返漏；尿中可见**管型、蛋白质**（肾小管坏死、血尿屏障破坏）、**红细胞、白细胞**；尿比重固定于 1.010 左右。 **② 氮质血症**：血中尿素、肌酐、尿酸等**非蛋白氮（NPN）显著升高**。 **③ 水肿**：眼睑水肿、下肢水肿，严重者**脑水肿、肺水肿**。 **④ 高钾血症**：**少尿期首要死亡原因、急性肾衰最危险的并发症**。原因：肾排钾减少、组织损伤与代酸使 K⁺ 转移到细胞外、K⁺ 摄入过多（库存血、食物）。**血钾＞8 mmol/L 可致心脏骤停**；应密切监测血钾与心电图，遵循「**见尿补钾**」原则。">
   <header class="qhead">
@@ -1183,7 +1258,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b26"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·大题（四次）；病生最终精简版·简答 15</span>
   </div>
-  <div class="ex" id="ex-b26" hidden><div class="ex-inner"><p>少尿期记住一低四高就够答题：低尿量，水高、钾高、氢高、氮高。</p><p>肾脏突然停工，排水、排钾、排酸、排毒四条线同时断掉：<br>一低（低尿量）：少尿 ＜400 ml/d 或无尿 ＜100 ml/d，原因是肾血流减少、肾小管阻塞、原尿返漏；尿比重固定在 1.010 左右。<br>水高（水肿）：排水减少加内生水增多加输液过多，严重者脑水肿、肺水肿，所以要严控输液。<br>钾高（高钾血症）：少尿期首要死亡原因、最危险并发症。原因：排钾减少、组织损伤与代酸使钾外移、摄入过多。血钾 ＞8 mmol/L 可致心脏骤停，必须监测血钾和心电图，遵循见尿补钾。<br>氢高（代谢性酸中毒）：排酸功能降低、固定酸生成增多、泌 H⁺ 障碍。<br>氮高（氮质血症）：尿素、肌酐、尿酸显著升高。</p><p>易错：一低是低尿量，不是低钾。</p></div></div>
+  <div class="ex" id="ex-b26"><div class="ex-inner"><p>少尿期记住一低四高就够答题：低尿量，水高、钾高、氢高、氮高。</p><p>肾脏突然停工，排水、排钾、排酸、排毒四条线同时断掉：<br>一低（低尿量）：少尿 ＜400 ml/d 或无尿 ＜100 ml/d，原因是肾血流减少、肾小管阻塞、原尿返漏；尿比重固定在 1.010 左右。<br>水高（水肿）：排水减少加内生水增多加输液过多，严重者脑水肿、肺水肿，所以要严控输液。<br>钾高（高钾血症）：少尿期首要死亡原因、最危险并发症。原因：排钾减少、组织损伤与代酸使钾外移、摄入过多。血钾 ＞8 mmol/L 可致心脏骤停，必须监测血钾和心电图，遵循见尿补钾。<br>氢高（代谢性酸中毒）：排酸功能降低、固定酸生成增多、泌 H⁺ 障碍。<br>氮高（氮质血症）：尿素、肌酐、尿酸显著升高。</p><p>易错：一低是低尿量，不是低钾。</p></div></div>
 </article>
 <article class="qcard" id="b27" data-cat="patho" data-freq="0" data-type="简答" data-text="慢性肾衰竭的发病机制与功能代谢变化 **发病机制**：① **健存肾单位学说**——肾单位不断破坏，残余健存肾单位代偿性高滤过，最终失代偿；② **矫枉失衡学说**——如 GFR 下降使磷排泄减少、血磷升高，机体代偿性减少 PTH 排磷，PTH 升高又带来骨与代谢损害；③ **肾小球高滤过学说**——残余肾小球长期高灌注、高滤过、高压力，促进硬化。 **功能代谢变化**： ① **泌尿功能**：夜尿增多、多尿（早期），晚期少尿；尿比重固定、尿渗透压降低。 ② **水电解质**：水钠潴留或脱水；**高钾**（晚期）、**高磷**、**低钙**；代谢性酸中毒（AG 增高型）。 ③ **酸碱平衡**：早期可正常，晚期**代谢性酸中毒**（排 H⁺、产 NH₃ 能力下降）。 ④ **肾性高血压**：钠水潴留 + RAAS 激活 + 舒血管物质减少。 ⑤ **肾性骨营养不良**：钙磷代谢障碍、继发性">
   <header class="qhead">
@@ -1201,7 +1276,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b27"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 肾功能不全二；病生最终精简版·名解 44～49</span>
   </div>
-  <div class="ex" id="ex-b27" hidden><div class="ex-inner"><p>慢性肾衰是肾单位一个个阵亡的过程，剩下的肾单位拼命加班，最后被累垮。</p><p>三个学说：<br>健存肾单位学说（过度滤过学说）——肾单位不断被破坏，残余的健存肾单位代偿性高灌注、高滤过、高压力，长期内皮损伤、肾小球硬化，更多肾单位丧失，恶性循环。<br>矫枉失衡学说——身体为纠正紊乱反而制造新紊乱。GFR 下降、磷排不出去、血磷升高，机体减少 PTH 排磷（矫枉），PTH 长期升高，溶骨、骨病、皮肤瘙痒（失衡）。<br>肾小管间质损害——蛋白尿、缺氧、炎症导致间质纤维化。</p><p>功能代谢变化：早期夜尿多、多尿（残存肾单位高滤过），晚期少尿、尿比重固定；水钠潴留或脱水，晚期高钾、高磷、低钙；代谢性酸中毒；肾性高血压；肾性骨营养不良；肾性贫血（EPO 减少）；尿毒症。</p><p>易错：肾性贫血主因是 EPO 减少，不是缺铁。</p></div></div>
+  <div class="ex" id="ex-b27"><div class="ex-inner"><p>慢性肾衰是肾单位一个个阵亡的过程，剩下的肾单位拼命加班，最后被累垮。</p><p>三个学说：<br>健存肾单位学说（过度滤过学说）——肾单位不断被破坏，残余的健存肾单位代偿性高灌注、高滤过、高压力，长期内皮损伤、肾小球硬化，更多肾单位丧失，恶性循环。<br>矫枉失衡学说——身体为纠正紊乱反而制造新紊乱。GFR 下降、磷排不出去、血磷升高，机体减少 PTH 排磷（矫枉），PTH 长期升高，溶骨、骨病、皮肤瘙痒（失衡）。<br>肾小管间质损害——蛋白尿、缺氧、炎症导致间质纤维化。</p><p>功能代谢变化：早期夜尿多、多尿（残存肾单位高滤过），晚期少尿、尿比重固定；水钠潴留或脱水，晚期高钾、高磷、低钙；代谢性酸中毒；肾性高血压；肾性骨营养不良；肾性贫血（EPO 减少）；尿毒症。</p><p>易错：肾性贫血主因是 EPO 减少，不是缺铁。</p></div></div>
 </article>
 <article class="qcard" id="b28" data-cat="patho" data-freq="0" data-type="简答" data-text="应激的神经-内分泌反应（蓝斑-交感-肾上腺髓质系统与 HPA 轴） **（一）蓝斑-去甲肾上腺素能神经元/交感-肾上腺髓质系统（LC-NE/SA）**： 应激原 → 激活蓝斑 → 去甲肾上腺素释放 → 交感神经兴奋、肾上腺髓质释放**儿茶酚胺**（肾上腺素、去甲肾上腺素）。 效应：心率加快、心肌收缩力增强、血压升高；血液重新分布（皮肤、内脏血管收缩，心脑骨骼肌扩张）；支气管扩张；代谢率升高、血糖升高；**血小板聚集增强**。 **（二）下丘脑-垂体-肾上腺皮质激素系统（HPA 轴）**： 应激原 → 下丘脑释放 **CRH** → 腺垂体释放 **ACTH** → 肾上腺皮质释放**糖皮质激素（GC）**。 GC 升高的意义：升高血糖（促糖异生、抑制外周葡萄糖利用）、**允许作用**（增强儿茶酚胺缩血管效应）、抑制炎症与免疫、稳定溶酶体膜、抗休克。 **（三）其他**：**胰高血糖素**升">
   <header class="qhead">
@@ -1219,7 +1294,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b28"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 应激（王晶瑶）；病生最终精简版·名解 16～21</span>
   </div>
-  <div class="ex" id="ex-b28" hidden><div class="ex-inner"><p>应激的神经-内分泌反应，就是身体拉警报后的两套系统：一套几秒钟起效，一套几分钟到几小时起效。</p><p>第一套：蓝斑-交感-肾上腺髓质系统——快反应。应激原激活蓝斑，去甲肾上腺素释放，交感兴奋、肾上腺髓质释放儿茶酚胺。效应：心率加快、血压升高；血液重新分布（皮肤内脏收缩、心脑骨骼肌扩张）；支气管扩张；代谢率升高、血糖升高。一句话：准备战斗或逃跑。</p><p>第二套：下丘脑-垂体-肾上腺皮质轴——慢反应。下丘脑释放 CRH，腺垂体释放 ACTH，肾上腺皮质释放糖皮质激素。GC 升高可升高血糖、允许作用（增强儿茶酚胺缩血管）、抑制炎症与免疫、稳定溶酶体膜、抗休克。</p><p>其他：胰高血糖素升高、胰岛素降低；ADH 与醛固酮升高；β-内啡肽升高（镇痛）；急性期反应蛋白增加。</p><p>易错：允许作用不是 GC 直接缩血管，是让儿茶酚胺作用增强。</p></div></div>
+  <div class="ex" id="ex-b28"><div class="ex-inner"><p>应激的神经-内分泌反应，就是身体拉警报后的两套系统：一套几秒钟起效，一套几分钟到几小时起效。</p><p>第一套：蓝斑-交感-肾上腺髓质系统——快反应。应激原激活蓝斑，去甲肾上腺素释放，交感兴奋、肾上腺髓质释放儿茶酚胺。效应：心率加快、血压升高；血液重新分布（皮肤内脏收缩、心脑骨骼肌扩张）；支气管扩张；代谢率升高、血糖升高。一句话：准备战斗或逃跑。</p><p>第二套：下丘脑-垂体-肾上腺皮质轴——慢反应。下丘脑释放 CRH，腺垂体释放 ACTH，肾上腺皮质释放糖皮质激素。GC 升高可升高血糖、允许作用（增强儿茶酚胺缩血管）、抑制炎症与免疫、稳定溶酶体膜、抗休克。</p><p>其他：胰高血糖素升高、胰岛素降低；ADH 与醛固酮升高；β-内啡肽升高（镇痛）；急性期反应蛋白增加。</p><p>易错：允许作用不是 GC 直接缩血管，是让儿茶酚胺作用增强。</p></div></div>
 </article>
 <article class="qcard" id="b29" data-cat="patho" data-freq="0" data-type="简答" data-text="应激性溃疡的发生机制 **① 胃肠黏膜缺血（主要因素）**：应激时交感-肾上腺髓质兴奋，内脏血管收缩，胃肠黏膜缺血缺氧，黏膜屏障功能受损。 **② 糖皮质激素分泌增多**：GC 使蛋白质分解大于合成，**胃上皮更新减慢、再生力降低**，黏膜修复能力下降。 **③ 胃黏膜前列腺素（PG）合成减少**：PG 对黏膜的保护作用减弱（黏液-碳酸氢盐屏障、黏膜血流、上皮更新均依赖 PG）。 **④ 酸中毒**：黏膜内 H⁺ 缓冲力降低，H⁺ 反向弥散加重黏膜损伤。 **⑤ 自由基损伤**：缺血-再灌注产生大量氧自由基，攻击细胞膜。 **临床表现**：大手术、严重创伤、烧伤、感染后数日内出现**上消化道出血**（呕血、黑便），胃镜下见胃底、胃体多发浅表溃疡、糜烂、渗血。 **防治**：积极处理基础疾病、消除应激原、加强胃肠道监护、尽早肠内营养；预防用药选 **PPI、H2RA、胃黏膜保护剂**。">
   <header class="qhead">
@@ -1237,7 +1312,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b29"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 应激；病生最终精简版·名解 21</span>
   </div>
-  <div class="ex" id="ex-b29" hidden><div class="ex-inner"><p>应激性溃疡就是身体忙着应对大事，把胃忘了：胃黏膜缺血、屏障变薄，胃酸照常分泌，于是糜烂渗血。</p><p>四条机制（缺血是主要因素）：<br>胃肠黏膜缺血（主要因素）——交感兴奋，内脏血管收缩，黏膜缺血缺氧，屏障受损。<br>糖皮质激素增多——GC 使蛋白质分解大于合成，胃上皮更新减慢、再生力降低。<br>前列腺素合成减少——PG 对黏膜的保护作用减弱（黏液-碳酸氢盐屏障、黏膜血流、上皮更新都依赖 PG）。<br>酸中毒与自由基——黏膜内 H⁺ 缓冲力降低，H⁺ 反向弥散加重损伤；缺血-再灌注产生氧自由基。</p><p>注意：这里没把胃酸分泌增多列为主要机制——应激时胃酸不一定升高，关键是屏障弱了、酸还在。</p><p>表现：大手术、严重创伤、烧伤、感染后数日内上消化道出血（呕血、黑便）。</p><p>易错：机制写胃酸分泌增多是常见错误答案。</p></div></div>
+  <div class="ex" id="ex-b29"><div class="ex-inner"><p>应激性溃疡就是身体忙着应对大事，把胃忘了：胃黏膜缺血、屏障变薄，胃酸照常分泌，于是糜烂渗血。</p><p>四条机制（缺血是主要因素）：<br>胃肠黏膜缺血（主要因素）——交感兴奋，内脏血管收缩，黏膜缺血缺氧，屏障受损。<br>糖皮质激素增多——GC 使蛋白质分解大于合成，胃上皮更新减慢、再生力降低。<br>前列腺素合成减少——PG 对黏膜的保护作用减弱（黏液-碳酸氢盐屏障、黏膜血流、上皮更新都依赖 PG）。<br>酸中毒与自由基——黏膜内 H⁺ 缓冲力降低，H⁺ 反向弥散加重损伤；缺血-再灌注产生氧自由基。</p><p>注意：这里没把胃酸分泌增多列为主要机制——应激时胃酸不一定升高，关键是屏障弱了、酸还在。</p><p>表现：大手术、严重创伤、烧伤、感染后数日内上消化道出血（呕血、黑便）。</p><p>易错：机制写胃酸分泌增多是常见错误答案。</p></div></div>
 </article>
 <article class="qcard" id="b30" data-cat="patho" data-freq="1" data-type="论述" data-text="四型酸碱失衡的判断（含代偿公式与 AG 的应用） **第一步：看 pH 定方向**——pH＜7.35 为酸中毒，＞7.45 为碱中毒，7.35～7.45 为代偿性/混合性。 **第二步：看原发因素**——**HCO₃⁻** 原发改变为代谢性，**PaCO₂** 原发改变为呼吸性；与 pH 同向变化者为原发。 **第三步：看代偿是否适当**（常用公式）： 代酸：PaCO₂ = 1.5 × HCO₃⁻ + 8 ± 2； 代碱：HCO₃⁻ 每升高 1 mmol/L，PaCO₂ 升高 0.5～0.7 mmHg； 呼酸急性：HCO₃⁻ 每升高 10 mmHg PaCO₂，HCO₃⁻ 升高 1 mmol/L；慢性升高 3.5～4； 呼碱急性：PaCO₂ 每降低 10 mmHg，HCO₃⁻ 降低 2 mmol/L；慢性降低 4～5。 **第四步：算 AG**——AG = Na⁺ −（Cl⁻ + HCO₃">
   <header class="qhead">
@@ -1255,7 +1330,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b30"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·大题（酸碱提示）；病生最终精简版·名解 3～9</span>
   </div>
-  <div class="ex" id="ex-b30" hidden><div class="ex-inner"><p>酸碱失衡判断就是五步走：先看 pH，再看谁先动，然后算代偿、算 AG、判混合。</p><p>① 看 pH：＜7.35 酸中毒，＞7.45 碱中毒，7.35～7.45 可能代偿或混合。<br>② 看原发：HCO₃⁻ 原发改变是代谢性，PaCO₂ 原发改变是呼吸性，与 pH 同向者为原发。<br>③ 看代偿：代酸 PaCO₂ = 1.5 × HCO₃⁻ + 8 ± 2；代碱 HCO₃⁻ 每升 1，PaCO₂ 升 0.5～0.7；呼酸急性 PaCO₂ 每升 10，HCO₃⁻ 升 1，慢性 3.5～4；呼碱急性每降 10，HCO₃⁻ 降 2，慢性 4～5。超出预计说明不止一种紊乱。<br>④ 算 AG：AG = Na⁺ −（Cl⁻ + HCO₃⁻），正常 12±4。AG 增高是 AG 增高型代酸；AG 正常而 Cl⁻ 升高是高氯型代酸。<br>⑤ 判混合：代偿超出预计、AG 与 HCO₃⁻ 变化不匹配，就是混合性。</p><p>易错：只看 pH 就下结论，必须走完五步。</p></div></div>
+  <div class="ex" id="ex-b30"><div class="ex-inner"><p>酸碱失衡判断就是五步走：先看 pH，再看谁先动，然后算代偿、算 AG、判混合。</p><p>① 看 pH：＜7.35 酸中毒，＞7.45 碱中毒，7.35～7.45 可能代偿或混合。<br>② 看原发：HCO₃⁻ 原发改变是代谢性，PaCO₂ 原发改变是呼吸性，与 pH 同向者为原发。<br>③ 看代偿：代酸 PaCO₂ = 1.5 × HCO₃⁻ + 8 ± 2；代碱 HCO₃⁻ 每升 1，PaCO₂ 升 0.5～0.7；呼酸急性 PaCO₂ 每升 10，HCO₃⁻ 升 1，慢性 3.5～4；呼碱急性每降 10，HCO₃⁻ 降 2，慢性 4～5。超出预计说明不止一种紊乱。<br>④ 算 AG：AG = Na⁺ −（Cl⁻ + HCO₃⁻），正常 12±4。AG 增高是 AG 增高型代酸；AG 正常而 Cl⁻ 升高是高氯型代酸。<br>⑤ 判混合：代偿超出预计、AG 与 HCO₃⁻ 变化不匹配，就是混合性。</p><p>易错：只看 pH 就下结论，必须走完五步。</p></div></div>
 </article>
 <article class="qcard" id="b31" data-cat="patho" data-freq="0" data-type="论述" data-text="急性肾衰多尿期多尿的机制及为何仍需密切监护 **多尿的判定**：24 小时尿量增至 **＞400 ml/d**（可达数千毫升），持续约 2 周。 **多尿机制**： ① **肾小球滤过率恢复**，而**肾小管上皮重吸收功能尚未恢复**——滤出的水钠不能被充分回收； ② **肾间质水肿消退、肾小管阻塞解除**，管腔内压下降，GFR 进一步回升； ③ 潴留的**尿素等溶质大量排出**，产生**渗透性利尿**； ④ 少尿期蓄积的水钠此时排出（「脱困性利尿」）。 **为何仍需密切监护**： ① **脱水与低血容量**：尿量过多可致有效循环血量下降，甚至休克； ② **低钾、低钠、低氯**：大量电解质随尿丢失，可出现肌无力、心律失常； ③ **感染风险高**：机体抵抗力仍低下，留置导管等增加感染机会； ④ **肾功能尚未完全恢复**：仍需监测 GFR、尿量、电解质与酸碱状态，防止再次恶化； ⑤ 部分">
   <header class="qhead">
@@ -1273,7 +1348,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b31"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 肾功能不全一 P44–P55、复习题 3</span>
   </div>
-  <div class="ex" id="ex-b31" hidden><div class="ex-inner"><p>多尿期不是好了，而是滤过恢复了、回收没跟上——大量水电解质白白流失，反而危险。</p><p>为什么多尿？<br>GFR 恢复，但肾小管上皮重吸收功能尚未恢复，滤出的水钠回收不了。<br>肾间质水肿消退、肾小管阻塞解除，管腔内压下降，GFR 进一步回升。<br>潴留的尿素等溶质大量排出，产生渗透性利尿。<br>少尿期蓄积的水钠此时排出（脱困性利尿）。<br>尿量增至 ＞400 ml/d，可达数千毫升，持续约 2 周。</p><p>为什么仍需监护？<br>脱水与低血容量——尿太多可致循环血量下降，甚至休克。<br>低钾、低钠、低氯——电解质随尿大量丢失，出现肌无力、心律失常。<br>感染风险高、肾功能未完全恢复，部分病例可转为慢性肾衰。</p><p>易错：多尿期低钾和脱水同样可以致命。</p></div></div>
+  <div class="ex" id="ex-b31"><div class="ex-inner"><p>多尿期不是好了，而是滤过恢复了、回收没跟上——大量水电解质白白流失，反而危险。</p><p>为什么多尿？<br>GFR 恢复，但肾小管上皮重吸收功能尚未恢复，滤出的水钠回收不了。<br>肾间质水肿消退、肾小管阻塞解除，管腔内压下降，GFR 进一步回升。<br>潴留的尿素等溶质大量排出，产生渗透性利尿。<br>少尿期蓄积的水钠此时排出（脱困性利尿）。<br>尿量增至 ＞400 ml/d，可达数千毫升，持续约 2 周。</p><p>为什么仍需监护？<br>脱水与低血容量——尿太多可致循环血量下降，甚至休克。<br>低钾、低钠、低氯——电解质随尿大量丢失，出现肌无力、心律失常。<br>感染风险高、肾功能未完全恢复，部分病例可转为慢性肾衰。</p><p>易错：多尿期低钾和脱水同样可以致命。</p></div></div>
 </article>
 <article class="qcard" id="b32" data-cat="patho" data-freq="1" data-type="名解" data-text="超极化阻滞 指**急性低钾血症**时，血钾浓度 **＜2.65 mmol/L**，细胞外液 K⁺ 浓度降低，**静息电位负值增大**（超极化）。 **静息膜电位与阈电位之间的距离加大**，使骨骼肌**兴奋性降低**。 临床表现为**肌肉松弛无力，甚至肌麻痹**（严重者可累及呼吸肌）。 **与高钾血症对比**：高钾时静息电位负值减小（去极化阻滞），兴奋性先升高后降低；低钾时直接降低。 **补钾原则**：见尿补钾、缓慢补钾、禁止静脉推注。">
   <header class="qhead">
@@ -1291,7 +1366,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b32"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">病生泡面往年·补；2026 秋课件 水电解质代谢紊乱</span>
   </div>
-  <div class="ex" id="ex-b32" hidden><div class="ex-inner"><p>超极化阻滞就是血钾太低，肌肉兴奋不起来——静息电位离起点太远，刺激够不着。</p><p>神经肌肉细胞像一根绷紧的弹簧，静息电位是起点，阈电位是扳机线。正常情况下两者距离适中，轻轻一碰就能触发。血钾低时，细胞内外钾浓度差变大，静息电位更负（超极化），起点离扳机线更远，同样的刺激就够不着，肌肉于是提不起劲。</p><p>标准：急性低钾血症，血钾 ＜2.65 mmol/L，静息电位负值增大，与阈电位距离加大，骨骼肌兴奋性降低，肌肉松弛无力甚至肌麻痹（严重者累及呼吸肌）。</p><p>与高钾对比：高钾时静息电位负值减小（去极化阻滞），兴奋性先升高后降低；低钾则直接降低。</p><p>临床联系：低钾性周期性麻痹、长期用排钾利尿药。心电图可见 U 波、T 波低平。补钾原则：见尿补钾、缓慢补钾、禁止静推。</p><p>易错：超极化阻滞是兴奋性降低，不是升高。</p></div></div>
+  <div class="ex" id="ex-b32"><div class="ex-inner"><p>超极化阻滞就是血钾太低，肌肉兴奋不起来——静息电位离起点太远，刺激够不着。</p><p>神经肌肉细胞像一根绷紧的弹簧，静息电位是起点，阈电位是扳机线。正常情况下两者距离适中，轻轻一碰就能触发。血钾低时，细胞内外钾浓度差变大，静息电位更负（超极化），起点离扳机线更远，同样的刺激就够不着，肌肉于是提不起劲。</p><p>标准：急性低钾血症，血钾 ＜2.65 mmol/L，静息电位负值增大，与阈电位距离加大，骨骼肌兴奋性降低，肌肉松弛无力甚至肌麻痹（严重者累及呼吸肌）。</p><p>与高钾对比：高钾时静息电位负值减小（去极化阻滞），兴奋性先升高后降低；低钾则直接降低。</p><p>临床联系：低钾性周期性麻痹、长期用排钾利尿药。心电图可见 U 波、T 波低平。补钾原则：见尿补钾、缓慢补钾、禁止静推。</p><p>易错：超极化阻滞是兴奋性降低，不是升高。</p></div></div>
 </article>
 <article class="qcard" id="b33" data-cat="patho" data-freq="0" data-type="名解" data-text="热休克蛋白（HSP） 指应激时细胞**合成或合成增加**的一组蛋白质，属**非分泌型蛋白**，主要在**细胞内**发挥功能，属应激蛋白。 又称**分子伴侣（molecular chaperone）**。 **功能**：帮助新生蛋白质**正确折叠、移位、维持和降解**，防止蛋白聚集，增强机体**抗损伤能力**。 **分类**：按分子量分为 HSP90、HSP70、HSP60、小分子 HSP 及泛素等；HSP70 最受关注。 **意义**：提高细胞对应激的耐受性，是机体重要的内源性保护机制。">
   <header class="qhead">
@@ -1309,7 +1384,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-b33"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 应激（王晶瑶）P81、思考题 4</span>
   </div>
-  <div class="ex" id="ex-b33" hidden><div class="ex-inner"><p>热休克蛋白（HSP）就是细胞里的折叠工：蛋白质刚合成出来是一团线，需要 HSP 帮忙折成正确形状。</p><p>细胞里每天生产成千上万条蛋白质绳子，刚出来是乱的，必须折成特定形状才能干活。HSP 就像一群熟练的折纸工——抓住新生的肽链，帮它正确折叠、送到该去的位置、维持稳定，坏了就送去降解。所以 HSP 又叫分子伴侣。</p><p>应激时会发生什么？热、缺氧、感染、创伤等应激原会让蛋白质变性、聚集，细胞立刻加快合成 HSP，把受损的蛋白救回来，防止聚集成垃圾——所以 HSP 也叫应激蛋白。</p><p>特点：非分泌型，主要在细胞内发挥作用（不像急性期反应蛋白那样分泌到血浆）。分类有 HSP90、HSP70、HSP60 等，其中 HSP70 最受关注。</p><p>易错：HSP 在细胞内，APP 分泌到血浆，两者不同。</p></div></div>
+  <div class="ex" id="ex-b33"><div class="ex-inner"><p>热休克蛋白（HSP）就是细胞里的折叠工：蛋白质刚合成出来是一团线，需要 HSP 帮忙折成正确形状。</p><p>细胞里每天生产成千上万条蛋白质绳子，刚出来是乱的，必须折成特定形状才能干活。HSP 就像一群熟练的折纸工——抓住新生的肽链，帮它正确折叠、送到该去的位置、维持稳定，坏了就送去降解。所以 HSP 又叫分子伴侣。</p><p>应激时会发生什么？热、缺氧、感染、创伤等应激原会让蛋白质变性、聚集，细胞立刻加快合成 HSP，把受损的蛋白救回来，防止聚集成垃圾——所以 HSP 也叫应激蛋白。</p><p>特点：非分泌型，主要在细胞内发挥作用（不像急性期反应蛋白那样分泌到血浆）。分类有 HSP90、HSP70、HSP60 等，其中 HSP70 最受关注。</p><p>易错：HSP 在细胞内，APP 分泌到血浆，两者不同。</p></div></div>
 </article>
 </section>
 <section class="cat" id="cat-path">
@@ -1334,7 +1409,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-r01"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">泌尿病理泡面·名解 1（两次）；2026 秋课件 泌尿系统疾病 P37</span>
   </div>
-  <div class="ex" id="ex-r01" hidden><div class="ex-inner"><p>肾病综合征不是一种病，而是一组表现相同、病理不同的临床综合征，核心是三高一低。</p><p>肾小球的滤过膜像一张带负电的细筛，专门把蛋白拦在血里。肾病综合征时这张筛子坏了，大量蛋白从尿里漏出去（＞3.5 g/24h）。蛋白一少，血浆胶体渗透压下降，水拉不住，渗到组织里就是水肿。肝脏拼命代偿合成蛋白，顺带把脂蛋白也造多了，就是高脂血症。</p><p>病理类型五个：微小病变（光镜正常、足突融合，儿童最常见、激素敏感）、膜性肾病（基底膜增厚、钉突，成人最常见、易血栓）、FSGS（局灶节段硬化、激素抵抗）、膜增生性（双轨征、低补体）、系膜增生性（系膜增宽）。</p><p>并发症：感染、血栓栓塞、急性肾损伤。</p><p>易错：三高一低的一低是低蛋白血症，不是低血压。</p></div></div>
+  <div class="ex" id="ex-r01"><div class="ex-inner"><p>肾病综合征不是一种病，而是一组表现相同、病理不同的临床综合征，核心是三高一低。</p><p>肾小球的滤过膜像一张带负电的细筛，专门把蛋白拦在血里。肾病综合征时这张筛子坏了，大量蛋白从尿里漏出去（＞3.5 g/24h）。蛋白一少，血浆胶体渗透压下降，水拉不住，渗到组织里就是水肿。肝脏拼命代偿合成蛋白，顺带把脂蛋白也造多了，就是高脂血症。</p><p>病理类型五个：微小病变（光镜正常、足突融合，儿童最常见、激素敏感）、膜性肾病（基底膜增厚、钉突，成人最常见、易血栓）、FSGS（局灶节段硬化、激素抵抗）、膜增生性（双轨征、低补体）、系膜增生性（系膜增宽）。</p><p>并发症：感染、血栓栓塞、急性肾损伤。</p><p>易错：三高一低的一低是低蛋白血症，不是低血压。</p></div></div>
 </article>
 <article class="qcard hot" id="r02" data-cat="path" data-freq="5" data-type="名解" data-text="新月体（crescent） **急进性肾小球肾炎**时多数肾小球球囊内形成新月形结构。 由**肾小球囊壁层上皮细胞显著增生**，堆积成层，在**毛细血管丛周围**形成的新月形小体。 主要构成：**增生的壁层上皮细胞 + 渗出的单核细胞**，还可有嗜中性粒细胞、淋巴细胞浸润。 上述成分附着于**球囊壁层**，在毛细血管球外侧呈**新月状或环状**分布。 **转归**：新月体压迫毛细血管丛 → 肾小球缺血硬化 → 肾功能迅速衰竭；新月体形成是**急进性肾炎**的病理标志。">
   <header class="qhead">
@@ -1352,7 +1427,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-r02"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">泌尿病理泡面·名解 2（五次）；2026 秋课件 泌尿系统疾病 P58–P60</span>
   </div>
-  <div class="ex" id="ex-r02" hidden><div class="ex-inner"><p>新月体就是肾小球球囊里长出一弯月牙，把毛细血管丛越挤越扁。</p><p>正常的肾小球囊像一只碗，碗底泡着一团毛细血管，碗壁只有一层扁平上皮。急进性肾炎时，碗壁上皮细胞疯狂增生，加上单核细胞渗进来，在毛细血管丛外面堆成一弯月牙。</p><p>成分要记准：增生的壁层上皮细胞加渗出的单核细胞。它附着在球囊壁层，呈新月状或环状。</p><p>后果很严重：月牙越挤越紧，毛细血管丛受压萎缩，肾小球缺血硬化，GFR 急剧下降，数周至数月肾衰竭。</p><p>三型靠免疫荧光分：Ⅰ 型 IgG 线样沉积（抗 GBM，伴肺出血即 Goodpasture）；Ⅱ 型 IgG/C3 颗粒状沉积（免疫复合物型）；Ⅲ 型寡免疫复合物（荧光阴性，多与 ANCA 相关）。</p><p>易错：新月体成分是壁层上皮细胞，不是内皮细胞。</p></div></div>
+  <div class="ex" id="ex-r02"><div class="ex-inner"><p>新月体就是肾小球球囊里长出一弯月牙，把毛细血管丛越挤越扁。</p><p>正常的肾小球囊像一只碗，碗底泡着一团毛细血管，碗壁只有一层扁平上皮。急进性肾炎时，碗壁上皮细胞疯狂增生，加上单核细胞渗进来，在毛细血管丛外面堆成一弯月牙。</p><p>成分要记准：增生的壁层上皮细胞加渗出的单核细胞。它附着在球囊壁层，呈新月状或环状。</p><p>后果很严重：月牙越挤越紧，毛细血管丛受压萎缩，肾小球缺血硬化，GFR 急剧下降，数周至数月肾衰竭。</p><p>三型靠免疫荧光分：Ⅰ 型 IgG 线样沉积（抗 GBM，伴肺出血即 Goodpasture）；Ⅱ 型 IgG/C3 颗粒状沉积（免疫复合物型）；Ⅲ 型寡免疫复合物（荧光阴性，多与 ANCA 相关）。</p><p>易错：新月体成分是壁层上皮细胞，不是内皮细胞。</p></div></div>
 </article>
 <article class="qcard" id="r03" data-cat="path" data-freq="2" data-type="名解" data-text="硬化性肾小球肾炎 / 颗粒性固缩肾 **硬化性肾小球肾炎**是**许多类型肾小球肾炎的终末阶段**。 病变特点：**大量肾小球硬化**，**肾小管萎缩、消失**，**间质纤维化**；起始病变类型多不能辨认。 **大体**：两侧肾脏**对称性固缩**，表面呈**微小颗粒状**，称**颗粒性固缩肾（granular nephrosclerosis）**；切面皮质变薄，**皮髓质分界不清**。 **临床**：慢性肾炎综合征——多尿、夜尿、低比重尿、高血压、贫血、氮质血症，最终尿毒症。 **机制**：健存肾单位代偿性高滤过 → 肾小球硬化 → 更多肾单位丧失，形成恶性循环。">
   <header class="qhead">
@@ -1370,7 +1445,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-r03"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">泌尿病理泡面·名解 3（两次）；2026 秋课件 泌尿系统疾病</span>
   </div>
-  <div class="ex" id="ex-r03" hidden><div class="ex-inner"><p>硬化性肾小球肾炎是各种肾炎的终点站：大量肾小球硬化成疤，肾脏缩小变硬，表面全是小颗粒。</p><p>肾小球像一个个小过滤器，长期炎症后一个个被水泥封死（玻璃样变），肾小管跟着萎缩消失，间质纤维化。整颗肾脏缩小、变硬，表面布满细小颗粒，所以叫颗粒性固缩肾。</p><p>大体：双肾对称性固缩，表面弥漫性细小颗粒，切面皮质变薄、皮髓质分界不清。镜下：肾小球硬化、玻璃样变；肾小管萎缩；间质纤维化；残存肾单位代偿性肥大。</p><p>临床联系因为残存肾单位拼命加班：多尿、夜尿、低比重尿（比重固定在 1.010）；高血压；贫血（EPO 减少）；氮质血症与尿毒症。</p><p>结局不可逆，最终需透析或肾移植。</p><p>易错：颗粒性固缩肾是慢性肾小球肾炎的终末改变，肾盂肾炎是瘢痕凹陷。</p></div></div>
+  <div class="ex" id="ex-r03"><div class="ex-inner"><p>硬化性肾小球肾炎是各种肾炎的终点站：大量肾小球硬化成疤，肾脏缩小变硬，表面全是小颗粒。</p><p>肾小球像一个个小过滤器，长期炎症后一个个被水泥封死（玻璃样变），肾小管跟着萎缩消失，间质纤维化。整颗肾脏缩小、变硬，表面布满细小颗粒，所以叫颗粒性固缩肾。</p><p>大体：双肾对称性固缩，表面弥漫性细小颗粒，切面皮质变薄、皮髓质分界不清。镜下：肾小球硬化、玻璃样变；肾小管萎缩；间质纤维化；残存肾单位代偿性肥大。</p><p>临床联系因为残存肾单位拼命加班：多尿、夜尿、低比重尿（比重固定在 1.010）；高血压；贫血（EPO 减少）；氮质血症与尿毒症。</p><p>结局不可逆，最终需透析或肾移植。</p><p>易错：颗粒性固缩肾是慢性肾小球肾炎的终末改变，肾盂肾炎是瘢痕凹陷。</p></div></div>
 </article>
 <article class="qcard" id="r04" data-cat="path" data-freq="0" data-type="名解" data-text="急性弥漫性增生性肾小球肾炎（毛细血管内增生性） 又称**毛细血管内增生性肾小球肾炎**，是**感染后肾小球肾炎**，以 **A 族乙型溶血性链球菌**感染最常见。 **发病**：咽部或皮肤感染后 **1～4 周**发病；抗链球菌溶血素「O」滴度升高，**血清补体降低**。 **大体**：肾脏体积肿大、充血，表面有**粟粒样出血点**，称「**大红肾**」「**蚤咬肾**」。 **光镜**：肾小球体积增大，**内皮细胞、系膜细胞增生**，腔内可见炎细胞浸润。 **电镜**：**上皮下高密度、大块状电子致密物沉积，呈「驼峰」状**。 **免疫荧光**：**IgG、C3 沿毛细血管壁呈粗颗粒状沉积**。 **临床**：**急性肾炎综合征**（血尿、蛋白尿、水肿、高血压），多见于儿童及青少年，男性多见；儿童预后好，约 1% 转为急进性。">
   <header class="qhead">
@@ -1388,7 +1463,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-r04"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 泌尿系统疾病 P43–P52</span>
   </div>
-  <div class="ex" id="ex-r04" hidden><div class="ex-inner"><p>急性弥漫性增生性肾小球肾炎就是感染后 1～4 周突然血尿、水肿、高血压的那类肾炎，儿童最常见。</p><p>A 族乙型溶血性链球菌先引起嗓子疼或皮肤化脓，抗体和细菌抗原结合成免疫复合物，随血流经过肾小球时卡在滤过膜上，激活补体、招来炎症细胞，肾小球就发炎了。</p><p>病理三件套：<br>大体：肾脏肿大、充血，表面有粟粒样出血点，即大红肾、蚤咬肾。<br>光镜：肾小球体积增大，内皮细胞和系膜细胞增生，伴中性粒细胞浸润。<br>电镜：上皮下驼峰状电子致密物沉积。<br>免疫荧光：IgG、C3 沿毛细血管壁呈粗颗粒状沉积。</p><p>临床联系：血尿蛋白尿（滤过膜损伤）、少尿（毛细血管腔狭窄、GFR 下降）、水肿（水钠潴留）、高血压（血容量增加）。</p><p>易错：驼峰是急性感染后肾炎，钉突是膜性肾病。</p></div></div>
+  <div class="ex" id="ex-r04"><div class="ex-inner"><p>急性弥漫性增生性肾小球肾炎就是感染后 1～4 周突然血尿、水肿、高血压的那类肾炎，儿童最常见。</p><p>A 族乙型溶血性链球菌先引起嗓子疼或皮肤化脓，抗体和细菌抗原结合成免疫复合物，随血流经过肾小球时卡在滤过膜上，激活补体、招来炎症细胞，肾小球就发炎了。</p><p>病理三件套：<br>大体：肾脏肿大、充血，表面有粟粒样出血点，即大红肾、蚤咬肾。<br>光镜：肾小球体积增大，内皮细胞和系膜细胞增生，伴中性粒细胞浸润。<br>电镜：上皮下驼峰状电子致密物沉积。<br>免疫荧光：IgG、C3 沿毛细血管壁呈粗颗粒状沉积。</p><p>临床联系：血尿蛋白尿（滤过膜损伤）、少尿（毛细血管腔狭窄、GFR 下降）、水肿（水钠潴留）、高血压（血容量增加）。</p><p>易错：驼峰是急性感染后肾炎，钉突是膜性肾病。</p></div></div>
 </article>
 <article class="qcard" id="r05" data-cat="path" data-freq="0" data-type="名解" data-text="膜性肾病（膜性肾小球肾炎） 以**肾小球毛细血管基底膜弥漫性增厚**为特点，**免疫复合物沉积于上皮下**，**无炎症细胞浸润**。 **光镜**：基底膜弥漫增厚，银染色可见**「钉突」** 形成（基底膜物质在沉积物之间向外突起）。 **电镜**：**上皮下电子致密物沉积**，足细胞足突融合。 **免疫荧光**：**IgG、C3 沿毛细血管壁呈细颗粒状**沉积。 **临床**：**成人肾病综合征最常见**的病理类型；易并发**肾静脉血栓**。 **机制**：抗**磷脂酶 A2 受体（PLA2R）抗体**与足细胞抗原结合，原位形成免疫复合物。">
   <header class="qhead">
@@ -1406,7 +1481,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-r05"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 泌尿系统疾病；《病理学》第 9 版</span>
   </div>
-  <div class="ex" id="ex-r05" hidden><div class="ex-inner"><p>膜性肾病就是基底膜被越垫越厚，像墙皮一层层往上糊，但不太发炎。</p><p>免疫复合物沉积在上皮下（足细胞和基底膜之间），基底膜为了包住这些沉积物，不断长出新物质，把沉积物一层层埋进去。银染色时，新生的基底膜物质在沉积物之间向外突起，看起来像一排钉子，即钉突。</p><p>病理特点：光镜基底膜弥漫性增厚、银染色见钉突；电镜上皮下电子致密物沉积；免疫荧光 IgG、C3 呈细颗粒状。关键是几乎没有炎症细胞浸润，所以血尿不明显，但蛋白漏得厉害。</p><p>临床：成人肾病综合征最常见的病理类型。因为大量蛋白从尿里丢，抗凝蛋白也丢，容易并发肾静脉血栓——这是它最特别的并发症。</p><p>机制：抗磷脂酶 A2 受体（PLA2R）抗体与足细胞抗原结合。</p><p>易错：钉突是基底膜增厚过程中形成的，不是变薄。</p></div></div>
+  <div class="ex" id="ex-r05"><div class="ex-inner"><p>膜性肾病就是基底膜被越垫越厚，像墙皮一层层往上糊，但不太发炎。</p><p>免疫复合物沉积在上皮下（足细胞和基底膜之间），基底膜为了包住这些沉积物，不断长出新物质，把沉积物一层层埋进去。银染色时，新生的基底膜物质在沉积物之间向外突起，看起来像一排钉子，即钉突。</p><p>病理特点：光镜基底膜弥漫性增厚、银染色见钉突；电镜上皮下电子致密物沉积；免疫荧光 IgG、C3 呈细颗粒状。关键是几乎没有炎症细胞浸润，所以血尿不明显，但蛋白漏得厉害。</p><p>临床：成人肾病综合征最常见的病理类型。因为大量蛋白从尿里丢，抗凝蛋白也丢，容易并发肾静脉血栓——这是它最特别的并发症。</p><p>机制：抗磷脂酶 A2 受体（PLA2R）抗体与足细胞抗原结合。</p><p>易错：钉突是基底膜增厚过程中形成的，不是变薄。</p></div></div>
 </article>
 <article class="qcard" id="r06" data-cat="path" data-freq="0" data-type="名解" data-text="微小病变性肾小球病 / 局灶节段性肾小球硬化（FSGS） **微小病变性肾小球病**：**光镜下肾小球基本正常**，**电镜下足细胞足突弥漫性融合**，**免疫荧光阴性**；是**儿童肾病综合征最常见**的病理类型；对**糖皮质激素敏感**。 **局灶节段性肾小球硬化（FSGS）**：病变呈**局灶性**（累及＜50% 肾小球）、**节段性**（累及肾小球面积＜50%）的**硬化**；**足突融合**；常伴**肾小管间质损伤**；临床多为**难治性肾病综合征**，可进展至肾衰。 **两者鉴别**：微小病变光镜正常、激素敏感；FSGS 有局灶节段硬化、激素抵抗、预后较差。">
   <header class="qhead">
@@ -1424,7 +1499,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-r06"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 泌尿系统疾病；《病理学》第 9 版</span>
   </div>
-  <div class="ex" id="ex-r06" hidden><div class="ex-inner"><p>微小病变和 FSGS 是儿童 NS 与激素抵抗 NS 的代表，光镜下一个正常、一个有疤。</p><p>微小病变性肾小球病：光镜下肾小球基本正常，电镜下足细胞足突弥漫性融合，免疫荧光阴性。临床是儿童肾病综合征最常见，对糖皮质激素敏感，治好了不留疤。</p><p>打个比方：筛子的筛眼没坏，但守门员（足细胞）的手指（足突）粘在一起了，缝隙关不严，蛋白就漏出去。</p><p>FSGS：局灶指只累及＜50% 的肾小球，节段指每个受累肾小球只累及＜50% 面积；镜下见硬化（疤）。临床多为难治性/激素抵抗性肾病综合征，可进展至肾衰。</p><p>两者都表现为肾病综合征，区别就在光镜有没有疤和激素敏不敏感。</p><p>易错：FSGS 的局灶是部分肾小球硬化，不是病变很轻，预后反而更差。</p></div></div>
+  <div class="ex" id="ex-r06"><div class="ex-inner"><p>微小病变和 FSGS 是儿童 NS 与激素抵抗 NS 的代表，光镜下一个正常、一个有疤。</p><p>微小病变性肾小球病：光镜下肾小球基本正常，电镜下足细胞足突弥漫性融合，免疫荧光阴性。临床是儿童肾病综合征最常见，对糖皮质激素敏感，治好了不留疤。</p><p>打个比方：筛子的筛眼没坏，但守门员（足细胞）的手指（足突）粘在一起了，缝隙关不严，蛋白就漏出去。</p><p>FSGS：局灶指只累及＜50% 的肾小球，节段指每个受累肾小球只累及＜50% 面积；镜下见硬化（疤）。临床多为难治性/激素抵抗性肾病综合征，可进展至肾衰。</p><p>两者都表现为肾病综合征，区别就在光镜有没有疤和激素敏不敏感。</p><p>易错：FSGS 的局灶是部分肾小球硬化，不是病变很轻，预后反而更差。</p></div></div>
 </article>
 <article class="qcard" id="r07" data-cat="path" data-freq="0" data-type="名解" data-text="IgA 肾病 以**系膜区 IgA 沉积**为特征的**原发性肾小球疾病**，是**我国最常见的原发性肾小球疾病**。 **免疫荧光**：**系膜区 IgA 呈颗粒状或团块状沉积**，常伴 C3 沉积。 **光镜**：系膜细胞和基质增生，可为局灶节段性或弥漫性。 **临床**：多见于青少年，常于**上呼吸道感染后 1～3 天**出现**发作性肉眼血尿**（「同步性」血尿，与急性链球菌感染后肾炎的 1～4 周潜伏期不同）。 **预后**：多数缓慢进展，部分发展为慢性肾衰。">
   <header class="qhead">
@@ -1442,7 +1517,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-r07"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 泌尿系统疾病；《病理学》第 9 版</span>
   </div>
-  <div class="ex" id="ex-r07" hidden><div class="ex-inner"><p>IgA 肾病就是一感冒就血尿的那类肾炎，是我国最常见的原发性肾小球疾病。</p><p>黏膜感染（嗓子疼、扁桃体炎）后，身体产生大量 IgA。这些 IgA 形成免疫复合物，沉积在肾小球的系膜区，激活补体、引起炎症——于是感染后 1～3 天就出现肉眼血尿。</p><p>关键时间点：感染后 1～3 天，即同步性血尿。这和急性链球菌感染后肾炎的 1～4 周潜伏期正好形成对比，是选择题的高频鉴别点。</p><p>病理：免疫荧光见系膜区 IgA 呈颗粒状或团块状沉积，常伴 C3；光镜见系膜细胞和基质增生。</p><p>临床：多见于青少年，发作性肉眼血尿，部分发展为慢性肾衰。</p><p>易错：IgA 肾病与链球菌后肾炎时间点不同，免疫荧光也不同——前者 IgA 在系膜区，后者 IgG/C3 沿毛细血管壁。</p></div></div>
+  <div class="ex" id="ex-r07"><div class="ex-inner"><p>IgA 肾病就是一感冒就血尿的那类肾炎，是我国最常见的原发性肾小球疾病。</p><p>黏膜感染（嗓子疼、扁桃体炎）后，身体产生大量 IgA。这些 IgA 形成免疫复合物，沉积在肾小球的系膜区，激活补体、引起炎症——于是感染后 1～3 天就出现肉眼血尿。</p><p>关键时间点：感染后 1～3 天，即同步性血尿。这和急性链球菌感染后肾炎的 1～4 周潜伏期正好形成对比，是选择题的高频鉴别点。</p><p>病理：免疫荧光见系膜区 IgA 呈颗粒状或团块状沉积，常伴 C3；光镜见系膜细胞和基质增生。</p><p>临床：多见于青少年，发作性肉眼血尿，部分发展为慢性肾衰。</p><p>易错：IgA 肾病与链球菌后肾炎时间点不同，免疫荧光也不同——前者 IgA 在系膜区，后者 IgG/C3 沿毛细血管壁。</p></div></div>
 </article>
 <article class="qcard" id="r08" data-cat="path" data-freq="0" data-type="名解" data-text="肾盂肾炎 指**肾盂、肾盏和肾间质**的**化脓性炎症**。 **病因**：以**大肠埃希菌**最常见（约占 60%～80%），其次为变形杆菌、葡萄球菌等。 **感染途径**：**上行性感染**（最常见，病原体经尿道→膀胱→输尿管→肾盂）、**血源性感染**（较少见）。 **诱因**：尿路梗阻（结石、前列腺肥大）、膀胱输尿管反流、留置导尿、女性尿道短。 **病理**：肾盂黏膜充血水肿、脓性渗出；肾间质化脓性炎、脓肿形成；**肾小管内可见白细胞管型**（尿中查见白细胞管型提示肾盂肾炎）。 **临床**：发热、腰痛、膀胱刺激征（尿频、尿急、尿痛）、脓尿、菌尿。 **类型**：急性肾盂肾炎、慢性肾盂肾炎（后者可致**肾盂肾盏变形、肾实质瘢痕**）。">
   <header class="qhead">
@@ -1460,7 +1535,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-r08"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 泌尿系统疾病；《病理学》第 9 版</span>
   </div>
-  <div class="ex" id="ex-r08" hidden><div class="ex-inner"><p>肾盂肾炎是肾脏的化脓性感染，和肾小球肾炎（免疫性）完全是两回事。</p><p>肾小球肾炎是自家免疫系统误伤，要用激素或免疫抑制剂；肾盂肾炎是细菌入侵，要用抗生素。一个是内讧，一个是外敌。</p><p>病因与途径：致病菌以大肠埃希菌最常见（60%～80%）；感染途径以上行性感染为主——细菌从尿道、膀胱、输尿管到肾盂、肾实质，女性尿道短而宽，所以女性多见；诱因有尿路梗阻、膀胱输尿管反流、留置导尿。</p><p>病理：急性期肾盂肾盏黏膜充血水肿、脓性渗出，肾间质化脓性炎，肾小管内中性粒细胞聚集形成白细胞管型，病变呈灶性分布，肾小球多不受累。慢性期间质纤维化、肾盂肾盏变形（特征性）、表面凹陷性瘢痕。</p><p>临床：发热、腰痛、膀胱刺激征，脓尿、菌尿、白细胞管型。</p><p>易错：肾盂肾炎主要累及肾盂肾盏和肾间质，不是肾小球疾病。</p></div></div>
+  <div class="ex" id="ex-r08"><div class="ex-inner"><p>肾盂肾炎是肾脏的化脓性感染，和肾小球肾炎（免疫性）完全是两回事。</p><p>肾小球肾炎是自家免疫系统误伤，要用激素或免疫抑制剂；肾盂肾炎是细菌入侵，要用抗生素。一个是内讧，一个是外敌。</p><p>病因与途径：致病菌以大肠埃希菌最常见（60%～80%）；感染途径以上行性感染为主——细菌从尿道、膀胱、输尿管到肾盂、肾实质，女性尿道短而宽，所以女性多见；诱因有尿路梗阻、膀胱输尿管反流、留置导尿。</p><p>病理：急性期肾盂肾盏黏膜充血水肿、脓性渗出，肾间质化脓性炎，肾小管内中性粒细胞聚集形成白细胞管型，病变呈灶性分布，肾小球多不受累。慢性期间质纤维化、肾盂肾盏变形（特征性）、表面凹陷性瘢痕。</p><p>临床：发热、腰痛、膀胱刺激征，脓尿、菌尿、白细胞管型。</p><p>易错：肾盂肾炎主要累及肾盂肾盏和肾间质，不是肾小球疾病。</p></div></div>
 </article>
 <article class="qcard" id="r09" data-cat="path" data-freq="0" data-type="名解" data-text="肾细胞癌 / 肾母细胞瘤 **肾细胞癌**：起源于**肾小管上皮**的恶性肿瘤，**透明细胞癌**最常见（占 70%～80%）；与 **VHL 基因**失活相关；大体呈**金黄色、常有出血坏死**；典型三联征为**血尿、腰痛、腹部包块**（多已晚期）；易转移至**肺、骨、肝**。 **肾母细胞瘤（Wilms 瘤）**：起源于**肾胚基**的恶性肿瘤，是**儿童最常见的肾脏恶性肿瘤**（多见于 5 岁以下）；与 **WT1 基因**异常相关；镜下见**胚基、上皮、间质**三种成分；表现为**腹部巨大包块**；对**手术 + 化疗 + 放疗**敏感，预后较好。">
   <header class="qhead">
@@ -1478,7 +1553,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-r09"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 泌尿系统疾病；《病理学》第 9 版</span>
   </div>
-  <div class="ex" id="ex-r09" hidden><div class="ex-inner"><p>肾细胞癌和肾母细胞瘤是成人与儿童两个年龄段的肾脏恶性肿瘤代表。</p><p>肾细胞癌（成人最常见）：起源于肾小管上皮；透明细胞癌最常见（70%～80%），癌细胞胞浆透明；与 VHL 基因失活相关；大体呈金黄色、常有出血坏死；典型三联征是血尿、腰痛、腹部包块，但出现时多已晚期；易转移至肺、骨、肝。</p><p>肾母细胞瘤 / Wilms 瘤（儿童最常见）：起源于肾胚基，多见于 5 岁以下；与 WT1 基因异常相关；镜下见胚基、上皮、间质三种成分；表现为腹部巨大包块；对手术加化疗加放疗敏感，预后较好。</p><p>记忆钩子：成人透明细胞、VHL；儿童肾母、WT1。</p><p>易错：VHL 是肾细胞癌，WT1 是 Wilms 瘤，不要记反。</p></div></div>
+  <div class="ex" id="ex-r09"><div class="ex-inner"><p>肾细胞癌和肾母细胞瘤是成人与儿童两个年龄段的肾脏恶性肿瘤代表。</p><p>肾细胞癌（成人最常见）：起源于肾小管上皮；透明细胞癌最常见（70%～80%），癌细胞胞浆透明；与 VHL 基因失活相关；大体呈金黄色、常有出血坏死；典型三联征是血尿、腰痛、腹部包块，但出现时多已晚期；易转移至肺、骨、肝。</p><p>肾母细胞瘤 / Wilms 瘤（儿童最常见）：起源于肾胚基，多见于 5 岁以下；与 WT1 基因异常相关；镜下见胚基、上皮、间质三种成分；表现为腹部巨大包块；对手术加化疗加放疗敏感，预后较好。</p><p>记忆钩子：成人透明细胞、VHL；儿童肾母、WT1。</p><p>易错：VHL 是肾细胞癌，WT1 是 Wilms 瘤，不要记反。</p></div></div>
 </article>
 <article class="qcard" id="r10" data-cat="path" data-freq="0" data-type="论述" data-text="急性弥漫性增生性肾小球肾炎的病理变化与临床病理联系 **病因与机制**：**A 族乙型溶血性链球菌**感染后 1～4 周发病；链球菌抗原与抗体形成**循环免疫复合物**沉积于肾小球，或原位形成免疫复合物，激活补体 → 炎症介质 → 肾小球损伤。 **大体**：双肾体积肿大、充血，表面散在**粟粒样出血点** → 「**大红肾**」「**蚤咬肾**」。 **光镜**：肾小球体积增大，**内皮细胞和系膜细胞增生**（故称毛细血管内增生性），伴**中性粒细胞浸润**；肾小管上皮细胞可发生水肿、脂肪变，管腔内见管型。 **电镜**：**上皮下驼峰状电子致密物沉积**。 **免疫荧光**：**IgG、C3 沿毛细血管壁呈粗颗粒状沉积**。 **临床病理联系**： ① **血尿、蛋白尿**：滤过膜损伤、通透性增加； ② **少尿**：内皮增生使毛细血管腔狭窄、GFR 下降； ③ **水肿**：GFR ">
   <header class="qhead">
@@ -1496,7 +1571,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-r10"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 泌尿系统疾病 P43–P52</span>
   </div>
-  <div class="ex" id="ex-r10" hidden><div class="ex-inner"><p>急性弥漫性增生性肾小球肾炎的病理变化与临床联系，按病因、大体、光镜、电镜、免疫、临床、结局七段背。</p><p>病因：A 族乙型溶血性链球菌感染后 1～4 周发病。链球菌抗原与抗体形成循环免疫复合物沉积于肾小球，激活补体，引起损伤。</p><p>大体：双肾肿大、充血，表面粟粒样出血点，即大红肾、蚤咬肾。</p><p>光镜：肾小球体积增大，内皮细胞和系膜细胞增生，伴中性粒细胞浸润。</p><p>电镜：上皮下驼峰状电子致密物沉积。</p><p>免疫荧光：IgG、C3 沿毛细血管壁呈粗颗粒状沉积。</p><p>临床病理联系：血尿蛋白尿（滤过膜损伤）、少尿（毛细血管腔狭窄、GFR 下降）、水肿（水钠潴留）、高血压（血容量增加）。</p><p>结局：儿童预后好，约 1% 转急进性，少数迁延为慢性。</p><p>易错：内皮加系膜增生，不是壁层上皮增生（后者是新月体）。</p></div></div>
+  <div class="ex" id="ex-r10"><div class="ex-inner"><p>急性弥漫性增生性肾小球肾炎的病理变化与临床联系，按病因、大体、光镜、电镜、免疫、临床、结局七段背。</p><p>病因：A 族乙型溶血性链球菌感染后 1～4 周发病。链球菌抗原与抗体形成循环免疫复合物沉积于肾小球，激活补体，引起损伤。</p><p>大体：双肾肿大、充血，表面粟粒样出血点，即大红肾、蚤咬肾。</p><p>光镜：肾小球体积增大，内皮细胞和系膜细胞增生，伴中性粒细胞浸润。</p><p>电镜：上皮下驼峰状电子致密物沉积。</p><p>免疫荧光：IgG、C3 沿毛细血管壁呈粗颗粒状沉积。</p><p>临床病理联系：血尿蛋白尿（滤过膜损伤）、少尿（毛细血管腔狭窄、GFR 下降）、水肿（水钠潴留）、高血压（血容量增加）。</p><p>结局：儿童预后好，约 1% 转急进性，少数迁延为慢性。</p><p>易错：内皮加系膜增生，不是壁层上皮增生（后者是新月体）。</p></div></div>
 </article>
 <article class="qcard" id="r11" data-cat="path" data-freq="0" data-type="论述" data-text="急进性肾小球肾炎（新月体性）的病理变化与分型 **概念**：又称**新月体性肾小球肾炎**或**毛细血管外肾小球肾炎**，以**大量新月体形成**为特征，临床呈**急进性肾炎综合征**，数周至数月内发展为肾衰竭。 **病理变化**： **光镜**：多数肾小球（＞50%）球囊内有**新月体**形成（壁层上皮细胞增生 + 单核细胞渗出）；毛细血管丛受压萎缩、坏死；后期新月体纤维化 → 肾小球硬化。 **大体**：双肾体积增大，表面可见点状出血；晚期缩小、变硬。 **免疫荧光与分型**： **Ⅰ 型（抗 GBM 型）**：**IgG 沿基底膜呈线样沉积**；血中抗 GBM 抗体阳性；伴肺出血者称 **Goodpasture 综合征**（肺出血-肾炎综合征）。 **Ⅱ 型（免疫复合物型）**：**IgG、C3 呈颗粒状沉积**；常继发于链球菌感染后肾炎、系统性红斑狼疮、过敏性紫癜、IgA 肾病。 ">
   <header class="qhead">
@@ -1514,7 +1589,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-r11"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 泌尿系统疾病 P53–P60</span>
   </div>
-  <div class="ex" id="ex-r11" hidden><div class="ex-inner"><p>急进性肾小球肾炎的关键就是新月体：球囊里长出月牙，把毛细血管压扁，肾功能几周内垮掉。</p><p>概念：又称新月体性肾小球肾炎、毛细血管外肾小球肾炎，以大量新月体形成为特征，临床呈急进性肾炎综合征，数周至数月发展为肾衰竭。</p><p>病理：光镜下多数肾小球（＞50%）球囊内有新月体（壁层上皮细胞增生加单核细胞渗出），毛细血管丛受压萎缩；大体双肾增大、表面点状出血。</p><p>三型靠免疫荧光分：<br>Ⅰ 型（抗 GBM）：IgG 沿基底膜线样沉积，伴肺出血者称 Goodpasture 综合征。<br>Ⅱ 型（免疫复合物型）：IgG、C3 颗粒状沉积，继发于链球菌感染后肾炎、SLE、过敏性紫癜。<br>Ⅲ 型（寡免疫复合物型）：荧光阴性，多与 ANCA 相关。</p><p>临床联系：新月体压迫毛细血管，GFR 急剧下降，少尿、无尿、氮质血症，迅速尿毒症。</p><p>易错：一线二颗粒三阴性，Ⅲ 型是免疫复合物最少，不是最多。</p></div></div>
+  <div class="ex" id="ex-r11"><div class="ex-inner"><p>急进性肾小球肾炎的关键就是新月体：球囊里长出月牙，把毛细血管压扁，肾功能几周内垮掉。</p><p>概念：又称新月体性肾小球肾炎、毛细血管外肾小球肾炎，以大量新月体形成为特征，临床呈急进性肾炎综合征，数周至数月发展为肾衰竭。</p><p>病理：光镜下多数肾小球（＞50%）球囊内有新月体（壁层上皮细胞增生加单核细胞渗出），毛细血管丛受压萎缩；大体双肾增大、表面点状出血。</p><p>三型靠免疫荧光分：<br>Ⅰ 型（抗 GBM）：IgG 沿基底膜线样沉积，伴肺出血者称 Goodpasture 综合征。<br>Ⅱ 型（免疫复合物型）：IgG、C3 颗粒状沉积，继发于链球菌感染后肾炎、SLE、过敏性紫癜。<br>Ⅲ 型（寡免疫复合物型）：荧光阴性，多与 ANCA 相关。</p><p>临床联系：新月体压迫毛细血管，GFR 急剧下降，少尿、无尿、氮质血症，迅速尿毒症。</p><p>易错：一线二颗粒三阴性，Ⅲ 型是免疫复合物最少，不是最多。</p></div></div>
 </article>
 <article class="qcard" id="r12" data-cat="path" data-freq="2" data-type="论述" data-text="肾病综合征的病理类型及其临床病理联系 **临床特点**：大量蛋白尿（＞3.5 g/24h）、低蛋白血症（＜30 g/L）、高度水肿、高脂血症。 **主要病理类型**： ① **微小病变性肾小球病**：儿童最常见；光镜正常、电镜足突弥漫融合、免疫荧光阴性；**激素敏感**。 ② **膜性肾病**：成人最常见；基底膜弥漫增厚、**钉突**、上皮下沉积、IgG/C3 细颗粒；易并发**肾静脉血栓**；抗 **PLA2R** 抗体相关。 ③ **局灶节段性肾小球硬化（FSGS）**：局灶（＜50% 小球）、节段（＜50% 面积）硬化；足突融合；**激素抵抗**、预后较差。 ④ **膜增生性肾小球肾炎**：系膜细胞增生并插入基底膜 → **双轨征**；C3 沉积为主；常伴低补体血症。 ⑤ **系膜增生性肾小球肾炎**：系膜细胞与基质增生；我国常见，可伴 IgA 沉积。 **临床病理联系**： **大">
   <header class="qhead">
@@ -1532,7 +1607,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-r12"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">泌尿病理泡面·名解 1（两次）；2026 秋课件 泌尿系统疾病 P37–P42</span>
   </div>
-  <div class="ex" id="ex-r12" hidden><div class="ex-inner"><p>肾病综合征的病理类型与临床联系，核心是五个类型、五个关键词、四个表现一条链。</p><p>临床特点：大量蛋白尿（＞3.5 g/24h）、低蛋白血症（＜30 g/L）、高度水肿、高脂血症。</p><p>五个类型：<br>微小病变——儿童最常见，光镜正常、足突融合、激素敏感。<br>膜性肾病——成人最常见，基底膜增厚、钉突、易并发肾静脉血栓。<br>FSGS——局灶节段性硬化，激素抵抗、预后较差。<br>膜增生性——系膜插入、双轨征，常伴低补体血症。<br>系膜增生性——系膜细胞与基质增生，我国常见。</p><p>临床联系一条链：滤过膜屏障破坏 → 大量蛋白尿 → 蛋白丢失超过肝合成 → 低蛋白血症 → 胶渗压下降加钠水潴留 → 水肿；肝代偿合成脂蛋白增加 → 高脂血症。</p><p>并发症：感染、血栓栓塞、急性肾损伤。</p><p>易错：膜性是基底膜增厚加钉突，膜增生是系膜插入加双轨征。</p></div></div>
+  <div class="ex" id="ex-r12"><div class="ex-inner"><p>肾病综合征的病理类型与临床联系，核心是五个类型、五个关键词、四个表现一条链。</p><p>临床特点：大量蛋白尿（＞3.5 g/24h）、低蛋白血症（＜30 g/L）、高度水肿、高脂血症。</p><p>五个类型：<br>微小病变——儿童最常见，光镜正常、足突融合、激素敏感。<br>膜性肾病——成人最常见，基底膜增厚、钉突、易并发肾静脉血栓。<br>FSGS——局灶节段性硬化，激素抵抗、预后较差。<br>膜增生性——系膜插入、双轨征，常伴低补体血症。<br>系膜增生性——系膜细胞与基质增生，我国常见。</p><p>临床联系一条链：滤过膜屏障破坏 → 大量蛋白尿 → 蛋白丢失超过肝合成 → 低蛋白血症 → 胶渗压下降加钠水潴留 → 水肿；肝代偿合成脂蛋白增加 → 高脂血症。</p><p>并发症：感染、血栓栓塞、急性肾损伤。</p><p>易错：膜性是基底膜增厚加钉突，膜增生是系膜插入加双轨征。</p></div></div>
 </article>
 <article class="qcard" id="r13" data-cat="path" data-freq="0" data-type="论述" data-text="慢性硬化性肾小球肾炎的病理变化与临床病理联系 **概念**：各种肾小球肾炎的**终末阶段**，又称**慢性硬化性肾小球肾炎**。 **病理变化**： **光镜**：**大量肾小球硬化、玻璃样变**；**肾小管萎缩、消失**；**间质纤维化**伴淋巴细胞浸润；残存肾单位**代偿性肥大**（肾小球体积增大、肾小管扩张）。 **大体**：双肾**对称性固缩**，表面呈**弥漫性细小颗粒** → **颗粒性固缩肾**；切面**皮质变薄**、**皮髓质分界不清**；肾盂周围脂肪增多。 **临床病理联系**： ① **多尿、夜尿、低比重尿**：残存肾单位代偿性高滤过，尿液无法浓缩； ② **高血压**：钠水潴留 + RAAS 激活； ③ **贫血**：**EPO 减少**； ④ **氮质血症与尿毒症**：GFR 显著下降、代谢产物蓄积； ⑤ **水电解质与酸碱紊乱**：高钾、高磷、低钙、代谢性酸中毒。">
   <header class="qhead">
@@ -1550,7 +1625,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-r13"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 泌尿系统疾病；《病理学》第 9 版</span>
   </div>
-  <div class="ex" id="ex-r13" hidden><div class="ex-inner"><p>慢性硬化性肾小球肾炎是所有肾炎的终点站，病理和临床都围绕残存肾单位拼命加班展开。</p><p>病理：光镜下大量肾小球硬化、玻璃样变，肾小管萎缩消失，间质纤维化，残存肾单位代偿性肥大。大体双肾对称性固缩，表面弥漫性细小颗粒，即颗粒性固缩肾；切面皮质变薄、皮髓质分界不清。</p><p>临床联系：<br>多尿、夜尿、低比重尿——高滤过致无法浓缩，比重固定在 1.010。<br>高血压——钠水潴留加 RAAS 激活。<br>贫血——EPO 减少。<br>氮质血症与尿毒症——GFR 显著下降、代谢产物蓄积。<br>水电解质酸碱紊乱——高钾、高磷、低钙、代酸。</p><p>结局不可逆，需透析或肾移植。</p><p>易错：多尿不是肾功能还好，恰恰是残存肾单位高滤过的表现，说明已晚期。</p></div></div>
+  <div class="ex" id="ex-r13"><div class="ex-inner"><p>慢性硬化性肾小球肾炎是所有肾炎的终点站，病理和临床都围绕残存肾单位拼命加班展开。</p><p>病理：光镜下大量肾小球硬化、玻璃样变，肾小管萎缩消失，间质纤维化，残存肾单位代偿性肥大。大体双肾对称性固缩，表面弥漫性细小颗粒，即颗粒性固缩肾；切面皮质变薄、皮髓质分界不清。</p><p>临床联系：<br>多尿、夜尿、低比重尿——高滤过致无法浓缩，比重固定在 1.010。<br>高血压——钠水潴留加 RAAS 激活。<br>贫血——EPO 减少。<br>氮质血症与尿毒症——GFR 显著下降、代谢产物蓄积。<br>水电解质酸碱紊乱——高钾、高磷、低钙、代酸。</p><p>结局不可逆，需透析或肾移植。</p><p>易错：多尿不是肾功能还好，恰恰是残存肾单位高滤过的表现，说明已晚期。</p></div></div>
 </article>
 <article class="qcard" id="r14" data-cat="path" data-freq="0" data-type="论述" data-text="肾盂肾炎的病因、感染途径与病理变化 **病因**：**大肠埃希菌**最常见（60%～80%），其次变形杆菌、克雷伯菌、葡萄球菌；**上行性感染**为主。 **感染途径**： ① **上行性感染**（最常见）：病原体经尿道 → 膀胱 → 输尿管 → 肾盂 → 肾实质；女性尿道短而宽、缺乏前列腺液杀菌作用，故女性多见。 ② **血源性感染**（较少）：细菌经血流到肾，多为金黄色葡萄球菌。 ③ **淋巴道感染与直接蔓延**（罕见）。 **诱因**：**尿路梗阻**（结石、前列腺肥大、肿瘤）、**膀胱输尿管反流**、留置导尿、妊娠、糖尿病、免疫抑制。 **病理变化**： **急性肾盂肾炎**：肾盂、肾盏黏膜**充血、水肿、脓性渗出**；肾间质**化脓性炎**、微小脓肿形成；肾小管内**中性粒细胞聚集**（**白细胞管型**）；病变呈**灶性**分布，肾小球多不受累。 **慢性肾盂肾炎**：间质**">
   <header class="qhead">
@@ -1568,7 +1643,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-r14"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 泌尿系统疾病；《病理学》第 9 版</span>
   </div>
-  <div class="ex" id="ex-r14" hidden><div class="ex-inner"><p>肾盂肾炎的病因、感染途径与病理变化，核心是大肠埃希菌从下往上爬。</p><p>病因：大肠埃希菌最常见（60%～80%），其次变形杆菌、克雷伯菌；以上行性感染为主。</p><p>感染途径：<br>上行性感染（最常见）——病原体经尿道、膀胱、输尿管到肾盂、肾实质。女性尿道短而宽，故女性多见。<br>血源性感染（较少）——细菌经血流到肾，多为金黄色葡萄球菌。</p><p>诱因：尿路梗阻（结石、前列腺肥大）、膀胱输尿管反流、留置导尿、妊娠、糖尿病。</p><p>病理：急性期肾盂肾盏黏膜充血水肿、脓性渗出，肾间质化脓性炎，肾小管内中性粒细胞聚集形成白细胞管型，病变呈灶性分布，肾小球多不受累。慢性期间质纤维化、肾盂肾盏变形（特征性）、表面凹陷性瘢痕。</p><p>临床：发热、腰痛、膀胱刺激征，脓尿、菌尿、白细胞管型。</p><p>易错：肾盂肾炎病变是灶性分布，肾小球多不受累。</p></div></div>
+  <div class="ex" id="ex-r14"><div class="ex-inner"><p>肾盂肾炎的病因、感染途径与病理变化，核心是大肠埃希菌从下往上爬。</p><p>病因：大肠埃希菌最常见（60%～80%），其次变形杆菌、克雷伯菌；以上行性感染为主。</p><p>感染途径：<br>上行性感染（最常见）——病原体经尿道、膀胱、输尿管到肾盂、肾实质。女性尿道短而宽，故女性多见。<br>血源性感染（较少）——细菌经血流到肾，多为金黄色葡萄球菌。</p><p>诱因：尿路梗阻（结石、前列腺肥大）、膀胱输尿管反流、留置导尿、妊娠、糖尿病。</p><p>病理：急性期肾盂肾盏黏膜充血水肿、脓性渗出，肾间质化脓性炎，肾小管内中性粒细胞聚集形成白细胞管型，病变呈灶性分布，肾小球多不受累。慢性期间质纤维化、肾盂肾盏变形（特征性）、表面凹陷性瘢痕。</p><p>临床：发热、腰痛、膀胱刺激征，脓尿、菌尿、白细胞管型。</p><p>易错：肾盂肾炎病变是灶性分布，肾小球多不受累。</p></div></div>
 </article>
 </section>
 <section class="cat" id="cat-pharm">
@@ -1593,7 +1668,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m01"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">药理泡面·名解 2（五次）</span>
   </div>
-  <div class="ex" id="ex-m01" hidden><div class="ex-inner"><p>化疗指数（CI）就是药物的安全倍数：能毒死一半动物的剂量，除以能治好一半动物的剂量。</p><p>一种药治好一半感染动物需要 10 mg（ED₅₀），毒死一半动物需要 1000 mg（LD₅₀），CI = 1000 ÷ 10 = 100。倍数越大，说明有效剂量离中毒剂量越远，药越安全。</p><p>公式：CI = LD₅₀ / ED₅₀，也可用 LD₅ / ED₉₅。</p><p>为什么青霉素安全？它作用于细菌的细胞壁，人体细胞根本没有细胞壁，所以 LD₅₀ 极大、CI 极高。相反抗肿瘤药 CI 往往很小，因为人体骨髓、胃肠黏膜也分裂快，治疗窗窄。</p><p>易错：分子是 LD₅₀、分母是 ED₅₀，别写反。</p></div></div>
+  <div class="ex" id="ex-m01"><div class="ex-inner"><p>化疗指数（CI）就是药物的安全倍数：能毒死一半动物的剂量，除以能治好一半动物的剂量。</p><p>一种药治好一半感染动物需要 10 mg（ED₅₀），毒死一半动物需要 1000 mg（LD₅₀），CI = 1000 ÷ 10 = 100。倍数越大，说明有效剂量离中毒剂量越远，药越安全。</p><p>公式：CI = LD₅₀ / ED₅₀，也可用 LD₅ / ED₉₅。</p><p>为什么青霉素安全？它作用于细菌的细胞壁，人体细胞根本没有细胞壁，所以 LD₅₀ 极大、CI 极高。相反抗肿瘤药 CI 往往很小，因为人体骨髓、胃肠黏膜也分裂快，治疗窗窄。</p><p>易错：分子是 LD₅₀、分母是 ED₅₀，别写反。</p></div></div>
 </article>
 <article class="qcard hot" id="m02" data-cat="pharm" data-freq="4" data-type="名解" data-text="抗生素后效应（PAE） 指细菌与抗菌药物**短暂接触**，药物浓度下降至**低于最低抑菌浓度（MIC）或消失后**，细菌生长**仍受到持续抑制**的效应。 **有 PAE 的药物**：氨基糖苷类、大环内酯类、喹诺酮类、碳青霉烯类。 **临床意义**：PAE 长的药物可**延长给药间隔**、减少给药次数，仍保持疗效（如氨基糖苷类每日一次给药）。">
   <header class="qhead">
@@ -1611,7 +1686,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m02"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">药理泡面·名解 4（四次）</span>
   </div>
-  <div class="ex" id="ex-m02" hidden><div class="ex-inner"><p>抗生素后效应（PAE）就是药走了、余威还在：细菌跟药短暂接触后，即使药浓度降到 MIC 以下甚至消失，生长仍被持续抑制。</p><p>一场暴雨把火浇灭，雨停之后木头还是湿的，一段时间内点不着。细菌被抗菌药打懵之后，也需要一段时间才能恢复繁殖。</p><p>有 PAE 的药：氨基糖苷类、大环内酯类、喹诺酮类、碳青霉烯类。</p><p>临床意义：PAE 长的药可以延长给药间隔、减少次数。氨基糖苷类传统一天 2～3 次，现在改成每日一次——先给足剂量产生强效应，靠 PAE 维持抑菌，既方便又减少耳肾毒性。</p><p>易错：PAE 是细菌生长被持续抑制，不是药物在体内蓄积。</p></div></div>
+  <div class="ex" id="ex-m02"><div class="ex-inner"><p>抗生素后效应（PAE）就是药走了、余威还在：细菌跟药短暂接触后，即使药浓度降到 MIC 以下甚至消失，生长仍被持续抑制。</p><p>一场暴雨把火浇灭，雨停之后木头还是湿的，一段时间内点不着。细菌被抗菌药打懵之后，也需要一段时间才能恢复繁殖。</p><p>有 PAE 的药：氨基糖苷类、大环内酯类、喹诺酮类、碳青霉烯类。</p><p>临床意义：PAE 长的药可以延长给药间隔、减少次数。氨基糖苷类传统一天 2～3 次，现在改成每日一次——先给足剂量产生强效应，靠 PAE 维持抑菌，既方便又减少耳肾毒性。</p><p>易错：PAE 是细菌生长被持续抑制，不是药物在体内蓄积。</p></div></div>
 </article>
 <article class="qcard" id="m03" data-cat="pharm" data-freq="2" data-type="名解" data-text="首次接触效应（FEE） 指抗菌药物在**初次接触细菌时有强大的抗菌效应**，**再度接触时不再出现该强大效应**，或连续与细菌接触后抗菌效应不再明显增强，**需要间隔相当时间（数小时）以后才会再起作用**。 **氨基糖苷类抗生素**有明显的 FEE。 **临床意义**：支持氨基糖苷类**每日一次给药**（先给足量产生强效应，间隔足够时间再给）。">
   <header class="qhead">
@@ -1629,7 +1704,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m03"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">药理泡面·名解 5（两次）</span>
   </div>
-  <div class="ex" id="ex-m03" hidden><div class="ex-inner"><p>首次接触效应（FEE）就是第一次最猛、后面疲了：抗菌药初次接触细菌时杀伤力最强，连续接触反而效果不再增强，要间隔几小时才恢复。</p><p>拳击手第一拳最有爆发力，连续快速出拳反而力道递减，需要退后几步蓄力再打。氨基糖苷类就是这样。</p><p>临床意义：FEE 和 PAE 一起，构成氨基糖苷类每日一次、给足剂量的理论依据——先给足量打出最强第一击，靠 PAE 维持抑菌，等 FEE 恢复后再给下一次。这样比一天分多次更有效，耳肾毒性也更低。</p><p>易错：FEE 讲第一次最强、需要间隔；PAE 讲药没了仍抑菌，两者不同。</p></div></div>
+  <div class="ex" id="ex-m03"><div class="ex-inner"><p>首次接触效应（FEE）就是第一次最猛、后面疲了：抗菌药初次接触细菌时杀伤力最强，连续接触反而效果不再增强，要间隔几小时才恢复。</p><p>拳击手第一拳最有爆发力，连续快速出拳反而力道递减，需要退后几步蓄力再打。氨基糖苷类就是这样。</p><p>临床意义：FEE 和 PAE 一起，构成氨基糖苷类每日一次、给足剂量的理论依据——先给足量打出最强第一击，靠 PAE 维持抑菌，等 FEE 恢复后再给下一次。这样比一天分多次更有效，耳肾毒性也更低。</p><p>易错：FEE 讲第一次最强、需要间隔；PAE 讲药没了仍抑菌，两者不同。</p></div></div>
 </article>
 <article class="qcard" id="m04" data-cat="pharm" data-freq="1" data-type="名解" data-text="化疗 / 化疗药物 / 抗生素 / 抗菌谱 **化疗**：指用化学药物杀灭或抑制机体内的**病原微生物（细菌、真菌、病毒等）、寄生虫及恶性肿瘤细胞**，消除或缓解由它们所引起的疾病的过程。 **化疗药物**：化疗中使用的化学药物。 **抗生素**：某些微生物（细菌、真菌和放线菌属）的**代谢产物**，分子量较低，可抑制或杀灭其他病原微生物；包括天然抗生素、半合成抗生素、化学合成仿制品。 **抗菌谱**：抗菌药物抑制或杀灭病原微生物的**范围**；分**窄谱**（如异烟肼仅对结核分枝杆菌）与**广谱**（如四环素类、喹诺酮类）。 **耐药性**：病原体对药物的敏感性下降甚至消失，致使药物疗效降低或失效。">
   <header class="qhead">
@@ -1647,7 +1722,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m04"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">药理泡面·名解 1、3；2026 秋课件 抗菌概论</span>
   </div>
-  <div class="ex" id="ex-m04" hidden><div class="ex-inner"><p>化疗、化疗药物、抗生素、抗菌谱、耐药性，这五个概念是抗菌药总论的地基。</p><p>化疗：用化学药物杀灭或抑制病原微生物、寄生虫及恶性肿瘤细胞，消除或缓解疾病的过程。化疗不只指治肿瘤，抗感染也是化疗。</p><p>化疗药物：化疗中使用的化学药物。</p><p>抗生素：某些微生物（细菌、真菌、放线菌）的代谢产物，可抑制或杀灭其他病原微生物。是微生物打架时放出的化学武器，人类拿来对付病菌。</p><p>抗菌谱：抗菌药物抑制或杀灭病原微生物的范围。窄谱如异烟肼只对结核分枝杆菌，广谱如四环素类、喹诺酮类。</p><p>耐药性：病原体对药物敏感性下降甚至消失，疗效降低或失效。</p><p>易错：抗生素只是抗菌药的一部分，还有人工合成的喹诺酮、磺胺。</p></div></div>
+  <div class="ex" id="ex-m04"><div class="ex-inner"><p>化疗、化疗药物、抗生素、抗菌谱、耐药性，这五个概念是抗菌药总论的地基。</p><p>化疗：用化学药物杀灭或抑制病原微生物、寄生虫及恶性肿瘤细胞，消除或缓解疾病的过程。化疗不只指治肿瘤，抗感染也是化疗。</p><p>化疗药物：化疗中使用的化学药物。</p><p>抗生素：某些微生物（细菌、真菌、放线菌）的代谢产物，可抑制或杀灭其他病原微生物。是微生物打架时放出的化学武器，人类拿来对付病菌。</p><p>抗菌谱：抗菌药物抑制或杀灭病原微生物的范围。窄谱如异烟肼只对结核分枝杆菌，广谱如四环素类、喹诺酮类。</p><p>耐药性：病原体对药物敏感性下降甚至消失，疗效降低或失效。</p><p>易错：抗生素只是抗菌药的一部分，还有人工合成的喹诺酮、磺胺。</p></div></div>
 </article>
 <article class="qcard" id="m05" data-cat="pharm" data-freq="0" data-type="名解" data-text="二重感染（菌群交替症） 指长期应用**广谱抗生素**，使**敏感菌被抑制**，**不敏感菌或耐药菌大量繁殖**，造成**新的感染**。 常见致病菌：**金黄色葡萄球菌、白假丝酵母菌（念珠菌）、难辨梭菌**。 典型表现：**假膜性肠炎**（难辨梭菌）、**口腔鹅口疮**、**真菌性肺炎**、**尿路感染**。 **防治**：合理使用抗生素、避免长期广谱用药、必要时补充微生态制剂、确诊后选用针对性药物（如万古霉素治假膜性肠炎）。">
   <header class="qhead">
@@ -1665,7 +1740,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m05"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 抗菌概论；《药理学》第 9 版</span>
   </div>
-  <div class="ex" id="ex-m05" hidden><div class="ex-inner"><p>二重感染（菌群交替症）就是把坏人赶走了，更坏的趁机占山为王。</p><p>肠道里住着几百种细菌，平时互相制约、和平共处。长期用广谱抗生素，把敏感菌大批杀光，耐药菌和真菌失去对手，疯狂繁殖，于是出现新的感染。</p><p>常见致病菌：金黄色葡萄球菌、白假丝酵母菌（念珠菌）、难辨梭菌。</p><p>典型表现：假膜性肠炎（难辨梭菌，腹泻腹痛发热）、口腔鹅口疮、真菌性肺炎。</p><p>防治：合理使用抗生素、避免长期广谱用药、必要时补充微生态制剂；确诊后选针对性药物。</p><p>易错：二重感染是菌群失调导致的新感染，不是药物过敏。</p></div></div>
+  <div class="ex" id="ex-m05"><div class="ex-inner"><p>二重感染（菌群交替症）就是把坏人赶走了，更坏的趁机占山为王。</p><p>肠道里住着几百种细菌，平时互相制约、和平共处。长期用广谱抗生素，把敏感菌大批杀光，耐药菌和真菌失去对手，疯狂繁殖，于是出现新的感染。</p><p>常见致病菌：金黄色葡萄球菌、白假丝酵母菌（念珠菌）、难辨梭菌。</p><p>典型表现：假膜性肠炎（难辨梭菌，腹泻腹痛发热）、口腔鹅口疮、真菌性肺炎。</p><p>防治：合理使用抗生素、避免长期广谱用药、必要时补充微生态制剂；确诊后选针对性药物。</p><p>易错：二重感染是菌群失调导致的新感染，不是药物过敏。</p></div></div>
 </article>
 <article class="qcard hot" id="m06" data-cat="pharm" data-freq="6" data-type="论述" data-text="抗菌药物的作用机制分类及代表药 **① 抑制细菌细胞壁合成**：**青霉素类、头孢菌素类**（作用于五肽交联桥/转肽酶）、**万古霉素**（与肽聚糖前体结合）、**磷霉素、环丝氨酸**；对**繁殖期**细菌作用强，人体细胞无细胞壁故毒性小。 **② 改变胞质膜通透性**：**多粘菌素**（与磷脂结合，破坏膜通透性，有明显细胞毒性）、**制霉菌素、两性霉素 B**（与真菌胞膜麦角固醇结合，形成孔道）。 **③ 抑制蛋白质合成**： 作用于 **30S 亚基**：**氨基糖苷类**（全程抑制，起始、延伸、终止均受阻）、**四环素类**（阻止氨基酰-tRNA 进入 A 位）、**大观霉素**； 作用于 **50S 亚基**：**大环内酯类**（抑制移位）、**氯霉素**（抑制肽酰转移酶）、**克林霉素**。 **④ 影响核酸代谢**： **影响 DNA**：**喹诺酮类**（抑制 DNA 回旋酶">
   <header class="qhead">
@@ -1683,7 +1758,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m06"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">药理泡面·大题 6（六次）；2026 秋课件 抗菌概论</span>
   </div>
-  <div class="ex" id="ex-m06" hidden><div class="ex-inner"><p>抗菌药的作用机制就五个位点：拆墙、破膜、停工厂、毁图纸、断原料。</p><p>① 抑制细胞壁合成（拆墙）：青霉素类、头孢菌素类（作用于转肽酶）、万古霉素。人体细胞无细胞壁，故毒性小。</p><p>② 改变胞质膜通透性（破膜）：多粘菌素（有细胞毒性）、两性霉素 B（与真菌胞膜麦角固醇结合形成孔道）。</p><p>③ 抑制蛋白质合成（停工厂）：30S 有氨基糖苷类（全程抑制）、四环素类；50S 有大环内酯类、氯霉素、克林霉素。</p><p>④ 影响核酸代谢（毁图纸）：喹诺酮类抑制 DNA 回旋酶；利福霉素类抑制 RNA 聚合酶。</p><p>⑤ 影响叶酸代谢（断原料）：磺胺类抑制二氢蝶酸合成酶，甲氧苄啶抑制二氢叶酸还原酶，合用双重阻断。</p><p>易错：喹诺酮抑制 DNA 回旋酶，不是抑制蛋白质合成。</p></div></div>
+  <div class="ex" id="ex-m06"><div class="ex-inner"><p>抗菌药的作用机制就五个位点：拆墙、破膜、停工厂、毁图纸、断原料。</p><p>① 抑制细胞壁合成（拆墙）：青霉素类、头孢菌素类（作用于转肽酶）、万古霉素。人体细胞无细胞壁，故毒性小。</p><p>② 改变胞质膜通透性（破膜）：多粘菌素（有细胞毒性）、两性霉素 B（与真菌胞膜麦角固醇结合形成孔道）。</p><p>③ 抑制蛋白质合成（停工厂）：30S 有氨基糖苷类（全程抑制）、四环素类；50S 有大环内酯类、氯霉素、克林霉素。</p><p>④ 影响核酸代谢（毁图纸）：喹诺酮类抑制 DNA 回旋酶；利福霉素类抑制 RNA 聚合酶。</p><p>⑤ 影响叶酸代谢（断原料）：磺胺类抑制二氢蝶酸合成酶，甲氧苄啶抑制二氢叶酸还原酶，合用双重阻断。</p><p>易错：喹诺酮抑制 DNA 回旋酶，不是抑制蛋白质合成。</p></div></div>
 </article>
 <article class="qcard hot" id="m07" data-cat="pharm" data-freq="4" data-type="论述" data-text="细菌耐药性的产生机制 **① 产生灭活酶**：细菌产生**灭活抗菌药物的酶**使药物失活，是耐药性产生的最重要机制之一——药物作用于细菌之前即被酶破坏。如 **β-内酰胺酶**（水解青霉素、头孢菌素）、**氨基糖苷类钝化酶**（乙酰化、磷酸化、腺苷化）、**氯霉素乙酰转移酶**。 **② 抗菌药物作用靶位改变**：细菌改变靶位蛋白的**结构和数量**，使药物结合的有效部位改变、亲和力下降。如 **青霉素结合蛋白（PBP）改变**导致对 β-内酰胺类耐药；**核糖体靶位改变**致大环内酯类耐药；**DNA 回旋酶突变**致喹诺酮类耐药。 **③ 改变细菌外膜通透性**：通过改变**通道蛋白（孔蛋白）的性质和数量**降低膜通透性，使药物不易进入。如铜绿假单胞菌外膜孔蛋白缺失。 **④ 影响主动流出系统（外排泵）**：细菌将进入菌体内的抗菌药物**主动排出体外**，如大肠埃希菌的 AcrAB-T">
   <header class="qhead">
@@ -1701,7 +1776,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m07"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">药理泡面·大题 7（四次）；2026 秋课件 抗菌概论</span>
   </div>
-  <div class="ex" id="ex-m07" hidden><div class="ex-inner"><p>细菌耐药就五招：灭酶、换靶、关门、外排、改路。</p><p>① 产生灭活酶（造剪刀）：细菌产生酶把药破坏掉，这是最重要的机制。β-内酰胺酶水解青霉素、头孢；氨基糖苷类钝化酶；氯霉素乙酰转移酶。</p><p>② 作用靶位改变（换锁）：PBP 改变导致对 β-内酰胺类耐药；核糖体靶位改变导致大环内酯类耐药；DNA 回旋酶突变导致喹诺酮耐药。</p><p>③ 改变外膜通透性（关门）：改变孔蛋白性质和数量，让药进不去。</p><p>④ 主动外排（把药泵出去）：细菌用外排泵把药主动排出，可造成多药耐药。</p><p>⑤ 改变代谢途径（绕路）：磺胺耐药菌直接利用外源叶酸，绕过被阻断的合成途径。</p><p>临床对策：开发加酶抑制剂复方（阿莫西林/克拉维酸）、联合用药。</p><p>易错：漏掉改变代谢途径——这是磺胺耐药的专属机制。</p></div></div>
+  <div class="ex" id="ex-m07"><div class="ex-inner"><p>细菌耐药就五招：灭酶、换靶、关门、外排、改路。</p><p>① 产生灭活酶（造剪刀）：细菌产生酶把药破坏掉，这是最重要的机制。β-内酰胺酶水解青霉素、头孢；氨基糖苷类钝化酶；氯霉素乙酰转移酶。</p><p>② 作用靶位改变（换锁）：PBP 改变导致对 β-内酰胺类耐药；核糖体靶位改变导致大环内酯类耐药；DNA 回旋酶突变导致喹诺酮耐药。</p><p>③ 改变外膜通透性（关门）：改变孔蛋白性质和数量，让药进不去。</p><p>④ 主动外排（把药泵出去）：细菌用外排泵把药主动排出，可造成多药耐药。</p><p>⑤ 改变代谢途径（绕路）：磺胺耐药菌直接利用外源叶酸，绕过被阻断的合成途径。</p><p>临床对策：开发加酶抑制剂复方（阿莫西林/克拉维酸）、联合用药。</p><p>易错：漏掉改变代谢途径——这是磺胺耐药的专属机制。</p></div></div>
 </article>
 <article class="qcard" id="m08" data-cat="pharm" data-freq="3" data-type="论述" data-text="抗菌药物的治疗应用原则 **① 尽早确定病原菌**：出现症状时尽早从感染部位、血液取样培养分离致病菌，并进行**体外药敏试验**，有针对性地选药。 **② 按适应证选药**：根据**病原菌种类、患者病理生理状况、药物特性**制定合理方案；不同药物抗菌谱不同，适应证亦不同。 **③ 抗菌药物的预防应用**：目的为防止可能发生的细菌感染，须有明确指征（如围手术期预防、风湿热预防），**避免无指征滥用**。 **④ 抗菌药物的联合应用**：目的是利用**协同作用**减少剂量、提高疗效、降低毒性与不良反应；指征为病原未明的严重感染、单一药物不能控制的混合感染、需长期用药防耐药、联合后毒性降低。 **⑤ 防止不合理使用**：**病毒感染、原因未明的发热一般不用抗菌药物**；尽量避免局部应用；**剂量要适宜、疗程要足够**（剂量过小易诱导耐药，过大易中毒；疗程不足易复发）。 **⑥ 考虑患者因素**：">
   <header class="qhead">
@@ -1719,7 +1794,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m08"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">药理泡面·大题 8（三次）；2026 秋课件 抗菌概论</span>
   </div>
-  <div class="ex" id="ex-m08" hidden><div class="ex-inner"><p>抗菌药应用原则就六句话：先找菌、按菌选药、该预防才预防、该联合才联合、别乱用、看人下药。</p><p>① 尽早确定病原菌：出现症状时尽早取样培养，做药敏试验。</p><p>② 按适应证选药：根据病原菌种类、患者状况、药物特性制定方案。</p><p>③ 预防应用：须有明确指征（围手术期、风湿热预防），避免滥用。</p><p>④ 联合应用：利用协同作用减少剂量、提高疗效、降低毒性。</p><p>⑤ 防止不合理使用：病毒感染、原因未明的发热一般不用；避免局部应用；剂量要适宜、疗程要足够。</p><p>⑥ 考虑患者因素：肾功能减退避免氨基糖苷类、万古霉素；肝功能减退避免氯霉素、利福平、异烟肼；儿童孕妇慎用喹诺酮（伤软骨）、四环素（伤牙齿）。</p><p>易错：预防应用必须有明确指征，不能随便预防。</p></div></div>
+  <div class="ex" id="ex-m08"><div class="ex-inner"><p>抗菌药应用原则就六句话：先找菌、按菌选药、该预防才预防、该联合才联合、别乱用、看人下药。</p><p>① 尽早确定病原菌：出现症状时尽早取样培养，做药敏试验。</p><p>② 按适应证选药：根据病原菌种类、患者状况、药物特性制定方案。</p><p>③ 预防应用：须有明确指征（围手术期、风湿热预防），避免滥用。</p><p>④ 联合应用：利用协同作用减少剂量、提高疗效、降低毒性。</p><p>⑤ 防止不合理使用：病毒感染、原因未明的发热一般不用；避免局部应用；剂量要适宜、疗程要足够。</p><p>⑥ 考虑患者因素：肾功能减退避免氨基糖苷类、万古霉素；肝功能减退避免氯霉素、利福平、异烟肼；儿童孕妇慎用喹诺酮（伤软骨）、四环素（伤牙齿）。</p><p>易错：预防应用必须有明确指征，不能随便预防。</p></div></div>
 </article>
 <article class="qcard" id="m09" data-cat="pharm" data-freq="1" data-type="简答" data-text="各代头孢菌素的特点 **第一代**（头孢唑林、头孢氨苄）：对**革兰阳性菌**作用强（优于第二代），对革兰阴性菌作用弱；**肾毒性较明显**；用于呼吸道、皮肤软组织、围手术期预防。 **第二代**（头孢呋辛、头孢克洛）：对**革兰阴性菌**作用增强，对革兰阳性菌略弱于第一代；**肾毒性降低**；用于呼吸道、泌尿道感染。 **第三代**（头孢曲松、头孢他啶、头孢噻肟）：对**革兰阴性菌**作用强（头孢他啶抗铜绿假单胞菌强）；**基本无肾毒性**；**易透过血脑屏障**，用于严重革兰阴性菌感染、脑膜炎。 **第四代**（头孢吡肟）：对革兰阳性菌、阴性菌均有较强作用，**对 β-内酰胺酶稳定性高**；用于多重耐药菌感染。 **第五代**（头孢洛林）：对**耐甲氧西林金黄色葡萄球菌（MRSA）** 有效。 **共同点**：均为**繁殖期杀菌药**，抑制细胞壁合成；**过敏反应**（与青霉素交叉过敏">
   <header class="qhead">
@@ -1737,7 +1812,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m09"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">药理泡面·大题（一次）；2026 秋课件 β内酰胺类抗生素</span>
   </div>
-  <div class="ex" id="ex-m09" hidden><div class="ex-inner"><p>头孢五代，一句话记：一代阳强肾毒大，二代阴强肾毒小，三代阴更强进脑，四代双强耐酶高，五代专打 MRSA。</p><p>第一代（头孢唑林）：对革兰阳性菌作用强，肾毒性较明显，用于呼吸道、皮肤软组织、围手术期预防。</p><p>第二代（头孢呋辛）：对革兰阴性菌作用增强，肾毒性降低。</p><p>第三代（头孢曲松、头孢他啶）：对革兰阴性菌作用强，基本无肾毒性，易透过血脑屏障，用于严重阴性菌感染、脑膜炎。</p><p>第四代（头孢吡肟）：对阳性菌、阴性菌均有较强作用，对 β-内酰胺酶稳定性高。</p><p>第五代（头孢洛林）：对 MRSA 有效。</p><p>共同点：均为繁殖期杀菌药；有过敏反应（与青霉素交叉过敏）；含硫甲基四氮唑侧链者（头孢哌酮）有双硫仑样反应。</p><p>易错：进脑的是三代，不是二代。</p></div></div>
+  <div class="ex" id="ex-m09"><div class="ex-inner"><p>头孢五代，一句话记：一代阳强肾毒大，二代阴强肾毒小，三代阴更强进脑，四代双强耐酶高，五代专打 MRSA。</p><p>第一代（头孢唑林）：对革兰阳性菌作用强，肾毒性较明显，用于呼吸道、皮肤软组织、围手术期预防。</p><p>第二代（头孢呋辛）：对革兰阴性菌作用增强，肾毒性降低。</p><p>第三代（头孢曲松、头孢他啶）：对革兰阴性菌作用强，基本无肾毒性，易透过血脑屏障，用于严重阴性菌感染、脑膜炎。</p><p>第四代（头孢吡肟）：对阳性菌、阴性菌均有较强作用，对 β-内酰胺酶稳定性高。</p><p>第五代（头孢洛林）：对 MRSA 有效。</p><p>共同点：均为繁殖期杀菌药；有过敏反应（与青霉素交叉过敏）；含硫甲基四氮唑侧链者（头孢哌酮）有双硫仑样反应。</p><p>易错：进脑的是三代，不是二代。</p></div></div>
 </article>
 <article class="qcard" id="m10" data-cat="pharm" data-freq="0" data-type="简答" data-text="利尿药的分类、作用部位与机制 **① 碳酸酐酶抑制药**（乙酰唑胺）：作用于**近曲小管**，抑制碳酸酐酶，减少 HCO₃⁻ 重吸收；利尿作用弱，用于青光眼、急性高山病。 **② 渗透性利尿药**（甘露醇）：作用于**近曲小管及髓袢**，提高小管液渗透压，阻碍水重吸收；用于脑水肿、降低颅内压、预防急性肾衰。 **③ 袢利尿药（高效）**（呋塞米、布美他尼、托拉塞米）：作用于**髓袢升支粗段**，抑制 **Na⁺-K⁺-2Cl⁻ 同向转运体（NKCC2）**，减少 NaCl 重吸收、破坏髓质高渗梯度；利尿作用最强，用于急性肺水肿、严重水肿、急性肾衰。 **④ 噻嗪类（中效）**（氢氯噻嗪）：作用于**远曲小管近端**，抑制 **Na⁺-Cl⁻ 同向转运体（NCC）**；用于轻中度水肿、高血压（基础降压药）。 **⑤ 保钾利尿药（低效）**：**螺内酯**（竞争性拮抗醛固酮受体）、**氨苯蝶啶">
   <header class="qhead">
@@ -1755,7 +1830,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m10"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 16-利尿药；《药理学》第 9 版</span>
   </div>
-  <div class="ex" id="ex-m10" hidden><div class="ex-inner"><p>利尿药就是在肾小管的不同路段设卡，不让钠水被回收，作用部位越靠后，利尿越弱。</p><p>① 碳酸酐酶抑制药（乙酰唑胺）：近曲小管，抑制碳酸酐酶。利尿弱，用于青光眼。</p><p>② 渗透性利尿药（甘露醇）：提高小管液渗透压，用于脑水肿降颅压。</p><p>③ 袢利尿药（呋塞米）：髓袢升支粗段，抑制 NKCC2，利尿最强，用于急性肺水肿、急性肾衰。</p><p>④ 噻嗪类（氢氯噻嗪）：远曲小管近端，抑制 NCC，中效，用于水肿、高血压。</p><p>⑤ 保钾利尿药：螺内酯（拮抗醛固酮受体）、氨苯蝶啶（阻断 ENaC），低效，常与排钾药合用。</p><p>记忆：近曲—髓袢—远曲—集合管，各段回收钠约 65% / 25% / 8% / 2%，所以越靠后越弱。</p><p>易错：呋塞米作用在髓袢升支粗段，不是远曲小管。</p></div></div>
+  <div class="ex" id="ex-m10"><div class="ex-inner"><p>利尿药就是在肾小管的不同路段设卡，不让钠水被回收，作用部位越靠后，利尿越弱。</p><p>① 碳酸酐酶抑制药（乙酰唑胺）：近曲小管，抑制碳酸酐酶。利尿弱，用于青光眼。</p><p>② 渗透性利尿药（甘露醇）：提高小管液渗透压，用于脑水肿降颅压。</p><p>③ 袢利尿药（呋塞米）：髓袢升支粗段，抑制 NKCC2，利尿最强，用于急性肺水肿、急性肾衰。</p><p>④ 噻嗪类（氢氯噻嗪）：远曲小管近端，抑制 NCC，中效，用于水肿、高血压。</p><p>⑤ 保钾利尿药：螺内酯（拮抗醛固酮受体）、氨苯蝶啶（阻断 ENaC），低效，常与排钾药合用。</p><p>记忆：近曲—髓袢—远曲—集合管，各段回收钠约 65% / 25% / 8% / 2%，所以越靠后越弱。</p><p>易错：呋塞米作用在髓袢升支粗段，不是远曲小管。</p></div></div>
 </article>
 <article class="qcard" id="m11" data-cat="pharm" data-freq="0" data-type="简答" data-text="呋塞米（袢利尿药）的作用、机制与不良反应 **作用与机制**：抑制**髓袢升支粗段 NKCC2**，减少 NaCl 重吸收 → ① 降低肾的**稀释功能**；② 降低髓质高渗梯度 → 降低**浓缩功能**；排出大量近等渗尿，**利尿作用强大**。 **临床应用**：**急性肺水肿**（首选，兼有扩血管作用）、严重心/肝/肾性水肿、**急性肾衰竭**（增加尿量、冲洗肾小管）、高钾血症与高钙血症、加速毒物排泄。 **不良反应**： ① **水和电解质紊乱**：**低钾血症**（最常见）、低钠、低氯、低镁、低血容量； ② **耳毒性**：剂量过大或快速静注可致耳鸣、听力下降（与氨基糖苷类合用加重）； ③ **高尿酸血症**：与尿酸竞争排泄，可诱发痛风； ④ **代谢异常**：高血糖、高血脂； ⑤ 过敏反应（磺胺类交叉过敏）。 **用药注意**：监测血钾、补钾或与保钾利尿药合用；避免与氨基糖苷类合">
   <header class="qhead">
@@ -1773,7 +1848,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m11"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 16-利尿药；《药理学》第 9 版</span>
   </div>
-  <div class="ex" id="ex-m11" hidden><div class="ex-inner"><p>呋塞米是最强利尿药，因为它卡在髓袢升支粗段——这里本来要回收 25% 的钠，一卡住，大量钠水直接排出去。</p><p>机制：抑制髓袢升支粗段的 NKCC2，既降低稀释功能，又降低髓质高渗梯度、降低浓缩功能，排出大量近等渗尿。</p><p>应用：急性肺水肿（首选，兼有扩血管作用）、严重心肝肾性水肿、急性肾衰竭、高钾高钙血症。</p><p>不良反应：<br>低钾血症最常见，还有低钠、低氯、低血容量。<br>耳毒性——剂量过大或快速静注可致耳鸣、听力下降，与氨基糖苷类合用加重。<br>高尿酸血症——可诱发痛风。<br>代谢异常——高血糖、高血脂。</p><p>用药注意：监测血钾、补钾或与保钾利尿药合用；避免与氨基糖苷类合用。</p><p>易错：呋塞米与氨基糖苷类合用是毒性叠加，不是协同。</p></div></div>
+  <div class="ex" id="ex-m11"><div class="ex-inner"><p>呋塞米是最强利尿药，因为它卡在髓袢升支粗段——这里本来要回收 25% 的钠，一卡住，大量钠水直接排出去。</p><p>机制：抑制髓袢升支粗段的 NKCC2，既降低稀释功能，又降低髓质高渗梯度、降低浓缩功能，排出大量近等渗尿。</p><p>应用：急性肺水肿（首选，兼有扩血管作用）、严重心肝肾性水肿、急性肾衰竭、高钾高钙血症。</p><p>不良反应：<br>低钾血症最常见，还有低钠、低氯、低血容量。<br>耳毒性——剂量过大或快速静注可致耳鸣、听力下降，与氨基糖苷类合用加重。<br>高尿酸血症——可诱发痛风。<br>代谢异常——高血糖、高血脂。</p><p>用药注意：监测血钾、补钾或与保钾利尿药合用；避免与氨基糖苷类合用。</p><p>易错：呋塞米与氨基糖苷类合用是毒性叠加，不是协同。</p></div></div>
 </article>
 <article class="qcard" id="m12" data-cat="pharm" data-freq="0" data-type="简答" data-text="氢氯噻嗪与螺内酯的作用特点及不良反应 **氢氯噻嗪（噻嗪类，中效）**： 机制：抑制**远曲小管近端 NCC**，减少 NaCl 重吸收； 特点：利尿作用中等；**降压**（基础降压药，早期通过排钠减少血容量，长期通过降低血管平滑肌细胞内 Na⁺、减少外周阻力）；**抗利尿**（尿崩症时减少尿量，机制不明）； 不良反应：**低钾血症**、低钠、低氯性碱中毒；**高尿酸血症**（诱发痛风）；**高血糖**、**高血脂**；**升高血钙**（与袢利尿药降低血钙相反）；过敏（磺胺类交叉）。 **螺内酯（保钾利尿药，低效）**： 机制：**竞争性拮抗醛固酮受体**，减少远曲小管和集合管 Na⁺ 重吸收与 K⁺ 排泄； 特点：利尿作用弱、起效慢、**保钾**；用于与排钾利尿药合用、原发性醛固酮增多症、肝硬化腹水； 不良反应：**高钾血症**（尤其肾功能不全时）、**男性乳房发育**、性功能障碍、月经">
   <header class="qhead">
@@ -1791,7 +1866,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m12"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 16-利尿药；《药理学》第 9 版</span>
   </div>
-  <div class="ex" id="ex-m12" hidden><div class="ex-inner"><p>氢氯噻嗪和螺内酯是中效排钾与低效保钾的代表，常配对使用。</p><p>氢氯噻嗪（噻嗪类，中效）：抑制远曲小管近端 NCC。特点是利尿中等、降压（基础降压药）、抗利尿（尿崩症时减少尿量）。不良反应是五升一降——升尿酸（诱发痛风）、升血糖、升血脂、升血钙、排钾，降血压。</p><p>螺内酯（保钾利尿药，低效）：竞争性拮抗醛固酮受体，减少远曲小管和集合管钠重吸收与钾排泄。特点是利尿弱、起效慢、保钾；用于与排钾利尿药合用、原发性醛固酮增多症。不良反应是高钾血症、男性乳房发育、性功能障碍。</p><p>为什么常配对：氢氯噻嗪排钾、螺内酯保钾，合用可对冲低钾；但肾功能不好时用螺内酯要警惕高钾。</p><p>易错：噻嗪升血钙，袢利尿药才是降血钙。</p></div></div>
+  <div class="ex" id="ex-m12"><div class="ex-inner"><p>氢氯噻嗪和螺内酯是中效排钾与低效保钾的代表，常配对使用。</p><p>氢氯噻嗪（噻嗪类，中效）：抑制远曲小管近端 NCC。特点是利尿中等、降压（基础降压药）、抗利尿（尿崩症时减少尿量）。不良反应是五升一降——升尿酸（诱发痛风）、升血糖、升血脂、升血钙、排钾，降血压。</p><p>螺内酯（保钾利尿药，低效）：竞争性拮抗醛固酮受体，减少远曲小管和集合管钠重吸收与钾排泄。特点是利尿弱、起效慢、保钾；用于与排钾利尿药合用、原发性醛固酮增多症。不良反应是高钾血症、男性乳房发育、性功能障碍。</p><p>为什么常配对：氢氯噻嗪排钾、螺内酯保钾，合用可对冲低钾；但肾功能不好时用螺内酯要警惕高钾。</p><p>易错：噻嗪升血钙，袢利尿药才是降血钙。</p></div></div>
 </article>
 <article class="qcard" id="m13" data-cat="pharm" data-freq="0" data-type="简答" data-text="氨基糖苷类抗生素的共性 **抗菌谱**：主要对**革兰阴性杆菌**（大肠埃希菌、肺炎克雷伯菌、铜绿假单胞菌）作用强；对革兰阳性球菌作用较弱；**对厌氧菌无效**（需氧呼吸链摄取药物）。 **机制**：**抑制细菌蛋白质合成（30S 亚基，全程抑制）**，兼有破坏胞质膜通透性；属**静止期杀菌药**（与 β-内酰胺类合用有协同）。 **药动学**：口服吸收差（需注射），**不透过血脑屏障**，主要经肾排泄，**在肾皮质和内耳淋巴液蓄积**。 **不良反应**： ① **耳毒性**（前庭功能障碍、耳蜗神经损害，不可逆）； ② **肾毒性**（近曲小管损伤，可逆）； ③ **神经肌肉阻滞**（与 Ca²⁺ 竞争，可致呼吸抑制，用钙剂解救）； ④ 过敏反应（皮疹、发热，链霉素可致过敏性休克）。 **特点**：**PAE 长、FEE 明显** → 支持**每日一次给药**；孕妇、儿童、肾功能不全者慎">
   <header class="qhead">
@@ -1809,7 +1884,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m13"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 氨基糖苷类、四环素类与氯霉素类；《药理学》第 9 版</span>
   </div>
-  <div class="ex" id="ex-m13" hidden><div class="ex-inner"><p>氨基糖苷类是专打革兰阴性杆菌的猛药，但也是耳肾双毒。</p><p>抗菌谱：主要对革兰阴性杆菌（大肠埃希菌、肺炎克雷伯菌、铜绿假单胞菌）作用强；对厌氧菌无效（厌氧菌没有需氧呼吸链，无法摄取药物）。</p><p>机制：抑制细菌蛋白质合成（30S 亚基，全程抑制），属静止期杀菌药（与 β-内酰胺类合用有协同）。</p><p>药动学：口服吸收差，不透过血脑屏障，主要经肾排泄，在肾皮质和内耳淋巴液蓄积——这就是毒性来源。</p><p>不良反应：耳毒性（前庭和耳蜗损害，不可逆）；肾毒性（近曲小管损伤，可逆）；神经肌肉阻滞（用钙剂解救）；过敏反应。</p><p>特点：PAE 长、FEE 明显，支持每日一次给药。</p><p>易错：氨基糖苷类是静止期杀菌药，不是繁殖期。</p></div></div>
+  <div class="ex" id="ex-m13"><div class="ex-inner"><p>氨基糖苷类是专打革兰阴性杆菌的猛药，但也是耳肾双毒。</p><p>抗菌谱：主要对革兰阴性杆菌（大肠埃希菌、肺炎克雷伯菌、铜绿假单胞菌）作用强；对厌氧菌无效（厌氧菌没有需氧呼吸链，无法摄取药物）。</p><p>机制：抑制细菌蛋白质合成（30S 亚基，全程抑制），属静止期杀菌药（与 β-内酰胺类合用有协同）。</p><p>药动学：口服吸收差，不透过血脑屏障，主要经肾排泄，在肾皮质和内耳淋巴液蓄积——这就是毒性来源。</p><p>不良反应：耳毒性（前庭和耳蜗损害，不可逆）；肾毒性（近曲小管损伤，可逆）；神经肌肉阻滞（用钙剂解救）；过敏反应。</p><p>特点：PAE 长、FEE 明显，支持每日一次给药。</p><p>易错：氨基糖苷类是静止期杀菌药，不是繁殖期。</p></div></div>
 </article>
 <article class="qcard" id="m14" data-cat="pharm" data-freq="0" data-type="简答" data-text="青霉素 G 的抗菌谱、作用机制与不良反应 **抗菌谱**：**革兰阳性球菌**（溶血性链球菌、肺炎链球菌、敏感金黄色葡萄球菌）、**革兰阳性杆菌**（白喉棒状杆菌、炭疽芽孢杆菌）、**革兰阴性球菌**（脑膜炎奈瑟菌、淋病奈瑟菌）、**螺旋体**（梅毒螺旋体、钩端螺旋体）；对革兰阴性杆菌作用弱。 **机制**：与 **青霉素结合蛋白（PBP，即转肽酶）** 结合，抑制**细胞壁肽聚糖五肽交联桥**形成 → 细胞壁缺损 → 细菌在低渗环境中膨胀、裂解；属**繁殖期杀菌药**。 **不良反应**： ① **过敏反应**（最常见、最严重，可致过敏性休克）——**必须做皮试**，备肾上腺素抢救； ② **赫氏反应**（治疗梅毒时大量螺旋体死亡释放内毒素，致寒战、高热、心悸）； ③ 大剂量静注可致**脑膜刺激征、抽搐**（青霉素脑病）； ④ 局部刺激（肌注疼痛、硬结）。 **注意**：现配现用（水溶液">
   <header class="qhead">
@@ -1827,7 +1902,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m14"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 β内酰胺类抗生素；《药理学》第 9 版</span>
   </div>
-  <div class="ex" id="ex-m14" hidden><div class="ex-inner"><p>青霉素 G 是拆墙专家：细菌的细胞壁靠五肽交联桥焊接，青霉素把焊枪（转肽酶）堵住，墙就砌不起来。</p><p>抗菌谱：革兰阳性球菌、革兰阳性杆菌（白喉、炭疽）、革兰阴性球菌（脑膜炎奈瑟菌）、螺旋体（梅毒、钩端螺旋体）；对革兰阴性杆菌作用弱。</p><p>机制：与 PBP（青霉素结合蛋白，即转肽酶）结合，抑制细胞壁肽聚糖五肽交联桥形成，细菌在低渗环境中膨胀、裂解。属繁殖期杀菌药。</p><p>不良反应：<br>过敏反应最常见最严重，可致过敏性休克，必须做皮试、备肾上腺素。<br>赫氏反应——治疗梅毒时大量螺旋体死亡释放内毒素，致寒战、高热。<br>大剂量静注可致脑膜刺激征、抽搐。</p><p>注意：现配现用；不与氨基糖苷类同瓶混合。</p><p>易错：赫氏反应不是过敏，是螺旋体死亡释放内毒素。</p></div></div>
+  <div class="ex" id="ex-m14"><div class="ex-inner"><p>青霉素 G 是拆墙专家：细菌的细胞壁靠五肽交联桥焊接，青霉素把焊枪（转肽酶）堵住，墙就砌不起来。</p><p>抗菌谱：革兰阳性球菌、革兰阳性杆菌（白喉、炭疽）、革兰阴性球菌（脑膜炎奈瑟菌）、螺旋体（梅毒、钩端螺旋体）；对革兰阴性杆菌作用弱。</p><p>机制：与 PBP（青霉素结合蛋白，即转肽酶）结合，抑制细胞壁肽聚糖五肽交联桥形成，细菌在低渗环境中膨胀、裂解。属繁殖期杀菌药。</p><p>不良反应：<br>过敏反应最常见最严重，可致过敏性休克，必须做皮试、备肾上腺素。<br>赫氏反应——治疗梅毒时大量螺旋体死亡释放内毒素，致寒战、高热。<br>大剂量静注可致脑膜刺激征、抽搐。</p><p>注意：现配现用；不与氨基糖苷类同瓶混合。</p><p>易错：赫氏反应不是过敏，是螺旋体死亡释放内毒素。</p></div></div>
 </article>
 <article class="qcard" id="m15" data-cat="pharm" data-freq="0" data-type="简答" data-text="大环内酯类抗生素的作用与机制 **代表药**：红霉素、阿奇霉素、克拉霉素、罗红霉素。 **抗菌谱**：**革兰阳性菌**（金黄色葡萄球菌、链球菌）、**革兰阴性球菌**、**军团菌、支原体、衣原体、螺旋体**；阿奇霉素对革兰阴性杆菌作用增强。 **机制**：与细菌核糖体 **50S 亚基**结合，抑制**移位**，阻碍肽链延长 → 抑制蛋白质合成。 **应用**：**支原体肺炎**（首选之一）、军团菌病、衣原体感染、百日咳、白喉带菌者、对青霉素过敏者的替代。 **不良反应**：胃肠道反应（最常见，红霉素刺激胃肠蠕动）、**肝损害**（红霉素酯化物）、**耳毒性**（大剂量）、**QT 间期延长**（阿奇霉素、克拉霉素）；**避免与特非那定、西沙必利等合用**（致心律失常）。">
   <header class="qhead">
@@ -1845,7 +1920,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m15"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 大环内酯类、林可霉素类与多肽类；《药理学》第 9 版</span>
   </div>
-  <div class="ex" id="ex-m15" hidden><div class="ex-inner"><p>大环内酯类是支原体、衣原体、军团菌的克星——这些病原体没有细胞壁，青霉素无效，但大环内酯能钻进它们的蛋白质工厂把生产线卡住。</p><p>代表药：红霉素、阿奇霉素、克拉霉素、罗红霉素。</p><p>抗菌谱：革兰阳性菌、军团菌、支原体、衣原体、螺旋体；阿奇霉素对革兰阴性杆菌作用增强。</p><p>机制：与细菌核糖体 50S 亚基结合，抑制移位，阻碍肽链延长。</p><p>应用：支原体肺炎（首选之一）、军团菌病、衣原体感染、对青霉素过敏者的替代。</p><p>不良反应：胃肠道反应最常见、肝损害（红霉素酯化物）、耳毒性（大剂量）、QT 间期延长（阿奇霉素、克拉霉素）。</p><p>易错：大环内酯作用于 50S，不是 30S。</p></div></div>
+  <div class="ex" id="ex-m15"><div class="ex-inner"><p>大环内酯类是支原体、衣原体、军团菌的克星——这些病原体没有细胞壁，青霉素无效，但大环内酯能钻进它们的蛋白质工厂把生产线卡住。</p><p>代表药：红霉素、阿奇霉素、克拉霉素、罗红霉素。</p><p>抗菌谱：革兰阳性菌、军团菌、支原体、衣原体、螺旋体；阿奇霉素对革兰阴性杆菌作用增强。</p><p>机制：与细菌核糖体 50S 亚基结合，抑制移位，阻碍肽链延长。</p><p>应用：支原体肺炎（首选之一）、军团菌病、衣原体感染、对青霉素过敏者的替代。</p><p>不良反应：胃肠道反应最常见、肝损害（红霉素酯化物）、耳毒性（大剂量）、QT 间期延长（阿奇霉素、克拉霉素）。</p><p>易错：大环内酯作用于 50S，不是 30S。</p></div></div>
 </article>
 <article class="qcard" id="m16" data-cat="pharm" data-freq="1" data-type="简答" data-text="四环素类与氯霉素的主要不良反应 **四环素类**（四环素、多西环素、米诺环素）： ① **牙齿与骨骼**：与 Ca²⁺ 络合沉积于牙齿和骨骼 → **牙齿黄染、釉质发育不全**、骨骼生长抑制；**孕妇、8 岁以下儿童禁用**； ② **二重感染**：广谱抗菌致菌群失调，常见**假膜性肠炎、真菌感染**； ③ **胃肠道刺激**与**肝损害**（大剂量静注）； ④ **光敏反应**（多西环素）； ⑤ 避免与含 Ca²⁺、Mg²⁺、Al³⁺、Fe²⁺ 药物同服（络合影响吸收）。 **应用**：**立克次体病（首选多西环素）**、支原体、衣原体、螺旋体、布鲁菌病。 **氯霉素**： ① **骨髓抑制**：可致**可逆性剂量相关性骨髓抑制**与**不可逆的再生障碍性贫血**（致死性，与剂量无关）； ② **灰婴综合征**：新生儿肝脏葡萄糖醛酸转移酶不足，药物蓄积致循环衰竭、皮肤灰紫；**新生儿禁用">
   <header class="qhead">
@@ -1863,7 +1938,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m16"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 氨基糖苷类、四环素类与氯霉素类；药理泡面·大题（一次）</span>
   </div>
-  <div class="ex" id="ex-m16" hidden><div class="ex-inner"><p>四环素类和氯霉素是广谱但有标志性毒性的两类药，考试专考它们的不良反应。</p><p>四环素类（四环素、多西环素）：<br>牙齿与骨骼——与 Ca²⁺ 络合沉积于牙齿和骨骼，致牙齿黄染、釉质发育不全；孕妇、8 岁以下儿童禁用。<br>二重感染——广谱抗菌致菌群失调。<br>光敏反应（多西环素）；避免与含 Ca²⁺、Mg²⁺、Al³⁺、Fe²⁺ 的药物同服。<br>应用：立克次体病（首选多西环素）、支原体、衣原体。</p><p>氯霉素：<br>骨髓抑制——可逆性剂量相关抑制加不可逆的再生障碍性贫血（致死性）。<br>灰婴综合征——新生儿肝脏葡萄糖醛酸转移酶不足，药物蓄积致循环衰竭、皮肤灰紫；新生儿禁用。<br>应用：伤寒、副伤寒、脑膜炎，因骨髓毒性现已少用。</p><p>易错：灰婴综合征是氯霉素，不是四环素。</p></div></div>
+  <div class="ex" id="ex-m16"><div class="ex-inner"><p>四环素类和氯霉素是广谱但有标志性毒性的两类药，考试专考它们的不良反应。</p><p>四环素类（四环素、多西环素）：<br>牙齿与骨骼——与 Ca²⁺ 络合沉积于牙齿和骨骼，致牙齿黄染、釉质发育不全；孕妇、8 岁以下儿童禁用。<br>二重感染——广谱抗菌致菌群失调。<br>光敏反应（多西环素）；避免与含 Ca²⁺、Mg²⁺、Al³⁺、Fe²⁺ 的药物同服。<br>应用：立克次体病（首选多西环素）、支原体、衣原体。</p><p>氯霉素：<br>骨髓抑制——可逆性剂量相关抑制加不可逆的再生障碍性贫血（致死性）。<br>灰婴综合征——新生儿肝脏葡萄糖醛酸转移酶不足，药物蓄积致循环衰竭、皮肤灰紫；新生儿禁用。<br>应用：伤寒、副伤寒、脑膜炎，因骨髓毒性现已少用。</p><p>易错：灰婴综合征是氯霉素，不是四环素。</p></div></div>
 </article>
 <article class="qcard" id="m17" data-cat="pharm" data-freq="0" data-type="简答" data-text="喹诺酮类与磺胺类的作用机制与不良反应 **喹诺酮类**（诺氟沙星、左氧氟沙星、环丙沙星）： 机制：抑制细菌 **DNA 回旋酶（拓扑异构酶Ⅱ）** 和**拓扑异构酶Ⅳ**，阻碍 DNA 复制 → 杀菌； 特点：**广谱**、**口服吸收好**、组织分布广、**PAE 长**；用于泌尿系感染、肠道感染、呼吸道感染； 不良反应：**软骨损害**（幼年动物负重关节损伤，**18 岁以下禁用**）、**光敏反应**、**中枢兴奋**（失眠、抽搐，癫痫者慎用）、QT 间期延长、肌腱炎/肌腱断裂； 注意：与含 Al³⁺、Mg²⁺ 抗酸药同服影响吸收。 **磺胺类**（磺胺嘧啶、磺胺甲噁唑、复方新诺明）： 机制：抑制**二氢蝶酸合成酶**，阻碍叶酸合成；**甲氧苄啶**抑制二氢叶酸还原酶，二者合用**双重阻断**（复方新诺明）； 应用：泌尿系感染、流行性脑脊髓膜炎（SD）、肠道感染、弓形虫病； 不良反应">
   <header class="qhead">
@@ -1881,7 +1956,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m17"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 人工合成抗菌药；《药理学》第 9 版</span>
   </div>
-  <div class="ex" id="ex-m17" hidden><div class="ex-inner"><p>喹诺酮和磺胺是两类重要的人工合成抗菌药，一个剪 DNA，一个断叶酸。</p><p>喹诺酮类（诺氟沙星、左氧氟沙星）：<br>机制：抑制细菌 DNA 回旋酶和拓扑异构酶Ⅳ，阻碍 DNA 复制。<br>特点：广谱、口服吸收好、PAE 长；用于泌尿系、肠道、呼吸道感染。<br>不良反应：软骨损害（18 岁以下禁用）、光敏反应、中枢兴奋、QT 间期延长。</p><p>磺胺类（磺胺嘧啶、复方新诺明）：<br>机制：抑制二氢蝶酸合成酶，阻碍叶酸合成；甲氧苄啶抑制二氢叶酸还原酶，合用双重阻断。<br>应用：泌尿系感染、流脑、肠道感染、弓形虫病。<br>不良反应：结晶尿（多饮水、碱化尿液）、过敏、血液系统（G6PD 缺乏者禁用）、新生儿胆红素脑病。</p><p>易错：沙星伤软骨，磺胺结晶尿。</p></div></div>
+  <div class="ex" id="ex-m17"><div class="ex-inner"><p>喹诺酮和磺胺是两类重要的人工合成抗菌药，一个剪 DNA，一个断叶酸。</p><p>喹诺酮类（诺氟沙星、左氧氟沙星）：<br>机制：抑制细菌 DNA 回旋酶和拓扑异构酶Ⅳ，阻碍 DNA 复制。<br>特点：广谱、口服吸收好、PAE 长；用于泌尿系、肠道、呼吸道感染。<br>不良反应：软骨损害（18 岁以下禁用）、光敏反应、中枢兴奋、QT 间期延长。</p><p>磺胺类（磺胺嘧啶、复方新诺明）：<br>机制：抑制二氢蝶酸合成酶，阻碍叶酸合成；甲氧苄啶抑制二氢叶酸还原酶，合用双重阻断。<br>应用：泌尿系感染、流脑、肠道感染、弓形虫病。<br>不良反应：结晶尿（多饮水、碱化尿液）、过敏、血液系统（G6PD 缺乏者禁用）、新生儿胆红素脑病。</p><p>易错：沙星伤软骨，磺胺结晶尿。</p></div></div>
 </article>
 <article class="qcard" id="m18" data-cat="pharm" data-freq="0" data-type="简答" data-text="抗结核病药的应用原则 **① 早期**：确诊后尽早用药，早期病灶血流丰富、药物易渗入，细菌繁殖旺盛、对药物敏感。 **② 联合**：联合使用 2 种以上药物，利用不同机制协同、**延缓耐药性**产生。 **③ 适量**：剂量适当，既能保证疗效又避免毒性。 **④ 规律**：按时规律服药，**避免漏服、间断**（间断易诱导耐药、导致治疗失败）。 **⑤ 全程**：坚持完成规定疗程（初治 6 个月、复治 8～12 个月），**不可随意停药**。 **常用药物**：异烟肼（INH，抑制分枝菌酸合成）、利福平（RFP，抑制 RNA 聚合酶）、吡嗪酰胺（PZA）、乙胺丁醇（EMB，抑制阿拉伯糖基转移酶）、链霉素。 **注意**：异烟肼与利福平**肝毒性**明显，需监测肝功能；异烟肼可致**周围神经炎**（补充维生素 B₆）；利福平**诱导肝药酶**、使体液橙红色。">
   <header class="qhead">
@@ -1899,7 +1974,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m18"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 抗结核、抗病毒与抗真菌药；《药理学》第 9 版</span>
   </div>
-  <div class="ex" id="ex-m18" hidden><div class="ex-inner"><p>抗结核药的五字原则是早期、联合、适量、规律、全程——结核菌顽固、易耐药，单药或断续用药很快失败。</p><p>早期：确诊后尽早用药，早期病灶血流丰富、药物易渗入。<br>联合：联合 2 种以上药物，利用不同机制协同、延缓耐药。<br>适量：剂量适当，既保证疗效又避免毒性。<br>规律：按时规律服药，避免漏服、间断。<br>全程：坚持完成规定疗程（初治 6 个月、复治 8～12 个月）。</p><p>常用药物：异烟肼（抑制分枝菌酸合成）、利福平（抑制 RNA 聚合酶）、吡嗪酰胺、乙胺丁醇、链霉素。</p><p>注意：异烟肼与利福平肝毒性明显；异烟肼可致周围神经炎（补维生素 B₆）；利福平诱导肝药酶、使体液橙红色。</p><p>打个比方：结核菌像躲在碉堡里的敌人，单发子弹打不死，必须多路包围、持续进攻。</p><p>易错：症状消失不等于治愈，必须完成疗程。</p></div></div>
+  <div class="ex" id="ex-m18"><div class="ex-inner"><p>抗结核药的五字原则是早期、联合、适量、规律、全程——结核菌顽固、易耐药，单药或断续用药很快失败。</p><p>早期：确诊后尽早用药，早期病灶血流丰富、药物易渗入。<br>联合：联合 2 种以上药物，利用不同机制协同、延缓耐药。<br>适量：剂量适当，既保证疗效又避免毒性。<br>规律：按时规律服药，避免漏服、间断。<br>全程：坚持完成规定疗程（初治 6 个月、复治 8～12 个月）。</p><p>常用药物：异烟肼（抑制分枝菌酸合成）、利福平（抑制 RNA 聚合酶）、吡嗪酰胺、乙胺丁醇、链霉素。</p><p>注意：异烟肼与利福平肝毒性明显；异烟肼可致周围神经炎（补维生素 B₆）；利福平诱导肝药酶、使体液橙红色。</p><p>打个比方：结核菌像躲在碉堡里的敌人，单发子弹打不死，必须多路包围、持续进攻。</p><p>易错：症状消失不等于治愈，必须完成疗程。</p></div></div>
 </article>
 <article class="qcard" id="m19" data-cat="pharm" data-freq="0" data-type="简答" data-text="抗菌药与消炎药的区别 **抗菌药**：指具有**杀菌或抑菌活性**的药物，主要用于治疗由**细菌或其他微生物**引起的**感染性疾病**。 **作用机制**：干扰细菌代谢、破坏细菌结构或抑制其生长繁殖，从而杀灭或抑制细菌。 **适用范围**：肺炎、尿路感染等**细菌感染**。 **消炎药**：即**解热镇痛抗炎药**，主要用于**缓解和控制炎症反应**，减轻炎症带来的疼痛与不适。 **作用机制**：抑制**炎症因子**的产生或释放，减轻炎症反应。 **适用范围**：各种炎症性疾病，包括**感染性炎症与非感染性炎症**。 **核心区别**：抗菌药针对**病原体**，消炎药针对**炎症反应**；**抗菌药不是消炎药**，消炎药也不能杀灭细菌。">
   <header class="qhead">
@@ -1917,7 +1992,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m19"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">药理泡面·抗菌概论；2026 秋课件 抗菌概论</span>
   </div>
-  <div class="ex" id="ex-m19" hidden><div class="ex-inner"><p>抗菌药和消炎药是两回事，日常却总被混用——这是概念辨析题的经典考点。</p><p>抗菌药：具有杀菌或抑菌活性的药物，用于治疗由细菌或其他微生物引起的感染性疾病。机制是干扰细菌代谢、破坏结构或抑制生长繁殖。适用于肺炎、尿路感染等细菌感染。</p><p>消炎药：即解热镇痛抗炎药，用于缓解和控制炎症反应，减轻疼痛不适。机制是抑制炎症因子的产生或释放。适用于各种炎症性疾病，包括感染性与非感染性。</p><p>核心区别：抗菌药针对病原体（杀细菌），消炎药针对炎症反应（压症状）；抗菌药不是消炎药，消炎药也不能杀灭细菌。</p><p>打个比方：家里进了老鼠，抗菌药是捕鼠器；老鼠咬坏家具引起红肿，消炎药是止痛膏。</p><p>易错：抗生素是抗菌药的一类，不是消炎药。</p></div></div>
+  <div class="ex" id="ex-m19"><div class="ex-inner"><p>抗菌药和消炎药是两回事，日常却总被混用——这是概念辨析题的经典考点。</p><p>抗菌药：具有杀菌或抑菌活性的药物，用于治疗由细菌或其他微生物引起的感染性疾病。机制是干扰细菌代谢、破坏结构或抑制生长繁殖。适用于肺炎、尿路感染等细菌感染。</p><p>消炎药：即解热镇痛抗炎药，用于缓解和控制炎症反应，减轻疼痛不适。机制是抑制炎症因子的产生或释放。适用于各种炎症性疾病，包括感染性与非感染性。</p><p>核心区别：抗菌药针对病原体（杀细菌），消炎药针对炎症反应（压症状）；抗菌药不是消炎药，消炎药也不能杀灭细菌。</p><p>打个比方：家里进了老鼠，抗菌药是捕鼠器；老鼠咬坏家具引起红肿，消炎药是止痛膏。</p><p>易错：抗生素是抗菌药的一类，不是消炎药。</p></div></div>
 </article>
 <article class="qcard" id="m20" data-cat="pharm" data-freq="0" data-type="简答" data-text="抗真菌药的作用机制与代表药 **多烯类（两性霉素 B、制霉菌素）**：与真菌胞膜**麦角固醇**结合，形成孔道，增加膜通透性 → 真菌内容物外漏死亡。**两性霉素 B** 抗深部真菌作用强，不良反应为**肾毒性、低钾血症、寒战高热、血栓性静脉炎**。 **唑类（氟康唑、伊曲康唑、伏立康唑）**：抑制真菌**细胞色素 P450 依赖的 14α-去甲基化酶**，阻断**麦角固醇**合成。**氟康唑**用于念珠菌病、隐球菌性脑膜炎。 **棘白菌素类（卡泊芬净）**：抑制 **β-1,3-葡聚糖合成酶**，破坏真菌细胞壁。 **氟胞嘧啶**：在真菌内转化为 5-氟尿嘧啶，干扰 DNA/RNA 合成。 **注意**：人体细胞膜含**胆固醇**而非麦角固醇，故两性霉素 B 对人有毒性（肾小管、红细胞）。">
   <header class="qhead">
@@ -1935,7 +2010,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m20"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 抗结核、抗病毒与抗真菌药</span>
   </div>
-  <div class="ex" id="ex-m20" hidden><div class="ex-inner"><p>抗真菌药的关键在于真菌有麦角固醇、人有胆固醇，利用这个差别做文章。</p><p>多烯类（两性霉素 B、制霉菌素）：与真菌胞膜麦角固醇结合，形成孔道。两性霉素 B 抗深部真菌作用强，但不良反应明显：肾毒性、低钾血症、寒战高热。</p><p>唑类（氟康唑、伊曲康唑）：抑制真菌 14α-去甲基化酶，阻断麦角固醇合成。氟康唑用于念珠菌病、隐球菌性脑膜炎。</p><p>棘白菌素类（卡泊芬净）：抑制 β-1,3-葡聚糖合成酶，破坏真菌细胞壁。</p><p>氟胞嘧啶：在真菌内转化为 5-氟尿嘧啶，干扰 DNA/RNA 合成。</p><p>为什么两性霉素 B 有毒？人体细胞膜含胆固醇，与麦角固醇结构相似，会被误伤，尤其肾小管和红细胞。</p><p>易错：两性霉素 B 作用于胞膜麦角固醇，不是细胞壁。</p></div></div>
+  <div class="ex" id="ex-m20"><div class="ex-inner"><p>抗真菌药的关键在于真菌有麦角固醇、人有胆固醇，利用这个差别做文章。</p><p>多烯类（两性霉素 B、制霉菌素）：与真菌胞膜麦角固醇结合，形成孔道。两性霉素 B 抗深部真菌作用强，但不良反应明显：肾毒性、低钾血症、寒战高热。</p><p>唑类（氟康唑、伊曲康唑）：抑制真菌 14α-去甲基化酶，阻断麦角固醇合成。氟康唑用于念珠菌病、隐球菌性脑膜炎。</p><p>棘白菌素类（卡泊芬净）：抑制 β-1,3-葡聚糖合成酶，破坏真菌细胞壁。</p><p>氟胞嘧啶：在真菌内转化为 5-氟尿嘧啶，干扰 DNA/RNA 合成。</p><p>为什么两性霉素 B 有毒？人体细胞膜含胆固醇，与麦角固醇结构相似，会被误伤，尤其肾小管和红细胞。</p><p>易错：两性霉素 B 作用于胞膜麦角固醇，不是细胞壁。</p></div></div>
 </article>
 <article class="qcard" id="m21" data-cat="pharm" data-freq="0" data-type="简答" data-text="常用抗病毒药的作用机制 **阿昔洛韦**：在病毒感染的细胞内被胸苷激酶磷酸化为三磷酸型，**抑制病毒 DNA 聚合酶**、终止 DNA 链延长；用于 **HSV（单纯疱疹）、VZV（水痘-带状疱疹）**。 **奥司他韦**：抑制流感病毒**神经氨酸酶**，阻止病毒从感染细胞释放；用于**甲型、乙型流感**（发病 48 h 内使用效果最好）。 **利巴韦林**：广谱抗病毒，抑制病毒核酸合成；用于 RSV 肺炎、拉沙热等。 **金刚烷胺**：阻断流感病毒 **M2 离子通道**，阻止病毒脱壳；仅对**甲型流感**有效，易耐药。 **干扰素**：通过诱导细胞产生抗病毒蛋白（如 2&#x27;-5&#x27; 寡腺苷酸合成酶），抑制病毒复制，兼有免疫调节作用。">
   <header class="qhead">
@@ -1953,7 +2028,7 @@ main{min-width:0}
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-m21"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">2026 秋课件 抗结核、抗病毒与抗真菌药</span>
   </div>
-  <div class="ex" id="ex-m21" hidden><div class="ex-inner"><p>抗病毒药难做，因为病毒住在细胞里，杀病毒容易伤细胞，所以它们大多瞄准病毒特有、人没有的靶点。</p><p>阿昔洛韦：在病毒感染的细胞内被病毒胸苷激酶激活，抑制病毒 DNA 聚合酶、终止链延长。用于 HSV、VZV。妙处是只有被感染的细胞才会激活它。</p><p>奥司他韦：抑制流感病毒神经氨酸酶，阻止病毒从感染细胞释放。用于甲型、乙型流感，发病 48 小时内使用效果最好。</p><p>利巴韦林：广谱抗病毒，抑制病毒核酸合成。</p><p>金刚烷胺：阻断流感病毒 M2 离子通道，阻止病毒脱壳；仅对甲型流感有效。</p><p>干扰素：诱导细胞产生抗病毒蛋白，抑制病毒复制，兼有免疫调节。</p><p>打个比方：病毒是入室劫匪——阿昔洛韦只在被劫的房子里引爆，奥司他韦堵住逃生门，金刚烷胺锁住他们的外套拉链。</p><p>易错：奥司他韦是阻止病毒释放，不是直接杀灭。</p></div></div>
+  <div class="ex" id="ex-m21"><div class="ex-inner"><p>抗病毒药难做，因为病毒住在细胞里，杀病毒容易伤细胞，所以它们大多瞄准病毒特有、人没有的靶点。</p><p>阿昔洛韦：在病毒感染的细胞内被病毒胸苷激酶激活，抑制病毒 DNA 聚合酶、终止链延长。用于 HSV、VZV。妙处是只有被感染的细胞才会激活它。</p><p>奥司他韦：抑制流感病毒神经氨酸酶，阻止病毒从感染细胞释放。用于甲型、乙型流感，发病 48 小时内使用效果最好。</p><p>利巴韦林：广谱抗病毒，抑制病毒核酸合成。</p><p>金刚烷胺：阻断流感病毒 M2 离子通道，阻止病毒脱壳；仅对甲型流感有效。</p><p>干扰素：诱导细胞产生抗病毒蛋白，抑制病毒复制，兼有免疫调节。</p><p>打个比方：病毒是入室劫匪——阿昔洛韦只在被劫的房子里引爆，奥司他韦堵住逃生门，金刚烷胺锁住他们的外套拉链。</p><p>易错：奥司他韦是阻止病毒释放，不是直接杀灭。</p></div></div>
 </article>
 </section>
   <p class="footer">考频来自「生理泌尿泡面往年」「病生泡面往年」「泌尿病理泡面」「药理泡面」的次数标注（一次＝1 次）；<br>
@@ -1965,15 +2040,80 @@ main{min-width:0}
 <script>
 (function(){
   var cards=[].slice.call(document.querySelectorAll('.qcard'));
-  /* 通俗解释折叠 */
+  /* 通俗解释折叠：class 控制，高度平滑过渡 */
   document.addEventListener('click',function(e){
     var b=e.target.closest('.ex-btn'); if(!b) return;
     var id=b.getAttribute('aria-controls'); var box=document.getElementById(id);
     var open=b.getAttribute('aria-expanded')==='true';
     b.setAttribute('aria-expanded',open?'false':'true');
     b.querySelector('.bulb').textContent=open?'💡':'🔽';
-    if(box) box.hidden=open;
+    if(box) box.classList.toggle('open',!open);
+    /* 展开后若内容超出视口，平滑滚到可见位置 */
+    if(!open && box){
+      setTimeout(function(){
+        var r=box.getBoundingClientRect();
+        if(r.bottom>window.innerHeight-24){
+          box.scrollIntoView({block:'nearest',behavior:'smooth'});
+        }
+      },380);
+    }
   });
+
+  /* 滚动监听：高亮当前分类 + 阅读进度 */
+  var pbar=document.getElementById('pbar');
+  var cats=[].slice.call(document.querySelectorAll('.cat'));
+  var navLinks=[].slice.call(document.querySelectorAll('.nav-cat'));
+  var ticking=false;
+  function onScroll(){
+    if(ticking) return;
+    ticking=true;
+    requestAnimationFrame(function(){
+      var y=window.scrollY+150, cur=null;
+      cats.forEach(function(c){
+        if(c.style.display==='none') return;
+        if(c.offsetTop<=y) cur=c;
+      });
+      var activeLink=null;
+      navLinks.forEach(function(a){
+        var on=!!cur && a.getAttribute('href')==='#'+cur.id;
+        a.classList.toggle('active', on);
+        if(on) activeLink=a;
+      });
+      /* 侧栏内部滚动跟随当前分类 */
+      var sb=document.querySelector('.sidebar');
+      if(activeLink && sb && !document.body.classList.contains('side-collapsed')){
+        var lr=activeLink.getBoundingClientRect(), sr=sb.getBoundingClientRect();
+        if(lr.top<sr.top+16 || lr.bottom>sr.bottom-16){
+          var target=sb.scrollTop + (lr.top - sr.top) - sb.clientHeight/2 + lr.height/2;
+          sb.scrollTo({top:Math.max(0,target),behavior:'smooth'});
+        }
+      }
+      if(pbar){
+        var h=document.documentElement.scrollHeight-window.innerHeight;
+        pbar.style.width=(h>0?Math.min(100,Math.max(0,window.scrollY/h*100)):0)+'%';
+      }
+      ticking=false;
+    });
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  onScroll();
+
+  /* 侧栏折叠（记忆状态） */
+  var st=document.getElementById('sideToggle');
+  var collapsed=localStorage.getItem('medilearn.dati.side')==='0';
+  function applySide(){
+    document.body.classList.toggle('side-collapsed',collapsed);
+    st.setAttribute('aria-expanded',collapsed?'false':'true');
+    st.setAttribute('aria-label',collapsed?'展开侧栏':'收起侧栏');
+    st.title=collapsed?'展开侧栏':'收起侧栏';
+  }
+  st.addEventListener('click',function(){
+    collapsed=!collapsed;
+    localStorage.setItem('medilearn.dati.side',collapsed?'0':'1');
+    applySide();
+  });
+  applySide();
   /* 搜索 */
   var q=document.getElementById('sideQ');
   if(q){

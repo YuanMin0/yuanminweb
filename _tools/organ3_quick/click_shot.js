@@ -24,7 +24,7 @@ const mobile = process.argv.includes('--mobile');
   await new Promise(r => setTimeout(r, 1600));
   const thenArg = process.argv.find(a => a.startsWith('--then='));
   if (sel) {
-    const scrollExpr = `(function(){var e=document.querySelector(${JSON.stringify(sel)}); if(!e) return 'NOTFOUND'; if(e.classList.contains('ex-btn')) e.click(); var r=e.getBoundingClientRect(); window.scrollTo(0, window.scrollY + r.top - 120); return 'OK '+Math.round(r.top);})()`;
+    const scrollExpr = `(function(){var e=document.querySelector(${JSON.stringify(sel)}); if(!e) return 'NOTFOUND'; e.click(); var r=e.getBoundingClientRect(); window.scrollTo(0, window.scrollY + r.top - 120); return 'OK '+Math.round(r.top);})()`;
     for (let k = 0; k < 3; k++) {
       const r0 = await pg.send('Runtime.evaluate', { expression: scrollExpr, returnByValue: true });
       if (k === 0) console.log('  target:', r0.result.value);

@@ -139,7 +139,7 @@ def render_item(it, ci):
     <button class="ex-btn" type="button" aria-expanded="false" aria-controls="ex-%s"><span class="bulb">💡</span>点击查看通俗解释</button>
     <span class="src">%s</span>
   </div>
-  <div class="ex" id="ex-%s" hidden><div class="ex-inner">%s</div></div>
+  <div class="ex" id="ex-%s"><div class="ex-inner">%s</div></div>
 </article>''' % (
         hot, it['id'], ci, it['freq'], it['type'],
         html.escape(it['title'] + ' ' + ' '.join(it['answer']))[:400],
@@ -153,14 +153,18 @@ EXAM_LINE = {
     'pharm': '本次考法：名解 1 道（概论里的概念，如化疗指数 / 抗生素后效应）＋ 论述 1 道（考整体：机制 / 耐药 / 应用原则）；各药特点与利尿药只考选择题。',
 }
 
+CAT_ICON = {'physio': 'Ⅰ', 'patho': 'Ⅱ', 'path': 'Ⅲ', 'pharm': 'Ⅳ'}
+
 sections = []
 nav = []
 all_items = []
 for cat in data:
     items = cat['items']
     all_items.extend(items)
-    nav.append('<a class="nav-cat" href="#cat-%s"><span>%s</span><em>%d</em></a>'
-               % (cat['id'], cat.get('short') or cat['name'], len(items)))
+    nav.append('<a class="nav-cat" href="#cat-%s" data-cat="%s" title="%s">'
+               '<i class="nc-ico" aria-hidden="true">%s</i><span>%s</span><em>%d</em></a>'
+               % (cat['id'], cat['id'], cat['name'], CAT_ICON.get(cat['id'], '•'),
+                  cat.get('short') or cat['name'], len(items)))
     cards = '\n'.join(render_item(it, cat['id']) for it in items)
     sections.append('''<section class="cat" id="cat-%s">
   <header class="cat-head">
@@ -207,12 +211,20 @@ h1,h2{font-family:var(--font-title);font-weight:400;margin:0}
 h3{font-family:var(--font-head);margin:0;font-size:1.06em;line-height:1.5}
 b{font-family:var(--font-head);color:var(--blueD)}
 a{color:var(--blueD)}
+.pbar{position:fixed;top:0;left:0;z-index:120;height:2.5px;width:0;
+  background:linear-gradient(90deg,var(--gold),#C0554A);box-shadow:0 0 8px rgba(192,85,74,.5);
+  transition:width .08s linear;pointer-events:none}
 .topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:14px;
   padding:10px 22px;background:rgba(250,246,236,.94);border-bottom:1px solid var(--line);
   backdrop-filter:blur(12px);font:13px var(--font-head)}
 .topbar a{text-decoration:none;color:var(--sub)}
 .topbar a:hover{color:var(--blueD)}
 .topbar .sep{color:var(--line)}
+.side-toggle{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;padding:0;border:1px solid var(--line);border-radius:8px;background:#fff;
+  color:var(--sub);cursor:pointer;transition:border-color .2s,color .2s,background .2s}
+.side-toggle:hover{border-color:var(--gold);color:var(--blueD);background:#FFFDF6}
+.side-toggle:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .hero{position:relative;overflow:hidden;padding:54px 26px 44px;color:#FFF9EC;
   background:linear-gradient(135deg,#3E5F7D 0%,#5B84A8 55%,#7FA0BE 100%)}
 .hero::after{content:"";position:absolute;inset:auto -10% -60% -10%;height:220px;
@@ -231,24 +243,76 @@ a{color:var(--blueD)}
   box-shadow:0 10px 22px -14px rgba(0,0,0,.5)}
 .hero-cta.ghost{background:rgba(255,255,255,.10);color:#FFF6E2;border-color:rgba(255,235,200,.55)}
 .hero-cta em{font:400 12px var(--font-kai);font-style:normal;opacity:.8}
-.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:26px;
-  width:min(1280px,calc(100% - 36px));margin:26px auto 80px;align-items:start}
+.layout{display:grid;grid-template-columns:278px minmax(0,1fr);gap:26px;
+  width:min(1280px,calc(100% - 36px));margin:26px auto 80px;align-items:start;
+  transition:grid-template-columns .36s cubic-bezier(.22,.61,.36,1),gap .36s}
+body.side-collapsed .layout{grid-template-columns:0 minmax(0,1fr);gap:0}
+body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-events:none;overflow:hidden}
 .sidebar{position:sticky;top:64px;max-height:calc(100vh - 84px);overflow:auto;
-  padding:16px 12px;background:var(--paper2);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
-.side-title{margin:0 0 10px;padding:0 6px 8px;border-bottom:1px solid var(--line);
-  font:700 13px var(--font-head);color:var(--sub);letter-spacing:.08em}
-.side-search{width:100%;margin-bottom:12px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;
-  background:#fff;font:14px var(--font-body);color:var(--ink)}
-.side-search:focus{outline:2px solid var(--blue);outline-offset:1px}
-.nav-cat{display:flex;justify-content:space-between;align-items:center;gap:8px;
-  padding:8px 8px;border-radius:7px;text-decoration:none;color:var(--ink);font:600 13.5px var(--font-head)}
-.nav-cat em{font:400 12px var(--font-kai);color:var(--sub);font-style:normal}
-.nav-cat:hover{background:var(--blueL)}
-.nav-hot{display:block;margin-top:10px;padding:9px 8px;border-radius:7px;text-decoration:none;
-  color:var(--red);font:700 13px var(--font-head);background:var(--redL)}
-.nav-legend{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
-  font:12px/1.7 var(--font-kai);color:var(--sub)}
-.nav-legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+  transition:opacity .26s ease,transform .3s ease;
+  padding:18px 14px 16px;border-radius:16px;
+  background:linear-gradient(180deg,#FFFDF7 0%,#FBF7EB 100%);
+  border:1px solid #E7DCC5;
+  box-shadow:0 20px 50px -34px rgba(62,95,125,.55),inset 0 1px 0 #fff;
+  scrollbar-width:thin;scrollbar-color:#D9CDB4 transparent}
+.sidebar::-webkit-scrollbar{width:7px}
+.sidebar::-webkit-scrollbar-thumb{background:#DED3BB;border-radius:99px}
+.sidebar::-webkit-scrollbar-thumb:hover{background:#C9BB9C}
+.sidebar::-webkit-scrollbar-track{background:transparent}
+.side-title{display:flex;align-items:center;gap:7px;margin:0 0 12px;padding:0 4px 10px;
+  border-bottom:1px solid #EADFC9;font:700 12.5px var(--font-head);color:#8A7A5E;letter-spacing:.14em}
+.side-title::before{content:"";width:3px;height:13px;border-radius:2px;
+  background:linear-gradient(180deg,var(--gold),var(--red))}
+.side-search{width:100%;margin-bottom:10px;padding:9px 12px 9px 32px;border:1px solid #E4D9C1;border-radius:10px;
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23A99C82' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E") no-repeat 10px center;
+  font:14px var(--font-body);color:var(--ink);transition:border-color .22s,box-shadow .22s}
+.side-search::placeholder{color:#B3A78D}
+.side-search:focus{outline:0;border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,167,94,.18)}
+.nav-cat{position:relative;display:flex;align-items:center;gap:9px;
+  margin-bottom:4px;padding:9px 8px 9px 11px;border-radius:10px;border:1px solid transparent;
+  text-decoration:none;color:var(--ink);font:600 12.8px var(--font-head);
+  transition:background .2s,transform .2s,border-color .2s,box-shadow .2s}
+.nav-cat::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:16px;border-radius:2px;background:#DDD2B9;transition:height .22s,background .22s}
+.nav-cat .nc-ico{flex:none;width:13px;text-align:center;font:400 12px var(--font-title);
+  color:#A99C82;font-style:normal;transition:color .2s}
+.nav-cat span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-cat em{flex:none;min-width:22px;padding:1px 6px;border-radius:99px;background:#F1EADA;
+  color:#8A7A5E;font:700 11px var(--font-head);font-style:normal;text-align:center;
+  transition:background .2s,color .2s}
+.nav-cat:hover{background:#fff;border-color:#EBE0C9;transform:translateX(2px);
+  box-shadow:0 6px 16px -14px rgba(0,0,0,.5)}
+.nav-cat:hover::before{background:var(--gold);height:20px}
+.nav-cat[data-cat="physio"]::before{background:rgba(91,132,168,.35)}
+.nav-cat[data-cat="patho"]::before{background:rgba(192,85,74,.32)}
+.nav-cat[data-cat="path"]::before{background:rgba(142,123,168,.35)}
+.nav-cat[data-cat="pharm"]::before{background:rgba(143,169,107,.38)}
+.nav-cat[data-cat="physio"].active .nc-ico,.nav-cat[data-cat="physio"]:hover .nc-ico{color:var(--blue)}
+.nav-cat[data-cat="patho"].active .nc-ico,.nav-cat[data-cat="patho"]:hover .nc-ico{color:var(--red)}
+.nav-cat[data-cat="path"].active .nc-ico,.nav-cat[data-cat="path"]:hover .nc-ico{color:var(--violet)}
+.nav-cat[data-cat="pharm"].active .nc-ico,.nav-cat[data-cat="pharm"]:hover .nc-ico{color:var(--green)}
+.nav-cat[data-cat="physio"].active::before,.nav-cat[data-cat="physio"]:hover::before{background:var(--blue)}
+.nav-cat[data-cat="patho"].active::before,.nav-cat[data-cat="patho"]:hover::before{background:var(--red)}
+.nav-cat[data-cat="path"].active::before,.nav-cat[data-cat="path"]:hover::before{background:var(--violet)}
+.nav-cat[data-cat="pharm"].active::before,.nav-cat[data-cat="pharm"]:hover::before{background:var(--green)}
+.nav-cat.active{background:#fff;border-color:#E7D8B6;box-shadow:0 8px 22px -18px rgba(0,0,0,.55)}
+.nav-cat.active::before{height:26px}
+.nav-cat.active span{color:var(--blueD)}
+.nav-cat.active em{background:var(--blueD);color:#fff}
+.nav-hot{position:relative;display:flex;align-items:center;gap:7px;margin-top:6px;padding:10px 12px;
+  border-radius:10px;text-decoration:none;color:#A8413A;font:700 12.5px var(--font-head);
+  background:linear-gradient(135deg,#FDEEE9,#FBE3DC);border:1px solid #F0CFC7;
+  transition:transform .2s,box-shadow .2s,border-color .2s}
+.nav-hot + .nav-hot{margin-top:7px}
+.nav-hot:hover{transform:translateY(-1px);border-color:#E3A79C;box-shadow:0 10px 22px -18px rgba(168,65,58,.8)}
+.nav-hot.gold{color:#7A4E12;background:linear-gradient(135deg,#FDF6E6,#F8EBCE);border-color:#EBD3A6}
+.nav-hot.gold:hover{border-color:#D9B877}
+.nav-legend{margin-top:16px;padding-top:14px;border-top:1px dashed #E2D7BF;
+  font:11.5px/1.9 var(--font-kai);color:#8A7A5E}
+.nav-legend{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px}
+.nav-legend div{display:flex;align-items:center;gap:5px}
+.nav-legend i{display:inline-block;width:8px;height:8px;border-radius:50%;flex:none;
+  box-shadow:0 0 0 2px rgba(255,255,255,.9)}
 main{min-width:0}
 .hotbox{margin-bottom:30px;padding:20px 22px;background:var(--redL);border:1px solid #EBC3BB;border-radius:14px}
 .hotbox h2{font-size:1.35rem;color:var(--red);margin-bottom:4px}
@@ -266,7 +330,12 @@ main{min-width:0}
 .cat-head h2{font-size:clamp(1.5rem,2.6vw,2rem);color:var(--blueD)}
 .cat-desc{max-width:820px;margin:8px 0 0;font:13.5px/1.7 var(--font-kai);color:var(--sub)}
 .qcard{position:relative;margin-bottom:18px;padding:20px 22px 16px;background:#fff;
-  border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:10px;box-shadow:0 6px 20px -16px rgba(0,0,0,.35)}
+  border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:12px;
+  box-shadow:0 6px 20px -16px rgba(0,0,0,.35);
+  transition:box-shadow .26s ease,transform .26s ease,border-color .26s ease}
+.qcard:hover{box-shadow:0 18px 42px -26px rgba(62,95,125,.55);transform:translateY(-2px);
+  border-color:#DCD2BB}
+.qcard.hot:hover{box-shadow:0 18px 42px -26px rgba(192,85,74,.55)}
 .qcard.hot{border-left-color:var(--red);background:linear-gradient(180deg,#FFF9F7,#fff 120px)}
 .qhead{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-bottom:12px}
 .qid{flex:none;padding:2px 7px;border-radius:5px;background:var(--blueL);color:var(--blueD);
@@ -359,12 +428,18 @@ main{min-width:0}
 .ex-btn[aria-expanded="true"]{background:var(--gold);color:#3A2A12}
 .ex-btn .bulb{font-size:13px}
 .src{flex:1 1 240px;min-width:0;font:12px/1.55 var(--font-kai);color:var(--sub);text-align:right}
-.ex{margin-top:12px;padding:14px 16px;border-radius:10px;background:var(--goldL);
-  border:1px solid #EBD3A6;border-left:4px solid var(--gold);animation:exin .22s ease}
-@keyframes exin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
-.ex-inner{font:15.5px/1.8 var(--font-body);color:#4A3A22}
+.ex{display:grid;grid-template-rows:0fr;opacity:0;margin-top:0;
+  border-radius:12px;background:linear-gradient(180deg,#FDF5E4,#FBF0DA);
+  border:0 solid #EBD3A6;border-left-width:0;
+  transition:grid-template-rows .36s cubic-bezier(.22,.61,.36,1),opacity .26s ease,
+    margin-top .32s ease,border-width .32s ease}
+.ex.open{grid-template-rows:1fr;opacity:1;margin-top:13px;border-width:1px;border-left-width:4px}
+.ex > .ex-inner{overflow:hidden;min-height:0;padding:0 16px;transition:padding .32s ease}
+.ex.open > .ex-inner{padding:14px 16px 15px}
+.ex-inner{font:15.5px/1.82 var(--font-body);color:#4A3A22}
 .ex-inner p{margin:0 0 9px}
 .ex-inner p:last-child{margin-bottom:0}
+.ex-inner b{color:#8A5B18}
 .ex-inner b{color:#8A5B18}
 .fig{margin:14px 0 2px;padding:10px;background:var(--paper2);border:1px solid var(--line);border-radius:10px;
   max-width:100%;overflow-x:auto}
@@ -398,15 +473,80 @@ main{min-width:0}
 JS = r'''
 (function(){
   var cards=[].slice.call(document.querySelectorAll('.qcard'));
-  /* 通俗解释折叠 */
+  /* 通俗解释折叠：class 控制，高度平滑过渡 */
   document.addEventListener('click',function(e){
     var b=e.target.closest('.ex-btn'); if(!b) return;
     var id=b.getAttribute('aria-controls'); var box=document.getElementById(id);
     var open=b.getAttribute('aria-expanded')==='true';
     b.setAttribute('aria-expanded',open?'false':'true');
     b.querySelector('.bulb').textContent=open?'💡':'🔽';
-    if(box) box.hidden=open;
+    if(box) box.classList.toggle('open',!open);
+    /* 展开后若内容超出视口，平滑滚到可见位置 */
+    if(!open && box){
+      setTimeout(function(){
+        var r=box.getBoundingClientRect();
+        if(r.bottom>window.innerHeight-24){
+          box.scrollIntoView({block:'nearest',behavior:'smooth'});
+        }
+      },380);
+    }
   });
+
+  /* 滚动监听：高亮当前分类 + 阅读进度 */
+  var pbar=document.getElementById('pbar');
+  var cats=[].slice.call(document.querySelectorAll('.cat'));
+  var navLinks=[].slice.call(document.querySelectorAll('.nav-cat'));
+  var ticking=false;
+  function onScroll(){
+    if(ticking) return;
+    ticking=true;
+    requestAnimationFrame(function(){
+      var y=window.scrollY+150, cur=null;
+      cats.forEach(function(c){
+        if(c.style.display==='none') return;
+        if(c.offsetTop<=y) cur=c;
+      });
+      var activeLink=null;
+      navLinks.forEach(function(a){
+        var on=!!cur && a.getAttribute('href')==='#'+cur.id;
+        a.classList.toggle('active', on);
+        if(on) activeLink=a;
+      });
+      /* 侧栏内部滚动跟随当前分类 */
+      var sb=document.querySelector('.sidebar');
+      if(activeLink && sb && !document.body.classList.contains('side-collapsed')){
+        var lr=activeLink.getBoundingClientRect(), sr=sb.getBoundingClientRect();
+        if(lr.top<sr.top+16 || lr.bottom>sr.bottom-16){
+          var target=sb.scrollTop + (lr.top - sr.top) - sb.clientHeight/2 + lr.height/2;
+          sb.scrollTo({top:Math.max(0,target),behavior:'smooth'});
+        }
+      }
+      if(pbar){
+        var h=document.documentElement.scrollHeight-window.innerHeight;
+        pbar.style.width=(h>0?Math.min(100,Math.max(0,window.scrollY/h*100)):0)+'%';
+      }
+      ticking=false;
+    });
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  onScroll();
+
+  /* 侧栏折叠（记忆状态） */
+  var st=document.getElementById('sideToggle');
+  var collapsed=localStorage.getItem('medilearn.dati.side')==='0';
+  function applySide(){
+    document.body.classList.toggle('side-collapsed',collapsed);
+    st.setAttribute('aria-expanded',collapsed?'false':'true');
+    st.setAttribute('aria-label',collapsed?'展开侧栏':'收起侧栏');
+    st.title=collapsed?'展开侧栏':'收起侧栏';
+  }
+  st.addEventListener('click',function(){
+    collapsed=!collapsed;
+    localStorage.setItem('medilearn.dati.side',collapsed?'0':'1');
+    applySide();
+  });
+  applySide();
   /* 搜索 */
   var q=document.getElementById('sideQ');
   if(q){
@@ -446,10 +586,14 @@ html_doc = '''<!doctype html>
 <style>%s</style>
 </head>
 <body>
+<div class="pbar" id="pbar" aria-hidden="true"></div>
 <div class="topbar">
   <a href="index.html">MediLearn</a><span class="sep">/</span>
   <a href="subject.html?s=organ3">器官系统基础IV</a><span class="sep">/</span>
   <span>考前大题速背</span>
+  <button class="side-toggle" id="sideToggle" type="button" aria-label="收起侧栏" aria-expanded="true" title="收起 / 展开侧栏">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
 </div>
 <header class="hero"><div class="hero-inner">
   <p class="eyebrow">ORGAN SYSTEM BASICS IV · 2026 秋</p>
@@ -474,12 +618,12 @@ html_doc = '''<!doctype html>
   <input class="side-search" id="sideQ" type="search" placeholder="搜索题目 / 关键词…" aria-label="搜索题目">
   <p id="searchHint" style="margin:-4px 0 8px;font:12px var(--font-kai);color:var(--sub)"></p>
   %s
-  <a class="nav-hot" href="#must" style="background:#FBE9E4;color:#A8413A">★ 本次必背 · %d 条</a>
-  <a class="nav-hot" href="#hot">★ 最常考（≥4 次）· %d 条</a>
+  <a class="nav-hot" href="#must"><span aria-hidden="true">★</span>本次必背 · %d 条</a>
+  <a class="nav-hot gold" href="#hot"><span aria-hidden="true">🔥</span>最常考（≥4 次）· %d 条</a>
   <div class="nav-legend">
-    <div><i style="background:#C0554A"></i>考过 4 次及以上（标红）</div>
-    <div><i style="background:#D9A75E"></i>考过 2～3 次</div>
-    <div><i style="background:#8FA96B"></i>考过 1 次</div>
+    <div><i style="background:#C0554A"></i>≥4 次（标红）</div>
+    <div><i style="background:#D9A75E"></i>2～3 次</div>
+    <div><i style="background:#8FA96B"></i>1 次</div>
     <div><i style="background:#E0D6C0"></i>未标次数</div>
   </div>
 </aside>

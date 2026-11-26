@@ -14,6 +14,7 @@ const [, , p, expr] = process.argv;
   const t = list.find(x => x.id === targetId);
   const pg = await CDP.attach(t.webSocketDebuggerUrl);
   await pg.send('Page.enable');
+  await pg.send('Emulation.setDeviceMetricsOverride', { width: 1100, height: 780, deviceScaleFactor: 1, mobile: false });
   await pg.send('Network.enable');
   await pg.send('Network.setCacheDisabled', { cacheDisabled: true });
   await pg.send('Page.navigate', { url: BASE + p });

@@ -1539,7 +1539,18 @@ body.side-collapsed .side-fab{display:flex}
 body.side-collapsed .layout{grid-template-columns:0 minmax(0,1fr)!important;gap:0!important}
 body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-events:none;overflow:hidden}
 .sidebar{transition:opacity .26s ease,transform .3s ease,box-shadow .5s ease}
-@media print{.side-fab,.side-collapse{display:none!important}}
+.side-handle{position:fixed;z-index:95;top:50%;transform:translateY(-50%);
+  display:flex;align-items:center;justify-content:center;width:26px;height:64px;padding:0;
+  border:1px solid #D9CDB4;border-radius:999px;
+  background:linear-gradient(180deg,#FFFDF6,#F3EAD8);color:#4E6A0D;cursor:pointer;
+  box-shadow:0 6px 18px -10px rgba(61,79,8,.7),inset 0 1px 0 #fff;
+  transition:left .32s cubic-bezier(.22,.61,.36,1),background .2s,box-shadow .2s}
+.side-handle:hover{background:#fff;box-shadow:10px 0 26px -14px rgba(61,79,8,.6)}
+.side-handle svg{transition:transform .3s}
+body.side-collapsed .side-handle{box-shadow:0 6px 18px -10px rgba(61,79,8,.8)}
+body.side-collapsed .side-handle svg{transform:rotate(180deg)}
+@media (max-width:900px){.side-handle{display:none}}
+@media print{.side-handle,.side-fab,.side-collapse{display:none!important}}
 </style>
 <style id="nav-font-fix">
 /* 目录可读性：仿宋小字在屏幕上发虚，改黑体、略放大、加半档字重 */
@@ -1554,14 +1565,14 @@ body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-event
 </style>
 </head>
 <body>
-<button class="side-fab" id="sideFab" type="button" aria-label="展开目录" title="展开目录"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+
 <header class="hero"><div class="hero-inner">
 <h1>器官系统基础IV · 考前速记</h1>
 <p>按 2026 秋季学期 18 讲课件顺序编排：泌尿生理四讲 → 利尿药 → 水电解质与酸碱平衡 → 休克与应激 → 肾功能不全两讲 → 泌尿系统疾病 → 抗菌药物六讲。</p>
 <div class="hero-meta"><span>大三上</span><span>共 18 讲 · 33 个知识点</span></div><div class="hero-ctas"><a class="hero-cta" href="../drill.html?s=organ3"><span class="hero-cta-ico" aria-hidden="true">✎</span>刷题<em>344 题 · 即时判分</em></a><a class="hero-cta hero-cta-exam" href="../exam5/index.html"><span class="hero-cta-ico" aria-hidden="true">🎯</span>模拟卷<em>3 套 · 含答案与解析</em></a><a class="hero-cta hero-cta-dati" href="../organ3-dati.html" title="考前大题速背：85 条大题与名解，含考频与通俗解释"><span class="hero-cta-ico" aria-hidden="true">📝</span>考前大题速背<em>91 条</em></a><a class="hero-cta hero-cta-pdf" href="../pdf/organ3.pdf" download="器官系统基础IV-考前速记.pdf" title="导出为 PDF（A4，含知识点与图示）"><span class="hero-cta-ico" aria-hidden="true">⇩</span>导出 PDF</a><span class="hero-cta-tip">3 套全真卷：选择 40 道 · 名解 6 道 · 论述 3 道，点开即可作答，交卷后对照答案与解析</span></div>
 </div></header>
 <div class="layout">
-<aside class="sidebar"><button class="side-collapse" id="sideCollapse" type="button" aria-label="收起目录"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg>收起目录</button><div class="nav-question-bank"><a class="nav-chapter" href="#question-bank">题库 · 314 题 →</a></div><h2 class="sidebar-title">章节目录</h2><div class="nav-group"><a class="nav-chapter" href="#chapter-01">第01讲 泌尿生理（一）：排泄与肾结构</a><a class="nav-section" href="#section-01-01">两类肾单位与肾的内分泌功能</a><a class="nav-section" href="#section-01-02">肾血流量及其调节</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-02">第02讲 泌尿生理（二）：肾小球滤过</a><a class="nav-section" href="#section-02-01">滤过膜的结构与两种屏障</a><a class="nav-section" href="#section-02-02">肾小球滤过与有效滤过压</a><a class="nav-section" href="#section-02-03">球管平衡与管球反馈</a><a class="nav-section" href="#section-02-04">肾清除率与常考物质</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-03">第03讲 泌尿生理（三）：重吸收与分泌</a><a class="nav-section" href="#section-03-01">近端小管与肾糖阈</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-04">第04讲 泌尿生理（四）：浓缩稀释与排尿</a><a class="nav-section" href="#section-04-01">髓袢与尿液浓缩稀释</a><a class="nav-section" href="#section-04-02">远曲小管、集合管与体液调节</a><a class="nav-section" href="#section-04-03">排尿反射</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-05">第05讲 利尿药</a><a class="nav-section" href="#section-05-01">利尿药的分类与作用部位</a><a class="nav-section" href="#section-05-02">肾功能不全时的用药原则</a><a class="nav-section" href="#section-05-03">肾功能评估与剂量调整</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-06">第06讲 水电解质代谢紊乱</a><a class="nav-section" href="#section-06-01">水钠代谢紊乱</a><a class="nav-section" href="#section-06-02">钾代谢紊乱</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-07">第07讲 酸碱平衡紊乱</a><a class="nav-section" href="#section-07-01">酸碱平衡紊乱</a><a class="nav-section" href="#section-07-02">酸碱平衡的调节机制</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-08">第08讲 休克</a><a class="nav-section" href="#section-08-01">休克的概念与分类</a><a class="nav-section" href="#section-08-02">休克的分期与微循环机制</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-09">第09讲 应激</a><a class="nav-section" href="#section-09-01">应激的概念与神经内分泌反应</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-10">第10讲 肾功能不全（一）：急性肾损伤</a><a class="nav-section" href="#section-10-01">急性肾损伤（AKI）</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-11">第11讲 肾功能不全（二）：慢性肾衰竭</a><a class="nav-section" href="#section-11-01">慢性肾脏病与尿毒症</a><a class="nav-section" href="#section-11-02">慢性肾衰竭的发病机制与分期</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-12">第12讲 泌尿系统疾病</a><a class="nav-section" href="#section-12-01">肾小球肾炎与肾病综合征</a><a class="nav-section" href="#section-12-02">尿路感染与抗菌药选择</a><a class="nav-section" href="#section-12-03">肾盂肾炎与间质性肾炎</a><a class="nav-section" href="#section-12-04">泌尿系统肿瘤</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-13">第13讲 抗菌药物概论</a><a class="nav-section" href="#section-13-01">抗菌药的基本概念与作用机制</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-14">第14讲 β-内酰胺类抗生素</a><a class="nav-section" href="#section-14-01">青霉素类与头孢菌素类</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-15">第15讲 大环内酯类、林可霉素类与多肽类</a><a class="nav-section" href="#section-15-01">大环内酯类与多肽类</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-16">第16讲 氨基糖苷类、四环素类与氯霉素类</a><a class="nav-section" href="#section-16-01">氨基糖苷类与四环素类</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-17">第17讲 人工合成抗菌药</a><a class="nav-section" href="#section-17-01">喹诺酮类与磺胺类</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-18">第18讲 抗结核、抗病毒与抗真菌药</a><a class="nav-section" href="#section-18-01">抗结核药与抗真菌药</a></div><div class="nav-question-bank" style="margin-top:22px;padding-top:14px;border-top:1px solid var(--gray-200)"><a class="nav-chapter" href="#question-bank">题库 · 314 题 →</a></div></aside>
+<aside class="sidebar"><div class="nav-question-bank"><a class="nav-chapter" href="#question-bank">题库 · 314 题 →</a></div><h2 class="sidebar-title">章节目录</h2><div class="nav-group"><a class="nav-chapter" href="#chapter-01">第01讲 泌尿生理（一）：排泄与肾结构</a><a class="nav-section" href="#section-01-01">两类肾单位与肾的内分泌功能</a><a class="nav-section" href="#section-01-02">肾血流量及其调节</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-02">第02讲 泌尿生理（二）：肾小球滤过</a><a class="nav-section" href="#section-02-01">滤过膜的结构与两种屏障</a><a class="nav-section" href="#section-02-02">肾小球滤过与有效滤过压</a><a class="nav-section" href="#section-02-03">球管平衡与管球反馈</a><a class="nav-section" href="#section-02-04">肾清除率与常考物质</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-03">第03讲 泌尿生理（三）：重吸收与分泌</a><a class="nav-section" href="#section-03-01">近端小管与肾糖阈</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-04">第04讲 泌尿生理（四）：浓缩稀释与排尿</a><a class="nav-section" href="#section-04-01">髓袢与尿液浓缩稀释</a><a class="nav-section" href="#section-04-02">远曲小管、集合管与体液调节</a><a class="nav-section" href="#section-04-03">排尿反射</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-05">第05讲 利尿药</a><a class="nav-section" href="#section-05-01">利尿药的分类与作用部位</a><a class="nav-section" href="#section-05-02">肾功能不全时的用药原则</a><a class="nav-section" href="#section-05-03">肾功能评估与剂量调整</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-06">第06讲 水电解质代谢紊乱</a><a class="nav-section" href="#section-06-01">水钠代谢紊乱</a><a class="nav-section" href="#section-06-02">钾代谢紊乱</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-07">第07讲 酸碱平衡紊乱</a><a class="nav-section" href="#section-07-01">酸碱平衡紊乱</a><a class="nav-section" href="#section-07-02">酸碱平衡的调节机制</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-08">第08讲 休克</a><a class="nav-section" href="#section-08-01">休克的概念与分类</a><a class="nav-section" href="#section-08-02">休克的分期与微循环机制</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-09">第09讲 应激</a><a class="nav-section" href="#section-09-01">应激的概念与神经内分泌反应</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-10">第10讲 肾功能不全（一）：急性肾损伤</a><a class="nav-section" href="#section-10-01">急性肾损伤（AKI）</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-11">第11讲 肾功能不全（二）：慢性肾衰竭</a><a class="nav-section" href="#section-11-01">慢性肾脏病与尿毒症</a><a class="nav-section" href="#section-11-02">慢性肾衰竭的发病机制与分期</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-12">第12讲 泌尿系统疾病</a><a class="nav-section" href="#section-12-01">肾小球肾炎与肾病综合征</a><a class="nav-section" href="#section-12-02">尿路感染与抗菌药选择</a><a class="nav-section" href="#section-12-03">肾盂肾炎与间质性肾炎</a><a class="nav-section" href="#section-12-04">泌尿系统肿瘤</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-13">第13讲 抗菌药物概论</a><a class="nav-section" href="#section-13-01">抗菌药的基本概念与作用机制</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-14">第14讲 β-内酰胺类抗生素</a><a class="nav-section" href="#section-14-01">青霉素类与头孢菌素类</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-15">第15讲 大环内酯类、林可霉素类与多肽类</a><a class="nav-section" href="#section-15-01">大环内酯类与多肽类</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-16">第16讲 氨基糖苷类、四环素类与氯霉素类</a><a class="nav-section" href="#section-16-01">氨基糖苷类与四环素类</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-17">第17讲 人工合成抗菌药</a><a class="nav-section" href="#section-17-01">喹诺酮类与磺胺类</a></div><div class="nav-group"><a class="nav-chapter" href="#chapter-18">第18讲 抗结核、抗病毒与抗真菌药</a><a class="nav-section" href="#section-18-01">抗结核药与抗真菌药</a></div><div class="nav-question-bank" style="margin-top:22px;padding-top:14px;border-top:1px solid var(--gray-200)"><a class="nav-chapter" href="#question-bank">题库 · 314 题 →</a></div></aside><button class="side-handle" id="sideHandle" type="button" aria-label="收起目录" aria-expanded="true" title="收起 / 展开目录"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg></button>
 <main><section class="chapter" id="chapter-01"><header class="chapter-header"><span class="chapter-number">01</span><div><p>器官系统基础IV</p><h2>第01讲 泌尿生理（一）：排泄与肾结构</h2></div></header><figure class="fig"><img src="../img/organ3/kidney_gross.webp" width="1000" height="1342" alt="肾脏结构图" loading="lazy"><figcaption>肾脏结构：肾皮质、肾髓质（肾锥体、肾乳头）、肾柱、肾窦，以及肾小盏—肾大盏—肾盂的引流路径（图解）</figcaption></figure><figure class="fig"><img src="../img/organ3/urinary_system.webp" width="1000" height="1321" alt="泌尿系统全貌" loading="lazy"><figcaption>泌尿系统全貌：肾—输尿管—膀胱—尿道；输尿管三处狭窄（起始部、跨越髂血管处、膀胱壁内段）是结石易嵌顿部位（图解）</figcaption></figure><article class="knowledge-block" id="section-01-01"><h3>肾单位、球旁器与两套毛细血管网</h3><div class="knowledge-content"><div class="chips" style="margin-bottom:10px"><span class="chip ghost">掌握</span><span class="chip ghost">高频</span><span class="chip ghost">对比</span><span class="chip ghost">基础</span></div><blockquote><b>重点提示</b>：肾单位组成、球旁器三种细胞、两套毛细血管网是后续滤过、重吸收、浓缩稀释的结构基础；皮质/近髓肾单位的对比几乎每年以选择题出现。</blockquote>
 <p>一、排泄与肾脏的地位</p>
 <p><b>排泄</b>是指机体新陈代谢产生的终产物排出体外的生理过程。排泄器官包括：呼吸道（CO₂、H₂O）、消化道（胆色素、无机盐）、皮肤（汗：H₂O、NaCl、尿素）、<b>肾</b>（尿：H₂O、盐、尿素、尿酸、肌酐、药物）。肾的排泄物<b>种类多、数量大、可选择、最重要</b>。</p>
@@ -2561,20 +2572,37 @@ body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-event
   setTimeout(function(){ measure(); onScroll(); }, 600);
   setTimeout(function(){ measure(); onScroll(); }, 1800);
 
-  var col=document.getElementById('sideCollapse'), fab=document.getElementById('sideFab');
+  var handle=document.getElementById('sideHandle');
+  var sbEl=document.querySelector('.sidebar');
   var collapsed=localStorage.getItem('medilearn.mn.side')==='0';
+
+  /* 把手始终贴在侧栏右缘、垂直居中；收起后贴到窗口左侧 */
+  function placeHandle(){
+    if(!handle) return;
+    if(collapsed || !sbEl){ handle.style.left='10px'; return; }
+    var r=sbEl.getBoundingClientRect();
+    handle.style.left=Math.round(r.right+3)+'px';
+  }
   function apply(){
     document.body.classList.toggle('side-collapsed',collapsed);
-    if(fab) fab.setAttribute('aria-label', collapsed?'展开目录':'收起目录');
-    if(fab) fab.title = collapsed?'展开目录':'收起目录';
+    if(handle){
+      handle.setAttribute('aria-expanded', collapsed?'false':'true');
+      handle.setAttribute('aria-label', collapsed?'展开目录':'收起目录');
+      handle.title = collapsed?'展开目录':'收起目录';
+    }
+    placeHandle();
   }
-  if(col) col.addEventListener('click',function(){
-    collapsed=true; localStorage.setItem('medilearn.mn.side','0'); apply(); onScroll();
+  if(handle) handle.addEventListener('click',function(){
+    collapsed=!collapsed;
+    localStorage.setItem('medilearn.mn.side', collapsed?'0':'1');
+    apply();
+    setTimeout(function(){ placeHandle(); onScroll(); }, 340);
   });
-  if(fab) fab.addEventListener('click',function(){
-    collapsed=false; localStorage.setItem('medilearn.mn.side','1'); apply(); onScroll();
-  });
+  window.addEventListener('resize', function(){ setTimeout(placeHandle, 60); });
+  window.addEventListener('load', placeHandle);
   apply();
+  setTimeout(placeHandle, 400);
+  setTimeout(placeHandle, 1200);
   onScroll();
 })();
 </script>

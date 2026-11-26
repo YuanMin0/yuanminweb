@@ -353,6 +353,21 @@ main{
 .sidebar .nav-section:hover{transform:none!important;background:var(--blue-soft)!important;color:var(--navy)!important}
 .sidebar .nav-section.active{color:var(--navy)!important;background:var(--blue-soft)!important;font-weight:700!important}
 .sidebar .nav-question-bank .nav-chapter{color:#B01060!important}
+/* 目录可读性：仿宋小字在屏幕上发虚，统一改黑体、加深颜色、略放大 */
+.sidebar .nav-section{
+  font-family:var(--font-heading)!important;
+  font-size:15px!important;
+  font-weight:500!important;
+  color:#3B3549!important;
+  letter-spacing:.015em;
+  line-height:1.62!important;
+  -webkit-font-smoothing:antialiased;
+}
+.sidebar .nav-section:hover{color:#2F2A3C!important}
+.sidebar .nav-section.active{color:#3A2C63!important;font-weight:700!important}
+.sidebar .nav-chapter{font-family:var(--font-heading)!important}
+.sidebar-title{font-family:var(--font-heading)!important}
+.side-search{font-family:var(--font-heading)!important}
 
 @keyframes growFull{ from{ width:0; } to{ width:100%; } }
 @keyframes growInset{ from{ width:0; } to{ width:calc(100% - 16px); } }
@@ -1525,6 +1540,17 @@ body.side-collapsed .layout{grid-template-columns:0 minmax(0,1fr)!important;gap:
 body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-events:none;overflow:hidden}
 .sidebar{transition:opacity .26s ease,transform .3s ease,box-shadow .5s ease}
 @media print{.side-fab,.side-collapse{display:none!important}}
+</style>
+<style id="nav-font-fix">
+/* 目录可读性：仿宋小字在屏幕上发虚，改黑体、略放大、加半档字重 */
+.sidebar .nav-chapter,
+.sidebar .nav-section,
+.sidebar-title,
+.side-search{
+  font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,-apple-system,sans-serif;
+}
+.sidebar .nav-section{font-size:15px;font-weight:500;letter-spacing:.015em;line-height:1.62}
+.sidebar .nav-section.active{font-weight:700}
 </style>
 </head>
 <body>

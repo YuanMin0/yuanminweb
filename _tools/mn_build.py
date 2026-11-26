@@ -16,6 +16,13 @@ TPL = Path(r'G:\学习资料\大三上\习思想\习思想PPT-莫奈版.html')
 tpl = TPL.read_text(encoding='utf-8')
 CSS = tpl[tpl.find('<style>') + 7: tpl.find('</style>')]
 EXTRA_CSS = '''
+    /* 目录可读性：仿宋小字在屏幕上发虚，改黑体、略放大、加半档字重 */
+    .sidebar .nav-chapter, .sidebar .nav-section, .sidebar-title, .side-search{
+      font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,-apple-system,sans-serif;
+    }
+    .sidebar .nav-section{font-size:15px;font-weight:500;letter-spacing:.015em;line-height:1.62}
+    .sidebar .nav-section.active{font-weight:700}
+
     /* 全宽度防横向溢出：长代码/公式在容器内滚动，不撑破页面 */
     pre { max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
     pre code { overflow-wrap:normal; word-break:normal; }

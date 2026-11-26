@@ -1414,6 +1414,17 @@ main p, main li, main td, main th, main dd, main dt,
 @media (max-width:600px){.hero-ctas{gap:8px 10px}}
 @media print{.hero-cta-pdf,.to-top{display:none!important}}
 </style>
+<style id="nav-font-fix">
+/* 目录可读性：仿宋小字在屏幕上发虚，改黑体、略放大、加半档字重 */
+.sidebar .nav-chapter,
+.sidebar .nav-section,
+.sidebar-title,
+.side-search{
+  font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,-apple-system,sans-serif;
+}
+.sidebar .nav-section{font-size:15px;font-weight:500;letter-spacing:.015em;line-height:1.62}
+.sidebar .nav-section.active{font-weight:700}
+</style>
 </head>
 <body>
 <header class="hero"><div class="hero-inner">

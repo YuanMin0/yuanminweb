@@ -160,11 +160,21 @@
   /* ==================== 状态 ==================== */
   var st = { i: 0, ans: {}, checked: {}, right: 0, order: pool.map(function (_, i) { return i; }), opt: {}, revealed: {}, t0: Date.now(), started: false };
 
+  /* 解析里是否引用了选项字母（如「A、B 正确」「故选 C」「答案 ABD」）。
+     这类题一旦打乱选项，解析中的字母就会与页面选项对不上，故保持教材原顺序。 */
+  function explainUsesLetters(q) {
+    var t = String(q.explain || '');
+    if (!t) return false;
+    if (/(?:答案|故选|应选|选)\s*(?:为|是|：|:)?\s*[A-F]/.test(t)) return true;
+    return /(^|[^A-Za-z])([A-F])(?=[^A-Za-z]|$)/.test(t);
+  }
+
   /* 选项乱序：为每道题生成一次「显示位次 → 原始下标」映射，本次练习内保持稳定 */
   function permOf(q) {
     if (q.type !== 'single' && q.type !== 'multiple') return null;
     var n = (q.options || []).length;
     if (n < 2) return null;
+    if (explainUsesLetters(q)) return null;   /* 解析含字母引用 → 不打乱，保证一致 */
     var p = st.opt[q.uid];
     if (!p || p.length !== n) {
       p = []; for (var k = 0; k < n; k++) p.push(k);
@@ -231,7 +241,7 @@
         '</div>' +
       '</section>' +
       '<div class="card card-pad mt-3 rv rv-d2 small muted">' +
-        '<b>作答提示</b>：本页为全科测验，包含单选、多选、名词解释、简答、论述等全部题型。多选题需选中全部正确项才算答对；填空题忽略大小写与空格，支持同义写法。名词解释/简答/论述为主观题，请先自行作答，再展开参考答案自评。每次开始练习时<b>选项顺序会随机打乱</b>，请不要依赖位置记忆。' +
+        '<b>作答提示</b>：本页为全科测验，包含单选、多选、名词解释、简答、论述等全部题型。多选题需选中全部正确项才算答对；填空题忽略大小写与空格，支持同义写法。名词解释/简答/论述为主观题，请先自行作答，再展开参考答案自评。选项顺序大多会随机打乱；<b>解析中标注了 A/B/C/D 的题目保持教材原顺序</b>，以保证选项字母与解析一一对应。' +
       '</div>';
     document.getElementById('startBtn').addEventListener('click', start);
     document.getElementById('shuffleBtn').addEventListener('click', function () {

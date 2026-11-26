@@ -2463,25 +2463,44 @@ body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-event
   var sb=document.querySelector('.sidebar');
   var linksCh=[].slice.call(document.querySelectorAll('.nav-chapter'));
   var linksSec=[].slice.call(document.querySelectorAll('.nav-section'));
-  var lastId=null, ticking=false, sbHold=0;
+  var ticking=false, sbHold=0, marks=[], sbSticky=true;
 
-  /* 用户手动滚侧栏后 1.6s 内不自动跟随，避免抢操作 */
+  /* 手动滚侧栏后 1.2s 内暂停跟随，避免抢操作 */
   if(sb){
     ['wheel','touchstart','pointerdown'].forEach(function(ev){
       sb.addEventListener(ev, function(){ sbHold=Date.now(); }, {passive:true});
     });
   }
 
-  function followSide(link){
-    if(!link || !sb) return;
+  /* 建立「正文位置 → 侧栏位置」映射：每一条目录对应它在页面中的起点 */
+  function measure(){
+    if(!sb) return;
+    sbSticky = getComputedStyle(sb).position==='sticky';
+    marks=[];
+    linksCh.concat(linksSec).forEach(function(a){
+      var href=a.getAttribute('href')||'';
+      if(href.charAt(0)!=='#' || href==='#question-bank') return;
+      var el=document.getElementById(href.slice(1));
+      if(!el) return;
+      marks.push({ y: el.getBoundingClientRect().top + window.scrollY, s: a.offsetTop });
+    });
+    marks.sort(function(p,q){ return p.y-q.y; });
+  }
+
+  /* 连续跟随：正文滚多少，侧栏就同步滑多少，当前项始终停在侧栏 30% 高度处 */
+  function syncSide(){
+    if(!sb || !marks.length || !sbSticky) return;
     if(document.body.classList.contains('side-collapsed')) return;
-    if(Date.now()-sbHold < 1600) return;
-    var lr=link.getBoundingClientRect(), sr=sb.getBoundingClientRect();
-    var pad=Math.min(110, sb.clientHeight*0.26);
-    if(lr.top < sr.top+pad || lr.bottom > sr.bottom-pad){
-      var target=sb.scrollTop + (lr.top-sr.top) - sb.clientHeight/2 + lr.height/2;
-      sb.scrollTo({top:Math.max(0,target), behavior:'smooth'});
-    }
+    if(Date.now()-sbHold < 1200) return;
+    var max=sb.scrollHeight-sb.clientHeight;
+    if(max<=0) return;
+    var y=window.scrollY, i=0;
+    while(i+1<marks.length && marks[i+1].y<=y) i++;
+    var a=marks[i], b=marks[i+1], t=0;
+    if(b && b.y>a.y) t=Math.max(0,Math.min(1,(y-a.y)/(b.y-a.y)));
+    var pos = b ? a.s+(b.s-a.s)*t : a.s;
+    var target=Math.max(0,Math.min(max, pos - sb.clientHeight*0.30));
+    if(Math.abs(target-sb.scrollTop)>0.6) sb.scrollTop=target;
   }
 
   function onScroll(){
@@ -2501,21 +2520,16 @@ body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-event
       linksSec.forEach(function(a){
         a.classList.toggle('active', !!curBlk && a.getAttribute('href')==='#'+curBlk.id);
       });
-      /* 内容到哪，侧栏跟到哪：仅在当前项变化时跟随 */
-      var cur=curBlk?('#'+curBlk.id):(curCh?('#'+curCh.id):null);
-      if(cur && cur!==lastId){
-        var isFirst = lastId===null;
-        lastId=cur;
-        if(!isFirst){
-          followSide(document.querySelector('.nav-section[href="'+cur+'"]') ||
-                     document.querySelector('.nav-chapter[href="'+cur+'"]'));
-        }
-      }
+      syncSide();
       ticking=false;
     });
   }
   window.addEventListener('scroll',onScroll,{passive:true});
-  window.addEventListener('resize',onScroll);
+  window.addEventListener('resize',function(){ measure(); onScroll(); });
+  window.addEventListener('load',function(){ measure(); onScroll(); });
+  measure(); onScroll();
+  setTimeout(function(){ measure(); onScroll(); }, 600);
+  setTimeout(function(){ measure(); onScroll(); }, 1800);
 
   var col=document.getElementById('sideCollapse'), fab=document.getElementById('sideFab');
   var collapsed=localStorage.getItem('medilearn.mn.side')==='0';

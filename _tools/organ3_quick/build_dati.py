@@ -286,8 +286,7 @@ body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-event
   color:#8A7A5E;font:700 11px var(--font-head);font-style:normal;text-align:center;
   transition:background .2s,color .2s}
 .nav-cat:hover{background:#fff;border-color:#EBE0C9;
-  transform:perspective(760px) translate3d(4px,0,20px);
-  box-shadow:0 14px 30px -20px rgba(0,0,0,.55)}
+  box-shadow:0 10px 24px -20px rgba(0,0,0,.5)}
 .nav-cat:hover::before{background:var(--gold);height:20px}
 .nav-cat[data-cat="physio"]::before{background:rgba(91,132,168,.35)}
 .nav-cat[data-cat="patho"]::before{background:rgba(192,85,74,.32)}
@@ -304,7 +303,7 @@ body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-event
 .nav-cat.active{background:#fff;border-color:#E7D8B6;box-shadow:0 8px 22px -18px rgba(0,0,0,.55)}
 .nav-cat.active::after{content:"";position:absolute;left:12px;right:10px;bottom:2px;height:2px;
   border-radius:2px;background:linear-gradient(90deg,var(--gold),transparent);
-  animation:navGrowFull .55s cubic-bezier(.16,1,.3,1) both}
+  animation:none}
 .nav-cat.active::before{height:26px}
 .nav-cat.active span{color:var(--blueD)}
 .nav-cat.active em{background:var(--blueD);color:#fff}

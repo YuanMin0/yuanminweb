@@ -109,7 +109,7 @@ def render_item(it, ci):
     # 以「一、二、三、」开头的要点当作小标题，不参与编号
     ans = ''
     for x in it['answer']:
-        if re.match(r'^(\*\*)?[一二三四五六七八九十]+、', x):
+        if re.match(r'^(\*\*)?(?:[一二三四五六七八九十]+、|[（(][一二三四五六七八九十]+[）)])', x):
             ans += '<li class="sec">%s</li>' % md(x)
         else:
             ans += '<li>%s</li>' % md(x)

@@ -35,7 +35,7 @@ class CDP {
     return new Promise((res, rej) => {
       this.p.set(id, { res, rej });
       this.ws.send(JSON.stringify({ id, method, params }));
-      setTimeout(() => { if (this.p.has(id)) { this.p.delete(id); rej(new Error('timeout ' + method)); } }, 90000);
+      setTimeout(() => { if (this.p.has(id)) { this.p.delete(id); rej(new Error('timeout ' + method)); } }, 240000);
     });
   }
 }
@@ -116,6 +116,7 @@ const CSS = `
       })()`
     });
     await new Promise(r => setTimeout(r, 350));
+
     const pdfOpts = {
       printBackground: true, paperWidth: 8.27, paperHeight: 11.69,
       marginTop: 0.45, marginBottom: 0.45, marginLeft: 0.45, marginRight: 0.45

@@ -634,9 +634,11 @@ body.mode-pick .wrap{padding-bottom:40px}
   }
   function save() {
     try {
+      /* 错题本是独立会话：只记住「当前在错题本」，答题记录仍写主进度的快照 */
+      var src = (st.wrongOnly && mainSnap) ? mainSnap : st;
       localStorage.setItem(KEY, JSON.stringify({
-        ans: st.ans, checked: st.checked, revealed: st.revealed,
-        i: st.i, ch: st.ch, wrongOnly: st.wrongOnly, favOnly: st.favOnly, order: st.order, src: st.src
+        ans: src.ans, checked: src.checked, revealed: st.revealed,
+        i: src.i, ch: st.ch, wrongOnly: st.wrongOnly, favOnly: st.favOnly, order: st.order, src: st.src
       }));
     } catch (e) {}
   }
@@ -653,6 +655,19 @@ body.mode-pick .wrap{padding-bottom:40px}
   /* 旧状态可能同时存了「错题本 + 章节筛选」，会导致点进去空池：这里统一纠正 */
   if (st.wrongOnly) { st.ch = ''; st.src = ''; st.favOnly = false; }
   else if (st.favOnly) { st.ch = ''; st.src = ''; }
+
+  /* 错题本会话：主进度先备份，再清空本次答题状态，刷新后错题回到未作答 */
+  var mainSnap = null;
+  function enterWrongSession() {
+    mainSnap = { ans: st.ans, checked: st.checked, i: st.i };
+    st.ans = {}; st.checked = {}; st.i = 0;
+  }
+  function leaveWrongSession() {
+    if (!mainSnap) return;
+    st.ans = mainSnap.ans; st.checked = mainSnap.checked; st.i = mainSnap.i;
+    mainSnap = null;
+  }
+  if (st.wrongOnly) enterWrongSession();
 
   /* ---------------- 题池（受筛选影响） ---------------- */
   var pool = [];
@@ -1072,15 +1087,24 @@ body.mode-pick .wrap{padding-bottom:40px}
 
   wrongBtn.addEventListener('click', function () {
     st.wrongOnly = !st.wrongOnly;
-    /* 错题本是一个独立集合：进入时清掉章节/来源/收藏筛选，保证看到全部错题 */
-    if (st.wrongOnly) { st.ch = ''; st.src = ''; st.favOnly = false; }
-    st.i = 0; save(); render();
+    if (st.wrongOnly) {
+      /* 进入错题本：独立会话，清筛选、备份并清空主答题状态 */
+      st.ch = ''; st.src = ''; st.favOnly = false;
+      enterWrongSession();
+    } else {
+      leaveWrongSession();
+      st.i = 0;
+    }
+    save(); render();
   });
 
   favBtn.addEventListener('click', function () {
     st.favOnly = !st.favOnly;
     /* 收藏夹与错题本互斥：开启其一时关掉另一个，并清掉章节/来源筛选 */
-    if (st.favOnly) { st.ch = ''; st.src = ''; st.wrongOnly = false; }
+    if (st.favOnly) {
+      if (st.wrongOnly) { st.wrongOnly = false; leaveWrongSession(); }
+      st.ch = ''; st.src = ''; st.favOnly = true;
+    }
     st.i = 0; save(); render();
   });
 

@@ -109,7 +109,8 @@ for (const s of subjects) {
               if (!q.answer.length) problems.push(['多选答案为空', tag]);
               if (q.answer.some(a => typeof a !== 'number' || a < 0 || a >= op.length)) problems.push(['多选答案越界', tag]);
               if (new Set(q.answer).size !== q.answer.length) problems.push(['多选答案有重复索引', tag]);
-              if (q.answer.length === op.length && op.length >= 4) problems.push(['多选全选(' + op.length + ')', tag]);
+              /* 在线考试原题可能「全选」；标 fromExam 的题目按原样保留，不再提示 */
+              if (!q.fromExam && q.answer.length === op.length && op.length >= 4) problems.push(['多选全选(' + op.length + ')', tag]);
             }
           }
         } else if (q.type === 'judge') {

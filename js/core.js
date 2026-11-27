@@ -360,7 +360,7 @@
   var NAV = [
     { href: 'subjects.html', label: '学习', key: 'subjects' },
     { href: 'drill.html', label: '刷题', key: 'drill' },
-    { href: 'materials.html', label: '资料', key: 'materials' },
+    { href: 'materials.html', label: '资料库', key: 'materials' },
     { href: 'wrongbook.html', label: '我的', key: 'wrong' },
     { href: 'mn/index.html', label: '考前速记', key: 'mn' }
   ];
@@ -376,7 +376,6 @@
         var cls = [];
         if (n.key === active) cls.push('on');
         if (n.key === 'drill') cls.push('nav-drill');
-        if (n.key === 'mn') cls.push('nav-mn');
         return '<a href="' + B + n.href + '"' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') + '>' + n.label + '</a>';
       }).join('');
       hdr.innerHTML =
@@ -398,7 +397,7 @@
           { href: 'index.html', label: '首页', ico: '⌂', match: ['index'] },
           { href: 'subjects.html', label: '学习', ico: '▦', match: ['subjects', 'subject', 'knowledge'] },
           { href: 'drill.html', label: '刷题', ico: '✎', match: ['drill', 'bank', 'quiz'] },
-          { href: 'materials.html', label: '资料', ico: '▤', match: ['materials'] },
+          { href: 'materials.html', label: '资料库', ico: '▤', match: ['materials'] },
           { href: 'wrongbook.html', label: '我的', ico: '✦', match: ['wrongbook'] }
         ];
         var wrongN = 0;
@@ -481,7 +480,7 @@
               ['我的收藏', 'favorites.html']
             ]) +
             col('资料', [
-              ['资料汇总', 'materials.html'],
+              ['资料库', 'materials.html'],
               ['更新日志', '#changelog'],
               ['安装到桌面', '#install', 'data-pwa-install'],
               ['关于本站', 'about.html']

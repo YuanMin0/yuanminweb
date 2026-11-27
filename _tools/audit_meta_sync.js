@@ -32,10 +32,17 @@ let bad = 0;
 for (const s of WB.subjects()) {
   const m = metaById[s.id];
   if (!m) { console.log('meta 缺失:', s.id); bad++; continue; }
-  const a = s._count || {}, b = m._count || {};
+  const a = Object.assign({}, s._count || {}), b = m._count || {};
+  /* 章节/知识点以速记页为准：卡片与页面显示要一致，试卷章节不计入 */
+  const mnFile = path.join(ROOT, 'mn', s.id + '.html');
+  if (fs.existsSync(mnFile)) {
+    const t = fs.readFileSync(mnFile, 'utf8');
+    const hm = t.match(/共\s*(\d+)\s*讲\s*·\s*(\d+)\s*个知识点/);
+    if (hm) { a.chapters = +hm[1]; a.knowledge = +hm[2]; }
+  }
   const diff = [];
   ['chapters', 'knowledge', 'quiz', 'choice'].forEach(k => {
-    if ((a[k] || 0) !== (b[k] || 0)) diff.push(`${k}: 实际 ${a[k]} / meta ${b[k]}`);
+    if ((a[k] || 0) !== (b[k] || 0)) diff.push(`${k}: 速记 ${a[k]} / meta ${b[k]}`);
   });
   if (diff.length) { console.log(s.id.padEnd(18), diff.join('  |  ')); bad++; }
 }

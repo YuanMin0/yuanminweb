@@ -222,10 +222,18 @@ def main():
         s = open(mp, encoding='utf-8').read()
         # 替换题库 section（从 <section class="question-bank" 到下一个 </section>）
         m = re.search(r'<section class="question-bank".*?</section>', s, re.S)
-        if not m:
-            rows.append((sid, n, 'no-section'))
-            continue
-        s = s[:m.start()] + sec + s[m.end():]
+        if m:
+            s = s[:m.start()] + sec + s[m.end():]
+        else:
+            # 新版 mn_build 不再输出题库骨架：插到 </main> 前
+            if '</main>' not in s:
+                rows.append((sid, n, 'no-section'))
+                continue
+            s = s.replace('</main>', sec + '\n</main>', 1)
+            # 侧栏补一个题库入口（若没有）
+            if 'nav-question-bank' not in s:
+                s = s.replace('<div class="nav-group">',
+                              '<div class="nav-question-bank"><a class="nav-chapter" href="#question-bank">题库 · %d 题 →</a></div>\n<div class="nav-group">' % n, 1)
 
         # 更新侧栏导航题数
         s = re.sub(r'(<div class="nav-question-bank"><a class="nav-chapter" href="#question-bank">)[^<]*(</a></div>)',

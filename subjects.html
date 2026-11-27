@@ -54,6 +54,10 @@
       </div>
     </div>
 
+    <div class="lock-note hide" id="lockNote">
+      <b>部分学期暂未开放</b>：由于参考资料不足，大一下、大二上、大二下、大三下及其他学期的学习功能暂时关闭（卡片仍可查看科目简介与规模）。
+      相关资料仍可在<a href="materials.html">资料库</a>下载或在线预览。
+    </div>
     <div class="subj-grid" id="grid"></div>
 
     <section class="mt-4 hide" id="searchWrap">
@@ -95,13 +99,18 @@
   function card(s, i) {
     var pct = WB.store.subjectPct(s.id);
     var href = s.ext ? s.ext : WB.link('subject.html', { s: s.id });
-    return '<a class="subj-card spot rv rv-d' + ((i % 3) + 1) + '" style="--accent:' + s.accent + ';--accent-soft:' + s.accentSoft + '" href="' + href + '">' +
+    var locked = s.sem !== 'dasan1';           /* 只有大三上开放学习功能 */
+    var tag = locked ? 'div' : 'a';
+    var attrs = locked
+      ? 'class="subj-card spot is-locked rv rv-d' + ((i % 3) + 1) + '" aria-disabled="true" title="参考资料不足，暂未开放"'
+      : 'class="subj-card spot rv rv-d' + ((i % 3) + 1) + '" href="' + href + '"';
+    return '<' + tag + ' ' + attrs + ' style="--accent:' + s.accent + ';--accent-soft:' + s.accentSoft + '">' +
       '<div class="subj-top">' +
         '<div class="subj-ico">' + s.icon + '</div>' +
         '<div style="min-width:0;flex:1">' +
           '<div class="subj-name">' + WB.esc(s.name) + (s.tag ? '<span class="subj-tag">' + WB.esc(s.tag) + '</span>' : '') + '</div>' +
           '<div class="subj-en">' + WB.esc(s.en || '') + '</div>' +
-        '</div>' + 
+        '</div>' +
       '</div>' +
       '<p class="subj-desc">' + WB.esc(s.desc) + '</p>' +
       WB.subjectProgress(s) +
@@ -114,18 +123,21 @@
             : '<span class="chip chip-teal">资料型</span>' +
               '<span><b>' + (s.matCount || 0) + '</b> 份资料</span>') +
         '</div><div class="spacer"></div>' +
-        (function () {
-          var dh = WB.drillHref(s);
-          return dh ? '<span class="chip chip-quiz" role="link" tabindex="0" data-alt="' + dh + '" aria-label="' + WB.esc(s.name) + ' 刷题"><span class="chip-quiz-i" aria-hidden="true">✎</span>刷题</span>' : '';
-        })() +
-        '<span class="chip chip-line">' + (s.ext ? '打开 →' : '进入 →') + '</span>' +
-      '</div></a>';
+        (locked
+          ? '<span class="chip chip-line">暂未开放</span>'
+          : (function () {
+              var dh = WB.drillHref(s);
+              return dh ? '<span class="chip chip-quiz" role="link" tabindex="0" data-alt="' + dh + '" aria-label="' + WB.esc(s.name) + ' 刷题"><span class="chip-quiz-i" aria-hidden="true">✎</span>刷题</span>' : '';
+            })() +
+            '<span class="chip chip-line">' + (s.ext ? '打开 →' : '进入 →') + '</span>') +
+      '</div></' + tag + '>';
   }
 
   function render() {
     var list = subjList();
     document.getElementById('sCount').textContent = list.length;
     document.getElementById('grid').innerHTML = list.map(card).join('');
+    document.getElementById('lockNote').classList.toggle('hide', curCat === 'dasan1');
     WB.fx.refresh();
   }
   function renderTabs() {

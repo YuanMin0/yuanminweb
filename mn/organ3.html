@@ -1539,17 +1539,19 @@ body.side-collapsed .side-fab{display:flex}
 body.side-collapsed .layout{grid-template-columns:0 minmax(0,1fr)!important;gap:0!important}
 body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-events:none;overflow:hidden}
 .sidebar{transition:opacity .26s ease,transform .3s ease,box-shadow .5s ease}
-.side-handle{position:fixed;z-index:95;top:50vh;transform:translateY(-50%);
+.side-handle{position:fixed;z-index:95;top:50vh;transform:translateY(-50%) translateX(-8px);
   display:flex;align-items:center;justify-content:center;width:26px;height:64px;padding:0;
-  border:1px solid #D9CDB4;border-radius:999px;
+  border:1px solid #D9CDB4;border-left:0;border-radius:0 15px 15px 0;
   background:linear-gradient(180deg,#FFFDF6,#F3EAD8);color:#4E6A0D;cursor:pointer;
-  box-shadow:0 6px 18px -10px rgba(61,79,8,.7),inset 0 1px 0 #fff;
-  transition:left .32s cubic-bezier(.22,.61,.36,1),background .2s,box-shadow .2s,opacity .25s}
-.side-handle:hover{background:#fff;box-shadow:10px 0 26px -14px rgba(61,79,8,.6)}
-body.side-collapsed .side-handle{opacity:.42}
+  box-shadow:8px 0 20px -14px rgba(61,79,8,.6),inset 0 1px 0 #fff;
+  opacity:0;pointer-events:none;
+  transition:left .32s cubic-bezier(.22,.61,.36,1),background .2s,box-shadow .2s,opacity .3s,transform .3s}
+.side-handle.show{opacity:1;pointer-events:auto;transform:translateY(-50%)}
+.side-handle:hover{background:#fff;box-shadow:10px 0 26px -14px rgba(61,79,8,.7)}
+body.side-collapsed .side-handle{opacity:.42;pointer-events:auto;transform:translateY(-50%);border-radius:999px;border-left:1px solid #D9CDB4}
 body.side-collapsed .side-handle:hover{opacity:1}
 .side-handle svg{transition:transform .3s}
-body.side-collapsed .side-handle{box-shadow:0 6px 18px -10px rgba(61,79,8,.8)}
+body.side-collapsed .side-handle svg{transform:rotate(180deg)}
 body.side-collapsed .side-handle svg{transform:rotate(180deg)}
 @media (max-width:900px){.side-handle{display:none}}
 @media print{.side-handle,.side-fab,.side-collapse{display:none!important}}
@@ -2564,6 +2566,7 @@ body.side-collapsed .side-handle svg{transform:rotate(180deg)}
         a.classList.toggle('active', !!curBlk && a.getAttribute('href')==='#'+curBlk.id);
       });
       syncSide();
+      updateHandle();
       ticking=false;
     });
   }
@@ -2583,7 +2586,19 @@ body.side-collapsed .side-handle svg{transform:rotate(180deg)}
     if(!handle) return;
     if(collapsed || !sbEl){ handle.style.left='10px'; return; }
     var r=sbEl.getBoundingClientRect();
-    handle.style.left=Math.round(r.right+3)+'px';
+    handle.style.left=Math.round(r.right-1)+'px';
+  }
+  var firstCh=document.querySelector('section.chapter');
+  /* 顶部（hero 区）不显示把手，滚到第一章才淡入 */
+  function updateHandle(){
+    if(!handle) return;
+    var show;
+    if(collapsed || !firstCh){ show=true; }
+    else{
+      var th=firstCh.getBoundingClientRect().top + window.scrollY - 240;
+      show = window.scrollY >= th;
+    }
+    handle.classList.toggle('show', show);
   }
   function apply(){
     document.body.classList.toggle('side-collapsed',collapsed);
@@ -2593,6 +2608,7 @@ body.side-collapsed .side-handle svg{transform:rotate(180deg)}
       handle.title = collapsed?'展开目录':'收起目录';
     }
     placeHandle();
+    updateHandle();
   }
   if(handle) handle.addEventListener('click',function(){
     collapsed=!collapsed;

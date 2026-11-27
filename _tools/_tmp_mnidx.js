@@ -1,1 +1,0 @@
-if(window.WB&&WB.auth)WB.auth.guard();

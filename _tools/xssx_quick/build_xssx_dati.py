@@ -9,6 +9,9 @@ SITE = D.parent.parent
 TPL = SITE / 'organ3-dati.html'
 OUT = SITE / 'xssx-dati.html'
 
+PRINT_CSS = '<style id="print-css">\n@media print{\n  @page{ size:A4; margin:14mm 12mm 16mm; }\n  html,body{ background:#fff !important; color:#111 !important; }\n  .topbar,.sidebar,.side-handle,.pbar,.to-top,.hero-ctas,.side-search,.nav-legend,\n  #searchHint,.ex-btn,.side-toggle{ display:none !important; }\n  .hero{ padding:0 0 9mm !important; background:none !important; border:0 !important; box-shadow:none !important; }\n  .hero-inner{ max-width:none !important; padding:0 !important; }\n  .hero h1{ font-size:25pt !important; color:#111 !important; margin:0 0 4mm !important; letter-spacing:.02em; }\n  .hero .eyebrow{ color:#777 !important; font-size:8.5pt !important; letter-spacing:.18em; }\n  .hero .lede{ color:#333 !important; font-size:10pt !important; line-height:1.75 !important; max-width:150mm; }\n  .hero-meta{ color:#444 !important; font-size:9pt !important; margin-top:4mm !important; }\n  .hero-meta b{ color:#111 !important; }\n  .layout{ display:block !important; grid-template-columns:none !important; gap:0 !important; }\n  main{ margin:0 !important; padding:0 !important; border:0 !important; background:#fff !important; box-shadow:none !important; }\n  .cat{ break-before:page; page-break-before:always; margin:0 0 6mm !important; }\n  .cat:first-of-type{ break-before:auto; page-break-before:auto; }\n  .cat-head{ margin:0 0 4mm !important; padding:0 0 2.5mm !important; border-bottom:1.6pt solid #222; }\n  .cat-head h2{ font-size:15pt !important; color:#111 !important; }\n  .cat-en{ color:#888 !important; font-size:8pt !important; letter-spacing:.16em; }\n  .cat-desc{ color:#333 !important; font-size:9pt !important; line-height:1.7 !important; }\n  .qcard{ border:.6pt solid #c9c9c9 !important; border-radius:2mm !important; box-shadow:none !important;\n          background:#fff !important; padding:3.6mm 4mm !important; margin:0 0 3.6mm !important;\n          break-inside:avoid; page-break-inside:avoid; }\n  .qcard::after{ display:none !important; }\n  .qhead{ margin-bottom:2mm !important; }\n  .qhead h3{ font-size:11pt !important; color:#111 !important; line-height:1.45 !important; }\n  .qid{ background:#f0f0f0 !important; color:#333 !important; border:0 !important; font-size:8pt !important; }\n  .qtype{ border:.6pt solid #999 !important; color:#333 !important; font-size:7.5pt !important; }\n  .ans{ margin:0 !important; padding-left:4.5mm !important; }\n  .ans li{ font-size:9.6pt !important; line-height:1.62 !important; color:#1a1a1a !important; margin:0 0 1.4mm !important; }\n  .ans b{ color:#000 !important; }\n  .qfoot{ margin-top:1.6mm !important; padding-top:0 !important; border:0 !important; }\n  .qfoot .src{ color:#777 !important; font-size:8pt !important; }\n  a{ color:#111 !important; text-decoration:none !important; }\n}\n</style>\n'
+PRINT_JS = "<script>\n(function(){\n  var b=document.getElementById('exportPdf');\n  if(!b) return;\n  b.addEventListener('click', function(){\n    document.body.classList.add('exporting');\n    /* 等一帧让打印样式生效，再唤起打印对话框 */\n    requestAnimationFrame(function(){ setTimeout(function(){ window.print(); }, 80); });\n  });\n})();\n</script>\n"
+
 cats = []
 for f in ['xssx_1.json', 'xssx_2.json', 'xssx_3.json', 'xssx_4.json']:
     cats.extend(json.loads((D / f).read_text(encoding='utf-8'))['cats'])
@@ -82,6 +85,7 @@ hero = '''<header class="hero"><div class="hero-inner">
   </div>
   <div class="hero-ctas">
     <a class="hero-cta" href="mn/xssx.html">📖 考前速记<em>知识点版</em></a>
+    <button class="hero-cta" id="exportPdf" type="button" title="按 A4 打印排版导出为 PDF（在打印对话框里选「另存为 PDF」）">⇩ 导出 PDF<em>A4 · 打印排版</em></button>
     <a class="hero-cta ghost" href="drill.html?s=xssx">✎ 刷题<em>212 题</em></a>
   </div>
 </div></header>''' % {'n': n_all, 's': n_short, 'e': n_essay}
@@ -129,6 +133,7 @@ tail_start = tpl.index('</main>') + len('</main>')
 tail = tpl[tail_start:]
 
 out = prefix + '<div class="layout">\n' + aside + '\n' + main + tail
+out = out.replace('</head>', PRINT_CSS + '</head>', 1).replace('</body>', PRINT_JS + '</body>', 1)
 OUT.write_text(out, encoding='utf-8', newline='\n')
 print('written', OUT, len(out), 'bytes')
 print('items', n_all, 'term', n_term, 'short', n_short, 'essay', n_essay, 'cats', len(cats))

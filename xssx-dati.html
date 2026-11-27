@@ -293,6 +293,43 @@ main{min-width:0}
   .cat{break-before:auto}
 }
 </style>
+<style id="print-css">
+@media print{
+  @page{ size:A4; margin:14mm 12mm 16mm; }
+  html,body{ background:#fff !important; color:#111 !important; }
+  .topbar,.sidebar,.side-handle,.pbar,.to-top,.hero-ctas,.side-search,.nav-legend,
+  #searchHint,.ex-btn,.side-toggle{ display:none !important; }
+  .hero{ padding:0 0 9mm !important; background:none !important; border:0 !important; box-shadow:none !important; }
+  .hero-inner{ max-width:none !important; padding:0 !important; }
+  .hero h1{ font-size:25pt !important; color:#111 !important; margin:0 0 4mm !important; letter-spacing:.02em; }
+  .hero .eyebrow{ color:#777 !important; font-size:8.5pt !important; letter-spacing:.18em; }
+  .hero .lede{ color:#333 !important; font-size:10pt !important; line-height:1.75 !important; max-width:150mm; }
+  .hero-meta{ color:#444 !important; font-size:9pt !important; margin-top:4mm !important; }
+  .hero-meta b{ color:#111 !important; }
+  .layout{ display:block !important; grid-template-columns:none !important; gap:0 !important; }
+  main{ margin:0 !important; padding:0 !important; border:0 !important; background:#fff !important; box-shadow:none !important; }
+  .cat{ break-before:page; page-break-before:always; margin:0 0 6mm !important; }
+  .cat:first-of-type{ break-before:auto; page-break-before:auto; }
+  .cat-head{ margin:0 0 4mm !important; padding:0 0 2.5mm !important; border-bottom:1.6pt solid #222; }
+  .cat-head h2{ font-size:15pt !important; color:#111 !important; }
+  .cat-en{ color:#888 !important; font-size:8pt !important; letter-spacing:.16em; }
+  .cat-desc{ color:#333 !important; font-size:9pt !important; line-height:1.7 !important; }
+  .qcard{ border:.6pt solid #c9c9c9 !important; border-radius:2mm !important; box-shadow:none !important;
+          background:#fff !important; padding:3.6mm 4mm !important; margin:0 0 3.6mm !important;
+          break-inside:avoid; page-break-inside:avoid; }
+  .qcard::after{ display:none !important; }
+  .qhead{ margin-bottom:2mm !important; }
+  .qhead h3{ font-size:11pt !important; color:#111 !important; line-height:1.45 !important; }
+  .qid{ background:#f0f0f0 !important; color:#333 !important; border:0 !important; font-size:8pt !important; }
+  .qtype{ border:.6pt solid #999 !important; color:#333 !important; font-size:7.5pt !important; }
+  .ans{ margin:0 !important; padding-left:4.5mm !important; }
+  .ans li{ font-size:9.6pt !important; line-height:1.62 !important; color:#1a1a1a !important; margin:0 0 1.4mm !important; }
+  .ans b{ color:#000 !important; }
+  .qfoot{ margin-top:1.6mm !important; padding-top:0 !important; border:0 !important; }
+  .qfoot .src{ color:#777 !important; font-size:8pt !important; }
+  a{ color:#111 !important; text-decoration:none !important; }
+}
+</style>
 </head>
 <body>
 <div class="pbar" id="pbar" aria-hidden="true"></div>
@@ -313,6 +350,7 @@ main{min-width:0}
   </div>
   <div class="hero-ctas">
     <a class="hero-cta" href="mn/xssx.html">📖 考前速记<em>知识点版</em></a>
+    <button class="hero-cta" id="exportPdf" type="button" title="按 A4 打印排版导出为 PDF（在打印对话框里选「另存为 PDF」）">⇩ 导出 PDF<em>A4 · 打印排版</em></button>
     <a class="hero-cta ghost" href="drill.html?s=xssx">✎ 刷题<em>212 题</em></a>
   </div>
 </div></header>
@@ -1265,6 +1303,17 @@ main{min-width:0}
     t.classList.toggle('show',window.scrollY>600);
   },{passive:true});
   t.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+<script>
+(function(){
+  var b=document.getElementById('exportPdf');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    document.body.classList.add('exporting');
+    /* 等一帧让打印样式生效，再唤起打印对话框 */
+    requestAnimationFrame(function(){ setTimeout(function(){ window.print(); }, 80); });
+  });
 })();
 </script>
 </body>

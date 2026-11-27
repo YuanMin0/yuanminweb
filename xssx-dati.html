@@ -1,0 +1,1271 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>考前大题速背 · 习近平新时代中国特色社会主义思想概论 | MediLearn</title>
+<meta name="description" content="习近平新时代中国特色社会主义思想概论 考前大题速背：按导论与十二章整理 81 条简答与论述，分点答案＋PPT 来源，可直接背诵。">
+<script src="js/auth.js"></script><script>if(window.WB&&WB.auth)WB.auth.guard();</script>
+<style>
+:root{
+  --paper:#FAF6EC; --paper2:#FDFBF4; --ink:#2E2A24; --sub:#6B6255; --line:#E0D6C0;
+  --blue:#5B84A8; --blueD:#3E5F7D; --blueL:#E3EDF5;
+  --red:#C0554A; --redL:#F8E4E0; --gold:#D9A75E; --goldL:#FBF0DA;
+  --green:#8FA96B; --greenL:#EDF2E2; --violet:#8E7BA8; --violetL:#EFE9F4;
+  --shadow:0 14px 40px -18px rgba(62,95,125,.35);
+  --font-title:"方正小标宋简体","STZhongsong","SimSun",serif;
+  --font-head:"黑体","SimHei","Microsoft YaHei",sans-serif;
+  --font-body:"仿宋_GB2312","FangSong","Microsoft YaHei",serif;
+  --font-kai:"楷体_GB2312","KaiTi",serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;color:var(--ink);background:var(--paper);font:17px/1.78 var(--font-body)}
+h1,h2{font-family:var(--font-title);font-weight:400;margin:0}
+h3{font-family:var(--font-head);margin:0;font-size:1.06em;line-height:1.5}
+b{font-family:var(--font-head);color:var(--blueD)}
+a{color:var(--blueD)}
+.pbar{position:fixed;top:0;left:0;z-index:120;height:2.5px;width:0;
+  background:linear-gradient(90deg,var(--gold),#C0554A);box-shadow:0 0 8px rgba(192,85,74,.5);
+  transition:width .08s linear;pointer-events:none}
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:14px;
+  padding:10px 22px;background:rgba(250,246,236,.94);border-bottom:1px solid var(--line);
+  backdrop-filter:blur(12px);font:13px var(--font-head)}
+.topbar a{text-decoration:none;color:var(--sub)}
+.topbar a:hover{color:var(--blueD)}
+.topbar .sep{color:var(--line)}
+.side-toggle{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;padding:0;border:1px solid var(--line);border-radius:8px;background:#fff;
+  color:var(--sub);cursor:pointer;transition:border-color .2s,color .2s,background .2s}
+.side-toggle:hover{border-color:var(--gold);color:var(--blueD);background:#FFFDF6}
+.side-toggle:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.hero{position:relative;overflow:hidden;padding:54px 26px 44px;color:#FFF9EC;
+  background:linear-gradient(135deg,#3E5F7D 0%,#5B84A8 55%,#7FA0BE 100%)}
+.hero::after{content:"";position:absolute;inset:auto -10% -60% -10%;height:220px;
+  background:radial-gradient(closest-side,rgba(217,167,94,.30),transparent 70%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;width:min(1180px,100%);margin:0 auto}
+.eyebrow{margin:0 0 8px;font:13px var(--font-kai);letter-spacing:.18em;color:#F0DCB4}
+.hero h1{font-size:clamp(2rem,4.4vw,3.3rem);letter-spacing:.02em}
+.lede{max-width:820px;margin:14px 0 0;color:#EAF2F8;font-size:1.02em}
+.hero .lede b,.hero-meta b{color:#FFF3D6!important;font-family:var(--font-head)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:18px;color:#D9E6F0;font:14px var(--font-kai)}
+.hero-meta b{color:#FFF3D6;font-family:var(--font-head)}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.hero-cta{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;
+  text-decoration:none;font:700 14px var(--font-head);color:#3A2A12;
+  background:linear-gradient(180deg,#F4D79F,#D9A75E);border:1px solid #FFEBC8;
+  box-shadow:0 10px 22px -14px rgba(0,0,0,.5)}
+.hero-cta.ghost{background:rgba(255,255,255,.10);color:#FFF6E2;border-color:rgba(255,235,200,.55)}
+.hero-cta em{font:400 12px var(--font-kai);font-style:normal;opacity:.8}
+.layout{display:grid;grid-template-columns:278px minmax(0,1fr);gap:26px;
+  width:min(1280px,calc(100% - 36px));margin:26px auto 80px;align-items:start;
+  transition:grid-template-columns .36s cubic-bezier(.22,.61,.36,1),gap .36s}
+body.side-collapsed .layout{grid-template-columns:0 minmax(0,1fr);gap:0}
+body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-events:none;overflow:hidden}
+.sidebar{position:sticky;top:64px;max-height:calc(100vh - 84px);overflow:auto;
+  transition:opacity .26s ease,transform .3s ease,box-shadow .5s ease;
+  padding:18px 14px 16px;border-radius:16px;
+  background:linear-gradient(160deg,rgba(255,255,255,.965),rgba(247,251,254,.93));
+  border:1px solid rgba(255,255,255,.92);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.92),0 26px 64px -30px rgba(62,95,125,.46);
+  scrollbar-width:thin;scrollbar-color:#D9CDB4 transparent}
+.sidebar:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.92),0 34px 78px -32px rgba(62,95,125,.55)}
+.sidebar::-webkit-scrollbar{width:7px}
+.sidebar::-webkit-scrollbar-thumb{background:#DED3BB;border-radius:99px}
+.sidebar::-webkit-scrollbar-thumb:hover{background:#C9BB9C}
+.sidebar::-webkit-scrollbar-track{background:transparent}
+.side-title{display:flex;align-items:center;gap:7px;margin:0 0 12px;padding:0 4px 10px;
+  border-bottom:1px solid #EADFC9;font:700 12.5px var(--font-head);color:#8A7A5E;letter-spacing:.14em}
+.side-title{position:relative}
+.side-title::before{content:"";width:3px;height:13px;border-radius:2px;
+  background:linear-gradient(180deg,var(--gold),var(--red))}
+.side-title::after{content:"";position:absolute;left:4px;bottom:0;height:2px;width:0;border-radius:2px;
+  background:linear-gradient(90deg,var(--gold),var(--red) 58%,rgba(192,85,74,0));
+  animation:navGrowInset 1.1s cubic-bezier(.16,1,.3,1) .25s forwards}
+.side-search{width:100%;margin-bottom:10px;padding:9px 12px 9px 32px;border:1px solid #E4D9C1;border-radius:10px;
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23A99C82' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E") no-repeat 10px center;
+  font:14px var(--font-body);color:var(--ink);transition:border-color .22s,box-shadow .22s}
+.side-search::placeholder{color:#B3A78D}
+.side-search:focus{outline:0;border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,167,94,.18)}
+.nav-cat{position:relative;display:flex;align-items:center;gap:9px;
+  margin-bottom:4px;padding:9px 8px 9px 11px;border-radius:10px;border:1px solid transparent;
+  text-decoration:none;color:var(--ink);font:600 12.8px var(--font-head);
+  transition:background .2s,transform .2s,border-color .2s,box-shadow .2s}
+.nav-cat::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:16px;border-radius:2px;background:#DDD2B9;transition:height .22s,background .22s}
+.nav-cat .nc-ico{flex:none;width:13px;text-align:center;font:400 12px var(--font-title);
+  color:#A99C82;font-style:normal;transition:color .2s}
+.nav-cat span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-cat em{flex:none;min-width:22px;padding:1px 6px;border-radius:99px;background:#F1EADA;
+  color:#8A7A5E;font:700 11px var(--font-head);font-style:normal;text-align:center;
+  transition:background .2s,color .2s}
+.nav-cat:hover{background:#fff;border-color:#EBE0C9;
+  box-shadow:0 10px 24px -20px rgba(0,0,0,.5)}
+.nav-cat:hover::before{background:var(--gold);height:20px}
+.nav-cat[data-cat="physio"]::before{background:rgba(91,132,168,.35)}
+.nav-cat[data-cat="patho"]::before{background:rgba(192,85,74,.32)}
+.nav-cat[data-cat="path"]::before{background:rgba(142,123,168,.35)}
+.nav-cat[data-cat="pharm"]::before{background:rgba(143,169,107,.38)}
+.nav-cat[data-cat="physio"].active .nc-ico,.nav-cat[data-cat="physio"]:hover .nc-ico{color:var(--blue)}
+.nav-cat[data-cat="patho"].active .nc-ico,.nav-cat[data-cat="patho"]:hover .nc-ico{color:var(--red)}
+.nav-cat[data-cat="path"].active .nc-ico,.nav-cat[data-cat="path"]:hover .nc-ico{color:var(--violet)}
+.nav-cat[data-cat="pharm"].active .nc-ico,.nav-cat[data-cat="pharm"]:hover .nc-ico{color:var(--green)}
+.nav-cat[data-cat="physio"].active::before,.nav-cat[data-cat="physio"]:hover::before{background:var(--blue)}
+.nav-cat[data-cat="patho"].active::before,.nav-cat[data-cat="patho"]:hover::before{background:var(--red)}
+.nav-cat[data-cat="path"].active::before,.nav-cat[data-cat="path"]:hover::before{background:var(--violet)}
+.nav-cat[data-cat="pharm"].active::before,.nav-cat[data-cat="pharm"]:hover::before{background:var(--green)}
+.nav-cat.active{background:#fff;border-color:#E7D8B6;box-shadow:0 8px 22px -18px rgba(0,0,0,.55)}
+.nav-cat.active::after{content:"";position:absolute;left:12px;right:10px;bottom:2px;height:2px;
+  border-radius:2px;background:linear-gradient(90deg,var(--gold),transparent);
+  animation:none}
+.nav-cat.active::before{height:26px}
+.nav-cat.active span{color:var(--blueD)}
+.nav-cat.active em{background:var(--blueD);color:#fff}
+.nav-hot{position:relative;display:flex;align-items:center;gap:7px;margin-top:6px;padding:10px 12px;
+  border-radius:10px;text-decoration:none;color:#A8413A;font:700 12.5px var(--font-head);
+  background:linear-gradient(135deg,#FDEEE9,#FBE3DC);border:1px solid #F0CFC7;
+  transition:transform .2s,box-shadow .2s,border-color .2s}
+.nav-hot + .nav-hot{margin-top:7px}
+.nav-hot:hover{transform:translateY(-1px);border-color:#E3A79C;box-shadow:0 10px 22px -18px rgba(168,65,58,.8)}
+.nav-hot.gold{color:#7A4E12;background:linear-gradient(135deg,#FDF6E6,#F8EBCE);border-color:#EBD3A6}
+.nav-hot.gold:hover{border-color:#D9B877}
+.nav-legend{margin-top:16px;padding-top:14px;border-top:1px dashed #E2D7BF;
+  font:11.5px/1.9 var(--font-kai);color:#8A7A5E}
+.nav-legend{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px}
+.nav-legend div{display:flex;align-items:center;gap:5px}
+.nav-legend i{display:inline-block;width:8px;height:8px;border-radius:50%;flex:none;
+  box-shadow:0 0 0 2px rgba(255,255,255,.9)}
+main{min-width:0}
+.hotbox{margin-bottom:30px;padding:20px 22px;background:var(--redL);border:1px solid #EBC3BB;border-radius:14px}
+.hotbox h2{font-size:1.35rem;color:var(--red);margin-bottom:4px}
+.hotbox p{margin:0 0 14px;font:13px var(--font-kai);color:#8A4A42}
+.hot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:9px}
+.hot-link{display:flex;align-items:baseline;gap:8px;padding:8px 11px;border-radius:8px;
+  background:#FFF9F7;border:1px solid #EFD3CD;text-decoration:none;color:var(--ink);font-size:13.5px}
+.hot-link:hover{border-color:var(--red)}
+.hot-link b{color:var(--red);font-size:11.5px;flex:none}
+.hot-link span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hot-link em{flex:none;font:400 12px var(--font-kai);color:var(--red);font-style:normal}
+.cat{margin-bottom:44px}
+.cat-head{margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--line)}
+.cat-en{margin:0 0 4px;font:12px var(--font-kai);letter-spacing:.16em;color:var(--gold);text-transform:uppercase}
+.cat-head h2{font-size:clamp(1.5rem,2.6vw,2rem);color:var(--blueD)}
+.cat-desc{max-width:820px;margin:8px 0 0;font:13.5px/1.7 var(--font-kai);color:var(--sub)}
+.qcard{position:relative;margin-bottom:18px;padding:20px 22px 16px;background:#fff;
+  border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:12px;
+  box-shadow:0 6px 20px -16px rgba(0,0,0,.35);
+  transition:box-shadow .26s ease,transform .26s ease,border-color .26s ease}
+.qcard:hover{box-shadow:0 18px 42px -26px rgba(62,95,125,.55);transform:translateY(-2px);
+  border-color:#DCD2BB}
+.qcard.hot:hover{box-shadow:0 18px 42px -26px rgba(192,85,74,.55)}
+.qcard.hot{border-left-color:var(--red);background:linear-gradient(180deg,#FFF9F7,#fff 120px)}
+.qhead{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-bottom:12px}
+.qid{flex:none;padding:2px 7px;border-radius:5px;background:var(--blueL);color:var(--blueD);
+  font:700 11.5px var(--font-head);letter-spacing:.05em}
+.qcard.hot .qid{background:var(--redL);color:var(--red)}
+.qhead h3{flex:1 1 320px;min-width:0}
+.star{display:inline-block;margin-right:7px;padding:1px 7px 2px;border-radius:5px;
+  background:var(--goldL);border:1px solid #E3C48C;color:#8A5B18;
+  font:700 11px/1.5 var(--font-head);letter-spacing:1.5px;vertical-align:2px}
+.star.hot{background:var(--red);border-color:#A8413A;color:#FFF4EE}
+.star.low{background:#F2EEE3;border-color:#DCD3BE;color:#8A8375}
+.tipbox{margin-top:12px;padding:11px 14px;border-radius:9px;background:#F1F5E9;
+  border-left:4px solid var(--green);font:14.5px/1.75 var(--font-body);color:#43502F}
+.tipbox b{color:var(--red);font-family:var(--font-head);margin-right:2px}
+/* 考试情报 */
+.exam-brief{margin-bottom:24px;padding:20px 22px;border-radius:14px;
+  background:linear-gradient(180deg,#FFFDF6,#FFF8E8);border:1px solid #E8D5A8}
+.eb-head{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:14px}
+.eb-head h2{font-size:1.25rem;color:#8A5B18}
+.eb-icon{font-size:1.05em}
+.eb-src{margin-left:auto;font:11.5px var(--font-kai);color:var(--sub)}
+.eb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:10px}
+.eb-cell{padding:10px 12px;border-radius:9px;background:#fff;border:1px solid #EFE2C6}
+.eb-cell b{display:block;margin-bottom:3px;color:var(--red);font:700 12.5px var(--font-head)}
+.eb-cell p{margin:0;font:13px/1.65 var(--font-body);color:#4A4234}
+.eb-cell strong{color:var(--red)}
+/* 历年真题 */
+.realbox{margin-bottom:22px;padding:14px 20px;border-radius:12px;background:#F2F6FA;border:1px solid #C9D8E6}
+.realbox summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;
+  font:700 14.5px var(--font-head);color:var(--blueD)}
+.realbox summary::-webkit-details-marker{display:none}
+.realbox summary em{font:400 12px var(--font-kai);color:var(--sub);font-style:normal;margin-left:auto}
+.rb-ico{font-size:1em}
+.rb-body{margin-top:12px}
+.rb-lead{margin:0 0 12px;font:13px/1.7 var(--font-body);color:#3C4A57}
+.rb-lead strong{color:var(--blueD)}
+.rb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:9px}
+.rb-cell{padding:9px 11px;border-radius:8px;background:#fff;border:1px solid #D5E1EC}
+.rb-cell b{display:block;margin-bottom:2px;color:var(--blueD);font:700 12px var(--font-head)}
+.rb-cell p{margin:0;font:12.5px/1.6 var(--font-body);color:#46525E}
+/* 真题徽章 */
+.real{flex:none;padding:2px 7px;border-radius:5px;background:#EAF1F8;border:1px solid #B9CDE0;
+  color:#3E5F7D;font:700 10.5px var(--font-head);white-space:nowrap}
+@keyframes navGrowFull{from{width:0}to{width:100%}}
+@keyframes navGrowInset{from{width:0}to{width:calc(100% - 16px)}}
+/* 本次必背 */
+.mustbox{margin-bottom:28px;padding:18px 22px;border-radius:14px;background:#FFF4F0;border:1px solid #EBC3BB}
+.mb-head h2{font-size:1.25rem;color:var(--red)}
+.mb-head p{margin:3px 0 13px;font:12.5px var(--font-kai);color:#8A4A42}
+.must-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.must-link{display:flex;align-items:baseline;gap:8px;padding:8px 11px;border-radius:8px;
+  background:#fff;border:1px solid #EFD3CD;text-decoration:none;color:var(--ink);font-size:13.5px}
+.must-link:hover{border-color:var(--red)}
+.must-link em{flex:none;font-style:normal;font:700 10.5px var(--font-head);padding:1px 5px;border-radius:4px}
+.must-link.mn em{background:var(--red);color:#fff}
+.must-link.ln em{background:var(--violet);color:#fff}
+.must-link b{flex:none;color:var(--sub);font-size:11px}
+.must-link span{flex:1;min-width:0;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;line-height:1.45}
+/* 本次考法徽章 */
+.exam{flex:none;padding:2px 8px;border-radius:999px;font:700 11px var(--font-head);white-space:nowrap}
+.exam.mn{background:var(--red);color:#fff}
+.exam.mn2{background:var(--redL);color:var(--red);border:1px solid #E0B0A8}
+.exam.ln{background:var(--violet);color:#fff}
+.exam.ln2{background:var(--violetL);color:var(--violet);border:1px solid #C9BBD8}
+.exam.sel{background:#F2EEE3;color:#6B6255;border:1px solid var(--line)}
+.exam.ign{background:transparent;color:#A79E8C;border:1px dashed #D6CDB8}
+/* 分类考法行 */
+.cat-exam{margin:8px 0 0;padding:7px 11px;border-radius:7px;background:#FFF6E4;
+  border-left:3px solid var(--gold);font:12.5px/1.6 var(--font-kai);color:#6B4A1E}
+.qtype{flex:none;padding:2px 8px;border-radius:999px;border:1px solid var(--line);
+  color:var(--sub);font:12px var(--font-kai)}
+.freq{flex:none;padding:2px 9px;border-radius:999px;font:700 11.5px var(--font-head);white-space:nowrap}
+.freq.hot{background:var(--red);color:#fff}
+.freq.mid{background:var(--goldL);color:#8A5B18;border:1px solid var(--gold)}
+.freq.low{background:var(--greenL);color:#4F6634;border:1px solid var(--green)}
+.freq.none{background:#F2EEE3;color:var(--sub);border:1px solid var(--line)}
+.ans{margin:0;padding-left:24px;list-style:none;counter-reset:q}
+.ans li{margin:5px 0;padding-left:5px;position:relative;counter-increment:q}
+.ans li::before{content:counter(q) ".";position:absolute;left:-24px;width:18px;
+  color:var(--blue);font-weight:700;text-align:right}
+.ans li.sec{counter-increment:none;list-style:none;margin:14px 0 4px -24px;padding:3px 0 3px 10px;
+  border-left:3px solid var(--blue);font:700 1.02em var(--font-head);color:var(--blueD);background:var(--blueL);border-radius:0 5px 5px 0}
+.ans li.sec::before{content:none}
+.qcard.hot .ans li.sec{border-left-color:var(--red);background:var(--redL);color:var(--red)}
+.qcard.hot .ans li::before{color:var(--red)}
+.qfoot{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:14px;padding-top:10px;border-top:1px dashed var(--line)}
+.ex-btn{display:inline-flex;align-items:center;gap:7px;padding:7px 16px;border-radius:999px;
+  border:1px solid var(--gold);background:var(--goldL);color:#7A4E12;
+  font:700 12.5px var(--font-head);cursor:pointer}
+.ex-btn:hover{background:#F7E7C4}
+.ex-btn[aria-expanded="true"]{background:var(--gold);color:#3A2A12}
+.ex-btn .bulb{font-size:13px}
+.src{flex:1 1 240px;min-width:0;font:12px/1.55 var(--font-kai);color:var(--sub);text-align:right}
+.ex{display:grid;grid-template-rows:0fr;opacity:0;margin-top:0;
+  border-radius:12px;background:linear-gradient(180deg,#FDF5E4,#FBF0DA);
+  border:0 solid #EBD3A6;border-left-width:0;
+  transition:grid-template-rows .36s cubic-bezier(.22,.61,.36,1),opacity .26s ease,
+    margin-top .32s ease,border-width .32s ease}
+.ex.open{grid-template-rows:1fr;opacity:1;margin-top:13px;border-width:1px;border-left-width:4px}
+.ex > .ex-inner{overflow:hidden;min-height:0;padding:0 16px;transition:padding .32s ease}
+.ex.open > .ex-inner{padding:14px 16px 15px}
+.ex-inner{font:15.5px/1.82 var(--font-body);color:#4A3A22}
+.ex-inner p{margin:0 0 9px}
+.ex-inner p:last-child{margin-bottom:0}
+.ex-inner b{color:#8A5B18}
+.ex-inner b{color:#8A5B18}
+.fig{margin:14px 0 2px;padding:10px;background:var(--paper2);border:1px solid var(--line);border-radius:10px;
+  max-width:100%;overflow-x:auto}
+.fig-svg{display:block;width:100%;min-width:520px;height:auto}
+.fig figcaption{margin-top:6px;font:12px var(--font-kai);color:var(--sub);text-align:center}
+.empty{padding:40px;text-align:center;color:var(--sub);font:14px var(--font-kai)}
+.to-top{position:fixed;right:20px;bottom:22px;z-index:60;display:flex;align-items:center;justify-content:center;width:46px;height:46px;border:0;border-radius:50%;
+  background:var(--blueD);color:#fff;font:700 18px/1 var(--font-head);cursor:pointer;
+  opacity:0;transform:translateY(10px);pointer-events:none;transition:.24s ease;box-shadow:0 12px 26px -12px rgba(62,95,125,.8)}
+.to-top.show{opacity:1;transform:none;pointer-events:auto}
+.footer{padding:30px 20px 50px;text-align:center;color:var(--sub);font:13px var(--font-kai)}
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;width:calc(100% - 24px)}
+  .sidebar{position:static;max-height:none;order:-1}
+  .nav-cat{display:inline-flex;margin:2px 4px 2px 0;padding:6px 10px;background:var(--blueL)}
+  .side-search{max-width:100%}
+  .src{text-align:left}
+}
+@media print{
+  .topbar,.sidebar,.hero-ctas,.ex-btn,.to-top,.hotbox{display:none!important}
+  body{background:#fff;font-size:11pt}
+  .layout{display:block;width:100%;margin:0}
+  .hero{background:#fff!important;color:#000;padding:0 0 12px;border-bottom:2px solid #000}
+  .hero h1{font-size:20pt}.lede,.hero-meta{color:#000}
+  .qcard{break-inside:avoid;page-break-inside:avoid;box-shadow:none;border:1px solid #999;margin-bottom:10px}
+  .ex{display:none!important}
+  .cat{break-before:auto}
+}
+</style>
+</head>
+<body>
+<div class="pbar" id="pbar" aria-hidden="true"></div>
+<div class="topbar">
+  <a href="index.html">MediLearn</a><span class="sep">/</span>
+  <a href="subject.html?s=xssx">习近平新时代中国特色社会主义思想概论</a><span class="sep">/</span>
+  <span>考前大题速背</span>
+  <button class="side-toggle" id="sideToggle" type="button" aria-label="收起侧栏" aria-expanded="true" title="收起 / 展开侧栏">
+    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+</div>
+<header class="hero"><div class="hero-inner">
+  <p class="eyebrow">XI JINPING THOUGHT · 2026 秋</p>
+  <h1>考前大题速背</h1>
+  <p class="lede">按 <b>导论 + 十二章</b> 编排，覆盖《复习要点（2026 秋）总》的考点清单。每条给出可直接背诵的分点答案，并标注对应的 <b>PPT 章节</b>，按章背诵、按条核对。</p>
+  <div class="hero-meta">
+    <span><b>81</b> 条</span><span>简答 <b>60</b></span><span>论述 <b>21</b></span><span>覆盖 <b>13</b> 章</span>
+  </div>
+  <div class="hero-ctas">
+    <a class="hero-cta" href="mn/xssx.html">📖 考前速记<em>知识点版</em></a>
+    <a class="hero-cta ghost" href="drill.html?s=xssx">✎ 刷题<em>212 题</em></a>
+  </div>
+</div></header>
+
+<div class="layout">
+<aside class="sidebar">
+  <p class="side-title">章节目录</p>
+  <input class="side-search" id="sideQ" type="search" placeholder="搜索考点 / 关键词…" aria-label="搜索考点">
+  <p id="searchHint" style="margin:-4px 0 8px;font:12px var(--font-kai);color:var(--sub)"></p>
+  <a class="nav-cat" href="#cat-daolun" data-cat="daolun" title="导论 · 马克思主义中国化时代化新的飞跃"><i class="nc-ico" aria-hidden="true">0</i><span>导论 · 新的飞跃</span><em>6</em></a><a class="nav-cat" href="#cat-c1" data-cat="c1" title="第一章 · 新时代坚持和发展中国特色社会主义"><i class="nc-ico" aria-hidden="true">1</i><span>第一章 · 中国特色社会主义</span><em>4</em></a><a class="nav-cat" href="#cat-c2" data-cat="c2" title="第二章 · 坚持以人民为中心"><i class="nc-ico" aria-hidden="true">2</i><span>第二章 · 以人民为中心</span><em>2</em></a><a class="nav-cat" href="#cat-c3" data-cat="c3" title="第三章 · 全面深化改革 教育科技人才战略"><i class="nc-ico" aria-hidden="true">3</i><span>第三章 · 改革与教科人</span><em>7</em></a><a class="nav-cat" href="#cat-c4" data-cat="c4" title="第四章 · 推动高质量发展"><i class="nc-ico" aria-hidden="true">4</i><span>第四章 · 高质量发展</span><em>4</em></a><a class="nav-cat" href="#cat-c5" data-cat="c5" title="第五章 · 中国特色社会主义政治发展道路"><i class="nc-ico" aria-hidden="true">5</i><span>第五章 · 政治发展道路</span><em>7</em></a><a class="nav-cat" href="#cat-c6" data-cat="c6" title="第六章 · 建设社会主义文化强国"><i class="nc-ico" aria-hidden="true">6</i><span>第六章 · 文化强国</span><em>5</em></a><a class="nav-cat" href="#cat-c7" data-cat="c7" title="第七章 · 保障和改善民生 加强社会建设"><i class="nc-ico" aria-hidden="true">7</i><span>第七章 · 民生与社会建设</span><em>5</em></a><a class="nav-cat" href="#cat-c8" data-cat="c8" title="第八章 · 建设社会主义生态文明"><i class="nc-ico" aria-hidden="true">8</i><span>第八章 · 生态文明</span><em>2</em></a><a class="nav-cat" href="#cat-c9" data-cat="c9" title="第九章 · 总体国家安全观 推进祖国统一"><i class="nc-ico" aria-hidden="true">9</i><span>第九章 · 国家安全与统一</span><em>4</em></a><a class="nav-cat" href="#cat-c10" data-cat="c10" title="第十章 · 习近平强军思想"><i class="nc-ico" aria-hidden="true">10</i><span>第十章 · 强军思想</span><em>29</em></a><a class="nav-cat" href="#cat-c11" data-cat="c11" title="第十一章 · 中国特色大国外交"><i class="nc-ico" aria-hidden="true">11</i><span>第十一章 · 大国外交</span><em>3</em></a><a class="nav-cat" href="#cat-c12" data-cat="c12" title="第十二章 · 党的领导和全面从严治党"><i class="nc-ico" aria-hidden="true">12</i><span>第十二章 · 党的领导</span><em>3</em></a>
+  <div class="nav-legend" style="grid-template-columns:1fr">
+    <div><i style="background:#C0554A"></i>按章背诵，共 81 条</div>
+    <div><i style="background:#D9A75E"></i>来源标注到 PPT 页码</div>
+  </div>
+</aside>
+<main>
+  <section class="exam-brief" id="intro">
+    <div class="eb-head"><span class="eb-icon" aria-hidden="true">📋</span><h2>怎么用这一页</h2>
+      <span class="eb-src">依据：复习要点（2026 秋）总 + 课堂 PPT</span></div>
+    <div class="eb-grid">
+      <div class="eb-cell"><b>覆盖范围</b><p>导论 6 条、第一章 4 条、第二章 2 条、第三章 7 条、第四章 4 条、第五章 7 条、第六章 5 条、第七章 5 条、第八章 2 条、第九章 4 条、第十章 29 条、第十一章 3 条、第十二章 3 条。</p></div>
+      <div class="eb-cell"><b>答案怎么用</b><p>每条按「总—分」给分点，加粗处是采分关键词；简答题写 3～5 点，论述题在此基础上展开并举例。</p></div>
+      <div class="eb-cell"><b>来源标注</b><p>每条末尾标注「第 X 章 PPT（必要时到节）」，与课堂课件对应；复习要点只列考点，答案以课件表述为准。</p></div>
+      <div class="eb-cell"><b>背诵顺序</b><p>先背导论与第一、二章（总论），再按章推进；第十章条目最多，按「强军思想—党的领导—强军目标—备战—现代化—改革—战略体系—方法论」顺序过。</p></div>
+    </div>
+  </section>
+<section class="cat" id="cat-daolun">
+  <header class="cat-head">
+    <div><p class="cat-en">INTRODUCTION</p><h2>导论 · 马克思主义中国化时代化新的飞跃</h2></div>
+    <p class="cat-desc">习思想创立的社会历史条件、社会主要矛盾、两个结合、科学体系、世界观方法论与两个确立。</p>
+  </header>
+  <article class="qcard" id="d01" data-cat="daolun" data-type="简答" data-text="习近平新时代中国特色社会主义思想创立的社会历史条件 时代背景：世界百年未有之大变局加速演进，中华民族伟大复兴进入关键时期，两者同步交织、相互激荡。 实践基础：新时代坚持和发展中国特色社会主义的伟大实践，是思想创立和发展的源头活水。 理论渊源：坚持马克思主义基本原理，继承和发展毛泽东思想、邓小平理论、“三个代表”重要思想、科学发展观。 文化根基：中华优秀传统文化是党的创新理论的根，坚持把马克思主义思想精髓同中华优秀传统文化精华贯通起来。 世界眼光：吸收借鉴人类文明优秀成果，回答中国之问、世界之问、人民之问、时代之问。">
+  <header class="qhead">
+    <span class="qid">D01</span>
+    <h3>习近平新时代中国特色社会主义思想创立的社会历史条件</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>时代背景</b>：世界百年未有之大变局加速演进，中华民族伟大复兴进入关键时期，两者同步交织、相互激荡。</li><li><b>实践基础</b>：新时代坚持和发展中国特色社会主义的伟大实践，是思想创立和发展的源头活水。</li><li><b>理论渊源</b>：坚持马克思主义基本原理，继承和发展毛泽东思想、邓小平理论、“三个代表”重要思想、科学发展观。</li><li><b>文化根基</b>：中华优秀传统文化是党的创新理论的根，坚持把马克思主义思想精髓同中华优秀传统文化精华贯通起来。</li><li><b>世界眼光</b>：吸收借鉴人类文明优秀成果，回答中国之问、世界之问、人民之问、时代之问。</li></ul>
+  <div class="qfoot"><span class="src">导论 PPT</span></div>
+</article>
+  <article class="qcard" id="d02" data-cat="daolun" data-type="简答" data-text="新时代社会主要矛盾的变化 表述：我国社会主要矛盾已经转化为人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾。 依据一：我国社会生产力水平总体上显著提高，社会生产能力在很多方面进入世界前列。 依据二：人民生活水平显著提高，对美好生活的向往更加强烈，需要日益广泛。 依据三：发展的不平衡不充分，成为满足人民日益增长的美好生活需要的主要制约因素。 注意：主要矛盾变化没有改变我国仍处于并将长期处于社会主义初级阶段的基本国情，没有改变我国是世界最大发展中国家的国际地位。">
+  <header class="qhead">
+    <span class="qid">D02</span>
+    <h3>新时代社会主要矛盾的变化</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>表述</b>：我国社会主要矛盾已经转化为<b>人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾</b>。</li><li><b>依据一</b>：我国社会生产力水平总体上显著提高，社会生产能力在很多方面进入世界前列。</li><li><b>依据二</b>：人民生活水平显著提高，对美好生活的向往更加强烈，需要日益广泛。</li><li><b>依据三</b>：发展的不平衡不充分，成为满足人民日益增长的美好生活需要的主要制约因素。</li><li><b>注意</b>：主要矛盾变化<b>没有改变</b>我国仍处于并将长期处于社会主义初级阶段的基本国情，没有改变我国是世界最大发展中国家的国际地位。</li></ul>
+  <div class="qfoot"><span class="src">导论 PPT</span></div>
+</article>
+  <article class="qcard" id="d03" data-cat="daolun" data-type="简答" data-text="“两个结合”的内涵与意义 内涵：把马克思主义基本原理同中国具体实际相结合、同中华优秀传统文化相结合。 同中国具体实际相结合：一切从实际出发，着眼解决新时代改革开放和社会主义现代化建设的实际问题。 同中华优秀传统文化相结合：把马克思主义思想精髓同中华优秀传统文化精华贯通起来，同人民群众日用而不觉的共同价值观念融通起来。 意义：是推进马克思主义中国化时代化的根本途径，是取得成功的最大法宝；造就了新的文化生命体，巩固了文化主体性。">
+  <header class="qhead">
+    <span class="qid">D03</span>
+    <h3>“两个结合”的内涵与意义</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>内涵</b>：把马克思主义基本原理同<b>中国具体实际</b>相结合、同<b>中华优秀传统文化</b>相结合。</li><li><b>同中国具体实际相结合</b>：一切从实际出发，着眼解决新时代改革开放和社会主义现代化建设的实际问题。</li><li><b>同中华优秀传统文化相结合</b>：把马克思主义思想精髓同中华优秀传统文化精华贯通起来，同人民群众日用而不觉的共同价值观念融通起来。</li><li><b>意义</b>：是推进马克思主义中国化时代化的根本途径，是取得成功的最大法宝；造就了新的文化生命体，巩固了文化主体性。</li></ul>
+  <div class="qfoot"><span class="src">导论 PPT</span></div>
+</article>
+  <article class="qcard" id="d04" data-cat="daolun" data-type="论述" data-text="习近平新时代中国特色社会主义思想的科学体系（宏观表述） 核心内容：“十个明确”（主体内容）、“十四个坚持”（基本方略）、“十三个方面成就”（实践成果）。 十个明确：明确中国特色社会主义最本质特征是中国共产党领导、总任务是实现社会主义现代化和中华民族伟大复兴、总体布局是“五位一体”、战略布局是“四个全面”等，是思想的四梁八柱。 十四个坚持：坚持党对一切工作的领导、坚持以人民为中心、坚持全面深化改革、坚持新发展理念、坚持人民当家作主、坚持全面依法治国、坚持社会主义核心价值体系、坚持在发展中保障和改善民生、坚持人与自然和谐共生、坚持总体国家安全观、坚持党对人民军队的绝对领导、坚持“一国两制”和推进祖国统一、坚持推动构建人类命运共同体、坚持全面从严治党。 十三个方面成就：在坚持党的全面领导、全面从严治党、经济建设、全面深化改革开放、政治建设、全面依法治国、文化建设、社会建设、生态文明建设、国防和军队建设、维护国家安全、坚持“一国两制”和推进祖国统一、外交工作等方面取得的历史性成就、发生的历史性变革。 整体把握：三者相互贯通、有机统一，构成系统完整、逻辑严密、内在统一的科学体系。">
+  <header class="qhead">
+    <span class="qid">D04</span>
+    <h3>习近平新时代中国特色社会主义思想的科学体系（宏观表述）</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>核心内容</b>：<b>“十个明确”</b>（主体内容）、<b>“十四个坚持”</b>（基本方略）、<b>“十三个方面成就”</b>（实践成果）。</li><li><b>十个明确</b>：明确中国特色社会主义最本质特征是中国共产党领导、总任务是实现社会主义现代化和中华民族伟大复兴、总体布局是“五位一体”、战略布局是“四个全面”等，是思想的四梁八柱。</li><li><b>十四个坚持</b>：坚持党对一切工作的领导、坚持以人民为中心、坚持全面深化改革、坚持新发展理念、坚持人民当家作主、坚持全面依法治国、坚持社会主义核心价值体系、坚持在发展中保障和改善民生、坚持人与自然和谐共生、坚持总体国家安全观、坚持党对人民军队的绝对领导、坚持“一国两制”和推进祖国统一、坚持推动构建人类命运共同体、坚持全面从严治党。</li><li><b>十三个方面成就</b>：在坚持党的全面领导、全面从严治党、经济建设、全面深化改革开放、政治建设、全面依法治国、文化建设、社会建设、生态文明建设、国防和军队建设、维护国家安全、坚持“一国两制”和推进祖国统一、外交工作等方面取得的历史性成就、发生的历史性变革。</li><li><b>整体把握</b>：三者相互贯通、有机统一，构成系统完整、逻辑严密、内在统一的科学体系。</li></ul>
+  <div class="qfoot"><span class="src">导论 PPT</span></div>
+</article>
+  <article class="qcard" id="d05" data-cat="daolun" data-type="简答" data-text="习近平新时代中国特色社会主义思想的世界观和方法论（六个必须坚持） 必须坚持人民至上：根本立场，一切为了人民、一切依靠人民。 必须坚持自信自立：独立自主是中华民族精神之魂，坚定“四个自信”。 必须坚持守正创新：守马克思主义基本原理之正、创中国化时代化之新。 必须坚持问题导向：问题是时代的声音，回答并指导解决问题是理论的根本任务。 必须坚持系统观念：用普遍联系、全面系统、发展变化的观点观察事物。 必须坚持胸怀天下：为解决人类面临的共同问题贡献中国智慧、中国方案。">
+  <header class="qhead">
+    <span class="qid">D05</span>
+    <h3>习近平新时代中国特色社会主义思想的世界观和方法论（六个必须坚持）</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>必须坚持人民至上</b>：根本立场，一切为了人民、一切依靠人民。</li><li><b>必须坚持自信自立</b>：独立自主是中华民族精神之魂，坚定“四个自信”。</li><li><b>必须坚持守正创新</b>：守马克思主义基本原理之正、创中国化时代化之新。</li><li><b>必须坚持问题导向</b>：问题是时代的声音，回答并指导解决问题是理论的根本任务。</li><li><b>必须坚持系统观念</b>：用普遍联系、全面系统、发展变化的观点观察事物。</li><li><b>必须坚持胸怀天下</b>：为解决人类面临的共同问题贡献中国智慧、中国方案。</li></ul>
+  <div class="qfoot"><span class="src">导论 PPT</span></div>
+</article>
+  <article class="qcard" id="d06" data-cat="daolun" data-type="简答" data-text="“两个确立”的内涵与决定性意义 内涵：确立习近平同志党中央的核心、全党的核心地位，确立习近平新时代中国特色社会主义思想的指导地位。 理论依据：是党在新时代取得的重大政治成果，是推动党和国家事业取得历史性成就、发生历史性变革的决定性因素。 实践意义：为新时代新征程党和国家事业发展、实现第二个百年奋斗目标提供了根本政治保证和思想保证。 要求：深刻领悟“两个确立”的决定性意义，增强“四个意识”、坚定“四个自信”、做到“两个维护”。">
+  <header class="qhead">
+    <span class="qid">D06</span>
+    <h3>“两个确立”的内涵与决定性意义</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>内涵</b>：确立习近平同志<b>党中央的核心、全党的核心</b>地位，确立<b>习近平新时代中国特色社会主义思想的指导地位</b>。</li><li><b>理论依据</b>：是党在新时代取得的重大政治成果，是推动党和国家事业取得历史性成就、发生历史性变革的决定性因素。</li><li><b>实践意义</b>：为新时代新征程党和国家事业发展、实现第二个百年奋斗目标提供了根本政治保证和思想保证。</li><li><b>要求</b>：深刻领悟“两个确立”的决定性意义，增强“四个意识”、坚定“四个自信”、做到“两个维护”。</li></ul>
+  <div class="qfoot"><span class="src">导论 PPT</span></div>
+</article>
+</section>
+<section class="cat" id="cat-c1">
+  <header class="cat-head">
+    <div><p class="cat-en">CHAPTER 1</p><h2>第一章 · 新时代坚持和发展中国特色社会主义</h2></div>
+    <p class="cat-desc">新时代的内涵与意义、新的历史方位、中国式现代化的中国特色及其与西方现代化的区别。</p>
+  </header>
+  <article class="qcard" id="c1a" data-cat="c1" data-type="论述" data-text="中国特色社会主义进入新时代的内涵和意义 内涵（五个是）：是承前启后、继往开来、在新的历史条件下继续夺取中国特色社会主义伟大胜利的时代；是决胜全面建成小康社会、进而全面建设社会主义现代化强国的时代；是全国各族人民团结奋斗、不断创造美好生活、逐步实现全体人民共同富裕的时代；是全体中华儿女勠力同心、奋力实现中华民族伟大复兴中国梦的时代；是我国日益走近世界舞台中央、不断为人类作出更大贡献的时代。 中华民族的意义：意味着近代以来久经磨难的中华民族迎来了从站起来、富起来到强起来的伟大飞跃。 科学社会主义的意义：意味着科学社会主义在 21 世纪的中国焕发出强大生机活力。 世界意义：意味着中国特色社会主义道路、理论、制度、文化不断发展，为发展中国家走向现代化提供了全新选择。">
+  <header class="qhead">
+    <span class="qid">C1A</span>
+    <h3>中国特色社会主义进入新时代的内涵和意义</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>内涵（五个是）</b>：是承前启后、继往开来、在新的历史条件下继续夺取中国特色社会主义伟大胜利的时代；是决胜全面建成小康社会、进而全面建设社会主义现代化强国的时代；是全国各族人民团结奋斗、不断创造美好生活、逐步实现全体人民共同富裕的时代；是全体中华儿女勠力同心、奋力实现中华民族伟大复兴中国梦的时代；是我国日益走近世界舞台中央、不断为人类作出更大贡献的时代。</li><li><b>中华民族的意义</b>：意味着近代以来久经磨难的中华民族迎来了从站起来、富起来到强起来的伟大飞跃。</li><li><b>科学社会主义的意义</b>：意味着科学社会主义在 21 世纪的中国焕发出强大生机活力。</li><li><b>世界意义</b>：意味着中国特色社会主义道路、理论、制度、文化不断发展，为发展中国家走向现代化提供了全新选择。</li></ul>
+  <div class="qfoot"><span class="src">第一章 PPT</span></div>
+</article>
+  <article class="qcard" id="c1b" data-cat="c1" data-type="简答" data-text="我国发展新的历史方位（新矛盾、新任务、新关系） 新矛盾：社会主要矛盾转化为人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾。 新任务：全面建成社会主义现代化强国、实现第二个百年奋斗目标，以中国式现代化全面推进中华民族伟大复兴。 新关系：我国同世界的关系发生深刻变化，日益走近世界舞台中央，同国际社会互联互动空前紧密。 判断依据：中国特色社会主义进入新时代，是我国发展新的历史方位。">
+  <header class="qhead">
+    <span class="qid">C1B</span>
+    <h3>我国发展新的历史方位（新矛盾、新任务、新关系）</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>新矛盾</b>：社会主要矛盾转化为人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾。</li><li><b>新任务</b>：全面建成社会主义现代化强国、实现第二个百年奋斗目标，以中国式现代化全面推进中华民族伟大复兴。</li><li><b>新关系</b>：我国同世界的关系发生深刻变化，日益走近世界舞台中央，同国际社会互联互动空前紧密。</li><li><b>判断依据</b>：中国特色社会主义进入新时代，是我国发展新的历史方位。</li></ul>
+  <div class="qfoot"><span class="src">第一章 PPT</span></div>
+</article>
+  <article class="qcard" id="c1c" data-cat="c1" data-type="论述" data-text="中国式现代化的中国特色 人口规模巨大的现代化：14 亿多人口整体迈进现代化社会，规模超过现有发达国家人口总和，艰巨性和复杂性前所未有。 全体人民共同富裕的现代化：坚持把实现人民对美好生活的向往作为现代化建设的出发点和落脚点，坚决防止两极分化。 物质文明和精神文明相协调的现代化：既不断厚植物质基础，又大力发展社会主义先进文化，促进物的全面丰富和人的全面发展。 人与自然和谐共生的现代化：坚持可持续发展，走生产发展、生活富裕、生态良好的文明发展道路。 走和平发展道路的现代化：不走殖民掠夺老路，不走国强必霸歪路，同世界各国互利共赢。">
+  <header class="qhead">
+    <span class="qid">C1C</span>
+    <h3>中国式现代化的中国特色</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>人口规模巨大的现代化</b>：14 亿多人口整体迈进现代化社会，规模超过现有发达国家人口总和，艰巨性和复杂性前所未有。</li><li><b>全体人民共同富裕的现代化</b>：坚持把实现人民对美好生活的向往作为现代化建设的出发点和落脚点，坚决防止两极分化。</li><li><b>物质文明和精神文明相协调的现代化</b>：既不断厚植物质基础，又大力发展社会主义先进文化，促进物的全面丰富和人的全面发展。</li><li><b>人与自然和谐共生的现代化</b>：坚持可持续发展，走生产发展、生活富裕、生态良好的文明发展道路。</li><li><b>走和平发展道路的现代化</b>：不走殖民掠夺老路，不走国强必霸歪路，同世界各国互利共赢。</li></ul>
+  <div class="qfoot"><span class="src">第一章 PPT</span></div>
+</article>
+  <article class="qcard" id="c1d" data-cat="c1" data-type="简答" data-text="中国式现代化与西方现代化的不同 领导力量不同：中国式现代化由中国共产党领导；西方现代化由资产阶级政党主导。 价值取向不同：中国式现代化以人民为中心、追求共同富裕；西方现代化以资本为中心、贫富分化。 实现方式不同：中国式现代化坚持和平发展、合作共赢；西方现代化伴随殖民掠夺、对外扩张。 文明形态不同：中国式现代化物质文明与精神文明相协调、人与自然和谐共生；西方现代化伴生物质主义膨胀、生态危机。 结论：中国式现代化打破了“现代化＝西方化”的迷思，拓展了发展中国家走向现代化的途径。">
+  <header class="qhead">
+    <span class="qid">C1D</span>
+    <h3>中国式现代化与西方现代化的不同</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>领导力量不同</b>：中国式现代化由中国共产党领导；西方现代化由资产阶级政党主导。</li><li><b>价值取向不同</b>：中国式现代化以人民为中心、追求共同富裕；西方现代化以资本为中心、贫富分化。</li><li><b>实现方式不同</b>：中国式现代化坚持和平发展、合作共赢；西方现代化伴随殖民掠夺、对外扩张。</li><li><b>文明形态不同</b>：中国式现代化物质文明与精神文明相协调、人与自然和谐共生；西方现代化伴生物质主义膨胀、生态危机。</li><li><b>结论</b>：中国式现代化打破了“现代化＝西方化”的迷思，拓展了发展中国家走向现代化的途径。</li></ul>
+  <div class="qfoot"><span class="src">第一章 PPT</span></div>
+</article>
+</section>
+<section class="cat" id="cat-c2">
+  <header class="cat-head">
+    <div><p class="cat-en">CHAPTER 2</p><h2>第二章 · 坚持以人民为中心</h2></div>
+    <p class="cat-desc">坚持以人民为中心的缘由与基本内涵。</p>
+  </header>
+  <article class="qcard" id="c2a" data-cat="c2" data-type="论述" data-text="坚持以人民为中心的缘由所在 理论依据：马克思主义唯物史观认为，人民是历史的创造者，是决定党和国家前途命运的根本力量。 党的性质宗旨：中国共产党是中国工人阶级的先锋队，同时是中国人民和中华民族的先锋队，全心全意为人民服务是根本宗旨。 初心使命：为中国人民谋幸福、为中华民族谋复兴，是中国共产党人的初心和使命。 历史经验：江山就是人民、人民就是江山，打江山、守江山，守的是人民的心；党的百年奋斗史就是一部践行初心使命的历史。 实践要求：新时代坚持和发展中国特色社会主义，必须始终把人民放在心中最高位置。">
+  <header class="qhead">
+    <span class="qid">C2A</span>
+    <h3>坚持以人民为中心的缘由所在</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>理论依据</b>：马克思主义唯物史观认为，人民是历史的创造者，是决定党和国家前途命运的根本力量。</li><li><b>党的性质宗旨</b>：中国共产党是中国工人阶级的先锋队，同时是中国人民和中华民族的先锋队，全心全意为人民服务是根本宗旨。</li><li><b>初心使命</b>：为中国人民谋幸福、为中华民族谋复兴，是中国共产党人的初心和使命。</li><li><b>历史经验</b>：江山就是人民、人民就是江山，打江山、守江山，守的是人民的心；党的百年奋斗史就是一部践行初心使命的历史。</li><li><b>实践要求</b>：新时代坚持和发展中国特色社会主义，必须始终把人民放在心中最高位置。</li></ul>
+  <div class="qfoot"><span class="src">第二章 PPT</span></div>
+</article>
+  <article class="qcard" id="c2b" data-cat="c2" data-type="简答" data-text="坚持以人民为中心的基本内涵 坚持人民至上：把人民放在心中最高位置，始终把人民利益摆在至高无上的地位。 依靠人民创造历史：尊重人民主体地位和首创精神，从群众中来、到群众中去。 把人民对美好生活的向往作为奋斗目标：着力解决发展不平衡不充分问题和人民群众急难愁盼问题。 贯彻党的群众路线：一切为了群众、一切依靠群众，始终保持同人民群众的血肉联系。 朝着共同富裕方向稳步前进：让发展成果更多更公平惠及全体人民。">
+  <header class="qhead">
+    <span class="qid">C2B</span>
+    <h3>坚持以人民为中心的基本内涵</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>坚持人民至上</b>：把人民放在心中最高位置，始终把人民利益摆在至高无上的地位。</li><li><b>依靠人民创造历史</b>：尊重人民主体地位和首创精神，从群众中来、到群众中去。</li><li><b>把人民对美好生活的向往作为奋斗目标</b>：着力解决发展不平衡不充分问题和人民群众急难愁盼问题。</li><li><b>贯彻党的群众路线</b>：一切为了群众、一切依靠群众，始终保持同人民群众的血肉联系。</li><li><b>朝着共同富裕方向稳步前进</b>：让发展成果更多更公平惠及全体人民。</li></ul>
+  <div class="qfoot"><span class="src">第二章 PPT</span></div>
+</article>
+</section>
+<section class="cat" id="cat-c3">
+  <header class="cat-head">
+    <div><p class="cat-en">CHAPTER 3</p><h2>第三章 · 全面深化改革 教育科技人才战略</h2></div>
+    <p class="cat-desc">全面深化改革总目标、制度优势、正确方向，教育科技人才一体化与教育强国、科技自立自强。</p>
+  </header>
+  <article class="qcard" id="c3a" data-cat="c3" data-type="简答" data-text="全面深化改革的总目标 总目标：完善和发展中国特色社会主义制度，推进国家治理体系和治理能力现代化。 两句话组成一个整体：前一句规定了根本方向，后一句规定了实现路径，缺一不可。 制度是根本：坚持和完善中国特色社会主义制度，是全面深化改革的根本前提。 治理是落脚点：把制度优势转化为治理效能，提高党科学执政、民主执政、依法执政水平。">
+  <header class="qhead">
+    <span class="qid">C3A</span>
+    <h3>全面深化改革的总目标</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>总目标</b>：完善和发展<b>中国特色社会主义制度</b>，推进<b>国家治理体系和治理能力现代化</b>。</li><li><b>两句话组成一个整体</b>：前一句规定了根本方向，后一句规定了实现路径，缺一不可。</li><li><b>制度是根本</b>：坚持和完善中国特色社会主义制度，是全面深化改革的根本前提。</li><li><b>治理是落脚点</b>：把制度优势转化为治理效能，提高党科学执政、民主执政、依法执政水平。</li></ul>
+  <div class="qfoot"><span class="src">第三章 PPT</span></div>
+</article>
+  <article class="qcard" id="c3b" data-cat="c3" data-type="简答" data-text="全面深化改革开放是一场深刻革命 触及深层次利益格局：改革进入攻坚期和深水区，必然触及深层次利益格局调整和制度体系变革。 突破利益固化藩篱：敢于啃硬骨头、敢于涉险滩，冲破思想观念束缚和利益固化藩篱。 制度的自我完善和发展：改革不是改向、不是变色，而是社会主义制度的自我完善和发展。 系统性整体性协同性：更加注重系统集成，增强改革的系统性、整体性、协同性。">
+  <header class="qhead">
+    <span class="qid">C3B</span>
+    <h3>全面深化改革开放是一场深刻革命</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>触及深层次利益格局</b>：改革进入攻坚期和深水区，必然触及深层次利益格局调整和制度体系变革。</li><li><b>突破利益固化藩篱</b>：敢于啃硬骨头、敢于涉险滩，冲破思想观念束缚和利益固化藩篱。</li><li><b>制度的自我完善和发展</b>：改革不是改向、不是变色，而是社会主义制度的自我完善和发展。</li><li><b>系统性整体性协同性</b>：更加注重系统集成，增强改革的系统性、整体性、协同性。</li></ul>
+  <div class="qfoot"><span class="src">第三章 PPT</span></div>
+</article>
+  <article class="qcard" id="c3c" data-cat="c3" data-type="论述" data-text="中国特色社会主义制度与国家治理体系的显著优势 党的领导：坚持党的集中统一领导，确保国家始终沿着社会主义方向前进。 人民当家作主：坚持人民主体地位，紧紧依靠人民推动国家发展。 全面依法治国：坚持全面依法治国，切实保障社会公平正义和人民权利。 集中力量办大事：坚持全国一盘棋，调动各方面积极性。 民族平等与共同繁荣：坚持各民族一律平等，铸牢中华民族共同体意识。 基本经济制度：坚持公有制为主体、多种所有制经济共同发展和按劳分配为主体、多种分配方式并存，把社会主义制度和市场经济有机结合起来。 共同富裕：坚持以人民为中心的发展思想，不断保障和改善民生、增进人民福祉。 改革创新：坚持改革创新、与时俱进，善于自我完善、自我发展。 自我革命：坚持党指挥枪，坚持德才兼备、选贤任能，坚持全面从严治党。 和平发展：坚持独立自主和对外开放相统一，积极参与全球治理。">
+  <header class="qhead">
+    <span class="qid">C3C</span>
+    <h3>中国特色社会主义制度与国家治理体系的显著优势</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>党的领导</b>：坚持党的集中统一领导，确保国家始终沿着社会主义方向前进。</li><li><b>人民当家作主</b>：坚持人民主体地位，紧紧依靠人民推动国家发展。</li><li><b>全面依法治国</b>：坚持全面依法治国，切实保障社会公平正义和人民权利。</li><li><b>集中力量办大事</b>：坚持全国一盘棋，调动各方面积极性。</li><li><b>民族平等与共同繁荣</b>：坚持各民族一律平等，铸牢中华民族共同体意识。</li><li><b>基本经济制度</b>：坚持公有制为主体、多种所有制经济共同发展和按劳分配为主体、多种分配方式并存，把社会主义制度和市场经济有机结合起来。</li><li><b>共同富裕</b>：坚持以人民为中心的发展思想，不断保障和改善民生、增进人民福祉。</li><li><b>改革创新</b>：坚持改革创新、与时俱进，善于自我完善、自我发展。</li><li><b>自我革命</b>：坚持党指挥枪，坚持德才兼备、选贤任能，坚持全面从严治党。</li><li><b>和平发展</b>：坚持独立自主和对外开放相统一，积极参与全球治理。</li></ul>
+  <div class="qfoot"><span class="src">第三章 PPT</span></div>
+</article>
+  <article class="qcard" id="c3d" data-cat="c3" data-type="简答" data-text="坚持全面深化改革开放的正确方向 坚持党的领导：把党的领导贯穿改革全过程各方面，确保改革正确方向。 坚持中国特色社会主义道路：既不走封闭僵化的老路，也不走改旗易帜的邪路。 坚持以人民为中心：改革为了人民、改革依靠人民、改革成果由人民共享。 坚持系统观念：加强顶层设计和整体谋划，处理好改革发展稳定关系。 坚持底线思维：增强风险意识，牢牢守住不发生系统性风险的底线。">
+  <header class="qhead">
+    <span class="qid">C3D</span>
+    <h3>坚持全面深化改革开放的正确方向</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>坚持党的领导</b>：把党的领导贯穿改革全过程各方面，确保改革正确方向。</li><li><b>坚持中国特色社会主义道路</b>：既不走封闭僵化的老路，也不走改旗易帜的邪路。</li><li><b>坚持以人民为中心</b>：改革为了人民、改革依靠人民、改革成果由人民共享。</li><li><b>坚持系统观念</b>：加强顶层设计和整体谋划，处理好改革发展稳定关系。</li><li><b>坚持底线思维</b>：增强风险意识，牢牢守住不发生系统性风险的底线。</li></ul>
+  <div class="qfoot"><span class="src">第三章 PPT</span></div>
+</article>
+  <article class="qcard" id="c3e" data-cat="c3" data-type="简答" data-text="教育、科技、人才的内在逻辑 教育是基础：教育培养人才、孕育科技创新，是全面建设社会主义现代化国家的基础性、战略性支撑。 科技是关键：科技是第一生产力，是推动经济社会发展的核心动力。 人才是根本：人才是第一资源，是科技创新和事业发展的根本保证。 三者有机统一：教育、科技、人才相互作用、相互支撑，必须一体推进、一体部署。 部署要求：坚持教育优先发展、科技自立自强、人才引领驱动，加快建设教育强国、科技强国、人才强国。">
+  <header class="qhead">
+    <span class="qid">C3E</span>
+    <h3>教育、科技、人才的内在逻辑</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>教育是基础</b>：教育培养人才、孕育科技创新，是全面建设社会主义现代化国家的基础性、战略性支撑。</li><li><b>科技是关键</b>：科技是第一生产力，是推动经济社会发展的核心动力。</li><li><b>人才是根本</b>：人才是第一资源，是科技创新和事业发展的根本保证。</li><li><b>三者有机统一</b>：教育、科技、人才相互作用、相互支撑，必须一体推进、一体部署。</li><li><b>部署要求</b>：坚持教育优先发展、科技自立自强、人才引领驱动，加快建设教育强国、科技强国、人才强国。</li></ul>
+  <div class="qfoot"><span class="src">第三章 PPT</span></div>
+</article>
+  <article class="qcard" id="c3f" data-cat="c3" data-type="简答" data-text="教育强国的科学内涵 坚持党对教育事业的全面领导：牢牢掌握党对教育工作的领导权。 坚持立德树人：培养德智体美劳全面发展的社会主义建设者和接班人。 坚持服务中华民族伟大复兴：教育要同国家发展的现实目标和未来方向紧密联系。 坚持人民满意：办好人民满意的教育，促进教育公平。 坚持中国特色、世界水平：扎根中国大地办教育，同时具有世界眼光。 坚持教育现代化：以教育现代化支撑国家现代化。">
+  <header class="qhead">
+    <span class="qid">C3F</span>
+    <h3>教育强国的科学内涵</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>坚持党对教育事业的全面领导</b>：牢牢掌握党对教育工作的领导权。</li><li><b>坚持立德树人</b>：培养德智体美劳全面发展的社会主义建设者和接班人。</li><li><b>坚持服务中华民族伟大复兴</b>：教育要同国家发展的现实目标和未来方向紧密联系。</li><li><b>坚持人民满意</b>：办好人民满意的教育，促进教育公平。</li><li><b>坚持中国特色、世界水平</b>：扎根中国大地办教育，同时具有世界眼光。</li><li><b>坚持教育现代化</b>：以教育现代化支撑国家现代化。</li></ul>
+  <div class="qfoot"><span class="src">第三章 PPT</span></div>
+</article>
+  <article class="qcard" id="c3g" data-cat="c3" data-type="简答" data-text="实现高水平科技自立自强的重大意义 应对风险挑战：关键核心技术要不来、买不来、讨不来，必须把创新主动权、发展主动权牢牢掌握在自己手中。 支撑高质量发展：以科技创新引领产业创新，培育发展新质生产力。 维护国家安全：科技安全是国家安全的重要保障，事关发展全局和国家安全。 赢得国际竞争：新一轮科技革命和产业变革深入发展，科技创新成为国际战略博弈的主要战场。 实现强国目标：科技强则国家强，是全面建成社会主义现代化强国的战略支撑。">
+  <header class="qhead">
+    <span class="qid">C3G</span>
+    <h3>实现高水平科技自立自强的重大意义</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>应对风险挑战</b>：关键核心技术要不来、买不来、讨不来，必须把创新主动权、发展主动权牢牢掌握在自己手中。</li><li><b>支撑高质量发展</b>：以科技创新引领产业创新，培育发展新质生产力。</li><li><b>维护国家安全</b>：科技安全是国家安全的重要保障，事关发展全局和国家安全。</li><li><b>赢得国际竞争</b>：新一轮科技革命和产业变革深入发展，科技创新成为国际战略博弈的主要战场。</li><li><b>实现强国目标</b>：科技强则国家强，是全面建成社会主义现代化强国的战略支撑。</li></ul>
+  <div class="qfoot"><span class="src">第三章 PPT</span></div>
+</article>
+</section>
+<section class="cat" id="cat-c4">
+  <header class="cat-head">
+    <div><p class="cat-en">CHAPTER 4</p><h2>第四章 · 推动高质量发展</h2></div>
+    <p class="cat-desc">新发展阶段、新发展理念、正确理解新发展理念与“两个毫不动摇”。</p>
+  </header>
+  <article class="qcard" id="c4a" data-cat="c4" data-type="简答" data-text="新发展阶段的内涵 时间坐标：全面建成小康社会、实现第一个百年奋斗目标之后，乘势而上开启全面建设社会主义现代化国家新征程、向第二个百年奋斗目标进军的阶段。 历史意义：是社会主义初级阶段中的一个阶段，是其中经过几十年积累、站到了新的起点上的一个阶段。 发展要求：我国发展仍然处于重要战略机遇期，但机遇和挑战都有新的发展变化。 核心任务：以中国式现代化全面推进中华民族伟大复兴，实现高质量发展。">
+  <header class="qhead">
+    <span class="qid">C4A</span>
+    <h3>新发展阶段的内涵</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>时间坐标</b>：全面建成小康社会、实现第一个百年奋斗目标之后，乘势而上开启全面建设社会主义现代化国家新征程、向第二个百年奋斗目标进军的阶段。</li><li><b>历史意义</b>：是社会主义初级阶段中的一个阶段，是其中经过几十年积累、站到了新的起点上的一个阶段。</li><li><b>发展要求</b>：我国发展仍然处于重要战略机遇期，但机遇和挑战都有新的发展变化。</li><li><b>核心任务</b>：以中国式现代化全面推进中华民族伟大复兴，实现高质量发展。</li></ul>
+  <div class="qfoot"><span class="src">第四章 PPT</span></div>
+</article>
+  <article class="qcard" id="c4b" data-cat="c4" data-type="论述" data-text="新发展理念的科学内涵和实践要求 创新：引领发展的第一动力，抓创新就是抓发展、谋创新就是谋未来。 协调：持续健康发展的内在要求，着力解决发展不平衡问题。 绿色：永续发展的必要条件，坚持人与自然和谐共生。 开放：国家繁荣发展的必由之路，以开放促改革促发展。 共享：中国特色社会主义的本质要求，让发展成果更多更公平惠及全体人民。 实践要求：完整、准确、全面贯彻新发展理念，把新发展理念贯穿发展全过程和各领域，推动质量变革、效率变革、动力变革。">
+  <header class="qhead">
+    <span class="qid">C4B</span>
+    <h3>新发展理念的科学内涵和实践要求</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>创新</b>：引领发展的第一动力，抓创新就是抓发展、谋创新就是谋未来。</li><li><b>协调</b>：持续健康发展的内在要求，着力解决发展不平衡问题。</li><li><b>绿色</b>：永续发展的必要条件，坚持人与自然和谐共生。</li><li><b>开放</b>：国家繁荣发展的必由之路，以开放促改革促发展。</li><li><b>共享</b>：中国特色社会主义的本质要求，让发展成果更多更公平惠及全体人民。</li><li><b>实践要求</b>：完整、准确、全面贯彻新发展理念，把新发展理念贯穿发展全过程和各领域，推动质量变革、效率变革、动力变革。</li></ul>
+  <div class="qfoot"><span class="src">第四章 PPT</span></div>
+</article>
+  <article class="qcard" id="c4c" data-cat="c4" data-type="简答" data-text="如何正确理解和把握新发展理念 从根本宗旨把握：为人民谋幸福、为民族谋复兴，是我们党领导现代化建设的出发点和落脚点。 从问题导向把握：新发展理念是针对我国发展中的突出矛盾和问题提出来的，要聚焦问题发力。 从忧患意识把握：增强忧患意识、坚持底线思维，随时准备应对更加复杂困难的局面。 系统集成：新发展理念是一个系统的理论体系，五大理念相互贯通、相互促进，必须一体坚持、一体贯彻。">
+  <header class="qhead">
+    <span class="qid">C4C</span>
+    <h3>如何正确理解和把握新发展理念</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>从根本宗旨把握</b>：为人民谋幸福、为民族谋复兴，是我们党领导现代化建设的出发点和落脚点。</li><li><b>从问题导向把握</b>：新发展理念是针对我国发展中的突出矛盾和问题提出来的，要聚焦问题发力。</li><li><b>从忧患意识把握</b>：增强忧患意识、坚持底线思维，随时准备应对更加复杂困难的局面。</li><li><b>系统集成</b>：新发展理念是一个系统的理论体系，五大理念相互贯通、相互促进，必须一体坚持、一体贯彻。</li></ul>
+  <div class="qfoot"><span class="src">第四章 PPT</span></div>
+</article>
+  <article class="qcard" id="c4d" data-cat="c4" data-type="简答" data-text="“两个毫不动摇” 第一句：毫不动摇巩固和发展公有制经济，坚持公有制主体地位，发挥国有经济战略支撑作用。 第二句：毫不动摇鼓励、支持、引导非公有制经济发展，促进非公有制经济健康发展和非公有制经济人士健康成长。 内在统一：公有制经济和非公有制经济都是社会主义市场经济的重要组成部分，都是我国经济社会发展的重要基础。 实践要求：坚持权利平等、机会平等、规则平等，构建亲清政商关系，优化民营企业发展环境。">
+  <header class="qhead">
+    <span class="qid">C4D</span>
+    <h3>“两个毫不动摇”</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>第一句</b>：毫不动摇<b>巩固和发展公有制经济</b>，坚持公有制主体地位，发挥国有经济战略支撑作用。</li><li><b>第二句</b>：毫不动摇<b>鼓励、支持、引导非公有制经济发展</b>，促进非公有制经济健康发展和非公有制经济人士健康成长。</li><li><b>内在统一</b>：公有制经济和非公有制经济都是社会主义市场经济的重要组成部分，都是我国经济社会发展的重要基础。</li><li><b>实践要求</b>：坚持权利平等、机会平等、规则平等，构建亲清政商关系，优化民营企业发展环境。</li></ul>
+  <div class="qfoot"><span class="src">第四章 PPT</span></div>
+</article>
+</section>
+<section class="cat" id="cat-c5">
+  <header class="cat-head">
+    <div><p class="cat-en">CHAPTER 5</p><h2>第五章 · 中国特色社会主义政治发展道路</h2></div>
+    <p class="cat-desc">全过程人民民主、全面依法治国的重大关系与核心要义、基本政治制度。</p>
+  </header>
+  <article class="qcard" id="c5a" data-cat="c5" data-type="论述" data-text="什么是全过程人民民主 本质：人民民主是社会主义的生命，没有民主就没有社会主义，就没有社会主义的现代化。 定义：全过程人民民主是中国共产党领导人民创造的新型民主，是社会主义民主政治的本质属性。 四个相统一：实现过程民主与成果民主、程序民主与实质民主、直接民主与间接民主、人民民主与国家意志相统一。 三个全：是全链条、全方位、全覆盖的民主。 三个最：是最广泛、最真实、最管用的社会主义民主。 制度载体：人民代表大会制度是根本政治制度，是全过程人民民主的重要制度载体。">
+  <header class="qhead">
+    <span class="qid">C5A</span>
+    <h3>什么是全过程人民民主</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>本质</b>：人民民主是社会主义的生命，没有民主就没有社会主义，就没有社会主义的现代化。</li><li><b>定义</b>：全过程人民民主是中国共产党领导人民创造的<b>新型民主</b>，是社会主义民主政治的本质属性。</li><li><b>四个相统一</b>：实现<b>过程民主与成果民主、程序民主与实质民主、直接民主与间接民主、人民民主与国家意志</b>相统一。</li><li><b>三个全</b>：是<b>全链条、全方位、全覆盖</b>的民主。</li><li><b>三个最</b>：是<b>最广泛、最真实、最管用</b>的社会主义民主。</li><li><b>制度载体</b>：人民代表大会制度是根本政治制度，是全过程人民民主的重要制度载体。</li></ul>
+  <div class="qfoot"><span class="src">第五章 PPT</span></div>
+</article>
+  <article class="qcard" id="c5b" data-cat="c5" data-type="简答" data-text="全面依法治国必须统筹处理的重大关系 政治与法治的关系：法治当中有政治，没有脱离政治的法治，坚持党的领导是社会主义法治最根本的保证。 改革与法治的关系：改革与法治如鸟之两翼、车之两轮，坚持在法治下推进改革、在改革中完善法治。 依法治国与以德治国的关系：法律是成文的道德，道德是内心的法律，二者相辅相成、相得益彰。 依法治国与依规治党的关系：党内法规既是管党治党的重要依据，也是全面依法治国的有力保障，坚持二者统筹推进。">
+  <header class="qhead">
+    <span class="qid">C5B</span>
+    <h3>全面依法治国必须统筹处理的重大关系</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>政治与法治的关系</b>：法治当中有政治，没有脱离政治的法治，坚持党的领导是社会主义法治最根本的保证。</li><li><b>改革与法治的关系</b>：改革与法治如鸟之两翼、车之两轮，坚持在法治下推进改革、在改革中完善法治。</li><li><b>依法治国与以德治国的关系</b>：法律是成文的道德，道德是内心的法律，二者相辅相成、相得益彰。</li><li><b>依法治国与依规治党的关系</b>：党内法规既是管党治党的重要依据，也是全面依法治国的有力保障，坚持二者统筹推进。</li></ul>
+  <div class="qfoot"><span class="src">第五章 PPT</span></div>
+</article>
+  <article class="qcard" id="c5c" data-cat="c5" data-type="简答" data-text="把握中国特色社会主义法治道路必须坚持的原则 坚持中国共产党的领导：党的领导是中国特色社会主义法治之魂。 坚持中国特色社会主义制度：制度是法治的根本依托。 贯彻中国特色社会主义法治理论：为法治道路提供理论支撑。 坚持人民主体地位：法治建设为了人民、依靠人民、造福人民、保护人民。 坚持依法治国和以德治国相结合：实现法律和道德协同发力。 坚持从中国实际出发：突出中国特色、实践特色、时代特色。">
+  <header class="qhead">
+    <span class="qid">C5C</span>
+    <h3>把握中国特色社会主义法治道路必须坚持的原则</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>坚持中国共产党的领导</b>：党的领导是中国特色社会主义法治之魂。</li><li><b>坚持中国特色社会主义制度</b>：制度是法治的根本依托。</li><li><b>贯彻中国特色社会主义法治理论</b>：为法治道路提供理论支撑。</li><li><b>坚持人民主体地位</b>：法治建设为了人民、依靠人民、造福人民、保护人民。</li><li><b>坚持依法治国和以德治国相结合</b>：实现法律和道德协同发力。</li><li><b>坚持从中国实际出发</b>：突出中国特色、实践特色、时代特色。</li></ul>
+  <div class="qfoot"><span class="src">第五章 PPT</span></div>
+</article>
+  <article class="qcard" id="c5d" data-cat="c5" data-type="简答" data-text="中国特色社会主义法治道路的核心要义 核心要义：坚持党的领导、坚持中国特色社会主义制度、贯彻中国特色社会主义法治理论。 三者关系：三者规定和确保了中国特色社会主义法治体系的制度属性和前进方向，是一个有机整体。 党的领导：是社会主义法治最根本的保证，必须贯穿全面依法治国全过程和各方面。 制度基础：中国特色社会主义制度是法治体系的根本制度依托。 理论支撑：中国特色社会主义法治理论是法治道路的行动指南。">
+  <header class="qhead">
+    <span class="qid">C5D</span>
+    <h3>中国特色社会主义法治道路的核心要义</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>核心要义</b>：<b>坚持党的领导</b>、<b>坚持中国特色社会主义制度</b>、<b>贯彻中国特色社会主义法治理论</b>。</li><li><b>三者关系</b>：三者规定和确保了中国特色社会主义法治体系的制度属性和前进方向，是一个有机整体。</li><li><b>党的领导</b>：是社会主义法治最根本的保证，必须贯穿全面依法治国全过程和各方面。</li><li><b>制度基础</b>：中国特色社会主义制度是法治体系的根本制度依托。</li><li><b>理论支撑</b>：中国特色社会主义法治理论是法治道路的行动指南。</li></ul>
+  <div class="qfoot"><span class="src">第五章 PPT</span></div>
+</article>
+  <article class="qcard" id="c5e" data-cat="c5" data-type="简答" data-text="为什么说全面依法治国是国家治理的一场深刻革命 从人治到法治：实现了从传统人治向现代法治的根本转变，是国家治理领域一场广泛而深刻的革命。 治理方式变革：法治是国家治理体系和治理能力现代化的重要标志，用法治方式治国理政。 体制机制重塑：涉及立法、执法、司法、守法各环节的体制机制重大变革。 权力约束：把权力关进制度的笼子，保证权力在法治轨道上运行。 人民权益保障：更好保障人民根本权益，维护社会公平正义。">
+  <header class="qhead">
+    <span class="qid">C5E</span>
+    <h3>为什么说全面依法治国是国家治理的一场深刻革命</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>从人治到法治</b>：实现了从传统人治向现代法治的根本转变，是国家治理领域一场广泛而深刻的革命。</li><li><b>治理方式变革</b>：法治是国家治理体系和治理能力现代化的重要标志，用法治方式治国理政。</li><li><b>体制机制重塑</b>：涉及立法、执法、司法、守法各环节的体制机制重大变革。</li><li><b>权力约束</b>：把权力关进制度的笼子，保证权力在法治轨道上运行。</li><li><b>人民权益保障</b>：更好保障人民根本权益，维护社会公平正义。</li></ul>
+  <div class="qfoot"><span class="src">第五章 PPT</span></div>
+</article>
+  <article class="qcard" id="c5f" data-cat="c5" data-type="论述" data-text="全过程人民民主的优势 保证人民当家作主：人民依法通过各种途径和形式管理国家事务、经济文化事业和社会事务。 广泛凝聚共识：通过协商民主广泛听取意见，找到最大公约数。 提高治理效能：把民主选举、民主协商、民主决策、民主管理、民主监督贯通起来，提升决策科学化水平。 维护社会稳定：利益诉求有序表达，矛盾在基层和源头化解。 彰显制度优势：体现了我国社会主义民主政治的本质和优越性，打破了“民主＝西方民主”的迷思。">
+  <header class="qhead">
+    <span class="qid">C5F</span>
+    <h3>全过程人民民主的优势</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>保证人民当家作主</b>：人民依法通过各种途径和形式管理国家事务、经济文化事业和社会事务。</li><li><b>广泛凝聚共识</b>：通过协商民主广泛听取意见，找到最大公约数。</li><li><b>提高治理效能</b>：把民主选举、民主协商、民主决策、民主管理、民主监督贯通起来，提升决策科学化水平。</li><li><b>维护社会稳定</b>：利益诉求有序表达，矛盾在基层和源头化解。</li><li><b>彰显制度优势</b>：体现了我国社会主义民主政治的本质和优越性，打破了“民主＝西方民主”的迷思。</li></ul>
+  <div class="qfoot"><span class="src">第五章 PPT</span></div>
+</article>
+  <article class="qcard" id="c5g" data-cat="c5" data-type="简答" data-text="我国的基本政治制度 中国共产党领导的多党合作和政治协商制度：我国的一项基本政治制度，是从中国土壤中生长出来的新型政党制度。 民族区域自治制度：在国家统一领导下，各少数民族聚居地方实行区域自治，设立自治机关，行使自治权。 基层群众自治制度：村民委员会、居民委员会等基层群众性自治组织，实行自我管理、自我服务、自我教育、自我监督。 地位：三者共同构成我国基本政治制度体系，与人民代表大会制度这一根本政治制度相辅相成。">
+  <header class="qhead">
+    <span class="qid">C5G</span>
+    <h3>我国的基本政治制度</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>中国共产党领导的多党合作和政治协商制度</b>：我国的一项基本政治制度，是从中国土壤中生长出来的新型政党制度。</li><li><b>民族区域自治制度</b>：在国家统一领导下，各少数民族聚居地方实行区域自治，设立自治机关，行使自治权。</li><li><b>基层群众自治制度</b>：村民委员会、居民委员会等基层群众性自治组织，实行自我管理、自我服务、自我教育、自我监督。</li><li><b>地位</b>：三者共同构成我国基本政治制度体系，与人民代表大会制度这一根本政治制度相辅相成。</li></ul>
+  <div class="qfoot"><span class="src">第五章 PPT</span></div>
+</article>
+</section>
+<section class="cat" id="cat-c6">
+  <header class="cat-head">
+    <div><p class="cat-en">CHAPTER 6</p><h2>第六章 · 建设社会主义文化强国</h2></div>
+    <p class="cat-desc">文化自信的底气与力量、中华优秀传统文化的创造性转化创新性发展、意识形态工作。</p>
+  </header>
+  <article class="qcard" id="c6a" data-cat="c6" data-type="论述" data-text="坚定中国特色社会主义文化自信的底气来自哪些方面 中华优秀传统文化：五千多年文明发展中孕育的中华优秀传统文化，是中华民族的根和魂。 革命文化：党领导人民在革命斗争中锻造的革命文化，承载着红色基因。 社会主义先进文化：在社会主义建设和改革中形成的先进文化，体现时代精神。 伟大实践基础：中国特色社会主义伟大实践是文化自信的现实根基。 文明底蕴：中华文明具有突出的连续性、创新性、统一性、包容性、和平性。 发展成就：新时代历史性成就和历史性变革，极大增强了民族自信心和自豪感。">
+  <header class="qhead">
+    <span class="qid">C6A</span>
+    <h3>坚定中国特色社会主义文化自信的底气来自哪些方面</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>中华优秀传统文化</b>：五千多年文明发展中孕育的中华优秀传统文化，是中华民族的根和魂。</li><li><b>革命文化</b>：党领导人民在革命斗争中锻造的革命文化，承载着红色基因。</li><li><b>社会主义先进文化</b>：在社会主义建设和改革中形成的先进文化，体现时代精神。</li><li><b>伟大实践基础</b>：中国特色社会主义伟大实践是文化自信的现实根基。</li><li><b>文明底蕴</b>：中华文明具有突出的连续性、创新性、统一性、包容性、和平性。</li><li><b>发展成就</b>：新时代历史性成就和历史性变革，极大增强了民族自信心和自豪感。</li></ul>
+  <div class="qfoot"><span class="src">第六章 PPT</span></div>
+</article>
+  <article class="qcard" id="c6b" data-cat="c6" data-type="简答" data-text="文化自信的力量 更基础：文化自信是更基础、更广泛、更深厚的自信，是更基本、更深沉、更持久的力量。 事关国运兴衰：文化兴国运兴，文化强民族强。 事关文化安全：坚定文化自信，才能有效抵御西方文化渗透和意识形态冲击。 事关民族精神独立性：保持精神上的独立自主，才能立得住、站得稳、行得远。 凝聚精神力量：为国家发展提供强大精神动力和智力支持。">
+  <header class="qhead">
+    <span class="qid">C6B</span>
+    <h3>文化自信的力量</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>更基础</b>：文化自信是更基础、更广泛、更深厚的自信，是更基本、更深沉、更持久的力量。</li><li><b>事关国运兴衰</b>：文化兴国运兴，文化强民族强。</li><li><b>事关文化安全</b>：坚定文化自信，才能有效抵御西方文化渗透和意识形态冲击。</li><li><b>事关民族精神独立性</b>：保持精神上的独立自主，才能立得住、站得稳、行得远。</li><li><b>凝聚精神力量</b>：为国家发展提供强大精神动力和智力支持。</li></ul>
+  <div class="qfoot"><span class="src">第六章 PPT</span></div>
+</article>
+  <article class="qcard" id="c6c" data-cat="c6" data-type="简答" data-text="如何推动中华优秀传统文化创造性转化、创新性发展 守正创新：坚持马克思主义指导，坚守中华文化立场，取其精华、去其糟粕。 古为今用、推陈出新：赋予中华优秀传统文化新的时代内涵和现代表达形式。 创造性转化：按照时代特点和要求，对至今仍有借鉴价值的内涵和陈旧表现形式加以改造。 创新性发展：按照时代新进步，对中华优秀传统文化的内涵加以补充、拓展、完善。 融入实践：推动中华优秀传统文化进教材、进课堂、进头脑，融入日常生活。 交流互鉴：推动中华文化走出去，在同世界文明交流互鉴中彰显魅力。">
+  <header class="qhead">
+    <span class="qid">C6C</span>
+    <h3>如何推动中华优秀传统文化创造性转化、创新性发展</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>守正创新</b>：坚持马克思主义指导，坚守中华文化立场，取其精华、去其糟粕。</li><li><b>古为今用、推陈出新</b>：赋予中华优秀传统文化新的时代内涵和现代表达形式。</li><li><b>创造性转化</b>：按照时代特点和要求，对至今仍有借鉴价值的内涵和陈旧表现形式加以改造。</li><li><b>创新性发展</b>：按照时代新进步，对中华优秀传统文化的内涵加以补充、拓展、完善。</li><li><b>融入实践</b>：推动中华优秀传统文化进教材、进课堂、进头脑，融入日常生活。</li><li><b>交流互鉴</b>：推动中华文化走出去，在同世界文明交流互鉴中彰显魅力。</li></ul>
+  <div class="qfoot"><span class="src">第六章 PPT</span></div>
+</article>
+  <article class="qcard" id="c6d" data-cat="c6" data-type="论述" data-text="如何建设具有强大凝聚力和引领力的社会主义意识形态 坚持马克思主义指导地位：马克思主义是社会主义意识形态的旗帜和灵魂，必须毫不动摇坚持。 壮大主流思想舆论：加强正面宣传，唱响主旋律、弘扬正能量，提高新闻舆论传播力、引导力、影响力、公信力。 培育和践行社会主义核心价值观：把社会主义核心价值观融入社会发展各方面，转化为人们的情感认同和行为习惯。 加强阵地建设和管理：管好用好互联网、高校、社科理论等阵地，决不给错误思想观点提供传播渠道。 防范化解意识形态风险：增强政治敏锐性和政治鉴别力，敢于亮剑、敢于斗争。 落实责任：坚持党管意识形态，落实意识形态工作责任制。">
+  <header class="qhead">
+    <span class="qid">C6D</span>
+    <h3>如何建设具有强大凝聚力和引领力的社会主义意识形态</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>坚持马克思主义指导地位</b>：马克思主义是社会主义意识形态的旗帜和灵魂，必须毫不动摇坚持。</li><li><b>壮大主流思想舆论</b>：加强正面宣传，唱响主旋律、弘扬正能量，提高新闻舆论传播力、引导力、影响力、公信力。</li><li><b>培育和践行社会主义核心价值观</b>：把社会主义核心价值观融入社会发展各方面，转化为人们的情感认同和行为习惯。</li><li><b>加强阵地建设和管理</b>：管好用好互联网、高校、社科理论等阵地，决不给错误思想观点提供传播渠道。</li><li><b>防范化解意识形态风险</b>：增强政治敏锐性和政治鉴别力，敢于亮剑、敢于斗争。</li><li><b>落实责任</b>：坚持党管意识形态，落实意识形态工作责任制。</li></ul>
+  <div class="qfoot"><span class="src">第六章 PPT</span></div>
+</article>
+  <article class="qcard" id="c6e" data-cat="c6" data-type="简答" data-text="怎样确保牢牢掌握意识形态工作领导权 坚持党管意识形态：意识形态工作领导权必须牢牢掌握在党的手中。 落实责任制：实行意识形态工作责任制，党委负主体责任，党委书记是第一责任人。 加强阵地管理：守土有责、守土负责、守土尽责，管好各类意识形态阵地。 建设队伍：建设一支政治强、业务精、作风正的宣传思想工作队伍。 敢于斗争：对大是大非问题旗帜鲜明，对错误思潮敢于亮剑。">
+  <header class="qhead">
+    <span class="qid">C6E</span>
+    <h3>怎样确保牢牢掌握意识形态工作领导权</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>坚持党管意识形态</b>：意识形态工作领导权必须牢牢掌握在党的手中。</li><li><b>落实责任制</b>：实行意识形态工作责任制，党委负主体责任，党委书记是第一责任人。</li><li><b>加强阵地管理</b>：守土有责、守土负责、守土尽责，管好各类意识形态阵地。</li><li><b>建设队伍</b>：建设一支政治强、业务精、作风正的宣传思想工作队伍。</li><li><b>敢于斗争</b>：对大是大非问题旗帜鲜明，对错误思潮敢于亮剑。</li></ul>
+  <div class="qfoot"><span class="src">第六章 PPT</span></div>
+</article>
+</section>
+<section class="cat" id="cat-c7">
+  <header class="cat-head">
+    <div><p class="cat-en">CHAPTER 7</p><h2>第七章 · 保障和改善民生 加强社会建设</h2></div>
+    <p class="cat-desc">增进民生福祉的原因、民生与发展的关系、保障改善民生的要求与健康中国建设。</p>
+  </header>
+  <article class="qcard" id="c7a" data-cat="c7" data-type="简答" data-text="增进民生福祉的原因 党的宗旨决定：全心全意为人民服务，必须把增进民生福祉作为发展的根本目的。 社会主义本质要求：共同富裕是中国特色社会主义的本质要求。 主要矛盾要求：解决人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾。 社会稳定的基础：民生稳，人心就稳，社会就稳。 初心使命的体现：为中国人民谋幸福，是中国共产党人的初心。">
+  <header class="qhead">
+    <span class="qid">C7A</span>
+    <h3>增进民生福祉的原因</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>党的宗旨决定</b>：全心全意为人民服务，必须把增进民生福祉作为发展的根本目的。</li><li><b>社会主义本质要求</b>：共同富裕是中国特色社会主义的本质要求。</li><li><b>主要矛盾要求</b>：解决人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾。</li><li><b>社会稳定的基础</b>：民生稳，人心就稳，社会就稳。</li><li><b>初心使命的体现</b>：为中国人民谋幸福，是中国共产党人的初心。</li></ul>
+  <div class="qfoot"><span class="src">第七章 PPT</span></div>
+</article>
+  <article class="qcard" id="c7b" data-cat="c7" data-type="简答" data-text="正确把握民生和发展的关系 发展是基础：发展是解决一切问题的基础和关键，民生改善离不开发展提供的物质基础。 民生是目的：增进民生福祉是发展的根本目的，发展为了人民、发展成果由人民共享。 民生是动力：民生改善能够扩大内需、激发消费潜力，为发展提供持久动力。 辩证统一：既要尽力而为，又要量力而行，在发展中将民生保障水平提高到新层次。">
+  <header class="qhead">
+    <span class="qid">C7B</span>
+    <h3>正确把握民生和发展的关系</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>发展是基础</b>：发展是解决一切问题的基础和关键，民生改善离不开发展提供的物质基础。</li><li><b>民生是目的</b>：增进民生福祉是发展的根本目的，发展为了人民、发展成果由人民共享。</li><li><b>民生是动力</b>：民生改善能够扩大内需、激发消费潜力，为发展提供持久动力。</li><li><b>辩证统一</b>：既要尽力而为，又要量力而行，在发展中将民生保障水平提高到新层次。</li></ul>
+  <div class="qfoot"><span class="src">第七章 PPT</span></div>
+</article>
+  <article class="qcard" id="c7c" data-cat="c7" data-type="简答" data-text="保障和改善民生的相关要求 尽力而为、量力而行：既不降低标准，也不吊高胃口，一件事情接着一件事情办。 坚守底线、突出重点：保障基本民生，聚焦重点群体和重点领域。 完善制度、引导预期：健全基本公共服务体系，形成合理稳定的社会预期。 尽力而为与量力而行相统一：处理好当前和长远、局部和整体的关系。 共建共享：坚持人人尽责、人人享有，鼓励共同奋斗创造美好生活。">
+  <header class="qhead">
+    <span class="qid">C7C</span>
+    <h3>保障和改善民生的相关要求</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>尽力而为、量力而行</b>：既不降低标准，也不吊高胃口，一件事情接着一件事情办。</li><li><b>坚守底线、突出重点</b>：保障基本民生，聚焦重点群体和重点领域。</li><li><b>完善制度、引导预期</b>：健全基本公共服务体系，形成合理稳定的社会预期。</li><li><b>尽力而为与量力而行相统一</b>：处理好当前和长远、局部和整体的关系。</li><li><b>共建共享</b>：坚持人人尽责、人人享有，鼓励共同奋斗创造美好生活。</li></ul>
+  <div class="qfoot"><span class="src">第七章 PPT</span></div>
+</article>
+  <article class="qcard" id="c7d" data-cat="c7" data-type="简答" data-text="解决人民群众最关心最直接最现实利益问题的具体要求 就业：强化就业优先政策，健全就业促进机制，促进高质量充分就业。 教育：办好人民满意的教育，促进教育公平，建设教育强国。 收入分配：完善分配制度，坚持按劳分配为主体、多种分配方式并存，扩大中等收入群体。 社会保障：健全覆盖全民、统筹城乡、公平统一、安全规范、可持续的多层次社会保障体系。 医疗卫生：深化医药卫生体制改革，促进优质医疗资源扩容和区域均衡布局。 住房：坚持房子是用来住的、不是用来炒的定位，加快建立多主体供给、多渠道保障、租购并举的住房制度。">
+  <header class="qhead">
+    <span class="qid">C7D</span>
+    <h3>解决人民群众最关心最直接最现实利益问题的具体要求</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>就业</b>：强化就业优先政策，健全就业促进机制，促进高质量充分就业。</li><li><b>教育</b>：办好人民满意的教育，促进教育公平，建设教育强国。</li><li><b>收入分配</b>：完善分配制度，坚持按劳分配为主体、多种分配方式并存，扩大中等收入群体。</li><li><b>社会保障</b>：健全覆盖全民、统筹城乡、公平统一、安全规范、可持续的多层次社会保障体系。</li><li><b>医疗卫生</b>：深化医药卫生体制改革，促进优质医疗资源扩容和区域均衡布局。</li><li><b>住房</b>：坚持房子是用来住的、不是用来炒的定位，加快建立多主体供给、多渠道保障、租购并举的住房制度。</li></ul>
+  <div class="qfoot"><span class="src">第七章 PPT</span></div>
+</article>
+  <article class="qcard" id="c7e" data-cat="c7" data-type="简答" data-text="健康中国建设的具体要求 普及健康生活：加强健康教育，提升全民健康素养，倡导健康文明生活方式。 优化健康服务：强化覆盖全民的公共卫生服务，提供优质高效的医疗服务。 完善健康保障：健全医疗保障体系，完善药品供应保障制度。 建设健康环境：深入开展爱国卫生运动，加强环境卫生治理。 发展健康产业：推动健康产业与养老、旅游、互联网等融合发展。 总要求：把人民健康放在优先发展的战略地位，全方位全周期保障人民健康。">
+  <header class="qhead">
+    <span class="qid">C7E</span>
+    <h3>健康中国建设的具体要求</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>普及健康生活</b>：加强健康教育，提升全民健康素养，倡导健康文明生活方式。</li><li><b>优化健康服务</b>：强化覆盖全民的公共卫生服务，提供优质高效的医疗服务。</li><li><b>完善健康保障</b>：健全医疗保障体系，完善药品供应保障制度。</li><li><b>建设健康环境</b>：深入开展爱国卫生运动，加强环境卫生治理。</li><li><b>发展健康产业</b>：推动健康产业与养老、旅游、互联网等融合发展。</li><li><b>总要求</b>：把人民健康放在优先发展的战略地位，全方位全周期保障人民健康。</li></ul>
+  <div class="qfoot"><span class="src">第七章 PPT</span></div>
+</article>
+</section>
+<section class="cat" id="cat-c8">
+  <header class="cat-head">
+    <div><p class="cat-en">CHAPTER 8</p><h2>第八章 · 建设社会主义生态文明</h2></div>
+    <p class="cat-desc">“两山”论的科学内涵与绿色发展是发展观的深刻革命。</p>
+  </header>
+  <article class="qcard" id="c8a" data-cat="c8" data-type="论述" data-text="如何理解“绿水青山就是金山银山”（“两山”论的科学内涵） 核心理念：绿水青山就是金山银山，深刻揭示了生态环境保护与经济发展的辩证统一关系。 生态优先：保护生态环境就是保护生产力，改善生态环境就是发展生产力。 辩证统一：绿水青山既是自然财富、生态财富，又是社会财富、经济财富。 发展路径：坚持生态优先、绿色发展，把生态优势转化为发展优势。 实践要求：实行最严格的生态环境保护制度，形成绿色发展方式和生活方式。 理论意义：是习近平生态文明思想的核心内容，打破了发展与保护对立的传统思维。">
+  <header class="qhead">
+    <span class="qid">C8A</span>
+    <h3>如何理解“绿水青山就是金山银山”（“两山”论的科学内涵）</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>核心理念</b>：绿水青山就是金山银山，深刻揭示了生态环境保护与经济发展的辩证统一关系。</li><li><b>生态优先</b>：保护生态环境就是保护生产力，改善生态环境就是发展生产力。</li><li><b>辩证统一</b>：绿水青山既是自然财富、生态财富，又是社会财富、经济财富。</li><li><b>发展路径</b>：坚持生态优先、绿色发展，把生态优势转化为发展优势。</li><li><b>实践要求</b>：实行最严格的生态环境保护制度，形成绿色发展方式和生活方式。</li><li><b>理论意义</b>：是习近平生态文明思想的核心内容，打破了发展与保护对立的传统思维。</li></ul>
+  <div class="qfoot"><span class="src">第八章 PPT</span></div>
+</article>
+  <article class="qcard" id="c8b" data-cat="c8" data-type="简答" data-text="如何理解绿色发展是发展观的深刻革命 发展理念变革：从单纯追求 GDP 增长转向人与自然和谐共生，是发展观的一场深刻革命。 发展方式变革：推动形成绿色低碳循环发展的经济体系，加快产业结构、能源结构转型。 生活方式变革：倡导简约适度、绿色低碳的生活方式，反对奢侈浪费和不合理消费。 制度保障：建立健全绿色低碳循环发展的经济体系和生态文明制度体系。 全球意义：为应对全球气候变化、共建清洁美丽世界贡献中国方案。">
+  <header class="qhead">
+    <span class="qid">C8B</span>
+    <h3>如何理解绿色发展是发展观的深刻革命</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>发展理念变革</b>：从单纯追求 GDP 增长转向人与自然和谐共生，是发展观的一场深刻革命。</li><li><b>发展方式变革</b>：推动形成绿色低碳循环发展的经济体系，加快产业结构、能源结构转型。</li><li><b>生活方式变革</b>：倡导简约适度、绿色低碳的生活方式，反对奢侈浪费和不合理消费。</li><li><b>制度保障</b>：建立健全绿色低碳循环发展的经济体系和生态文明制度体系。</li><li><b>全球意义</b>：为应对全球气候变化、共建清洁美丽世界贡献中国方案。</li></ul>
+  <div class="qfoot"><span class="src">第八章 PPT</span></div>
+</article>
+</section>
+<section class="cat" id="cat-c9">
+  <header class="cat-head">
+    <div><p class="cat-en">CHAPTER 9</p><h2>第九章 · 总体国家安全观 推进祖国统一</h2></div>
+    <p class="cat-desc">总体国家安全观的内涵、政治安全首位、发展与安全的关系、“一国两制”与台湾问题。</p>
+  </header>
+  <article class="qcard" id="c9a" data-cat="c9" data-type="论述" data-text="总体国家安全观的内涵 五大要素：以人民安全为宗旨、以政治安全为根本、以经济安全为基础、以军事科技文化社会安全为保障、以促进国际安全为依托。 五对关系：既重视外部安全又重视内部安全、既重视国土安全又重视国民安全、既重视传统安全又重视非传统安全、既重视发展问题又重视安全问题、既重视自身安全又重视共同安全。 十个坚持：坚持党对国家安全工作的绝对领导、坚持中国特色国家安全道路、坚持以人民安全为宗旨等。 总体性：统筹发展和安全，构建集政治、军事、国土、经济、金融、文化、社会、科技、网络、粮食、生态、资源、核、海外利益、太空、深海、极地、生物、人工智能等安全于一体的国家安全体系。">
+  <header class="qhead">
+    <span class="qid">C9A</span>
+    <h3>总体国家安全观的内涵</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>五大要素</b>：以<b>人民安全</b>为宗旨、以<b>政治安全</b>为根本、以<b>经济安全</b>为基础、以<b>军事科技文化社会安全</b>为保障、以<b>促进国际安全</b>为依托。</li><li><b>五对关系</b>：既重视外部安全又重视内部安全、既重视国土安全又重视国民安全、既重视传统安全又重视非传统安全、既重视发展问题又重视安全问题、既重视自身安全又重视共同安全。</li><li><b>十个坚持</b>：坚持党对国家安全工作的绝对领导、坚持中国特色国家安全道路、坚持以人民安全为宗旨等。</li><li><b>总体性</b>：统筹发展和安全，构建集政治、军事、国土、经济、金融、文化、社会、科技、网络、粮食、生态、资源、核、海外利益、太空、深海、极地、生物、人工智能等安全于一体的国家安全体系。</li></ul>
+  <div class="qfoot"><span class="src">第九章 PPT</span></div>
+</article>
+  <article class="qcard" id="c9b" data-cat="c9" data-type="论述" data-text="“一国两制”的内涵及党解决台湾问题的方略 “一国两制”内涵：在一个中国的前提下，国家主体坚持社会主义制度，香港、澳门保持原有的资本主义制度和生活方式长期不变，享有高度自治权。 根本宗旨：维护国家主权、安全、发展利益，保持香港、澳门长期繁荣稳定。 台湾问题总方略：坚持和平统一、一国两制基本方针，坚持一个中国原则和“九二共识”。 基本立场：台湾是中国的台湾，解决台湾问题是中国人自己的事，不容任何外来干涉。 坚决反“独”：坚决反对“台独”分裂行径和外部势力干涉，决不承诺放弃使用武力，保留采取一切必要措施的选项。 融合发展：深化两岸各领域融合发展，增进两岸同胞福祉，共同创造祖国统一、民族复兴的光荣伟业。">
+  <header class="qhead">
+    <span class="qid">C9B</span>
+    <h3>“一国两制”的内涵及党解决台湾问题的方略</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>“一国两制”内涵</b>：在一个中国的前提下，国家主体坚持社会主义制度，香港、澳门保持原有的资本主义制度和生活方式长期不变，享有高度自治权。</li><li><b>根本宗旨</b>：维护国家主权、安全、发展利益，保持香港、澳门长期繁荣稳定。</li><li><b>台湾问题总方略</b>：坚持<b>和平统一、一国两制</b>基本方针，坚持一个中国原则和<b>“九二共识”</b>。</li><li><b>基本立场</b>：台湾是中国的台湾，解决台湾问题是中国人自己的事，不容任何外来干涉。</li><li><b>坚决反“独”</b>：坚决反对“台独”分裂行径和外部势力干涉，决不承诺放弃使用武力，保留采取一切必要措施的选项。</li><li><b>融合发展</b>：深化两岸各领域融合发展，增进两岸同胞福祉，共同创造祖国统一、民族复兴的光荣伟业。</li></ul>
+  <div class="qfoot"><span class="src">第九章 PPT</span></div>
+</article>
+  <article class="qcard" id="c9c" data-cat="c9" data-type="简答" data-text="为什么把维护政治安全放在首要位置 政治安全是根本：政治安全是最高的国家安全，是国家安全的根本。 核心内容：政权安全和制度安全是政治安全的核心，事关党和国家安危。 风险挑战：各种敌对势力始终企图颠覆我国政权、改变我国制度。 保障作用：政治安全得到保障，其他领域安全才有坚实基础。 实践要求：坚持党的领导，坚定“四个自信”，坚决维护国家政权安全和制度安全。">
+  <header class="qhead">
+    <span class="qid">C9C</span>
+    <h3>为什么把维护政治安全放在首要位置</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>政治安全是根本</b>：政治安全是最高的国家安全，是国家安全的根本。</li><li><b>核心内容</b>：政权安全和制度安全是政治安全的核心，事关党和国家安危。</li><li><b>风险挑战</b>：各种敌对势力始终企图颠覆我国政权、改变我国制度。</li><li><b>保障作用</b>：政治安全得到保障，其他领域安全才有坚实基础。</li><li><b>实践要求</b>：坚持党的领导，坚定“四个自信”，坚决维护国家政权安全和制度安全。</li></ul>
+  <div class="qfoot"><span class="src">第九章 PPT</span></div>
+</article>
+  <article class="qcard" id="c9d" data-cat="c9" data-type="简答" data-text="发展与安全的关系 发展是安全的基础：发展是解决一切问题的基础和关键，为安全提供物质保障。 安全是发展的条件：没有安全稳定的环境，发展就无从谈起。 统筹发展和安全：坚持系统观念，把安全发展贯穿国家发展各领域全过程。 底线思维：增强忧患意识，做到居安思危、未雨绸缪。 目标统一：实现高质量发展和高水平安全良性互动。">
+  <header class="qhead">
+    <span class="qid">C9D</span>
+    <h3>发展与安全的关系</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>发展是安全的基础</b>：发展是解决一切问题的基础和关键，为安全提供物质保障。</li><li><b>安全是发展的条件</b>：没有安全稳定的环境，发展就无从谈起。</li><li><b>统筹发展和安全</b>：坚持系统观念，把安全发展贯穿国家发展各领域全过程。</li><li><b>底线思维</b>：增强忧患意识，做到居安思危、未雨绸缪。</li><li><b>目标统一</b>：实现高质量发展和高水平安全良性互动。</li></ul>
+  <div class="qfoot"><span class="src">第九章 PPT</span></div>
+</article>
+</section>
+<section class="cat" id="cat-c10">
+  <header class="cat-head">
+    <div><p class="cat-en">CHAPTER 10</p><h2>第十章 · 习近平强军思想</h2></div>
+    <p class="cat-desc">强军思想的时代背景、主要内容与军事观方法论；党对军队绝对领导、强军目标、备战打仗、国防和军队改革。</p>
+  </header>
+  <article class="qcard" id="m01" data-cat="c10" data-type="简答" data-text="习近平强军思想产生的时代背景 世界之变：世界百年未有之大变局加速演进，国际战略格局和全球安全环境深刻变化。 国家安全形势：我国安全形势复杂严峻，传统安全与非传统安全威胁相互交织。 强军需求：国防和军队现代化水平与国家安全需求相比差距较大，必须加快强军步伐。 实践基础：党的十八大以来强军兴军的伟大实践，为强军思想提供了丰厚土壤。">
+  <header class="qhead">
+    <span class="qid">M01</span>
+    <h3>习近平强军思想产生的时代背景</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>世界之变</b>：世界百年未有之大变局加速演进，国际战略格局和全球安全环境深刻变化。</li><li><b>国家安全形势</b>：我国安全形势复杂严峻，传统安全与非传统安全威胁相互交织。</li><li><b>强军需求</b>：国防和军队现代化水平与国家安全需求相比差距较大，必须加快强军步伐。</li><li><b>实践基础</b>：党的十八大以来强军兴军的伟大实践，为强军思想提供了丰厚土壤。</li></ul>
+  <div class="qfoot"><span class="src">第十章第一节 PPT</span></div>
+</article>
+  <article class="qcard" id="m02" data-cat="c10" data-type="论述" data-text="习近平强军思想的主要内容（十一个明确） 根本方向：明确党对人民军队的绝对领导是人民军队的建军之本、强军之魂。 强军目标：明确建设一支听党指挥、能打胜仗、作风优良的人民军队，把人民军队建设成为世界一流军队。 战略布局：明确政治建军、改革强军、科技强军、人才强军、依法治军。 备战打仗：明确把备战打仗作为第一要务，全面提高新时代打赢能力。 建设路径：明确军民融合发展、国防和军队改革、军事政策制度改革等重点任务。 军事外交：明确走和平发展道路，服务构建人类命运共同体。 根本保证：明确全面加强军队党的建设，坚持全面从严治党、全面从严治军。">
+  <header class="qhead">
+    <span class="qid">M02</span>
+    <h3>习近平强军思想的主要内容（十一个明确）</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>根本方向</b>：明确党对人民军队的绝对领导是人民军队的建军之本、强军之魂。</li><li><b>强军目标</b>：明确建设一支听党指挥、能打胜仗、作风优良的人民军队，把人民军队建设成为世界一流军队。</li><li><b>战略布局</b>：明确政治建军、改革强军、科技强军、人才强军、依法治军。</li><li><b>备战打仗</b>：明确把备战打仗作为第一要务，全面提高新时代打赢能力。</li><li><b>建设路径</b>：明确军民融合发展、国防和军队改革、军事政策制度改革等重点任务。</li><li><b>军事外交</b>：明确走和平发展道路，服务构建人类命运共同体。</li><li><b>根本保证</b>：明确全面加强军队党的建设，坚持全面从严治党、全面从严治军。</li></ul>
+  <div class="qfoot"><span class="src">第十章第一节 PPT</span></div>
+</article>
+  <article class="qcard" id="m03" data-cat="c10" data-type="简答" data-text="习近平强军思想蕴含的马克思主义立场观点方法 人民立场：始终站在人民立场上，坚持人民军队为人民。 系统观念：统筹军队建设各领域、各层次、各要素，整体推进强军事业。 问题导向：聚焦备战打仗和军队建设中的突出矛盾问题。 底线思维：增强忧患意识，做好应对复杂困难局面的准备。 辩证方法：正确处理政治与军事、战争与和平、发展与安全的关系。">
+  <header class="qhead">
+    <span class="qid">M03</span>
+    <h3>习近平强军思想蕴含的马克思主义立场观点方法</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>人民立场</b>：始终站在人民立场上，坚持人民军队为人民。</li><li><b>系统观念</b>：统筹军队建设各领域、各层次、各要素，整体推进强军事业。</li><li><b>问题导向</b>：聚焦备战打仗和军队建设中的突出矛盾问题。</li><li><b>底线思维</b>：增强忧患意识，做好应对复杂困难局面的准备。</li><li><b>辩证方法</b>：正确处理政治与军事、战争与和平、发展与安全的关系。</li></ul>
+  <div class="qfoot"><span class="src">第十章第一节 PPT</span></div>
+</article>
+  <article class="qcard" id="m04" data-cat="c10" data-type="简答" data-text="习近平强军思想的地位（回答了什么问题） 回答的问题：新时代建设一支什么样的强大人民军队、怎样建设强大人民军队。 理论地位：是马克思主义军事理论中国化时代化的新飞跃。 指导地位：是党的军事指导理论的最新成果。 体系地位：是习近平新时代中国特色社会主义思想的“军事篇”。">
+  <header class="qhead">
+    <span class="qid">M04</span>
+    <h3>习近平强军思想的地位（回答了什么问题）</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>回答的问题</b>：新时代建设一支什么样的强大人民军队、怎样建设强大人民军队。</li><li><b>理论地位</b>：是马克思主义军事理论中国化时代化的新飞跃。</li><li><b>指导地位</b>：是党的军事指导理论的最新成果。</li><li><b>体系地位</b>：是习近平新时代中国特色社会主义思想的“军事篇”。</li></ul>
+  <div class="qfoot"><span class="src">第十章第一节 PPT</span></div>
+</article>
+  <article class="qcard" id="m05" data-cat="c10" data-type="论述" data-text="党对军队绝对领导的主要内容和特点 政治领导：坚持党对军队的政治领导，确保军队坚定正确的政治方向。 思想领导：坚持用党的创新理论武装官兵，确保军队思想纯洁。 组织领导：坚持党管干部、党管人才，健全军队党的组织体系。 制度保证：坚持党委统一的集体领导下的首长分工负责制、政治委员制、政治机关制。 特点：具有唯一性（只能由中国共产党领导）、彻底性（一切行动听指挥）、无条件性（不讲价钱、不打折扣）。">
+  <header class="qhead">
+    <span class="qid">M05</span>
+    <h3>党对军队绝对领导的主要内容和特点</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>政治领导</b>：坚持党对军队的政治领导，确保军队坚定正确的政治方向。</li><li><b>思想领导</b>：坚持用党的创新理论武装官兵，确保军队思想纯洁。</li><li><b>组织领导</b>：坚持党管干部、党管人才，健全军队党的组织体系。</li><li><b>制度保证</b>：坚持党委统一的集体领导下的首长分工负责制、政治委员制、政治机关制。</li><li><b>特点</b>：具有<b>唯一性</b>（只能由中国共产党领导）、<b>彻底性</b>（一切行动听指挥）、<b>无条件性</b>（不讲价钱、不打折扣）。</li></ul>
+  <div class="qfoot"><span class="src">第十章第二节 PPT</span></div>
+</article>
+  <article class="qcard" id="m06" data-cat="c10" data-type="简答" data-text="军委主席负责制的内容及重要意义 内容：中央军事委员会实行主席负责制，军委主席统一领导全国武装力量，对全军重大问题和重要事项作出决策。 地位：是坚持党对军队绝对领导的根本制度和根本实现形式。 意义：确保全军最高领导权和指挥权集中于党中央、中央军委和军委主席。 要求：全军必须坚决维护军委主席负责制，一切行动听从党中央、中央军委和军委主席指挥。">
+  <header class="qhead">
+    <span class="qid">M06</span>
+    <h3>军委主席负责制的内容及重要意义</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>内容</b>：中央军事委员会实行主席负责制，军委主席统一领导全国武装力量，对全军重大问题和重要事项作出决策。</li><li><b>地位</b>：是坚持党对军队绝对领导的根本制度和根本实现形式。</li><li><b>意义</b>：确保全军最高领导权和指挥权集中于党中央、中央军委和军委主席。</li><li><b>要求</b>：全军必须坚决维护军委主席负责制，一切行动听从党中央、中央军委和军委主席指挥。</li></ul>
+  <div class="qfoot"><span class="src">第十章第二节 PPT</span></div>
+</article>
+  <article class="qcard" id="m07" data-cat="c10" data-type="论述" data-text="对“军队非党化、军队非政治化”和“军队国家化”的认识 错误实质：这些论调割裂军队与党的关系，企图动摇党对军队的绝对领导。 理论谬误：军队从来不是超政治的，任何国家的军队都从属于一定的阶级及其政党。 历史事实：我军是党缔造和领导的，党的绝对领导是人民军队的建军之本、强军之魂。 现实危害：若照搬西方模式，必将导致军队脱离党的领导，危及国家政权安全。 正确立场：必须旗帜鲜明反对，坚持党对军队绝对领导的根本原则和制度。">
+  <header class="qhead">
+    <span class="qid">M07</span>
+    <h3>对“军队非党化、军队非政治化”和“军队国家化”的认识</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>错误实质</b>：这些论调割裂军队与党的关系，企图动摇党对军队的绝对领导。</li><li><b>理论谬误</b>：军队从来不是超政治的，任何国家的军队都从属于一定的阶级及其政党。</li><li><b>历史事实</b>：我军是党缔造和领导的，党的绝对领导是人民军队的建军之本、强军之魂。</li><li><b>现实危害</b>：若照搬西方模式，必将导致军队脱离党的领导，危及国家政权安全。</li><li><b>正确立场</b>：必须旗帜鲜明反对，坚持党对军队绝对领导的根本原则和制度。</li></ul>
+  <div class="qfoot"><span class="src">第十章第二节 PPT</span></div>
+</article>
+  <article class="qcard" id="m08" data-cat="c10" data-type="简答" data-text="为什么说党对军队绝对领导是人民军队建军之本、强军之魂 建军之本：我军从诞生之日起就是党领导下的人民军队，党的绝对领导是我军的立军之本。 强军之魂：强军首先强政治，政治建军是我军的根本性原则。 历史证明：我军之所以能够从小到大、从弱到强，根本在于党的坚强领导。 现实要求：面对复杂环境，必须把党对军队绝对领导贯彻到军队建设各领域全过程。">
+  <header class="qhead">
+    <span class="qid">M08</span>
+    <h3>为什么说党对军队绝对领导是人民军队建军之本、强军之魂</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>建军之本</b>：我军从诞生之日起就是党领导下的人民军队，党的绝对领导是我军的立军之本。</li><li><b>强军之魂</b>：强军首先强政治，政治建军是我军的根本性原则。</li><li><b>历史证明</b>：我军之所以能够从小到大、从弱到强，根本在于党的坚强领导。</li><li><b>现实要求</b>：面对复杂环境，必须把党对军队绝对领导贯彻到军队建设各领域全过程。</li></ul>
+  <div class="qfoot"><span class="src">第十章第二节 PPT</span></div>
+</article>
+  <article class="qcard" id="m09" data-cat="c10" data-type="简答" data-text="强军目标提出的重大意义 战略意义：明确了新时代军队建设的目标方向，是强军兴军的战略牵引。 理论意义：丰富和发展了党的军事指导理论。 实践意义：为国防和军队现代化建设提供了根本遵循。 世界意义：为建设世界一流军队提供了中国方案。">
+  <header class="qhead">
+    <span class="qid">M09</span>
+    <h3>强军目标提出的重大意义</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>战略意义</b>：明确了新时代军队建设的目标方向，是强军兴军的战略牵引。</li><li><b>理论意义</b>：丰富和发展了党的军事指导理论。</li><li><b>实践意义</b>：为国防和军队现代化建设提供了根本遵循。</li><li><b>世界意义</b>：为建设世界一流军队提供了中国方案。</li></ul>
+  <div class="qfoot"><span class="src">第十章第三节 PPT</span></div>
+</article>
+  <article class="qcard" id="m10" data-cat="c10" data-type="论述" data-text="强军目标的科学内涵 听党指挥：是强军之魂，决定军队建设的政治方向。 能打胜仗：是强军之要，反映军队的根本职能和军队建设的根本指向。 作风优良：是强军之基，关系军队的性质、宗旨、本色。 世界一流：把人民军队建设成为世界一流军队，是强军目标的发展要求。 三者统一：听党指挥、能打胜仗、作风优良相互联系、相互促进，统一于建设世界一流军队的伟大实践。">
+  <header class="qhead">
+    <span class="qid">M10</span>
+    <h3>强军目标的科学内涵</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>听党指挥</b>：是强军之魂，决定军队建设的政治方向。</li><li><b>能打胜仗</b>：是强军之要，反映军队的根本职能和军队建设的根本指向。</li><li><b>作风优良</b>：是强军之基，关系军队的性质、宗旨、本色。</li><li><b>世界一流</b>：把人民军队建设成为世界一流军队，是强军目标的发展要求。</li><li><b>三者统一</b>：听党指挥、能打胜仗、作风优良相互联系、相互促进，统一于建设世界一流军队的伟大实践。</li></ul>
+  <div class="qfoot"><span class="src">第十章第三节 PPT</span></div>
+</article>
+  <article class="qcard" id="m11" data-cat="c10" data-type="简答" data-text="国防和军队现代化新“三步走”战略安排 第一步：到 2027 年实现建军一百年奋斗目标。 第二步：到 2035 年基本实现国防和军队现代化。 第三步：到本世纪中叶把人民军队全面建成世界一流军队。 意义：明确了国防和军队现代化的时间表、路线图，与党和国家现代化战略安排相衔接。">
+  <header class="qhead">
+    <span class="qid">M11</span>
+    <h3>国防和军队现代化新“三步走”战略安排</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>第一步</b>：到 2027 年实现建军一百年奋斗目标。</li><li><b>第二步</b>：到 2035 年基本实现国防和军队现代化。</li><li><b>第三步</b>：到本世纪中叶把人民军队全面建成世界一流军队。</li><li><b>意义</b>：明确了国防和军队现代化的时间表、路线图，与党和国家现代化战略安排相衔接。</li></ul>
+  <div class="qfoot"><span class="src">第十章第三节 PPT</span></div>
+</article>
+  <article class="qcard" id="m12" data-cat="c10" data-type="简答" data-text="为什么说能打仗、打胜仗是党和人民对军队的根本要求 根本职能：军队首先是一个战斗队，能打仗、打胜仗是军队的根本价值所在。 使命要求：维护国家主权、安全、发展利益，必须有过硬的打赢能力。 人民期待：党和人民把安全托付给军队，军队必须不负重托。 现实紧迫：国家安全形势复杂严峻，必须时刻准备打仗。">
+  <header class="qhead">
+    <span class="qid">M12</span>
+    <h3>为什么说能打仗、打胜仗是党和人民对军队的根本要求</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>根本职能</b>：军队首先是一个战斗队，能打仗、打胜仗是军队的根本价值所在。</li><li><b>使命要求</b>：维护国家主权、安全、发展利益，必须有过硬的打赢能力。</li><li><b>人民期待</b>：党和人民把安全托付给军队，军队必须不负重托。</li><li><b>现实紧迫</b>：国家安全形势复杂严峻，必须时刻准备打仗。</li></ul>
+  <div class="qfoot"><span class="src">第十章第四节 PPT</span></div>
+</article>
+  <article class="qcard" id="m13" data-cat="c10" data-type="简答" data-text="如何加强联合作战指挥体系能力建设 健全指挥体制：完善军委管总、战区主战、军种主建的领导指挥体制。 强化联合指挥：构建平战一体、常态运行、精干高效的联合作战指挥机构。 提升指挥手段：加强信息化、智能化指挥手段建设，提高指挥效能。 培养指挥人才：造就高素质联合作战指挥人才队伍。 实战检验：通过演训实践检验和提升联合作战指挥能力。">
+  <header class="qhead">
+    <span class="qid">M13</span>
+    <h3>如何加强联合作战指挥体系能力建设</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>健全指挥体制</b>：完善军委管总、战区主战、军种主建的领导指挥体制。</li><li><b>强化联合指挥</b>：构建平战一体、常态运行、精干高效的联合作战指挥机构。</li><li><b>提升指挥手段</b>：加强信息化、智能化指挥手段建设，提高指挥效能。</li><li><b>培养指挥人才</b>：造就高素质联合作战指挥人才队伍。</li><li><b>实战检验</b>：通过演训实践检验和提升联合作战指挥能力。</li></ul>
+  <div class="qfoot"><span class="src">第十章第四节 PPT</span></div>
+</article>
+  <article class="qcard" id="m14" data-cat="c10" data-type="简答" data-text="如何深入推进实战化军事训练 坚持战斗力标准：把战斗力作为唯一的根本的标准，一切训练向打仗聚焦。 按纲施训：严格落实训练大纲，从难从严从实战需要出发训练。 对抗训练：加强实兵对抗、体系对抗，提高实战对抗能力。 联合训练：加强军兵种联合训练，提升体系作战能力。 科技练兵：运用新技术新装备，提高训练的科技含量。">
+  <header class="qhead">
+    <span class="qid">M14</span>
+    <h3>如何深入推进实战化军事训练</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>坚持战斗力标准</b>：把战斗力作为唯一的根本的标准，一切训练向打仗聚焦。</li><li><b>按纲施训</b>：严格落实训练大纲，从难从严从实战需要出发训练。</li><li><b>对抗训练</b>：加强实兵对抗、体系对抗，提高实战对抗能力。</li><li><b>联合训练</b>：加强军兵种联合训练，提升体系作战能力。</li><li><b>科技练兵</b>：运用新技术新装备，提高训练的科技含量。</li></ul>
+  <div class="qfoot"><span class="src">第十章第四节 PPT</span></div>
+</article>
+  <article class="qcard" id="m15" data-cat="c10" data-type="简答" data-text="提升战斗力的具体要求 政治过硬：坚持党对军队绝对领导，确保部队绝对忠诚、绝对纯洁、绝对可靠。 本领高强：提高打赢信息化智能化战争能力。 作风优良：发扬一不怕苦、二不怕死的战斗精神。 纪律严明：坚持依法治军、从严治军，用铁的纪律凝聚铁的意志。 保障有力：加强后勤和装备保障，提高综合保障能力。">
+  <header class="qhead">
+    <span class="qid">M15</span>
+    <h3>提升战斗力的具体要求</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>政治过硬</b>：坚持党对军队绝对领导，确保部队绝对忠诚、绝对纯洁、绝对可靠。</li><li><b>本领高强</b>：提高打赢信息化智能化战争能力。</li><li><b>作风优良</b>：发扬一不怕苦、二不怕死的战斗精神。</li><li><b>纪律严明</b>：坚持依法治军、从严治军，用铁的纪律凝聚铁的意志。</li><li><b>保障有力</b>：加强后勤和装备保障，提高综合保障能力。</li></ul>
+  <div class="qfoot"><span class="src">第十章第四节 PPT</span></div>
+</article>
+  <article class="qcard" id="m16" data-cat="c10" data-type="简答" data-text="为什么要推进国防和军队现代化 国家安全需要：国家安全环境深刻变化，必须建设与国家安全需求相适应的军事力量。 世界军事革命：新一轮世界军事革命加速推进，战争形态向信息化智能化演变。 国家现代化的重要组成部分：国防和军队现代化是国家现代化的重要标志和坚强保障。 强军目标要求：实现党在新时代的强军目标，必须加快国防和军队现代化。">
+  <header class="qhead">
+    <span class="qid">M16</span>
+    <h3>为什么要推进国防和军队现代化</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>国家安全需要</b>：国家安全环境深刻变化，必须建设与国家安全需求相适应的军事力量。</li><li><b>世界军事革命</b>：新一轮世界军事革命加速推进，战争形态向信息化智能化演变。</li><li><b>国家现代化的重要组成部分</b>：国防和军队现代化是国家现代化的重要标志和坚强保障。</li><li><b>强军目标要求</b>：实现党在新时代的强军目标，必须加快国防和军队现代化。</li></ul>
+  <div class="qfoot"><span class="src">第十章第五节 PPT</span></div>
+</article>
+  <article class="qcard" id="m17" data-cat="c10" data-type="简答" data-text="强化政治建军的着力点 铸牢军魂：坚持党对军队绝对领导，确保部队绝对忠诚。 理论武装：用党的创新理论武装官兵头脑。 作风建设：持之以恒正风肃纪，纯洁部队政治生态。 组织建设：加强军队党的建设，把党的政治优势和组织优势转化为制胜优势。 红色基因：传承红色基因，永葆人民军队性质宗旨本色。">
+  <header class="qhead">
+    <span class="qid">M17</span>
+    <h3>强化政治建军的着力点</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>铸牢军魂</b>：坚持党对军队绝对领导，确保部队绝对忠诚。</li><li><b>理论武装</b>：用党的创新理论武装官兵头脑。</li><li><b>作风建设</b>：持之以恒正风肃纪，纯洁部队政治生态。</li><li><b>组织建设</b>：加强军队党的建设，把党的政治优势和组织优势转化为制胜优势。</li><li><b>红色基因</b>：传承红色基因，永葆人民军队性质宗旨本色。</li></ul>
+  <div class="qfoot"><span class="src">第十章第五节 PPT</span></div>
+</article>
+  <article class="qcard" id="m18" data-cat="c10" data-type="简答" data-text="改革强军的具体措施 领导指挥体制改革：建立军委管总、战区主战、军种主建新格局。 规模结构和力量编成改革：优化军兵种比例，调整部队编成。 军事政策制度改革：构建中国特色军事政策制度体系。 军民融合发展：把军民融合发展上升为国家战略。 依法治军：推进治军方式根本性转变。">
+  <header class="qhead">
+    <span class="qid">M18</span>
+    <h3>改革强军的具体措施</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>领导指挥体制改革</b>：建立军委管总、战区主战、军种主建新格局。</li><li><b>规模结构和力量编成改革</b>：优化军兵种比例，调整部队编成。</li><li><b>军事政策制度改革</b>：构建中国特色军事政策制度体系。</li><li><b>军民融合发展</b>：把军民融合发展上升为国家战略。</li><li><b>依法治军</b>：推进治军方式根本性转变。</li></ul>
+  <div class="qfoot"><span class="src">第十章第五节 PPT</span></div>
+</article>
+  <article class="qcard" id="m19" data-cat="c10" data-type="简答" data-text="深化国防和军队改革的重点内容 领导指挥体制：破立并举，构建军委—战区—部队的作战指挥体系和军委—军种—部队的领导管理体系。 规模结构和力量编成：精简机关和非战斗机构人员，优化军兵种结构。 军事政策制度：推进军事政策制度改革，构建现代军事政策制度体系。 联勤保障体制：建立联勤保障部队，构建联勤保障新体制。">
+  <header class="qhead">
+    <span class="qid">M19</span>
+    <h3>深化国防和军队改革的重点内容</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>领导指挥体制</b>：破立并举，构建军委—战区—部队的作战指挥体系和军委—军种—部队的领导管理体系。</li><li><b>规模结构和力量编成</b>：精简机关和非战斗机构人员，优化军兵种结构。</li><li><b>军事政策制度</b>：推进军事政策制度改革，构建现代军事政策制度体系。</li><li><b>联勤保障体制</b>：建立联勤保障部队，构建联勤保障新体制。</li></ul>
+  <div class="qfoot"><span class="src">第十章第六节 PPT</span></div>
+</article>
+  <article class="qcard" id="m20" data-cat="c10" data-type="简答" data-text="重塑重构领导指挥体制改革的总原则 军委管总：军委统一领导全国武装力量，强化军委集中统一领导。 战区主战：战区专司主营打仗，负责本战略方向作战指挥。 军种主建：军种负责本军种建设管理，为打仗提供力量支撑。 总原则：坚持党对军队绝对领导，坚持战斗力标准，坚持精简高效。">
+  <header class="qhead">
+    <span class="qid">M20</span>
+    <h3>重塑重构领导指挥体制改革的总原则</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>军委管总</b>：军委统一领导全国武装力量，强化军委集中统一领导。</li><li><b>战区主战</b>：战区专司主营打仗，负责本战略方向作战指挥。</li><li><b>军种主建</b>：军种负责本军种建设管理，为打仗提供力量支撑。</li><li><b>总原则</b>：坚持党对军队绝对领导，坚持战斗力标准，坚持精简高效。</li></ul>
+  <div class="qfoot"><span class="src">第十章第六节 PPT</span></div>
+</article>
+  <article class="qcard" id="m21" data-cat="c10" data-type="简答" data-text="新军兵种格局 陆军：由区域防卫型向全域作战型转变。 海军：由近海防御型向远海防卫型转变。 空军：由国土防空型向攻防兼备型转变。 火箭军：由兵种升格为独立军种，是我国战略威慑的核心力量。 战略支援部队：2015 年组建，2024 年调整为信息支援部队、军事航天部队、网络空间部队。 联勤保障部队：2016 年组建，构建联勤保障新体制。">
+  <header class="qhead">
+    <span class="qid">M21</span>
+    <h3>新军兵种格局</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>陆军</b>：由区域防卫型向全域作战型转变。</li><li><b>海军</b>：由近海防御型向远海防卫型转变。</li><li><b>空军</b>：由国土防空型向攻防兼备型转变。</li><li><b>火箭军</b>：由兵种升格为独立军种，是我国战略威慑的核心力量。</li><li><b>战略支援部队</b>：2015 年组建，2024 年调整为信息支援部队、军事航天部队、网络空间部队。</li><li><b>联勤保障部队</b>：2016 年组建，构建联勤保障新体制。</li></ul>
+  <div class="qfoot"><span class="src">第十章第六节 PPT</span></div>
+</article>
+  <article class="qcard" id="m22" data-cat="c10" data-type="简答" data-text="军队规模结构和力量编成的发展方向和主要特征 发展方向：向精兵、合成、高效方向发展，构建中国特色现代军事力量体系。 精干化：精简机关和非战斗机构人员，压减规模、提高质量。 合成化：推进部队编成合成化、模块化，提高独立作战能力。 多能化：提高部队遂行多样化军事任务能力。 体系化：优化军兵种比例结构，形成体系作战能力。">
+  <header class="qhead">
+    <span class="qid">M22</span>
+    <h3>军队规模结构和力量编成的发展方向和主要特征</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>发展方向</b>：向精兵、合成、高效方向发展，构建中国特色现代军事力量体系。</li><li><b>精干化</b>：精简机关和非战斗机构人员，压减规模、提高质量。</li><li><b>合成化</b>：推进部队编成合成化、模块化，提高独立作战能力。</li><li><b>多能化</b>：提高部队遂行多样化军事任务能力。</li><li><b>体系化</b>：优化军兵种比例结构，形成体系作战能力。</li></ul>
+  <div class="qfoot"><span class="src">第十章第六节 PPT</span></div>
+</article>
+  <article class="qcard" id="m23" data-cat="c10" data-type="简答" data-text="深化国防和军队改革取得的重大成效（体制一新、结构一新、格局一新、面貌一新） 体制一新：建立军委管总、战区主战、军种主建的新领导指挥体制。 结构一新：规模结构和力量编成得到优化，军兵种比例更加合理。 格局一新：形成军委—战区—部队的作战指挥体系和军委—军种—部队的领导管理体系。 面貌一新：部队政治生态重塑、组织形态重塑、力量体系重塑、作风形象重塑。">
+  <header class="qhead">
+    <span class="qid">M23</span>
+    <h3>深化国防和军队改革取得的重大成效（体制一新、结构一新、格局一新、面貌一新）</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>体制一新</b>：建立军委管总、战区主战、军种主建的新领导指挥体制。</li><li><b>结构一新</b>：规模结构和力量编成得到优化，军兵种比例更加合理。</li><li><b>格局一新</b>：形成军委—战区—部队的作战指挥体系和军委—军种—部队的领导管理体系。</li><li><b>面貌一新</b>：部队政治生态重塑、组织形态重塑、力量体系重塑、作风形象重塑。</li></ul>
+  <div class="qfoot"><span class="src">第十章第六节 PPT</span></div>
+</article>
+  <article class="qcard" id="m24" data-cat="c10" data-type="简答" data-text="巩固提高一体化国家战略体系和能力的重大意义 应对复杂安全形势：统筹发展和安全，提升国家综合实力和战略能力。 服务强国强军：把国防和军队建设融入国家经济社会发展体系。 提高资源配置效率：打破军民分割，实现资源统筹共享。 支撑备战打仗：为打赢战争提供坚实的战略支撑。">
+  <header class="qhead">
+    <span class="qid">M24</span>
+    <h3>巩固提高一体化国家战略体系和能力的重大意义</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>应对复杂安全形势</b>：统筹发展和安全，提升国家综合实力和战略能力。</li><li><b>服务强国强军</b>：把国防和军队建设融入国家经济社会发展体系。</li><li><b>提高资源配置效率</b>：打破军民分割，实现资源统筹共享。</li><li><b>支撑备战打仗</b>：为打赢战争提供坚实的战略支撑。</li></ul>
+  <div class="qfoot"><span class="src">第十章第七节 PPT</span></div>
+</article>
+  <article class="qcard" id="m25" data-cat="c10" data-type="简答" data-text="推进一体化国家战略体系和能力的内容要求 顶层设计：加强战略统筹和顶层设计，形成国家战略体系。 军民融合：推动重点区域、重点领域、新兴领域协调发展。 国防动员：完善国防动员体系，提高平战转换能力。 战略资源：统筹战略资源储备和运用，增强战略韧性。 法治保障：健全相关法律法规和政策制度。">
+  <header class="qhead">
+    <span class="qid">M25</span>
+    <h3>推进一体化国家战略体系和能力的内容要求</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>顶层设计</b>：加强战略统筹和顶层设计，形成国家战略体系。</li><li><b>军民融合</b>：推动重点区域、重点领域、新兴领域协调发展。</li><li><b>国防动员</b>：完善国防动员体系，提高平战转换能力。</li><li><b>战略资源</b>：统筹战略资源储备和运用，增强战略韧性。</li><li><b>法治保障</b>：健全相关法律法规和政策制度。</li></ul>
+  <div class="qfoot"><span class="src">第十章第七节 PPT</span></div>
+</article>
+  <article class="qcard" id="m26" data-cat="c10" data-type="论述" data-text="“五个坚持”及其重要意义 坚持政治建军：确保军队建设正确政治方向。 坚持改革强军：通过改革解放和发展战斗力。 坚持科技强军：把科技创新作为战斗力生成的重要引擎。 坚持人才强军：培养高素质新型军事人才。 坚持依法治军：提高国防和军队建设法治化水平。 意义：五者相互联系、相互促进，构成新时代强军兴军的战略布局，为强军事业提供根本遵循。">
+  <header class="qhead">
+    <span class="qid">M26</span>
+    <h3>“五个坚持”及其重要意义</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>坚持政治建军</b>：确保军队建设正确政治方向。</li><li><b>坚持改革强军</b>：通过改革解放和发展战斗力。</li><li><b>坚持科技强军</b>：把科技创新作为战斗力生成的重要引擎。</li><li><b>坚持人才强军</b>：培养高素质新型军事人才。</li><li><b>坚持依法治军</b>：提高国防和军队建设法治化水平。</li><li><b>意义</b>：五者相互联系、相互促进，构成新时代强军兴军的战略布局，为强军事业提供根本遵循。</li></ul>
+  <div class="qfoot"><span class="src">第十章第八节 PPT</span></div>
+</article>
+  <article class="qcard" id="m27" data-cat="c10" data-type="简答" data-text="军事与政治的辩证关系 军事从属于政治：战争是政治的继续，军事行动服务于政治目的。 政治决定军事：政治方向决定军事方向，政治优势是军事优势的重要基础。 军事反作用于政治：强大的军事力量是实现政治目标的重要支撑。 实践要求：坚持党对军队绝对领导，坚持军事服从政治、战略服从政略。">
+  <header class="qhead">
+    <span class="qid">M27</span>
+    <h3>军事与政治的辩证关系</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>军事从属于政治</b>：战争是政治的继续，军事行动服务于政治目的。</li><li><b>政治决定军事</b>：政治方向决定军事方向，政治优势是军事优势的重要基础。</li><li><b>军事反作用于政治</b>：强大的军事力量是实现政治目标的重要支撑。</li><li><b>实践要求</b>：坚持党对军队绝对领导，坚持军事服从政治、战略服从政略。</li></ul>
+  <div class="qfoot"><span class="src">第十章第八节 PPT</span></div>
+</article>
+  <article class="qcard" id="m28" data-cat="c10" data-type="简答" data-text="“以武止戈”的科学内涵 核心要义：以强大的军事力量遏制战争、维护和平，实现“不战而屈人之兵”。 防御性国防政策：我国始终奉行防御性国防政策，永不称霸、永不扩张。 止戈为武：强军的目的是维护和平，而不是谋求霸权。 实践要求：能战方能止战，准备打才可能不必打，越不能打越可能挨打。">
+  <header class="qhead">
+    <span class="qid">M28</span>
+    <h3>“以武止戈”的科学内涵</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>核心要义</b>：以强大的军事力量遏制战争、维护和平，实现“不战而屈人之兵”。</li><li><b>防御性国防政策</b>：我国始终奉行防御性国防政策，永不称霸、永不扩张。</li><li><b>止戈为武</b>：强军的目的是维护和平，而不是谋求霸权。</li><li><b>实践要求</b>：能战方能止战，准备打才可能不必打，越不能打越可能挨打。</li></ul>
+  <div class="qfoot"><span class="src">第十章第八节 PPT</span></div>
+</article>
+  <article class="qcard" id="m29" data-cat="c10" data-type="简答" data-text="如何在日常生活中培养斗争精神 坚定理想信念：筑牢信仰之基，增强斗争底气。 增强忧患意识：居安思危，保持清醒头脑和战略定力。 敢于担当作为：面对困难矛盾敢于迎难而上。 锤炼本领：在实践中经风雨、见世面、壮筋骨、长才干。 讲究策略：把握斗争方向、立场、原则，做到有理有利有节。">
+  <header class="qhead">
+    <span class="qid">M29</span>
+    <h3>如何在日常生活中培养斗争精神</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>坚定理想信念</b>：筑牢信仰之基，增强斗争底气。</li><li><b>增强忧患意识</b>：居安思危，保持清醒头脑和战略定力。</li><li><b>敢于担当作为</b>：面对困难矛盾敢于迎难而上。</li><li><b>锤炼本领</b>：在实践中经风雨、见世面、壮筋骨、长才干。</li><li><b>讲究策略</b>：把握斗争方向、立场、原则，做到有理有利有节。</li></ul>
+  <div class="qfoot"><span class="src">第十章第八节 PPT</span></div>
+</article>
+</section>
+<section class="cat" id="cat-c11">
+  <header class="cat-head">
+    <div><p class="cat-en">CHAPTER 11</p><h2>第十一章 · 中国特色大国外交</h2></div>
+    <p class="cat-desc">百年未有之大变局、人类命运共同体、“一带一路”。</p>
+  </header>
+  <article class="qcard" id="c11a" data-cat="c11" data-type="论述" data-text="为什么说当今世界百年未有之大变局加速演进 力量对比深刻调整：新兴市场国家和发展中国家群体性崛起，国际力量对比更趋均衡。 全球治理体系变革：全球治理体系和国际秩序变革加速推进，单边主义、保护主义抬头。 科技革命驱动：新一轮科技革命和产业变革深入发展，深刻改变生产生活方式和国际竞争格局。 风险挑战增多：世界进入新的动荡变革期，和平赤字、发展赤字、安全赤字、治理赤字加重。 中国与世界关系：我国日益走近世界舞台中央，中华民族伟大复兴战略全局与世界百年未有之大变局相互交织。">
+  <header class="qhead">
+    <span class="qid">C11A</span>
+    <h3>为什么说当今世界百年未有之大变局加速演进</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>力量对比深刻调整</b>：新兴市场国家和发展中国家群体性崛起，国际力量对比更趋均衡。</li><li><b>全球治理体系变革</b>：全球治理体系和国际秩序变革加速推进，单边主义、保护主义抬头。</li><li><b>科技革命驱动</b>：新一轮科技革命和产业变革深入发展，深刻改变生产生活方式和国际竞争格局。</li><li><b>风险挑战增多</b>：世界进入新的动荡变革期，和平赤字、发展赤字、安全赤字、治理赤字加重。</li><li><b>中国与世界关系</b>：我国日益走近世界舞台中央，中华民族伟大复兴战略全局与世界百年未有之大变局相互交织。</li></ul>
+  <div class="qfoot"><span class="src">第十一章 PPT</span></div>
+</article>
+  <article class="qcard" id="c11b" data-cat="c11" data-type="论述" data-text="人类命运共同体的深刻内涵 总目标：建设持久和平、普遍安全、共同繁荣、开放包容、清洁美丽的世界。 持久和平：坚持对话协商，建设一个持久和平的世界。 普遍安全：坚持共建共享，建设一个普遍安全的世界。 共同繁荣：坚持合作共赢，建设一个共同繁荣的世界。 开放包容：坚持交流互鉴，建设一个开放包容的世界。 清洁美丽：坚持绿色低碳，建设一个清洁美丽的世界。 实践路径：推动构建新型国际关系，弘扬全人类共同价值，落实全球发展倡议、全球安全倡议、全球文明倡议。">
+  <header class="qhead">
+    <span class="qid">C11B</span>
+    <h3>人类命运共同体的深刻内涵</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>总目标</b>：建设<b>持久和平、普遍安全、共同繁荣、开放包容、清洁美丽</b>的世界。</li><li><b>持久和平</b>：坚持对话协商，建设一个持久和平的世界。</li><li><b>普遍安全</b>：坚持共建共享，建设一个普遍安全的世界。</li><li><b>共同繁荣</b>：坚持合作共赢，建设一个共同繁荣的世界。</li><li><b>开放包容</b>：坚持交流互鉴，建设一个开放包容的世界。</li><li><b>清洁美丽</b>：坚持绿色低碳，建设一个清洁美丽的世界。</li><li><b>实践路径</b>：推动构建新型国际关系，弘扬全人类共同价值，落实全球发展倡议、全球安全倡议、全球文明倡议。</li></ul>
+  <div class="qfoot"><span class="src">第十一章 PPT</span></div>
+</article>
+  <article class="qcard" id="c11c" data-cat="c11" data-type="简答" data-text="“一带一路”倡议的内涵与意义 全称：丝绸之路经济带和 21 世纪海上丝绸之路。 原则：共商、共建、共享。 五通：政策沟通、设施联通、贸易畅通、资金融通、民心相通。 理念：和平合作、开放包容、互学互鉴、互利共赢。 意义：是构建人类命运共同体的重要实践平台，为世界经济增长开辟新空间，为完善全球治理提供新方案。">
+  <header class="qhead">
+    <span class="qid">C11C</span>
+    <h3>“一带一路”倡议的内涵与意义</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>全称</b>：丝绸之路经济带和 21 世纪海上丝绸之路。</li><li><b>原则</b>：共商、共建、共享。</li><li><b>五通</b>：政策沟通、设施联通、贸易畅通、资金融通、民心相通。</li><li><b>理念</b>：和平合作、开放包容、互学互鉴、互利共赢。</li><li><b>意义</b>：是构建人类命运共同体的重要实践平台，为世界经济增长开辟新空间，为完善全球治理提供新方案。</li></ul>
+  <div class="qfoot"><span class="src">第十一章 PPT</span></div>
+</article>
+</section>
+<section class="cat" id="cat-c12">
+  <header class="cat-head">
+    <div><p class="cat-en">CHAPTER 12</p><h2>第十二章 · 党的领导和全面从严治党</h2></div>
+    <p class="cat-desc">党的领导是最本质特征、“两个确立”“四个意识”“四个自信”“两个维护”、政治建设为统领。</p>
+  </header>
+  <article class="qcard" id="c12a" data-cat="c12" data-type="论述" data-text="为什么说中国共产党的领导是中国特色社会主义最本质的特征 马克思主义政党理论：党的领导是社会主义运动的必然要求，是科学社会主义的基本原则。 历史逻辑：没有中国共产党就没有新中国，就没有中国特色社会主义。 制度逻辑：党的领导是中国特色社会主义制度的最大优势，是其他各方面制度优势发挥的根本保证。 实践逻辑：新时代取得历史性成就、发生历史性变革，根本在于党的坚强领导。 本质要求：党政军民学，东西南北中，党是领导一切的。">
+  <header class="qhead">
+    <span class="qid">C12A</span>
+    <h3>为什么说中国共产党的领导是中国特色社会主义最本质的特征</h3>
+    <span class="qtype">论述</span>
+  </header>
+  <ul class="ans"><li><b>马克思主义政党理论</b>：党的领导是社会主义运动的必然要求，是科学社会主义的基本原则。</li><li><b>历史逻辑</b>：没有中国共产党就没有新中国，就没有中国特色社会主义。</li><li><b>制度逻辑</b>：党的领导是中国特色社会主义制度的最大优势，是其他各方面制度优势发挥的根本保证。</li><li><b>实践逻辑</b>：新时代取得历史性成就、发生历史性变革，根本在于党的坚强领导。</li><li><b>本质要求</b>：党政军民学，东西南北中，党是领导一切的。</li></ul>
+  <div class="qfoot"><span class="src">第十二章 PPT</span></div>
+</article>
+  <article class="qcard" id="c12b" data-cat="c12" data-type="简答" data-text="“两个确立”“四个意识”“四个自信”“两个维护” 两个确立：确立习近平同志党中央的核心、全党的核心地位，确立习近平新时代中国特色社会主义思想的指导地位。 四个意识：政治意识、大局意识、核心意识、看齐意识。 四个自信：道路自信、理论自信、制度自信、文化自信。 两个维护：坚决维护习近平总书记党中央的核心、全党的核心地位，坚决维护党中央权威和集中统一领导。 关系：相互联系、相互贯通，是新时代党的政治建设的根本要求。">
+  <header class="qhead">
+    <span class="qid">C12B</span>
+    <h3>“两个确立”“四个意识”“四个自信”“两个维护”</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>两个确立</b>：确立习近平同志党中央的核心、全党的核心地位，确立习近平新时代中国特色社会主义思想的指导地位。</li><li><b>四个意识</b>：政治意识、大局意识、核心意识、看齐意识。</li><li><b>四个自信</b>：道路自信、理论自信、制度自信、文化自信。</li><li><b>两个维护</b>：坚决维护习近平总书记党中央的核心、全党的核心地位，坚决维护党中央权威和集中统一领导。</li><li><b>关系</b>：相互联系、相互贯通，是新时代党的政治建设的根本要求。</li></ul>
+  <div class="qfoot"><span class="src">第十二章 PPT</span></div>
+</article>
+  <article class="qcard" id="c12c" data-cat="c12" data-type="简答" data-text="坚持以党的政治建设为统领 首要任务：保证全党服从中央，坚持党中央权威和集中统一领导。 政治方向：坚定执行党的政治路线，严格遵守政治纪律和政治规矩。 政治生态：营造风清气正的良好政治生态，严肃党内政治生活。 政治能力：提高政治判断力、政治领悟力、政治执行力。 统领作用：党的政治建设是党的根本性建设，决定党的建设方向和效果。">
+  <header class="qhead">
+    <span class="qid">C12C</span>
+    <h3>坚持以党的政治建设为统领</h3>
+    <span class="qtype">简答</span>
+  </header>
+  <ul class="ans"><li><b>首要任务</b>：保证全党服从中央，坚持党中央权威和集中统一领导。</li><li><b>政治方向</b>：坚定执行党的政治路线，严格遵守政治纪律和政治规矩。</li><li><b>政治生态</b>：营造风清气正的良好政治生态，严肃党内政治生活。</li><li><b>政治能力</b>：提高政治判断力、政治领悟力、政治执行力。</li><li><b>统领作用</b>：党的政治建设是党的根本性建设，决定党的建设方向和效果。</li></ul>
+  <div class="qfoot"><span class="src">第十二章 PPT</span></div>
+</article>
+</section>
+</main>
+</div>
+<button class="to-top" type="button" aria-label="回到顶部"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 19V6M12 6l-6 6M12 6l6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<script>
+(function(){
+  var cards=[].slice.call(document.querySelectorAll('.qcard'));
+  /* 通俗解释折叠：class 控制，高度平滑过渡 */
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('.ex-btn'); if(!b) return;
+    var id=b.getAttribute('aria-controls'); var box=document.getElementById(id);
+    var open=b.getAttribute('aria-expanded')==='true';
+    b.setAttribute('aria-expanded',open?'false':'true');
+    b.querySelector('.bulb').textContent=open?'💡':'🔽';
+    if(box) box.classList.toggle('open',!open);
+    /* 展开后若内容超出视口，平滑滚到可见位置 */
+    if(!open && box){
+      setTimeout(function(){
+        var r=box.getBoundingClientRect();
+        if(r.bottom>window.innerHeight-24){
+          box.scrollIntoView({block:'nearest',behavior:'smooth'});
+        }
+      },380);
+    }
+  });
+
+  /* 滚动监听：高亮当前分类 + 侧栏跟随 + 阅读进度 */
+  var pbar=document.getElementById('pbar');
+  var cats=[].slice.call(document.querySelectorAll('.cat'));
+  var navLinks=[].slice.call(document.querySelectorAll('.nav-cat'));
+  var sbSide=document.querySelector('.sidebar');
+  var lastCat=null, sbHold=0, ticking=false;
+  if(sbSide){
+    ['wheel','touchstart','pointerdown'].forEach(function(ev){
+      sbSide.addEventListener(ev, function(){ sbHold=Date.now(); }, {passive:true});
+    });
+  }
+  function followCat(link){
+    if(!link || !sbSide) return;
+    if(document.body.classList.contains('side-collapsed')) return;
+    if(Date.now()-sbHold < 1600) return;
+    var lr=link.getBoundingClientRect(), sr=sbSide.getBoundingClientRect();
+    var pad=Math.min(90, sbSide.clientHeight*0.24);
+    if(lr.top < sr.top+pad || lr.bottom > sr.bottom-pad){
+      var target=sbSide.scrollTop + (lr.top-sr.top) - sbSide.clientHeight/2 + lr.height/2;
+      sbSide.scrollTo({top:Math.max(0,target), behavior:'smooth'});
+    }
+  }
+  function onScroll(){
+    if(ticking) return;
+    ticking=true;
+    requestAnimationFrame(function(){
+      var y=window.scrollY+150, cur=null;
+      cats.forEach(function(c){
+        if(c.style.display==='none') return;
+        if(c.offsetTop<=y) cur=c;
+      });
+      var activeLink=null;
+      navLinks.forEach(function(a){
+        var on=!!cur && a.getAttribute('href')==='#'+cur.id;
+        a.classList.toggle('active', on);
+        if(on) activeLink=a;
+      });
+      /* 内容到哪，侧栏跟到哪：仅在分类变化时跟随 */
+      if(cur && cur.id!==lastCat){
+        var isFirst = lastCat===null;
+        lastCat=cur.id;
+        if(!isFirst) followCat(activeLink);
+      }
+      if(pbar){
+        var h=document.documentElement.scrollHeight-window.innerHeight;
+        pbar.style.width=(h>0?Math.min(100,Math.max(0,window.scrollY/h*100)):0)+'%';
+      }
+      ticking=false;
+    });
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  onScroll();
+
+  /* 侧栏折叠（记忆状态） */
+  var st=document.getElementById('sideToggle');
+  var collapsed=localStorage.getItem('medilearn.dati.side')==='0';
+  function applySide(){
+    document.body.classList.toggle('side-collapsed',collapsed);
+    st.setAttribute('aria-expanded',collapsed?'false':'true');
+    st.setAttribute('aria-label',collapsed?'展开侧栏':'收起侧栏');
+    st.title=collapsed?'展开侧栏':'收起侧栏';
+  }
+  st.addEventListener('click',function(){
+    collapsed=!collapsed;
+    localStorage.setItem('medilearn.dati.side',collapsed?'0':'1');
+    applySide();
+  });
+  applySide();
+  /* 搜索 */
+  var q=document.getElementById('sideQ');
+  if(q){
+    q.addEventListener('input',function(){
+      var v=q.value.trim().toLowerCase();
+      var shown=0;
+      cards.forEach(function(c){
+        var hit=!v||(c.dataset.text||'').toLowerCase().indexOf(v)>=0;
+        c.style.display=hit?'':'none';
+        if(hit) shown++;
+      });
+      document.querySelectorAll('.cat').forEach(function(sec){
+        var any=sec.querySelectorAll('.qcard:not([style*="display: none"])').length;
+        sec.style.display=any?'':'none';
+      });
+      var em=document.getElementById('searchHint');
+      if(em) em.textContent=v?('匹配 '+shown+' 条'):'';
+    });
+  }
+  /* 回到顶部 */
+  var t=document.querySelector('.to-top');
+  window.addEventListener('scroll',function(){
+    t.classList.toggle('show',window.scrollY>600);
+  },{passive:true});
+  t.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>

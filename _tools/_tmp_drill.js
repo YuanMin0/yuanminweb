@@ -386,7 +386,8 @@
 
     /* 贴纸：来源 / 题型 / 章节（有 freq、level 时优先展示） */
     var sticks = '';
-    sticks += sticker('st-src', WB.srcName(WB.srcType(q)), '来源：' + (q.source || '未标注'));
+    /* 在线考试题单独标注，避免与「往年真题」混在一起 */
+    sticks += sticker('st-src', isExamQ(q) ? '在线考试题' : WB.srcName(WB.srcType(q)), '来源：' + (q.source || '未标注'));
     sticks += sticker('st-type', typeText(q.type));
     if (q.level) {
       var lv = Array.isArray(q.level) ? q.level.join(' · ') : q.level;

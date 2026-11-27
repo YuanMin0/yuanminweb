@@ -105,7 +105,9 @@
     });
 
     var html = '<div class="pick-head"><h2>选一个科目开始</h2>' +
-      '<p>按年级分类 · 共 ' + subs.length + ' 个科目有题目</p></div>';
+      '<p>按年级分类 · 共 ' + subs.length + ' 个科目有题目</p>' +
+      '<p class="pick-note"><b>部分学期暂未开放</b>：由于参考资料不足，大一下、大二上、大二下、大三下及其他学期的刷题暂不可进入（仍显示题量）。' +
+      '相关资料可在<a href="materials.html">资料库</a>下载或在线预览。</p></div>';
 
     order.forEach(function (cat) {
       var list = groups[cat.id];
@@ -118,6 +120,14 @@
         '<span>' + list.length + ' 科 · ' + totalQ + ' 题</span></h2><div class="sg">';
 
       list.forEach(function (s) {
+        if (s.sem !== 'dasan1') {
+          html += '<div class="scard is-locked" aria-disabled="true" title="参考资料不足，暂未开放">' +
+            '<div class="scard-t">' + WB.esc(s.name) + '<span class="scard-tag scard-tag-lock">暂未开放</span></div>' +
+            '<div class="scard-m"><span>' + (s._count.choice || 0) + ' 题</span><span>—</span></div>' +
+            '<div class="scard-bar"><i style="width:0%"></i></div>' +
+            '</div>';
+          return;
+        }
         var href = WB.drillHref(s);
         /* 没有刷题入口但有外部文档页（如劳动卫生学）：仍列出，标「文档页」，
            避免用户以为它消失了，也不会误点成刷题 */

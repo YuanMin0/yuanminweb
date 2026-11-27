@@ -845,7 +845,10 @@ body.mode-pick .wrap{padding-bottom:40px}
           '<button class="btn btn-ghost" data-self="0" type="button">✕ 没记住</button>'
         : '<button class="btn" id="revealBtn" type="button">查看参考答案</button>';
     } else if (checked) {
-      actions = '<button class="btn" id="nextInline" type="button">下一题 →</button>';
+      actions = '<button class="btn" id="nextInline" type="button">下一题 →</button>' +
+        (right && WB.store.wrong()[q.uid]
+          ? '<button class="btn btn-ghost" id="dropWrong" type="button">✓ 移出错题本</button>'
+          : '');
     } else if (q.type === 'multiple') {
       actions = '<button class="btn" id="submitBtn" type="button">确认作答</button>';
     } else if (q.type === 'fill') {
@@ -873,7 +876,9 @@ body.mode-pick .wrap{padding-bottom:40px}
     stage.innerHTML = '<div class="card">' +
       '<div class="stickers">' + sticks + '</div>' +
       '<h2 class="stem">' + esc4(q.stem) + '</h2>' +
-      body + actions + expHtml +
+      body +
+      (actions ? '<div class="actions">' + actions + '</div>' : '') +
+      expHtml +
       '</div>';
 
     posEl.textContent = WB.pad(st.i + 1) + ' / ' + WB.pad(pool.length);
@@ -991,6 +996,13 @@ body.mode-pick .wrap{padding-bottom:40px}
     var nx = document.getElementById('nextInline');
     if (nx) nx.addEventListener('click', function () { go(1); });
 
+    var dw = document.getElementById('dropWrong');
+    if (dw) dw.addEventListener('click', function () {
+      WB.store.removeWrong(q.uid);
+      if (WB.toast) WB.toast('已移出错题本');
+      save(); render();
+    });
+
     var inp = document.getElementById('fillInput');
     if (inp) inp.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') { e.preventDefault(); st.ans[q.uid] = inp.value; check(); }
@@ -1011,11 +1023,8 @@ body.mode-pick .wrap{padding-bottom:40px}
         stem: q.stem, type: q.type, options: q.options || null,
         answer: q.answer, explain: q.explain || '', myAnswer: my
       });
-    } else if (WB.store.wrong()[q.uid]) {
-      /* 原本做错、这次做对 → 自动移出错题本，避免「已掌握」的题一直占位 */
-      WB.store.removeWrong(q.uid);
-      if (WB.toast) WB.toast('已掌握，移出错题本');
     }
+    /* 做对后不再自动移出：由用户在解析区点「移出错题本」自行决定 */
     /* 写入答题日志：drill 此前不记录，导致连续天数与周报统计缺失 */
     WB.store.addLog({ uid: q.uid, subjectId: q.subjectId, kid: q.kid, ok: WB.isCorrect(q, my) });
     save(); render();
@@ -1038,6 +1047,8 @@ body.mode-pick .wrap{padding-bottom:40px}
 
   wrongBtn.addEventListener('click', function () {
     st.wrongOnly = !st.wrongOnly;
+    /* 错题本是一个独立集合：进入时清掉章节/来源/收藏筛选，保证看到全部错题 */
+    if (st.wrongOnly) { st.ch = ''; st.src = ''; st.favOnly = false; }
     st.i = 0; save(); render();
   });
 

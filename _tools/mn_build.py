@@ -70,10 +70,16 @@ def render_content(items):
 def build(sub):
     chapters = sub.get('chapters') or []
     nav, body = [], []
+    # 讨论课：没有讲义，但在目录里占位说明（数据里用 discussionChapters 声明）
+    disc = {}
+    for d in (sub.get('discussionChapters') or []):
+        disc.setdefault(int(d.get('after') or 0), []).append(d.get('title') or '讨论课')
     for i, ch in enumerate(chapters, 1):
         no = '%02d' % i
         ks = ch.get('knowledge') or []
         nav.append('<div class="nav-group"><a class="nav-chapter" href="#chapter-%s">%s</a></div>' % (no, ch.get('title', '')))
+        for dt in disc.get(i, []):
+            nav.append('<div class="nav-group"><span class="nav-chapter nav-muted">%s</span></div>' % dt)
         arts = []
         for j, k in enumerate(ks, 1):
             tags = ''.join('<span class="chip ghost">%s</span>' % t for t in (k.get('tags') or [])[:3])
@@ -97,12 +103,14 @@ def build(sub):
 <div class="hero-meta"><span>%s</span><span>共 %d 讲 · %d 个知识点</span></div>
 </div></header>
 <div class="layout">
-<aside class="sidebar"><h2 class="sidebar-title">章节目录</h2>%s</aside>
+<aside class="sidebar"><h2 class="sidebar-title">章节目录</h2>%s%s</aside>
 <main>%s
 <footer class="footer"><p><a href="../subject.html?s=%s">← 返回科目页</a> · <a href="../quiz.html?s=%s">去刷题</a></p></footer>
 </main></div>
 </body></html>''' % (sub.get('name', ''), CSS, sub.get('name', ''), md(sub.get('desc', '') or ''),
-                     SEM_MAP.get(sub.get('sem',''), sub.get('sem','')), len(chapters), n_k, ''.join(nav), ''.join(body),
+                     SEM_MAP.get(sub.get('sem',''), sub.get('sem','')), len(chapters), n_k,
+                     ('<p class="nav-note">%s</p>' % sub.get('discussionNote')) if sub.get('discussionNote') else '',
+                     ''.join(nav), ''.join(body),
                      sub.get('id'), sub.get('id'))
 
 

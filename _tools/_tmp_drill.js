@@ -226,7 +226,14 @@
       });
     }
     if (st.ch) list = list.filter(function (q) { return q._chKey === st.ch; });
-    if (st.src) list = list.filter(function (q) { return WB.srcType(q) === st.src; });
+    if (st.src) {
+      if (st.src.indexOf('exam|') === 0) {
+        var ek = st.src.slice(5);
+        list = list.filter(function (q) { return q.chapterTitle === ek; });
+      } else {
+        list = list.filter(function (q) { return !isExamQ(q) && WB.srcType(q) === st.src; });
+      }
+    }
     if (st.favOnly) list = list.filter(function (q) { return WB.store.isFav(q.uid); });
     if (st.wrongOnly) {
       var w = WB.store.wrong();
@@ -682,9 +689,13 @@
   document.getElementById('drClose').addEventListener('click', closeDrawer);
   mask.addEventListener('click', closeDrawer);
 
+  /* 在线考试题按「来源」归类，不占用章节筛选 */
+  function isExamQ(q) { return !!q._exam || /^在线考试/.test(q.chapterTitle || ''); }
+
   function chList() {
     var seen = {}, out = [];
     base.forEach(function (q) {
+      if (isExamQ(q)) return;
       if (seen[q._chKey]) return;
       seen[q._chKey] = 1; out.push(q._chKey);
     });
@@ -694,12 +705,20 @@
   function renderDrawer() {
     var chs = chList();
     var counts = {};
-    base.forEach(function (q) { counts[q._chKey] = (counts[q._chKey] || 0) + 1; });
+    base.forEach(function (q) { if (!isExamQ(q)) counts[q._chKey] = (counts[q._chKey] || 0) + 1; });
 
     /* 来源筛选：计数以当前章节范围为基准，避免「选了 PPT 又选章节」后为空 */
     var scope = st.ch ? base.filter(function (q) { return q._chKey === st.ch; }) : base;
     var sc = {};
-    scope.forEach(function (q) { var t = WB.srcType(q); sc[t] = (sc[t] || 0) + 1; });
+    scope.forEach(function (q) { if (isExamQ(q)) return; var t = WB.srcType(q); sc[t] = (sc[t] || 0) + 1; });
+    /* 在线考试按章节单独成组，归到「来源」里 */
+    var examKeys = [], examCnt = {};
+    base.forEach(function (q) {
+      if (!isExamQ(q)) return;
+      var k = q.chapterTitle;
+      if (!examCnt[k]) { examKeys.push(k); examCnt[k] = 0; }
+      examCnt[k]++;
+    });
     srcbar.innerHTML = '<button class="chip' + (st.src ? '' : ' on') + '" type="button" data-src="">全部 ' + scope.length + '</button>' +
       WB.SRC_TYPES.map(function (t) {
         if (!sc[t.id]) return '';
@@ -708,10 +727,18 @@
         if (t.id === 'ppt') tip += '（仅收课件原文题，不含复习资料）';
         return '<button class="chip' + (st.src === t.id ? ' on' : '') + '" type="button" data-src="' + t.id + '" title="' + tip + '">' +
           t.name + ' ' + sc[t.id] + '</button>';
+      }).join('') +
+      examKeys.map(function (k) {
+        return '<button class="chip' + (st.src === 'exam|' + k ? ' on' : '') + '" type="button" data-src="exam|' + WB.esc(k) + '" title="' + WB.esc(k) + ' · ' + examCnt[k] + ' 题">' +
+          WB.esc(k) + ' ' + examCnt[k] + '</button>';
       }).join('');
     srcbar.querySelectorAll('.chip').forEach(function (b) {
       b.addEventListener('click', function () {
-        st.src = b.getAttribute('data-src'); st.i = 0; save(); render(); renderDrawer();
+        var v = b.getAttribute('data-src');
+        st.src = v;
+        /* 选「在线考试·某章」时清掉章节筛选，避免互相打架 */
+        if (v && v.indexOf('exam|') === 0) st.ch = '';
+        st.i = 0; save(); render(); renderDrawer();
       });
     });
 

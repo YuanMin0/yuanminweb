@@ -43,10 +43,11 @@ function norm(s) {
     .toLowerCase();
 }
 
-const dupOpt = [], dupStem = [], allSel = [];
+const dupOpt = [], dupStem = [], nearStem = [], allSel = [];
 const typeBySubj = {};
 for (const s of WB.subjects()) {
   const stemMap = new Map();
+  const headMap = new Map();
   (s.chapters || []).forEach((ch, ci) => (ch.knowledge || []).forEach((k, ki) => (k.quiz || []).forEach((q, qi) => {
     const tag = `${s.id}#c${ci + 1}k${ki + 1}q${qi + 1}`;
     typeBySubj[s.id] = typeBySubj[s.id] || {};
@@ -62,10 +63,16 @@ for (const s of WB.subjects()) {
       if (q.type === 'multiple' && Array.isArray(q.answer) && q.answer.length === q.options.length && q.options.length >= 4)
         allSel.push({ tag, n: q.options.length });
     }
-    const n = norm(q.stem).slice(0, 40);
-    if (n) {
-      if (stemMap.has(n)) dupStem.push({ tag, prev: stemMap.get(n), stem: String(q.stem).slice(0, 40) });
-      else stemMap.set(n, tag);
+    /* 用完整题干判重：只看前 40 字会把「同一病例、不同问法」误判成重复 */
+    const nFull = norm(q.stem);
+    const nHead = nFull.slice(0, 40);
+    if (nFull) {
+      if (stemMap.has(nFull)) dupStem.push({ tag, prev: stemMap.get(nFull), stem: String(q.stem).slice(0, 40) });
+      else stemMap.set(nFull, tag);
+    }
+    if (nHead) {
+      if (headMap.has(nHead) && !stemMap.has(nFull)) nearStem.push({ tag, prev: headMap.get(nHead), stem: String(q.stem).slice(0, 46) });
+      else headMap.set(nHead, tag);
     }
   })));
 }
@@ -74,6 +81,8 @@ console.log('=== 真·选项重复 (' + dupOpt.length + ') ===');
 dupOpt.forEach(d => console.log(`  [${d.tag}] ${String.fromCharCode(65 + d.a)} 与 ${String.fromCharCode(65 + d.b)} 同为「${d.text}」`));
 console.log('\n=== 同科目题干重复 (' + dupStem.length + ') ===');
 dupStem.forEach(d => console.log(`  [${d.tag}] ≈ [${d.prev}] ${d.stem}`));
+console.log('\n=== 同题干开头·不同问法 (' + nearStem.length + ') ===');
+nearStem.forEach(d => console.log(`  [${d.tag}] ≈ [${d.prev}] ${d.stem}`));
 console.log('\n=== 多选全选分布 (' + allSel.length + ') ===');
 const bySubj = {};
 allSel.forEach(a => { const s = a.tag.split('#')[0]; bySubj[s] = (bySubj[s] || 0) + 1; });

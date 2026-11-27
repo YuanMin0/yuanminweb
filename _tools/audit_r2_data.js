@@ -128,7 +128,8 @@ for (const s of subjects) {
           }
         }
 
-        const nk = norm(q.stem).slice(0, 30);
+        /* 完整题干判重：同一病例不同问法（准确率 / 敏感度）不算重复 */
+        const nk = norm(q.stem);
         if (nk) {
           if (stems.has(nk)) problems.push(['同科目题干重复: ' + String(q.stem).slice(0, 24), tag + ' ≈ ' + stems.get(nk)]);
           else stems.set(nk, tag);

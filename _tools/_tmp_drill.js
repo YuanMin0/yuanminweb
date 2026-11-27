@@ -623,6 +623,8 @@
 
   favBtn.addEventListener('click', function () {
     st.favOnly = !st.favOnly;
+    /* 收藏夹与错题本互斥：开启其一时关掉另一个，并清掉章节/来源筛选 */
+    if (st.favOnly) { st.ch = ''; st.src = ''; st.wrongOnly = false; }
     st.i = 0; save(); render();
   });
 

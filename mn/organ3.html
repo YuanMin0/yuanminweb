@@ -1537,6 +1537,13 @@ body.side-collapsed .side-fab{display:flex}
 
 .layout{transition:grid-template-columns .36s cubic-bezier(.22,.61,.36,1),gap .36s}
 body.side-collapsed .layout{grid-template-columns:0 minmax(0,1fr)!important;gap:0!important}
+/* 收起目录后正文变宽：行宽跟着放宽，避免右侧大片留白 */
+body.side-collapsed{--measure:68em}
+body.side-collapsed .knowledge-content > p,
+body.side-collapsed .knowledge-content > ul,
+body.side-collapsed .knowledge-content > ol{max-width:var(--measure)}
+body.side-collapsed .intro p,
+body.side-collapsed .question-bank > p{max-width:var(--measure)}
 body.side-collapsed .sidebar{opacity:0;transform:translateX(-14px);pointer-events:none;overflow:hidden}
 .sidebar{transition:opacity .26s ease,transform .3s ease,box-shadow .5s ease}
 .side-handle{position:fixed;z-index:95;top:50vh;transform:translateY(-50%) translateX(-8px);

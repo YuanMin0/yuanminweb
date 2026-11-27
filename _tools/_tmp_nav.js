@@ -13,6 +13,7 @@
   }
 
   /* 建立「正文位置 → 侧栏位置」映射：每一条目录对应它在页面中的起点 */
+  var marksH=0;
   function measure(){
     if(!sb) return;
     sbSticky = getComputedStyle(sb).position==='sticky';
@@ -25,6 +26,7 @@
       marks.push({ y: el.getBoundingClientRect().top + window.scrollY, s: a.offsetTop });
     });
     marks.sort(function(p,q){ return p.y-q.y; });
+    marksH = document.documentElement.scrollHeight;
   }
 
   /* 连续跟随：正文滚多少，侧栏就同步滑多少，当前项始终停在侧栏 30% 高度处 */
@@ -62,6 +64,7 @@
       linksSec.forEach(function(a){
         a.classList.toggle('active', !!curBlk && a.getAttribute('href')==='#'+curBlk.id);
       });
+      if(Math.abs(document.documentElement.scrollHeight - marksH) > 4) measure();
       syncSide();
       updateHandle();
       ticking=false;
@@ -116,7 +119,10 @@
     apply();
     setTimeout(function(){ placeHandle(); onScroll(); }, 340);
   });
-  window.addEventListener('resize', function(){ setTimeout(placeHandle, 60); });
+  window.addEventListener('resize', function(){ setTimeout(function(){ measure(); placeHandle(); }, 60); });
+  window.addEventListener('load', function(){ setTimeout(measure, 300); });
+  document.addEventListener('load', function(e){ if(e.target && e.target.tagName==='IMG') measure(); }, true);
+  if(window.ResizeObserver){ try{ new ResizeObserver(function(){ measure(); }).observe(document.querySelector('main')||document.body); }catch(e){} }
   window.addEventListener('load', placeHandle);
   var phTick=false;
   window.addEventListener('scroll', function(){

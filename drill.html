@@ -683,9 +683,8 @@ body.mode-pick .wrap{padding-bottom:40px}
     }
     if (st.ch) list = list.filter(function (q) { return q._chKey === st.ch; });
     if (st.src) {
-      if (st.src.indexOf('exam|') === 0) {
-        var ek = st.src.slice(5);
-        list = list.filter(function (q) { return q.chapterTitle === ek; });
+      if (st.src === 'exam') {
+        list = list.filter(isExamQ);
       } else {
         list = list.filter(function (q) { return !isExamQ(q) && WB.srcType(q) === st.src; });
       }
@@ -1167,14 +1166,9 @@ body.mode-pick .wrap{padding-bottom:40px}
     var scope = st.ch ? base.filter(function (q) { return q._chKey === st.ch; }) : base;
     var sc = {};
     scope.forEach(function (q) { if (isExamQ(q)) return; var t = WB.srcType(q); sc[t] = (sc[t] || 0) + 1; });
-    /* 在线考试按章节单独成组，归到「来源」里 */
-    var examKeys = [], examCnt = {};
-    base.forEach(function (q) {
-      if (!isExamQ(q)) return;
-      var k = q.chapterTitle;
-      if (!examCnt[k]) { examKeys.push(k); examCnt[k] = 0; }
-      examCnt[k]++;
-    });
+    /* 在线考试整体作为「来源」下的一个大类 */
+    var examN = 0;
+    base.forEach(function (q) { if (isExamQ(q)) examN++; });
     srcbar.innerHTML = '<button class="chip' + (st.src ? '' : ' on') + '" type="button" data-src="">全部 ' + scope.length + '</button>' +
       WB.SRC_TYPES.map(function (t) {
         if (!sc[t.id]) return '';
@@ -1184,16 +1178,15 @@ body.mode-pick .wrap{padding-bottom:40px}
         return '<button class="chip' + (st.src === t.id ? ' on' : '') + '" type="button" data-src="' + t.id + '" title="' + tip + '">' +
           t.name + ' ' + sc[t.id] + '</button>';
       }).join('') +
-      examKeys.map(function (k) {
-        return '<button class="chip' + (st.src === 'exam|' + k ? ' on' : '') + '" type="button" data-src="exam|' + WB.esc(k) + '" title="' + WB.esc(k) + ' · ' + examCnt[k] + ' 题">' +
-          WB.esc(k) + ' ' + examCnt[k] + '</button>';
-      }).join('');
+      (examN
+        ? '<button class="chip' + (st.src === 'exam' ? ' on' : '') + '" type="button" data-src="exam" title="AI医学堂在线考试 · 共 ' + examN + ' 题">在线考试 ' + examN + '</button>'
+        : '');
     srcbar.querySelectorAll('.chip').forEach(function (b) {
       b.addEventListener('click', function () {
         var v = b.getAttribute('data-src');
         st.src = v;
         /* 选「在线考试·某章」时清掉章节筛选，避免互相打架 */
-        if (v && v.indexOf('exam|') === 0) st.ch = '';
+        if (v === 'exam') st.ch = '';
         st.i = 0; save(); render(); renderDrawer();
       });
     });

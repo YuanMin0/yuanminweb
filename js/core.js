@@ -477,7 +477,8 @@
               ['全部科目', 'subjects.html'],
               ['题库总览', 'bank.html'],
               ['错题本', 'wrongbook.html'],
-              ['我的收藏', 'favorites.html']
+              ['我的收藏', 'favorites.html'],
+              ['使用教程', 'guide.html']
             ]) +
             col('资料', [
               ['资料库', 'materials.html'],

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MediLearn 使用教程 · 从入门到考前冲刺</title>
+<meta name="description" content="MediLearn 医学学习站使用教程：学习、刷题、资料库、考前速记、考前大题速背、错题本与常见问题，配 8 张实景截图。">
+<style>
+  :root{
+    --cream:#FAF6EC; --paper:#FFFDF7; --ink:#2C3418; --ink-2:#4A5433; --ink-3:#6E7752;
+    --line:#E4DCC6; --blue:#5B84A8; --blue-d:#3E5F7D; --red:#C0554A; --gold:#D9A75E;
+    --green:#8FA96B; --violet:#8E7BA8;
+    --serif:"Songti SC","Source Han Serif SC","Noto Serif SC",Georgia,serif;
+    --sans:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,sans-serif;
+    --shadow:0 10px 30px -18px rgba(44,52,24,.45);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth; scroll-padding-top:24px}
+  body{
+    margin:0; color:var(--ink); font:16px/1.85 var(--sans);
+    background:
+      radial-gradient(ellipse 52% 42% at 88% 4%, rgba(91,132,168,.16), transparent 62%),
+      radial-gradient(ellipse 46% 38% at 4% 96%, rgba(192,85,74,.12), transparent 62%),
+      var(--cream);
+    background-attachment:fixed;
+  }
+  a{color:var(--blue-d)}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  /* 顶部 */
+  .top{
+    display:flex;align-items:center;gap:14px;padding:18px 0 14px;
+    border-bottom:1px solid rgba(44,52,24,.10);
+  }
+  .logo{display:flex;align-items:center;gap:9px;font:800 17px var(--sans);color:var(--ink);text-decoration:none}
+  .logo-mark{
+    width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+    background:linear-gradient(160deg,#6E9CC4,#3E5F7D);color:#fff;font-size:15px;
+    box-shadow:0 4px 12px -6px rgba(62,95,125,.8);
+  }
+  .top .sp{flex:1}
+  .top-btn{
+    padding:8px 16px;border-radius:999px;border:1.5px solid var(--ink);background:var(--paper);
+    color:var(--ink);font:700 13.5px var(--sans);cursor:pointer;text-decoration:none;
+    transition:.2s;
+  }
+  .top-btn:hover{background:var(--ink);color:var(--cream)}
+
+  /* 首屏 */
+  .hero{padding:52px 0 26px}
+  .eyebrow{font:700 12px var(--sans);letter-spacing:.22em;color:var(--blue-d);margin:0 0 14px}
+  .hero h1{
+    margin:0;font:700 clamp(30px,4.6vw,46px)/1.28 var(--serif);letter-spacing:.02em;
+  }
+  .hero h1 em{font-style:normal;color:var(--red)}
+  .hero .lead{margin:16px 0 0;max-width:720px;color:var(--ink-2);font-size:16.5px;line-height:1.9}
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px}
+  .chip{
+    padding:5px 13px;border-radius:999px;background:var(--paper);border:1px solid var(--line);
+    font:600 13px var(--sans);color:var(--ink-2);box-shadow:0 2px 8px -6px rgba(44,52,24,.4);
+  }
+  .chip b{color:var(--ink)}
+
+  /* 布局 */
+  .layout{display:grid;grid-template-columns:236px minmax(0,1fr);gap:44px;align-items:start;padding:10px 0 80px}
+  .toc{position:sticky;top:20px;padding:18px 16px;border-radius:16px;background:rgba(255,253,247,.82);
+    border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+  .toc h2{margin:0 0 10px;font:700 13px var(--sans);letter-spacing:.14em;color:var(--ink-3)}
+  .toc a{display:block;padding:7px 9px;border-radius:8px;color:var(--ink-2);text-decoration:none;
+    font:600 14px var(--sans);border-left:3px solid transparent;transition:.16s}
+  .toc a:hover{background:rgba(91,132,168,.10);color:var(--blue-d);border-left-color:var(--blue)}
+  .toc a span{display:inline-block;width:22px;color:var(--blue);font-weight:800}
+
+  main{min-width:0}
+  section{scroll-margin-top:20px;margin-bottom:54px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+  .sec-no{
+    flex:0 0 auto;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+    background:var(--ink);color:var(--cream);font:800 14px var(--sans);
+  }
+  h2.sec-t{margin:0;font:700 25px/1.35 var(--serif);letter-spacing:.01em}
+  .sec-sub{margin:6px 0 20px 42px;color:var(--ink-3);font-size:14.5px}
+
+  h3{font:700 17.5px var(--sans);margin:26px 0 8px}
+  p{margin:10px 0}
+  ul,ol{margin:10px 0;padding-left:22px}
+  li{margin:6px 0}
+  li b{color:var(--ink)}
+  code{background:rgba(44,52,24,.07);padding:1px 6px;border-radius:5px;font:600 13.5px var(--sans)}
+
+  /* 步骤 */
+  .steps{counter-reset:s;list-style:none;padding:0;margin:14px 0}
+  .steps li{
+    counter-increment:s;position:relative;padding:12px 16px 12px 50px;margin:10px 0;
+    background:var(--paper);border:1px solid var(--line);border-radius:12px;
+    box-shadow:0 4px 14px -12px rgba(44,52,24,.5);
+  }
+  .steps li::before{
+    content:counter(s);position:absolute;left:14px;top:12px;width:24px;height:24px;border-radius:8px;
+    display:grid;place-items:center;background:var(--blue);color:#fff;font:800 12.5px var(--sans);
+  }
+  .steps li b{display:block;margin-bottom:2px}
+  .steps li span{color:var(--ink-2);font-size:14.5px}
+
+  /* 图 */
+  figure{margin:22px 0;padding:12px;background:var(--paper);border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow)}
+  figure img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid rgba(44,52,24,.08)}
+  figcaption{margin-top:10px;color:var(--ink-3);font-size:13px;text-align:center}
+  figcaption b{color:var(--ink-2)}
+
+  /* 提示 */
+  .tip,.warn{
+    margin:18px 0;padding:14px 18px;border-radius:12px;font-size:14.5px;line-height:1.8;
+    border-left:4px solid var(--green);background:rgba(143,169,107,.12);
+  }
+  .warn{border-left-color:var(--red);background:rgba(192,85,74,.10)}
+  .tip b,.warn b{display:block;margin-bottom:4px;font-size:13.5px;letter-spacing:.04em}
+  .tip b{color:#5E7440}.warn b{color:var(--red)}
+
+  /* 表格 */
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;background:var(--paper);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:rgba(91,132,168,.10);font:700 13.5px var(--sans);color:var(--blue-d)}
+  tr:last-child td{border-bottom:0}
+
+  /* FAQ */
+  details{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:0 16px;margin:10px 0}
+  details[open]{box-shadow:0 6px 18px -14px rgba(44,52,24,.5)}
+  summary{cursor:pointer;padding:14px 0;font:700 15px var(--sans);list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:'＋';display:inline-block;width:20px;color:var(--blue);font-weight:800}
+  details[open] summary::before{content:'－'}
+  details p{margin:0 0 14px;color:var(--ink-2);font-size:14.5px}
+
+  .foot{margin-top:40px;padding:22px 0 40px;border-top:1px solid rgba(44,52,24,.12);
+    color:var(--ink-3);font-size:13.5px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .foot .sp{flex:1}
+
+  @media (max-width:920px){
+    .layout{grid-template-columns:1fr;gap:20px}
+    .toc{position:static;display:grid;grid-template-columns:1fr 1fr;gap:2px}
+    .toc h2{grid-column:1/-1}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 16px}
+    .hero{padding:34px 0 18px}
+    .toc{grid-template-columns:1fr}
+    .sec-sub{margin-left:0}
+  }
+  @media print{
+    @page{size:A4;margin:14mm 12mm}
+    body{background:#fff}
+    .top,.toc,.top-btn,.foot .top-btn{display:none!important}
+    .layout{display:block;padding:0}
+    .hero{padding:0 0 8mm}
+    section{break-inside:auto;margin-bottom:8mm}
+    figure{break-inside:avoid;box-shadow:none}
+    .steps li{break-inside:avoid;box-shadow:none}
+    a{color:inherit;text-decoration:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <a class="logo" href="index.html"><span class="logo-mark">✚</span>MediLearn</a>
+    <span class="sp"></span>
+    <button class="top-btn" type="button" onclick="window.print()">⇩ 打印 / 存为 PDF</button>
+    <a class="top-btn" href="index.html">进入站点 →</a>
+  </div>
+
+  <header class="hero">
+    <p class="eyebrow">MEDILEARN · 使用教程</p>
+    <h1>从入门到<em>考前冲刺</em><br>一份能直接转给同学的上手指南</h1>
+    <p class="lead">这份教程按真实界面截图讲解：怎么找知识点、怎么刷题、错题本怎么用、资料在哪里看、考前怎么用「速记 + 大题速背」冲刺。照着做一遍，10 分钟就能上手。</p>
+    <div class="chips">
+      <span class="chip">适用：<b>电脑 / 手机 / 平板</b></span>
+      <span class="chip">无需安装，<b>浏览器打开即用</b></span>
+      <span class="chip">全站 <b>50 个科目</b></span>
+      <span class="chip">约 <b>3800 道题</b></span>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <nav class="toc" aria-label="目录">
+      <h2>目 录</h2>
+      <a href="#s1"><span>01</span>三分钟上手</a>
+      <a href="#s2"><span>02</span>学习：看知识点</a>
+      <a href="#s3"><span>03</span>刷题与错题本</a>
+      <a href="#s4"><span>04</span>资料库：查原始材料</a>
+      <a href="#s5"><span>05</span>考前速记</a>
+      <a href="#s6"><span>06</span>考前大题速背</a>
+      <a href="#s7"><span>07</span>我的：进度与设置</a>
+      <a href="#s8"><span>08</span>常见问题</a>
+    </nav>
+
+    <main>
+
+      <!-- 01 -->
+      <section id="s1">
+        <div class="sec-head"><span class="sec-no">01</span><h2 class="sec-t">三分钟上手</h2></div>
+        <p class="sec-sub">先记住一句话：<b>平时用「学习」看知识点，「刷题」检验，「资料库」查原件；考前用「考前速记」和「考前大题速背」冲刺。</b></p>
+
+        <p>打开站点后，顶部有五个入口，各管一件事：</p>
+
+        <figure>
+          <img src="img/guide/01-features.png" alt="功能说明：顶部导航五个入口与科目页四个按钮" width="1770" height="1290" loading="lazy">
+          <figcaption><b>图 1</b>　首页「功能说明」把五个入口和科目页四个按钮讲清楚了（页面向下滚就能看到）</figcaption>
+        </figure>
+
+        <table>
+          <thead><tr><th style="width:96px">入口</th><th>做什么</th><th style="width:170px">什么时候用</th></tr></thead>
+          <tbody>
+            <tr><td><b>学习</b></td><td>按「科目 → 章节 → 知识点」逐层展开，表格、要点框、术语卡、配图都在这里</td><td>系统过内容、查漏补缺</td></tr>
+            <tr><td><b>刷题</b></td><td>只出单选与多选，提交后立即判分并给解析</td><td>课后自测、碎片时间刷题</td></tr>
+            <tr><td><b>资料库</b></td><td>课件 PDF、复习总结、讲义等原始文件，可在线预览或下载</td><td>想对照老师原版课件</td></tr>
+            <tr><td><b>我的</b></td><td>错题本、学习进度、站点设置</td><td>定期清理错题、看完成度</td></tr>
+            <tr><td><b>考前速记</b></td><td>每科一页纯知识点，去掉题目与解析</td><td>考前 1–2 天快速过一遍</td></tr>
+          </tbody>
+        </table>
+
+        <div class="tip"><b>一句话路线</b>先「学习」过一遍 → 用「刷题」找漏洞 → 错题本反复刷 → 考前看「速记」＋「大题速背」。</div>
+      </section>
+
+      <!-- 02 -->
+      <section id="s2">
+        <div class="sec-head"><span class="sec-no">02</span><h2 class="sec-t">学习：怎么找知识点</h2></div>
+        <p class="sec-sub">进入科目后，左侧是章节目录，右侧是正文；滚动时目录会自动跟随当前章节。</p>
+
+        <ol class="steps">
+          <li><b>选科目</b><span>首页「全部科目」或顶部「学习」，点卡片进入。</span></li>
+          <li><b>选章节</b><span>左侧目录按「第 01 讲 / 第 02 讲」排列，点一下就跳转。</span></li>
+          <li><b>看正文</b><span>每个知识点包含：要点框、表格、术语卡、配图，重点句已加粗。</span></li>
+          <li><b>进下一步</b><span>科目页有四个按钮：开始刷题、全科测验、下载讲义、资料汇总（见图 1 下半部分）。</span></li>
+        </ol>
+
+        <div class="tip"><b>小技巧</b>左侧目录支持搜索框（部分页面），输入关键词可直接跳到对应知识点；手机端目录在正文上方，点「章节目录」展开。</div>
+      </section>
+
+      <!-- 03 -->
+      <section id="s3">
+        <div class="sec-head"><span class="sec-no">03</span><h2 class="sec-t">刷题：从选科目到错题本</h2></div>
+        <p class="sec-sub">刷题只出选择题（单选 / 多选），主观题在「全科测验」里。</p>
+
+        <figure>
+          <img src="img/guide/04-drill-picker.jpg" alt="刷题科目选择页：大三上可进入，其他学期置灰并标注暂未开放" width="1418" height="1384" loading="lazy">
+          <figcaption><b>图 2</b>　选科目：只有<b>大三上</b>可以进入；其他学期卡片置灰、标「暂未开放」，但仍显示题量</figcaption>
+        </figure>
+
+        <ol class="steps">
+          <li><b>选科目</b><span>按年级分组，卡片上写着选择题数量与完成度。</span></li>
+          <li><b>答题</b><span>单选点选项即判分；多选选完后点「确认作答」。</span></li>
+          <li><b>看解析</b><span>判分后展开解析，标出正确答案与每个选项的对错原因。</span></li>
+          <li><b>进错题本</b><span>答错自动收录；工具栏点「只刷错题」进入错题本练习。</span></li>
+        </ol>
+
+        <h3>错题本怎么用</h3>
+        <ul>
+          <li><b>只刷错题</b>：进入的是<b>独立会话</b>，只包含错题，且会自动清掉章节筛选。</li>
+          <li><b>答对后可移出</b>：解析区会出现「✓ 移出错题本」，由你决定是否移出（不再自动删除）。</li>
+          <li><b>刷新即重置</b>：错题本里的答题记录不写回主进度，刷新页面回到未作答；主刷题页面的进度不受影响。</li>
+          <li><b>与收藏夹互斥</b>：开错题本会自动关收藏夹，反之亦然。</li>
+        </ul>
+
+        <div class="warn"><b>注意</b>「只刷错题」和主刷题是两套状态：在错题本里答对，不会改变主页面那道题的「已答」记录。</div>
+      </section>
+
+      <!-- 04 -->
+      <section id="s4">
+        <div class="sec-head"><span class="sec-no">04</span><h2 class="sec-t">资料库：查原始课件</h2></div>
+        <p class="sec-sub">这里放的是老师发的原始文件，按科目归档，支持在线预览与下载。</p>
+
+        <figure>
+          <img src="img/guide/02-materials-top.png" alt="资料库顶部：使用说明与筛选" width="1791" height="466" loading="lazy">
+          <figcaption><b>图 3</b>　资料库顶部：可按科目筛选，也可搜索文件名</figcaption>
+        </figure>
+
+        <figure>
+          <img src="img/guide/03-materials-list.png" alt="资料库科目展开：每个文件带类型、大小、云端标记与阅读/下载按钮" width="1760" height="944" loading="lazy">
+          <figcaption><b>图 4</b>　每个文件标注类型（DOCX / PDF）、大小与「云端」；右侧「阅读 / 预览」与「下载」</figcaption>
+        </figure>
+
+        <ul>
+          <li><b>PDF</b>：点「预览」直接在页面内渲染，手机、平板都能看，可缩放、可全屏。</li>
+          <li><b>Word 文档</b>：点「阅读」进入重新排版的文字版，带目录、可直接复制。</li>
+          <li><b>下载</b>：所有文件都能一键下载到本地。</li>
+        </ul>
+
+        <div class="tip"><b>提示</b>资料库只放整理好的、可直接背诵的材料——往年真题、题库练习、重点归纳、讲义笔记、病例分析；PPT 课件、压缩包与截图已全部删除，避免堆积。</div>
+      </section>
+
+      <!-- 05 -->
+      <section id="s5">
+        <div class="sec-head"><span class="sec-no">05</span><h2 class="sec-t">考前速记：一页过完一科</h2></div>
+        <p class="sec-sub">去掉题目与解析，只留知识点，适合考前快速过一遍。</p>
+
+        <figure>
+          <img src="img/guide/05-mn-list.png" alt="考前速记列表：按学期分组，非大三上置灰并说明" width="1816" height="1302" loading="lazy">
+          <figcaption><b>图 5</b>　速记列表：大三上可进入；其他学期置灰并标注「暂未开放」，仍显示讲数与知识点数</figcaption>
+        </figure>
+
+        <figure>
+          <img src="img/guide/06-mn-hero.png" alt="速记页头部：三个按钮，刷题、考前大题速背、导出 PDF" width="1493" height="650" loading="lazy">
+          <figcaption><b>图 6</b>　每科速记页顶部有三个按钮：刷题、考前大题速背、导出 PDF</figcaption>
+        </figure>
+
+        <figure>
+          <img src="img/guide/07-mn-btns.png" alt="三个按钮特写" width="1021" height="148" loading="lazy">
+          <figcaption><b>图 7</b>　按钮特写：<b>刷题</b>（即时判分）、<b>考前大题速背</b>（该科大题条数）、<b>导出 PDF</b></figcaption>
+        </figure>
+
+        <ul>
+          <li><b>刷题 N 题</b>：直达该科选择题，数量就是选择题总数。</li>
+          <li><b>考前大题速背</b>：只有整理过大题的科目才有（目前习思想、器官系统基础IV）。</li>
+          <li><b>导出 PDF</b>：按 A4 排版打印，适合打印随身看。</li>
+        </ul>
+      </section>
+
+      <!-- 06 -->
+      <section id="s6">
+        <div class="sec-head"><span class="sec-no">06</span><h2 class="sec-t">考前大题速背：分点背诵</h2></div>
+        <p class="sec-sub">把「简答 / 论述」按考点拆成分点答案，标注来源，直接背。</p>
+
+        <figure>
+          <img src="img/guide/08-dati-hero.png" alt="习思想考前大题速背页面头部：81 条，简答 60、论述 21，覆盖 13 章" width="1406" height="522" loading="lazy">
+          <figcaption><b>图 8</b>　大题速背页：81 条，简答 60、论述 21，覆盖 13 章；右上「导出 PDF」按 A4 排版</figcaption>
+        </figure>
+
+        <ol class="steps">
+          <li><b>按章过</b><span>左侧章节目录，点章节跳到对应题目组。</span></li>
+          <li><b>背分点</b><span>每题 3–6 个分点，加粗处是采分关键词；论述题在分点后展开。</span></li>
+          <li><b>核对来源</b><span>每题末尾标「第 X 章 PPT」，可回到资料库对照原课件。</span></li>
+          <li><b>导出</b><span>点「导出 PDF」→ 打印对话框里选「另存为 PDF」，每章另起一页，题卡不跨页。</span></li>
+        </ol>
+
+        <div class="tip"><b>背诵顺序建议</b>先背导论与第一、二章（总论），再按章推进；第十章条目最多，按「强军思想—党的领导—强军目标—备战—现代化—改革—战略体系—方法论」顺序过。</div>
+      </section>
+
+      <!-- 07 -->
+      <section id="s7">
+        <div class="sec-head"><span class="sec-no">07</span><h2 class="sec-t">我的：进度与设置</h2></div>
+        <p class="sec-sub">顶部「我的」集中管理错题本、学习进度与站点设置。</p>
+
+        <ul>
+          <li><b>错题本</b>：按科目列出所有错题，可点进去重做，也可手动移除。</li>
+          <li><b>学习进度</b>：每个科目显示已学知识点比例，首页卡片同步显示。</li>
+          <li><b>设置</b>：深色/浅色主题切换、退出登录、桌面版下载。</li>
+        </ul>
+
+        <div class="tip"><b>换设备怎么办</b>进度与错题保存在浏览器本地（localStorage），换浏览器或清缓存会丢失；重要进度建议定期截图或导出。</div>
+      </section>
+
+      <!-- 08 -->
+      <section id="s8">
+        <div class="sec-head"><span class="sec-no">08</span><h2 class="sec-t">常见问题</h2></div>
+
+        <details open>
+          <summary>为什么有的学期是灰色的、点不动？</summary>
+          <p>目前只开放<b>大三上</b>。其他学期因为参考资料不足，学习功能暂时关闭，但科目简介、章数、知识点数、题量仍然显示；相关资料仍可在<b>资料库</b>下载或在线预览。</p>
+        </details>
+
+        <details>
+          <summary>改了内容，刷新后还是旧的？</summary>
+          <p>站点用了离线缓存（Service Worker）。在页面上按 <code>Ctrl + Shift + R</code> 强制刷新即可；手机端可在浏览器设置里清除站点数据。</p>
+        </details>
+
+        <details>
+          <summary>手机上能用吗？</summary>
+          <p>可以。页面自适应手机，底部有「首页 / 学习 / 刷题 / 资料」标签栏；速记页的目录在正文上方，点开即可跳转。</p>
+        </details>
+
+        <details>
+          <summary>错题本里的题为什么刷新后回到未作答？</summary>
+          <p>这是刻意设计：错题本是<b>独立会话</b>，答题记录不写回主进度，刷新即重置，方便反复刷同一批错题而不污染主页面。</p>
+        </details>
+
+        <details>
+          <summary>「导出 PDF」点了没反应？</summary>
+          <p>它会唤起浏览器打印对话框，请在「目标打印机」里选择<b>「另存为 PDF」</b>，再点保存。手机上选择「存储为 PDF」或「打印为 PDF」。</p>
+        </details>
+
+        <details>
+          <summary>资料库里的文件能直接背吗？</summary>
+          <p>资料库是原始材料（讲义、总结、真题）。想直接背，用「考前速记」（纯知识点）和「考前大题速背」（分点答案）更省时间。</p>
+        </details>
+      </section>
+
+      <div class="foot">
+        <span>MediLearn 使用教程 · 2026 秋</span>
+        <span class="sp"></span>
+        <button class="top-btn" type="button" onclick="window.print()">⇩ 打印本教程</button>
+      </div>
+
+    </main>
+  </div>
+</div>
+</body>
+</html>

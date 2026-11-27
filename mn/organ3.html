@@ -2584,9 +2584,12 @@ body.side-collapsed .side-handle svg{transform:rotate(180deg)}
   /* 把手始终贴在侧栏右缘、垂直居中；收起后贴到窗口左侧 */
   function placeHandle(){
     if(!handle) return;
-    if(collapsed || !sbEl){ handle.style.left='10px'; return; }
+    if(collapsed){ handle.style.left='10px'; return; }
+    if(!sbEl) return;
+    /* 优先用实际渲染矩形（跟随展开动画），矩形无效时退回布局坐标 */
     var r=sbEl.getBoundingClientRect();
-    handle.style.left=Math.round(r.right-1)+'px';
+    var x = r.width > 10 ? r.right : (sbEl.offsetLeft + sbEl.offsetWidth);
+    if(x>0) handle.style.left = Math.round(x-1)+'px';
   }
   var firstCh=document.querySelector('section.chapter');
   /* 顶部（hero 区）不显示把手，滚到第一章才淡入 */
@@ -2618,6 +2621,12 @@ body.side-collapsed .side-handle svg{transform:rotate(180deg)}
   });
   window.addEventListener('resize', function(){ setTimeout(placeHandle, 60); });
   window.addEventListener('load', placeHandle);
+  var phTick=false;
+  window.addEventListener('scroll', function(){
+    if(phTick) return; phTick=true;
+    requestAnimationFrame(function(){ placeHandle(); phTick=false; });
+  }, {passive:true});
+  if(window.ResizeObserver && sbEl){ try{ new ResizeObserver(function(){ placeHandle(); }).observe(sbEl); }catch(e){} }
   apply();
   setTimeout(placeHandle, 400);
   setTimeout(placeHandle, 1200);

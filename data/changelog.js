@@ -1,5 +1,15 @@
 window.CHANGELOG = [
   {
+    v: 'v1.4.44',
+    date: '2026-11-27',
+    title: '目录把手定位修正：始终贴在侧栏右缘',
+    sub: '改用布局坐标（offsetLeft+offsetWidth）计算位置，并用 ResizeObserver 跟随侧栏尺寸变化。',
+    items: [
+      { t: 'fix', text: '原先用 getBoundingClientRect 取右边缘，在侧栏展开动画或布局未稳定时会读到 0，导致把手跑到窗口最左侧。' },
+      { t: 'fix', text: '改为 offsetLeft + offsetWidth（布局坐标，不受动画/滚动影响），并加 ResizeObserver 与滚动时的节流校正。' }
+    ]
+  },
+  {
     v: 'v1.4.43',
     date: '2026-11-27',
     title: '目录把手贴回侧栏边缘 · 滚到第一章才出现',

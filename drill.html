@@ -650,6 +650,9 @@ body.mode-pick .wrap{padding-bottom:40px}
   st.favOnly = !!st.favOnly;          /* 只看收藏 */
   st.order = st.order || 'seq';
   st.revealed = st.revealed || {};   /* 主观题是否已展开参考答案 */
+  /* 旧状态可能同时存了「错题本 + 章节筛选」，会导致点进去空池：这里统一纠正 */
+  if (st.wrongOnly) { st.ch = ''; st.src = ''; st.favOnly = false; }
+  else if (st.favOnly) { st.ch = ''; st.src = ''; }
 
   /* ---------------- 题池（受筛选影响） ---------------- */
   var pool = [];
@@ -790,8 +793,13 @@ body.mode-pick .wrap{padding-bottom:40px}
     }
 
     if (!pool.length) {
+      var emptyWhy = st.wrongOnly
+        ? '错题本里暂时没有可练的选择题：可能已全部移出，或错题属于主观题（请到「全科测验」里查看）。'
+        : (st.favOnly
+            ? '收藏夹里暂时没有可练的选择题。'
+            : '当前筛选下没有可练的题目，可能都答对了，或该讲暂无题。');
       stage.innerHTML = '<div class="card"><p class="stem" style="margin:0 0 14px">这里没有题。</p>' +
-        '<p style="margin:0;font-weight:700;font-size:14px">当前筛选下没有可练的题目，可能都答对了、该讲暂无题，或收藏夹为空。</p>' +
+        '<p style="margin:0;font-weight:700;font-size:14px">' + emptyWhy + '</p>' +
         '<div class="actions"><button class="btn" id="toAll" type="button">回到全部题目</button></div></div>';
       posEl.textContent = '— / —';
       ptextEl.textContent = '没有可练的题';

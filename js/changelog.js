@@ -9,6 +9,18 @@
   var LIST = window.CHANGELOG || [];
   if (!LIST.length) return;
 
+  /* 置顶公告：带 pinnedUntil 的条目在到期前一直作为「本周公告」展示 */
+  function activeEntry() {
+    var now = Date.now();
+    for (var i = 0; i < LIST.length; i++) {
+      var e = LIST[i];
+      if (!e.pinnedUntil) continue;
+      var end = new Date(String(e.pinnedUntil) + 'T23:59:59').getTime();
+      if (end > now) return e;
+    }
+    return LIST[0];
+  }
+
   var K_SEEN = 'medilearn.cl.seen';     // 已读版本号
   var K_DAY = 'medilearn.cl.day';       // 上次自动弹出的日期
   var K_OFF = 'medilearn.cl.off';       // 用户勾了「不再自动弹出」
@@ -24,8 +36,8 @@
   var mask = null;
 
   function build() {
-    var latest = LIST[0];
-    var older = LIST.slice(1);
+    var latest = activeEntry();
+    var older = LIST.filter(function (e) { return e !== latest; });
     var groups = { new: [], opt: [], fix: [] };
     latest.items.forEach(function (it) {
       (groups[it.t] || groups.new).push(it.text);
@@ -88,7 +100,7 @@
     if (!mask) return;
     var never = document.getElementById('clNever');
     if (never && never.checked) lsSet(K_OFF, '1');
-    lsSet(K_SEEN, LIST[0].v);
+    lsSet(K_SEEN, activeEntry().v);
     mask.classList.remove('on');
     setTimeout(function () { if (mask) { mask.remove(); mask = null; } }, 200);
   }
@@ -110,7 +122,7 @@
     if (!isHome) return;
 
     if (ls(K_OFF) === '1') return;                 // 用户关掉了自动提示
-    if (ls(K_SEEN) === LIST[0].v) return;          // 这一版已经看过
+    if (ls(K_SEEN) === activeEntry().v) return;    // 这一版已经看过
     if (ls(K_DAY) === today()) return;             // 今天已经弹过一次
 
     lsSet(K_DAY, today());                          // 先记日期，避免刷新重复弹

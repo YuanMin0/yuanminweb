@@ -86,7 +86,14 @@
   details[open] summary::before{content:'－'}
   details p{margin:0 0 13px;color:var(--ink2);font-size:14.5px}
 
-  .end{margin:44px 0 0;padding:22px 0 60px;border-top:1px solid rgba(44,52,24,.12);
+  .share{margin:36px 0 0;padding:16px 18px;border-radius:12px;background:var(--paper);
+    border:1px dashed rgba(44,52,24,.28);font-size:14px;color:var(--ink2)}
+  .share b{display:block;margin-bottom:6px;color:var(--ink);font-size:13.5px;letter-spacing:.04em}
+  .share code{display:inline-block;margin:2px 0 4px;padding:5px 10px;border-radius:7px;
+    background:rgba(91,132,168,.12);color:var(--blue-d);font:600 13.5px ui-monospace,Menlo,Consolas,monospace}
+  .share span{display:block;color:var(--ink3);font-size:12.5px}
+  .share span b{display:inline;color:var(--red);font-size:12.5px}
+  .end{margin:20px 0 0;padding:22px 0 60px;border-top:1px solid rgba(44,52,24,.12);
     color:var(--ink3);font-size:13px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
   .end .sp{flex:1}
 
@@ -340,6 +347,12 @@
       <p>它会唤起打印对话框，在「目标打印机」里选「另存为 PDF」再保存；手机上选「存储为 PDF」。</p>
     </details>
   </section>
+
+  <div class="share">
+    <b>分享给同学时，请用这个地址</b>
+    <code>https://www.yuanminstudy.uk/start</code>
+    <span>要带 <b>www.</b>，不带 www 的裸域目前没有解析，会打不开。</span>
+  </div>
 
   <div class="end">
     <span>MediLearn · 开始教程 · 2026 秋</span>

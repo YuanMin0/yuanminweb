@@ -73,6 +73,26 @@ function plain(blocks) {
     .trim();
 }
 
+/* 抽取小标题与加粗术语作为关键词，弥补正文截断导致的漏检 */
+function keywords(blocks) {
+  const out = [];
+  (blocks || []).forEach(b => {
+    if (!b) return;
+    if (b.type === 'h' && b.text) out.push(b.text);
+    if (b.title) out.push(b.title);
+    const raw = [b.text || '', (b.items || []).join(' '), (b.head || []).join(' ')].join(' ');
+    const re = /\*\*(.+?)\*\*/g;
+    let m;
+    while ((m = re.exec(raw))) out.push(m[1]);
+  });
+  const uniq = [];
+  out.forEach(x => {
+    const v = String(x).replace(/[*\s]/g, '').slice(0, 14);
+    if (v && uniq.indexOf(v) < 0) uniq.push(v);
+  });
+  return uniq.join(' ').slice(0, 200);
+}
+
 const items = [];
 WB.subjects().forEach(s => {
   (s.chapters || []).forEach((ch, ci) => {
@@ -89,8 +109,9 @@ WB.subjects().forEach(s => {
         t: k.title || '',
         d: sum.slice(0, 140),
         g: (k.tags || []).slice(0, 4).join(' '),
+        k: keywords(k.content),
         /* 全文只保留前 400 字，用于命中排序，不落全文以控制体积 */
-        x: text.slice(0, 400)
+        x: text.slice(0, 200)
       });
     });
   });

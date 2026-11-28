@@ -140,12 +140,13 @@
   }
 
   function score(it, terms) {
-    var t = it.t || '', d = it.d || '', c = it.c || '', sn = it.sn || '', x = it.x || '', g = it.g || '';
+    var t = it.t || '', d = it.d || '', c = it.c || '', sn = it.sn || '', x = it.x || '', g = it.g || '', kk = it.k || '';
     var s = 0;
     for (var i = 0; i < terms.length; i++) {
       var w = terms[i];
       var hit = false;
       if (t.indexOf(w) > -1) { s += 6; hit = true; }
+      if (kk.indexOf(w) > -1) { s += 4; hit = true; }
       if (g.indexOf(w) > -1) { s += 3; hit = true; }
       if (c.indexOf(w) > -1) { s += 3; hit = true; }
       if (sn.indexOf(w) > -1) { s += 2; hit = true; }

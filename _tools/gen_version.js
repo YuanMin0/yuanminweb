@@ -6,6 +6,13 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
+/* 先重建知识点检索索引：必须在下面计算文件 SHA1 之前执行 */
+try {
+  require('child_process').execSync('node "' + path.join(__dirname, 'gen_ksearch.js') + '"', { stdio: 'inherit' });
+} catch (e) {
+  console.log('!! 检索索引重建失败：' + e.message);
+}
+
 const ROOT = path.resolve(__dirname, '..');
 const OUT = path.join(ROOT, 'version.json');
 const VER = process.argv[2] || '1.4.4';

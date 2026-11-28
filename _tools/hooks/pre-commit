@@ -1,0 +1,17 @@
+#!/bin/sh
+# 提交前自动重建知识点检索索引（data/ksearch.js）
+# 安装：sh _tools/install_hooks.sh
+set -e
+if ! command -v node >/dev/null 2>&1; then
+  echo "[pre-commit] 未找到 node，跳过索引重建"
+  exit 0
+fi
+if node _tools/gen_ksearch.js >/dev/null 2>&1; then
+  if ! git diff --quiet -- data/ksearch.js 2>/dev/null; then
+    git add data/ksearch.js
+    echo "[pre-commit] 已重建并暂存 data/ksearch.js"
+  fi
+else
+  echo "[pre-commit] 索引生成失败，提交继续（请手动检查 _tools/gen_ksearch.js）"
+fi
+exit 0

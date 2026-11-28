@@ -383,6 +383,7 @@
         '<a class="logo" href="' + B + 'index.html"><span class="logo-mark">✚</span><span>MediLearn</span></a>' +
         '<nav class="nav" id="site-nav" data-nav>' + links + '</nav>' +
         '<div class="hdr-tools">' +
+        '<a class="icon-btn" href="' + B + 'search.html" title="检索知识点" aria-label="检索知识点">⌕</a>' +
         '<button class="icon-btn" data-theme-btn title="切换主题" aria-label="切换主题">◑</button>' +
         '<button class="icon-btn" data-logout-btn title="退出登录" aria-label="退出登录">⏻</button>' +
         '<a class="hdr-dl" href="' + B + 'download.html" data-desktop-dl title="下载 Windows 桌面版（离线可用）" aria-label="下载 Windows 桌面版">' +

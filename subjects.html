@@ -205,43 +205,96 @@
     clearTimeout(tmr);
     var q = qEl.value.trim();
     if (!q) { sugEl.innerHTML = ''; sWrap.classList.add('hide'); return; }
-    tmr = setTimeout(function () { runSearch(q); }, 160);
+    tmr = setTimeout(function () { ensureK(function () { runSearch(q); }); }, 160);
   });
 
   qEl.addEventListener('keydown', function (e) { if (e.key === 'Escape') { qEl.value = ''; sugEl.innerHTML = ''; sWrap.classList.add('hide'); } });
   document.addEventListener('click', function (e) { if (!e.target.closest('.search')) sugEl.innerHTML = ''; });
 
+  /* 知识点检索：懒加载 data/ksearch.js（只在首次输入时下载） */
+  var KIDX = null, kLoading = false, kWait = [];
+  function ensureK(cb) {
+    if (KIDX) return cb();
+    kWait.push(cb);
+    if (kLoading) return;
+    kLoading = true;
+    var sc = document.createElement('script');
+    sc.src = 'data/ksearch.js';
+    sc.onload = function () {
+      KIDX = (window.KSEARCH && window.KSEARCH.items) || [];
+      kLoading = false;
+      kWait.splice(0).forEach(function (f) { try { f(); } catch (e) {} });
+    };
+    sc.onerror = function () {
+      KIDX = []; kLoading = false;
+      kWait.splice(0).forEach(function (f) { try { f(); } catch (e) {} });
+    };
+    document.head.appendChild(sc);
+  }
+
+  function kScore(it, terms) {
+    var t = it.t || '', d = it.d || '', c = it.c || '', sn = it.sn || '', x = it.x || '', g = it.g || '', kk = it.k || '';
+    var sc = 0;
+    for (var i = 0; i < terms.length; i++) {
+      var w = terms[i], hit = false;
+      if (t.indexOf(w) > -1) { sc += 6; hit = true; }
+      if (kk.indexOf(w) > -1) { sc += 4; hit = true; }
+      if (g.indexOf(w) > -1) { sc += 3; hit = true; }
+      if (c.indexOf(w) > -1) { sc += 3; hit = true; }
+      if (sn.indexOf(w) > -1) { sc += 2; hit = true; }
+      if (d.indexOf(w) > -1) { sc += 2; hit = true; }
+      if (x.indexOf(w) > -1) { sc += 1; hit = true; }
+      if (!hit) return -1;
+    }
+    if (t.indexOf(terms[0]) === 0) sc += 4;
+    return sc;
+  }
+
+  function kLink(it) {
+    return 'knowledge.html?s=' + encodeURIComponent(it.s) + '&k=' + encodeURIComponent(it.kid);
+  }
+
   function runSearch(q) {
-    var res = WB.search(q);
-    /* 联想层：前 6 条 */
-    sugEl.innerHTML = res.length
-      ? '<div class="sug">' + res.slice(0, 6).map(function (r) {
-          return '<a class="sug-item" href="' + WB.link('knowledge.html', { s: r.subject.id, k: r.k.id }) + '">' +
-            '<div class="sug-t">' + hl(r.k.title, q) + '</div>' +
-            '<div class="sug-d">' + WB.esc(r.subject.name) + ' · ' + WB.esc(r.k.chapterTitle) + '</div></a>';
+    if (!KIDX) return;                    /* 索引还没到，加载完成后会重跑 */
+    var terms = q.split(/\s+/).filter(Boolean);
+    var hits = [];
+    for (var i = 0; i < KIDX.length; i++) {
+      var sc = kScore(KIDX[i], terms);
+      if (sc > 0) hits.push({ it: KIDX[i], s: sc });
+    }
+    hits.sort(function (a, b) { return b.s - a.s; });
+    var top = hits.slice(0, 40);
+
+    sugEl.innerHTML = top.length
+      ? '<div class="sug">' + top.slice(0, 6).map(function (h) {
+          return '<a class="sug-item" href="' + kLink(h.it) + '">' +
+            '<div class="sug-t">' + hl(h.it.t, q) + '</div>' +
+            '<div class="sug-d">' + WB.esc(h.it.sn) + ' · ' + WB.esc(h.it.c) + '</div></a>';
         }).join('') + '</div>'
       : '<div class="sug"><div class="sug-item"><div class="sug-d">没有匹配的知识点</div></div></div>';
 
-    /* 结果列表 */
     sWrap.classList.remove('hide');
-    sSub.textContent = '关键词「' + q + '」命中 ' + res.length + ' 个知识点';
-    if (!res.length) {
-      sList.innerHTML = WB.empty('🔍', '没有找到相关内容', '换个关键词试试，例如「构词法」「t 检验」「强军目标」「两山」', '', 'search');
+    sSub.innerHTML = '关键词「' + WB.esc(q) + '」命中 ' + hits.length + ' 个知识点' +
+      '　·　<a href="search.html?q=' + encodeURIComponent(q) + '">在检索页查看 →</a>';
+
+    if (!hits.length) {
+      sList.innerHTML = WB.empty('🔍', '没有找到相关内容',
+        '换个更短的关键词试试，例如「休克」「浓缩」「酸碱」', '', 'search');
     } else {
-      sList.innerHTML = res.map(function (r) {
-        var k = r.k;
-        return '<div class="chapter open spot" style="--accent:' + r.subject.accent + ';--accent-soft:' + r.subject.accentSoft + '">' +
+      sList.innerHTML = top.map(function (h) {
+        var it = h.it;
+        return '<div class="chapter open spot" style="--accent:var(--brand);--accent-soft:var(--brand-soft)">' +
           '<div class="chapter-hd" style="cursor:default">' +
-            '<div class="chapter-no">' + r.subject.icon + '</div>' +
+            '<div class="chapter-no">⌕</div>' +
             '<div style="flex:1;min-width:0">' +
-              '<div class="chapter-t">' + hl(k.title, q) + '</div>' +
-              '<div class="chapter-s">' + WB.esc(r.subject.name) + ' · ' + WB.esc(k.chapterTitle) + ' · ' + k.quiz.length + ' 题</div>' +
+              '<div class="chapter-t">' + hl(it.t, q) + '</div>' +
+              '<div class="chapter-s">来源：' + WB.esc(it.sn) + ' · ' + WB.esc(it.c) + '</div>' +
             '</div>' +
-            '<a class="gbtn gbtn-sm" href="' + WB.link('knowledge.html', { s: r.subject.id, k: k.id }) + '">查看</a>' +
+            '<a class="gbtn gbtn-sm" href="' + kLink(it) + '">查看</a>' +
           '</div>' +
           '<div class="chapter-bd" style="max-height:none;opacity:1">' +
             '<div class="krow" style="border-bottom:0"><div class="krow-main">' +
-              '<div class="krow-d" style="white-space:normal">' + WB.esc(r.snippet) + '</div>' +
+              '<div class="krow-d" style="white-space:normal">' + hl(it.d, q) + '</div>' +
             '</div></div>' +
           '</div></div>';
       }).join('');

@@ -269,6 +269,13 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 28px 0; }
   font-size: 15px; transition: .16s var(--ease);
 }
 .icon-btn:hover { color: var(--text); border-color: var(--border-2); background: var(--surface-3); }
+.icon-btn.hdr-search { width: auto; padding: 0 12px; display: inline-flex; gap: 6px; align-items: center; }
+.icon-btn.hdr-search span { font-size: 13px; font-weight: 700; letter-spacing: .02em; }
+.icon-btn.hdr-search:hover { color: var(--brand); border-color: var(--brand); background: var(--brand-soft); }
+@media (max-width: 860px) {
+  .icon-btn.hdr-search { width: 40px; padding: 0; justify-content: center; }
+  .icon-btn.hdr-search span { display: none; }
+}
 
 .menu-btn { display: none; }
 
